@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-23
 
-Indicadores publicados: 165
+Indicadores publicados: 182
 
 ## Alertas
 
@@ -28,15 +28,10 @@ Indicadores publicados: 165
 - recaudacion: sin dato nuevo (último 2026-09)
 - icg: sin dato nuevo (último 2026-09)
 - reservas: sin dato nuevo (último 2026-10)
-- reservas: la fuente revisó 1 datos anteriores
 - dolar_mayorista: sin dato nuevo (último 2026-10)
-- dolar_mayorista: la fuente revisó 1 datos anteriores
 - base_monetaria: sin dato nuevo (último 2026-10)
-- base_monetaria: la fuente revisó 1 datos anteriores
 - tasa_plazo_fijo: sin dato nuevo (último 2026-10)
-- tasa_plazo_fijo: la fuente revisó 1 datos anteriores
 - prestamos_privados: sin dato nuevo (último 2026-10)
-- prestamos_privados: la fuente revisó 2 datos anteriores
 - dolar_ccl: sin dato nuevo (último 2026-10)
 - dolar_mep: sin dato nuevo (último 2026-10)
 - riesgo_pais: sin dato nuevo (último 2026-10)
@@ -65,21 +60,14 @@ Indicadores publicados: 165
 - icc: sin dato nuevo (último 2026-09)
 - dolar_tarjeta: sin dato nuevo (último 2026-10)
 - depositos_privados_ars: sin dato nuevo (último 2026-10)
-- depositos_privados_ars: la fuente revisó 3 datos anteriores
 - depositos_privados_usd: sin dato nuevo (último 2026-10)
-- depositos_privados_usd: la fuente revisó 1 datos anteriores
 - compras_divisas_bcra: sin dato nuevo (último 2026-09)
 - prestamos_hipotecarios: sin dato nuevo (último 2026-10)
-- prestamos_hipotecarios: la fuente revisó 1 datos anteriores
 - prestamos_prendarios: sin dato nuevo (último 2026-10)
-- prestamos_prendarios: la fuente revisó 1 datos anteriores
 - prestamos_personales: sin dato nuevo (último 2026-10)
-- prestamos_personales: la fuente revisó 2 datos anteriores
 - prestamos_tarjetas: sin dato nuevo (último 2026-10)
-- prestamos_tarjetas: la fuente revisó 2 datos anteriores
 - prestamos_tarjetas: variación inusual en el último dato (-7.8%)
 - tasa_personales: sin dato nuevo (último 2026-10)
-- tasa_personales: la fuente revisó 1 datos anteriores
 - tasa_tarjetas: sin dato nuevo (último 2026-09)
 - icl: sin dato nuevo (último 2026-10)
 - pobreza_personas: sin dato nuevo (último 2026-01)
@@ -156,5 +144,68 @@ Indicadores publicados: 165
 - ipcf_decil_9: sin dato nuevo (último 2026-01)
 - ipcf_decil_10: sin dato nuevo (último 2026-01)
 - gini: sin dato nuevo (último 2026-01)
+- bdp_cuenta_corriente: sin dato nuevo (último 2026-04)
+- bdp_bienes: sin dato nuevo (último 2026-04)
+- bdp_servicios: sin dato nuevo (último 2026-04)
+- bdp_viajes: sin dato nuevo (último 2026-04)
+- bdp_ingreso_primario: sin dato nuevo (último 2026-04)
+- bdp_ied: sin dato nuevo (último 2026-04)
+- bdp_reservas: sin dato nuevo (último 2026-04)
 - bdp_reservas: variación inusual en el último dato (34888.1%)
+- deuda_total_res: sin dato nuevo (último 2026-04)
+- deuda_externa: sin dato nuevo (último 2026-04)
+- deuda_interna: sin dato nuevo (último 2026-04)
+- deuda_titulos: sin dato nuevo (último 2026-04)
+- deuda_letras: sin dato nuevo (último 2026-04)
+- deuda_organismos: sin dato nuevo (último 2026-04)
+- deuda_bilaterales: sin dato nuevo (último 2026-04)
+- deuda_adelantos: sin dato nuevo (último 2026-04)
+- deuda_otros: sin dato nuevo (último 2026-04)
+- prov_resultado_financiero: sin dato nuevo (último 2025-01)
+- prov_resultado_primario: sin dato nuevo (último 2025-01)
+- prov_ingresos: sin dato nuevo (último 2025-01)
+- prov_origen_nacional: sin dato nuevo (último 2025-01)
+- informalidad: sin dato nuevo (último 2026-04)
+- empleo_publico: sin dato nuevo (último 2026-01)
+- remuneracion_sipa: sin dato nuevo (último 2026-06)
+- homicidios: sin dato nuevo (último 2025-01)
+- suicidios: sin dato nuevo (último 2025-01)
+- morosidad: sin dato nuevo (último 2026-04)
+- morosidad_publicos: sin dato nuevo (último 2026-04)
+- morosidad_privados: sin dato nuevo (último 2026-04)
+- morosidad_privados_nac: sin dato nuevo (último 2026-04)
+- morosidad_no_bancarias: sin dato nuevo (último 2026-04)
+- morosidad_pnfc: sin dato nuevo (último 2026-02)
+- morosidad_fintech: sin dato nuevo (último 2026-02)
+- morosidad_tarjetas_nb: sin dato nuevo (último 2026-02)
+- morosidad_electro: sin dato nuevo (último 2026-02)
+- morosidad_coop: sin dato nuevo (último 2026-02)
+- ventas_autos: sin dato nuevo (último 2026-09)
+- produccion_autos: sin dato nuevo (último 2026-09)
+- faena_vacuna: sin dato nuevo (último 2026-04)
+- fae_privados: sin dato nuevo (último 2026-08)
+- gasto_auh: sin dato nuevo (último 2026-09)
+- pib_nominal: sin dato nuevo (último 2026-04)
+- ipc_vivienda: sin dato nuevo (último 2026-08)
+- ipc_transporte: sin dato nuevo (último 2026-08)
+- ipc_educacion: sin dato nuevo (último 2026-08)
+- merval: sin dato nuevo (último 2026-10)
+- adr_ggal: sin dato nuevo (último 2026-10)
+- adr_ypf: sin dato nuevo (último 2026-10)
+- gpn_total: sin dato nuevo (último 2023-01)
+- gpn_prevision: sin dato nuevo (último 2023-01)
+- gpn_asistencia: sin dato nuevo (último 2023-01)
+- gpn_economicos: sin dato nuevo (último 2023-01)
+- gpn_deuda: sin dato nuevo (último 2023-01)
+- gpn_defensa: sin dato nuevo (último 2023-01)
+- gpn_funcionamiento: sin dato nuevo (último 2023-01)
+- gpn_educ_basica: sin dato nuevo (último 2023-01)
+- gpn_educ_superior: sin dato nuevo (último 2023-01)
+- gpn_salud_publica: sin dato nuevo (último 2023-01)
+- gpn_pami: sin dato nuevo (último 2023-01)
+- gpn_obras_sociales: sin dato nuevo (último 2023-01)
+- gpn_ciencia: sin dato nuevo (último 2023-01)
+- gpn_vivienda: sin dato nuevo (último 2023-01)
+- gpn_empleo: sin dato nuevo (último 2023-01)
+- calificacion_sp: sin dato nuevo (último 2026-10)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
