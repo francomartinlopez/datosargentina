@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, mapas, transformar, vistas
+from . import calidad, distribucion, mapas, transformar, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -80,6 +80,13 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
             continue
         mensuales[nombre] = transformar.empalmar([(mensuales[t["serie"]], t.get("hasta")) for t in tramos])
     for nombre, c in config.get("calculos", {}).items():
+        if c["operacion"] == "promedio":  # promedio simple de varias series (p. ej. deciles de un estrato)
+            faltan = [x for x in c["series"] if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
+            continue
         faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
         if faltan:
             alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
@@ -192,7 +199,7 @@ def main() -> None:
     mensuales, alertas_proc = procesar(config, crudas)
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
-    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA)
+    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA)
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 

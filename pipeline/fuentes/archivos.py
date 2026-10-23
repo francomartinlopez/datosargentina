@@ -28,6 +28,7 @@ ARCHIVOS = {
     "canastas": INDEC + "sociedad/serie_cba_cbt.xls",
     "supermercados": INDEC + "economia/serie_supermercados.xlsx",
     "itcrm": "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/ITCRMSerie.xlsx",
+    "ingresos": INDEC + "sociedad/cuadros_informe_ingresos_{MM}_{AA}.xls",
 }
 FIRMAS = (b"\xd0\xcf\x11\xe0", b"PK\x03\x04")  # xls (OLE2) y xlsx (zip)
 
@@ -159,6 +160,41 @@ def indec_supermercados_precios(h: dict | None = None) -> pd.Series:
     s = s[s.index.notna()].dropna()
     s.index = s.index.to_period("M").to_timestamp()
     return s.sort_index()
+
+
+def _cuadro_deciles(df: pd.DataFrame, columnas: dict[str, str]) -> list[dict]:
+    """Lee un cuadro de deciles de la EPH buscando cada columna por su encabezado."""
+    fila_enc = next(i for i in range(len(df)) if any("ingreso medio por decil" in _texto(v).lower() for v in df.iloc[i]))
+    encabezados = {j: _texto(df.iat[fila_enc, j]).lower() for j in range(df.shape[1])}
+    cols = {}
+    for clave, texto in columnas.items():
+        cols[clave] = next(j for j, e in encabezados.items() if e.startswith(texto.lower()))
+    desde = next(j for j, e in encabezados.items() if e == "desde")
+    hasta = next(j for j, e in encabezados.items() if e == "hasta")
+    filas = []
+    for i in range(fila_enc + 1, len(df)):
+        d = pd.to_numeric(df.iat[i, 0], errors="coerce")
+        if pd.isna(d) or not 1 <= d <= 10:
+            continue
+        fila = {"decil": int(d), "desde": float(df.iat[i, desde]), "hasta": float(df.iat[i, hasta])}
+        for clave, j in cols.items():
+            fila[clave] = float(pd.to_numeric(df.iat[i, j], errors="coerce"))
+        filas.append(fila)
+    return filas
+
+
+def indec_distribucion_ingreso(h: dict | None = None) -> dict:
+    """Último informe de distribución del ingreso (EPH): deciles de personas y de hogares."""
+    h = h or hojas("ingresos")
+    titulo = _texto(h["Cuadro 1"].iat[0, 0])
+    m = re.search(r"(primer|segundo|tercer|cuarto) trimestre( de)? (\d{4})", titulo, flags=re.I)
+    trimestre = {"primer": 1, "segundo": 2, "tercer": 3, "cuarto": 4}[m.group(1).lower()] if m else None
+    personas = _cuadro_deciles(h["Cuadro 1"], {"poblacion_miles": "población por decil", "ingreso_total_millones": "ingreso total por decil",
+                                              "porcentaje_ingreso": "porcentaje del ingreso", "ingreso_medio": "ingreso medio por decil"})
+    hogares = _cuadro_deciles(h["Cuadro 9"], {"hogares_miles": "hogares por decil", "poblacion_miles": "población por decil",
+                                             "ingreso_total_millones": "ingreso total por decil", "porcentaje_ingreso": "porcentaje del ingreso",
+                                             "ingreso_medio": "ingreso medio por decil"})
+    return {"anio": int(m.group(3)) if m else None, "trimestre": trimestre, "personas": personas, "hogares": hogares}
 
 
 LECTORES = {

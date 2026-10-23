@@ -167,6 +167,19 @@ series:
   asal_prov_santiago_del_estero: {fuente: datosgobar, id: "154.2_SIAGO_EERO_S_0_0_15"}
   asal_prov_tierra_del_fuego: {fuente: datosgobar, id: "154.2_TRA_FUEEGO_S_0_0_12"}
   asal_prov_tucuman: {fuente: datosgobar, id: "154.2_TMANMAN_S_0_0_7"}
+  # --- Distribución del ingreso (EPH, trimestral, pesos corrientes) ---
+  ipcf_total:          {fuente: datosgobar, id: "301.1_TOTAL_IPCFPCF_0_T_10"}
+  ipcf_decil_1: {fuente: datosgobar, id: "301.1_DECIL_1_IPPCF_0_T_12"}
+  ipcf_decil_2: {fuente: datosgobar, id: "301.1_DECIL_2_IPPCF_0_T_12"}
+  ipcf_decil_3: {fuente: datosgobar, id: "301.1_DECIL_3_IPPCF_0_T_12"}
+  ipcf_decil_4: {fuente: datosgobar, id: "301.1_DECIL_4_IPPCF_0_T_12"}
+  ipcf_decil_5: {fuente: datosgobar, id: "301.1_DECIL_5_IPPCF_0_T_12"}
+  ipcf_decil_6: {fuente: datosgobar, id: "301.1_DECIL_6_IPPCF_0_T_12"}
+  ipcf_decil_7: {fuente: datosgobar, id: "301.1_DECIL_7_IPPCF_0_T_12"}
+  ipcf_decil_8: {fuente: datosgobar, id: "301.1_DECIL_8_IPPCF_0_T_12"}
+  ipcf_decil_9: {fuente: datosgobar, id: "301.1_DECIL_9_IPPCF_0_T_12"}
+  ipcf_decil_10: {fuente: datosgobar, id: "301.1_DECIL_10_IPCF_0_T_13"}
+  gini:                {fuente: datosgobar, id: "65.1_CGI_0_0_21"}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -182,6 +195,9 @@ empalmes:
 calculos:
   saldo_comercial: {operacion: resta, a: exportaciones, b: importaciones}
   brecha_ccl:      {operacion: brecha, a: dolar_ccl, b: dolar_mayorista}
+  ipcf_estrato_bajo:  {operacion: promedio, series: [ipcf_decil_1, ipcf_decil_2, ipcf_decil_3, ipcf_decil_4]}
+  ipcf_estrato_medio: {operacion: promedio, series: [ipcf_decil_5, ipcf_decil_6, ipcf_decil_7, ipcf_decil_8]}
+  ipcf_estrato_alto:  {operacion: promedio, series: [ipcf_decil_9, ipcf_decil_10]}
   balanza_energetica: {operacion: resta, a: expo_combustibles, b: impo_combustibles}
   brecha_mep:      {operacion: brecha, a: dolar_mep, b: dolar_mayorista}
   brecha_tarjeta:  {operacion: brecha, a: dolar_tarjeta, b: dolar_mayorista}
@@ -301,3 +317,11 @@ indicadores:
   - {id: empleo_ensenanza, nombre: "Enseñanza", seccion: "Empleo e ingresos", serie: asal_ensenanza, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
   - {id: empleo_salud, nombre: "Salud y servicios sociales", seccion: "Empleo e ingresos", serie: asal_salud, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
   - {id: empleo_servicios, nombre: "Servicios comunitarios y personales", seccion: "Empleo e ingresos", serie: asal_servicios, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  # --- Ingresos de los hogares (EPH) ---
+  - {id: ingreso_per_capita, nombre: "Ingreso per cápita familiar (real)", seccion: "Empleo e ingresos", serie: ipcf_total, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T, portada: true,
+     nota: "Ingreso disponible de los hogares por integrante, promedio de la EPH (31 aglomerados), en pesos de hoy. Incluye ingresos laborales y no laborales (jubilaciones, planes, rentas)."}
+  - {id: ingreso_estrato_bajo, nombre: "Ingreso per cápita: estrato bajo (deciles 1 a 4)", seccion: "Empleo e ingresos", serie: ipcf_estrato_bajo, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
+  - {id: ingreso_estrato_medio, nombre: "Ingreso per cápita: estrato medio (deciles 5 a 8)", seccion: "Empleo e ingresos", serie: ipcf_estrato_medio, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
+  - {id: ingreso_estrato_alto, nombre: "Ingreso per cápita: estrato alto (deciles 9 y 10)", seccion: "Empleo e ingresos", serie: ipcf_estrato_alto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
+  - {id: gini, nombre: "Desigualdad: coeficiente de Gini", seccion: "Empleo e ingresos", serie: gini, tipo_valor: tasa, unidad: "coeficiente (0 = igualdad total)", frecuencia: T,
+     nota: "Gini del ingreso per cápita familiar. Va de 0 (todos ganan lo mismo) a 1 (una persona concentra todo el ingreso)."}

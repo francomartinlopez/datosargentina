@@ -231,3 +231,26 @@ table.tabla { border-collapse: collapse; font-size: 14px; width: 100%; max-width
 .mapa-lista { margin: 0; padding: 0; list-style: none; columns: 2 200px; column-gap: 24px; font-size: 13px; }
 .mapa-lista li { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--grilla); break-inside: avoid; font-variant-numeric: tabular-nums; }
 .mapa-lista li span:first-child { color: var(--tinta-2); }
+
+/* Selector de período */
+.etiqueta-selector { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--tinta-2); margin: 12px 0 4px; }
+.selector { font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--borde); background: var(--superficie); color: var(--tinta); }
+
+/* Pirámide de ingresos */
+.estratos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.estrato { border: 1px solid var(--borde); border-radius: 10px; padding: 10px 12px; }
+.estrato p { margin: 0; }
+.estrato-nombre { font-size: 13px; color: var(--tinta-2); display: flex; align-items: center; gap: 6px; }
+.estrato-nombre i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.estrato-valor { font-size: 22px; font-weight: 650; margin: 2px 0 !important; }
+.estrato-detalle { font-size: 12px; color: var(--tinta-3); }
+.piramide { display: grid; gap: 4px; }
+.pir-fila { display: grid; grid-template-columns: 190px 1fr 70px; gap: 10px; align-items: center; font-size: 13px; }
+.pir-cab { font-size: 12px; color: var(--tinta-3); }
+.pir-cab span:last-child, .pir-cant { text-align: right; font-variant-numeric: tabular-nums; }
+.pir-decil { display: flex; flex-direction: column; line-height: 1.2; }
+.pir-decil small { color: var(--tinta-3); font-size: 11px; }
+.pir-pista { position: relative; height: 22px; }
+.pir-barra { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.pir-num { position: absolute; left: 6px; top: 3px; font-size: 12px; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 0 2px rgba(0,0,0,.35); white-space: nowrap; }
+@media (max-width: 520px) { .pir-fila { grid-template-columns: 110px 1fr 52px; font-size: 12px; } }

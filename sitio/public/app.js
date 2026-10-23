@@ -306,7 +306,8 @@ function ficha(f, { anidada = false } = {}) {
   const leyenda = el("ul", { class: "leyenda", hidden: true });
   const vistasDisponibles = VISTAS.filter((v) => (v.id === "comparativa" ? Object.keys(f.vistas.comparativa || {}).length : (f.vistas[v.id] || []).length));
   // Para saldos (pueden ser negativos) la vista inicial es la serie en su unidad
-  const inicial = f.tipo_valor === "saldo" ? "desde_2003" : "interanual";
+  // Con desestacionalizada se abre en "Desde 2003", donde se ven las dos líneas
+  const inicial = f.tipo_valor === "saldo" || f.desest ? "desde_2003" : "interanual";
   let actual = vistasDisponibles.find((v) => v.id === inicial) ? inicial : vistasDisponibles[0]?.id;
   const botones = vistasDisponibles.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === actual), text: v.texto, onclick: () => { actual = v.id; render(); } }));
   function render() {
@@ -357,28 +358,62 @@ function diferenciaNivel(m, desde) {
   return previo ? vu - previo[1] : null;
 }
 
+// Períodos para comparar en los rankings: hace un año o el mes previo a cada asunción
+const PERIODOS_RANKING = [
+  { id: "anio", texto: "Hace un año" },
+  ...[...GESTIONES].reverse().map((g) => ({ id: g.nombre, texto: `Inicio de ${g.corto}`, base: basePrevia(g.desde) })),
+];
+function basePrevia(desde) {
+  const d = fecha(desde); d.setMonth(d.getMonth() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-01`;
+}
+function promedio12(lista, hastaIdx) {
+  if (hastaIdx < 11) return null;
+  let s = 0; for (let k = hastaIdx - 11; k <= hastaIdx; k++) s += lista[k][1];
+  return s / 12;
+}
+// Variación de un miembro contra el período elegido.
+//  - porcentaje (EMAE por sector, series originales): último año = interanual del último mes;
+//    contra una asunción = promedio de los últimos 12 meses vs. los 12 meses previos a asumir.
+//  - diferencia (empleo, mayormente desestacionalizado): último dato menos el del mes base.
+function compararMiembro(m, periodo, porDiferencia) {
+  const lista = m.vistas.desde_2003;
+  if (!lista || lista.length < 2) return null;
+  const n = lista.length - 1, [fu, vu] = lista[n];
+  const idx = (f) => lista.findIndex(([x]) => x === f);
+  if (periodo.id === "anio") {
+    if (!porDiferencia) return m.interanual_ultimo;
+    const d = fecha(fu); const k = idx(`${d.getFullYear() - 1}-${String(d.getMonth() + 1).padStart(2, "0")}-01`);
+    return k >= 0 ? vu - lista[k][1] : null;
+  }
+  const k = idx(periodo.base);
+  if (k < 0) return null;
+  if (porDiferencia) return vu - lista[k][1];
+  const a = promedio12(lista, n), b = promedio12(lista, k);
+  return a != null && b ? (a / b - 1) * 100 : null;
+}
+
 function fichaGrupo(g) {
   const porDiferencia = g.ranking === "diferencia";
-  const medidas = porDiferencia
-    ? [{ id: "anio", texto: "Último año", valor: (m) => diferenciaNivel(m) }, { id: "gestion", texto: "Gestión actual", valor: (m) => diferenciaNivel(m, "2023-11-01") }]
-    : [{ id: "ia", texto: "Interanual", valor: (m) => m.interanual_ultimo }];
-  let medida = medidas[0];
+  let per = PERIODOS_RANKING[0];
   const fmtRank = (v) => (porDiferencia ? signo(v, Math.abs(v) < 10 ? 1 : 0) + " mil" : signo(v) + "%");
   const detalle = el("div", { class: "grupo-detalle" });
   let elegido = null;
   const barras = el("div", { class: "ranking", role: "list" });
-  const botonesMedida = medidas.map((md) => el("button", { type: "button", "aria-pressed": String(md === medida), text: md.texto,
-    onclick: () => { medida = md; botonesMedida.forEach((b, i) => b.setAttribute("aria-pressed", String(medidas[i] === md))); pintar(); } }));
+  const selector = el("select", { class: "selector", "aria-label": "Comparar contra", onchange: (e) => { per = PERIODOS_RANKING[e.target.selectedIndex]; pintar(); } },
+    ...PERIODOS_RANKING.map((pr) => el("option", { text: pr.texto })));
   const subtitulo = el("p", { class: "unidad" });
   const pintar = () => {
-    const ordenados = g.miembros.map((m) => [m, medida.valor(m)]).filter(([, v]) => v != null).sort((a, b) => b[1] - a[1]);
+    const ordenados = g.miembros.map((m) => [m, compararMiembro(m, per, porDiferencia)]).filter(([, v]) => v != null && isFinite(v)).sort((a, b) => b[1] - a[1]);
     const maxAbs = Math.max(...ordenados.map(([, v]) => Math.abs(v)), 1e-9);
     if (!elegido && ordenados[0]) elegido = ordenados[0][0].id;
     const ref = ordenados[0] ? periodo(ordenados[0][0].ultimo.fecha, ordenados[0][0].frecuencia) : "";
-    subtitulo.textContent = porDiferencia
-      ? `Variación en ${g.unidad_ranking || "unidades"} · ${medida.id === "anio" ? "últimos 12 meses" : "desde noviembre de 2023"} · ${ref}. Tocá un sector para ver su serie.`
-      : `Variación interanual por sector · ${ref}. Tocá un sector para ver su serie.`;
+    const que = per.id === "anio" ? "contra el mismo mes del año anterior"
+      : porDiferencia ? `contra ${fechaCorta(per.base)}, el mes previo a la asunción`
+      : `promedio de los últimos 12 meses contra los 12 meses previos a la asunción (${fechaCorta(per.base)})`;
+    subtitulo.textContent = `${porDiferencia ? `Variación en ${g.unidad_ranking || "unidades"}` : "Variación %"} ${que} · último dato: ${ref}. Tocá un sector para ver su serie.`;
     barras.innerHTML = "";
+    if (!ordenados.length) barras.append(el("p", { class: "vacio", text: "No hay datos para ese período." }));
     ordenados.forEach(([m, v]) => {
       const ancho = (Math.abs(v) / maxAbs) * 45;
       const fila = el("button", { type: "button", class: "rank-fila", "aria-pressed": String(m.id === elegido), role: "listitem",
@@ -390,15 +425,64 @@ function fichaGrupo(g) {
           el("span", { class: "rank-num" + (ancho > 30 ? " dentro" : ""), style: ancho > 30 ? (v < 0 ? `right:${50 + ancho - 1}%;transform:translateX(100%)` : `left:${50 + ancho - 1}%;transform:translateX(-100%)`) : (v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`), text: fmtRank(v) })));
       barras.append(fila);
     });
-    detalle.innerHTML = "";
-    const m = g.miembros.find((x) => x.id === elegido);
-    if (m) detalle.append(ficha(m, { anidada: true }));
+    if (detalle.dataset.id !== elegido) {
+      detalle.innerHTML = "";
+      detalle.dataset.id = elegido || "";
+      const m = g.miembros.find((x) => x.id === elegido);
+      if (m) detalle.append(ficha(m, { anidada: true }));
+    }
   };
   pintar();
   return el("article", { class: "ficha ancha", id: g.id },
     el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: g.nombre }), subtitulo)),
-    medidas.length > 1 ? el("div", { class: "vistas", role: "group", "aria-label": "Medida" }, ...botonesMedida) : null,
+    el("label", { class: "etiqueta-selector" }, "Comparar contra ", selector),
     barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
+}
+
+/* ---------- Pirámide de ingresos ---------- */
+
+function fichaPiramide(d) {
+  let lectura = "hogares";
+  const colores = { Bajo: css("--s1"), Medio: css("--s2"), Alto: css("--s3") };
+  const estratoDe = (dec) => (dec <= 4 ? "Bajo" : dec <= 8 ? "Medio" : "Alto");
+  const cuerpo = el("div", { class: "piramide" });
+  const resumen = el("div", { class: "estratos" });
+  const botones = ["hogares", "personas"].map((k) => el("button", { type: "button", "aria-pressed": String(k === lectura), text: k === "hogares" ? "Hogares" : "Personas",
+    onclick: () => { lectura = k; render(); } }));
+  const pesos = (v) => "$ " + fmt(v, 0);
+  function render() {
+    botones.forEach((b) => b.setAttribute("aria-pressed", String(b.textContent.toLowerCase() === lectura)));
+    const datos = d[lectura];
+    const max = Math.max(...datos.deciles.map((x) => x.ingreso_medio));
+    cuerpo.innerHTML = "";
+    cuerpo.append(el("div", { class: "pir-fila pir-cab" }, el("span", { text: "Decil" }), el("span", { text: "Ingreso per cápita medio" }),
+      el("span", { text: lectura === "hogares" ? "Hogares" : "Personas" })));
+    [...datos.deciles].sort((a, b) => b.decil - a.decil).forEach((x) => {
+      const e = estratoDe(x.decil);
+      const cant = lectura === "hogares" ? x.hogares_miles : x.poblacion_miles;
+      const rango = x.decil === 10 ? `más de ${pesos(x.desde)}` : `${pesos(x.desde)} a ${pesos(x.hasta)}`;
+      cuerpo.append(el("div", { class: "pir-fila" },
+        el("span", { class: "pir-decil" }, el("strong", { text: String(x.decil) }), el("small", { text: rango })),
+        el("span", { class: "pir-pista" }, el("span", { class: "pir-barra", style: `width:${(x.ingreso_medio / max) * 100}%;background:${colores[e]}` }),
+          el("span", { class: "pir-num", text: pesos(x.ingreso_medio) })),
+        el("span", { class: "pir-cant", text: fmt(cant / 1000, 2) + " M" })));
+    });
+    resumen.innerHTML = "";
+    datos.estratos.forEach((s) => resumen.append(el("div", { class: "estrato" },
+      el("p", { class: "estrato-nombre" }, el("i", { style: `background:${colores[s.estrato]}` }), `Estrato ${s.estrato.toLowerCase()} (deciles ${s.deciles})`),
+      el("p", { class: "estrato-valor", text: pesos(s.ingreso_medio) }),
+      el("p", { class: "estrato-detalle", text: `ingreso per cápita medio · ${fmt(s.cantidad_miles / 1000, 2)} millones de ${lectura} · ${fmt(s.porcentaje_ingreso, 1)}% del ingreso total` }),
+      el("p", { class: "estrato-detalle", text: `de ${pesos(s.desde)} a ${s.estrato === "Alto" ? "más" : pesos(s.hasta)} por persona` }))));
+  }
+  render();
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `Ingreso per cápita familiar por decil, en pesos corrientes por mes · ${d.periodo}` }))),
+    el("div", { class: "vistas", role: "group", "aria-label": "Lectura" }, ...botones),
+    el("p", { class: "leyenda-vista", text: "Cada decil reúne al 10% de los " + "hogares o de las personas, ordenados por ingreso per cápita." }),
+    resumen, cuerpo,
+    el("p", { class: "nota", text: d.nota }),
+    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
 }
 
 /* ---------- Mapas por provincia ---------- */
@@ -676,6 +760,7 @@ async function iniciar() {
   const listaMapas = (await leer("mapas/indice")) || [];
   const mapasCargados = (await Promise.all(listaMapas.map((m) => leer(`mapas/${m}`)))).filter(Boolean);
   const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
+  const piramide = await leer("distribucion_ingreso");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -691,6 +776,7 @@ async function iniciar() {
     const grilla = el("div", { class: "grilla" });
     fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
     if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
+    if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();
