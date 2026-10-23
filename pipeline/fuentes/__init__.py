@@ -31,7 +31,7 @@ def pedir(url: str, params: dict | None = None, verify: bool = True) -> requests
 
 def extraer(definicion: dict):
     """Despacha según el campo 'fuente' de la definición de la serie."""
-    from . import archivos, argentinadatos, bcra, datosgobar, fred, manual
+    from . import archivos, argentinadatos, bcra, datosgobar, fred, manual, yahoo
 
     fuentes = {
         "datosgobar": datosgobar.extraer,
@@ -40,6 +40,7 @@ def extraer(definicion: dict):
         "fred": fred.extraer,
         "manual": manual.extraer,
         "archivo": archivos.extraer,
+        "yahoo": yahoo.extraer,
     }
     tipo = definicion["fuente"]
     if tipo not in fuentes:

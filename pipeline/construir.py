@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, distribucion, mapas, transformar, vistas
+from . import calidad, distribucion, mapas, transformar, tasas, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -94,6 +94,13 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
                 continue
             mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
+            continue
+        if c["operacion"] == "porcentaje_pib":  # flujo mensual de 12 meses / PIB nominal de 4 trimestres, en %
+            faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales[nombre] = transformar.porcentaje_pib(mensuales[c["a"]], mensuales[c["b"]])
             continue
         faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
         if faltan:
@@ -220,7 +227,7 @@ def main() -> None:
     mensuales, alertas_proc = procesar(config, crudas)
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
-    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA)
+    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + tasas.construir(SALIDA)
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 

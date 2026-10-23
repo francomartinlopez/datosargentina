@@ -99,3 +99,17 @@ def acumulado_12m(s: pd.Series) -> pd.Series:
         return s.rolling(4, min_periods=4).sum().dropna()
     s = s.asfreq("MS")
     return s.rolling(12, min_periods=12).sum().dropna()
+
+
+def porcentaje_pib(flujo: pd.Series, pib: pd.Series) -> pd.Series:
+    """Flujo mensual acumulado en los 12 meses que terminan en cada trimestre, como % del PIB
+    nominal de esos 4 trimestres. Resultado trimestral (fecha = primer mes del trimestre)."""
+    f = flujo.dropna().sort_index().asfreq("MS")
+    f12 = f.rolling(12, min_periods=12).sum()
+    p4 = acumulado_12m(pib)
+    out = {}
+    for q, v in p4.items():
+        fin = q + pd.DateOffset(months=2)
+        if fin in f12.index and pd.notna(f12[fin]) and v:
+            out[q] = float(f12[fin] / v * 100)
+    return pd.Series(out, dtype=float).sort_index()

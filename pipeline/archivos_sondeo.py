@@ -38,6 +38,7 @@ ARCHIVOS = {
     "byma": ["https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price"],
     "yahoo_ypf": ["https://query1.finance.yahoo.com/v8/finance/chart/YPF?range=max&interval=1mo"],
     "yahoo_argt": ["https://query1.finance.yahoo.com/v8/finance/chart/ARGT?range=max&interval=1mo"],
+    "ucii": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/capacidad_{MM}_{AA}.xls", 4) + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_capacidad_instalada.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cuadros_capacidad_instalada.xls"],
     "bcra_entidades": ["https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/entfin.xls", "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/panhis.xls"],
 }
 
@@ -85,6 +86,17 @@ def main() -> None:
                     break
             except Exception as e:
                 informe[clave].append({"url": u, "error": repr(e)})
+    # páginas cuyo HTML se guarda crudo para buscar los datos que cargan por JavaScript
+    for clave, u in {"rigi": "https://www.argentina.gob.ar/economia/rigi"}.items():
+        try:
+            r = requests.get(u, headers=CAB, timeout=60)
+            (SALIDA / f"{clave}.html").write_text(r.text[:600000], encoding="utf-8")
+            for js in sorted(set(re.findall(r'(?:src|href)="([^"]+\.(?:js|json))"', r.text)))[:40]:
+                if "rigi" in js.lower() or "proyecto" in js.lower():
+                    c = requests.get(urljoin(u, js), headers=CAB, timeout=60)
+                    (SALIDA / f"{clave}_{Path(js).name}").write_bytes(c.content[:600000])
+        except Exception as e:
+            (SALIDA / f"{clave}_error.txt").write_text(repr(e), encoding="utf-8")
     enlaces = {}
     for clave, u in PAGINAS.items():
         try:
