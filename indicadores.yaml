@@ -78,13 +78,13 @@ series:
   auh_monto:           {fuente: datosgobar, id: "165.1_AAUH_0_0_3"}
   pnc_gasto:           {fuente: datosgobar, id: "186.3_PENSIONES_VAS_0_0_26"}
   expo_primarios:      {fuente: datosgobar, id: "75.3_IETPP_0_M_43"}
-  expo_moa:            {fuente: datosgobar, id: "75.3_ITMOA_0_M_13"}
+  expo_moa:            {fuente: datosgobar, id: "74.3_IEMOA_0_M_48"}
   expo_moi:            {fuente: datosgobar, id: "75.3_ITM_0_M_13"}
-  expo_combustibles:   {fuente: datosgobar, id: "75.3_ITCE_0_M_30"}
-  impo_combustibles:   {fuente: datosgobar, id: "74.3_IICL_0_M_42"}
+  expo_combustibles:   {fuente: datosgobar, id: "74.2_IECE_0_T_35"}   # la serie mensual no tiene valores en la API
+  impo_combustibles:   {fuente: datosgobar, id: "74.2_IICL_0_T_42"}   # la mensual se corta en 2003
   terminos_intercambio: {fuente: datosgobar, id: "82.2_ITI_2004_T_27"}
   gasto_jubilaciones:  {fuente: datosgobar, id: "452.2_JUBILACIONVAS_0_T_36_18"}
-  subsidios_energia:   {fuente: datosgobar, id: "452.2_ENERGIAGIA_0_T_7_56"}
+  subsidios_energia:   {fuente: datosgobar, id: "452.2_ENERGIAGIA_0_T_7_79"}   # trimestral: la mensual no tiene valores
   transf_capital_provincias: {fuente: datosgobar, id: "372.9_GTOS_CAP_T017__50_32"}
   icc:                 {fuente: datosgobar, id: "380.3_ICC_NACIONNAL_0_T_12"}
   dolar_tarjeta:       {fuente: argentinadatos, id: "cotizaciones/dolares/tarjeta", campo: venta, agregacion: promedio}
@@ -165,12 +165,12 @@ indicadores:
   - {id: expo_primarios, nombre: "Exportaciones: productos primarios", seccion: "Sector externo e inversión", serie: expo_primarios, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
   - {id: expo_moa, nombre: "Exportaciones: manufacturas agropecuarias (MOA)", seccion: "Sector externo e inversión", serie: expo_moa, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
   - {id: expo_moi, nombre: "Exportaciones: manufacturas industriales (MOI)", seccion: "Sector externo e inversión", serie: expo_moi, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
-  - {id: expo_combustibles, nombre: "Exportaciones: combustibles y energía", seccion: "Sector externo e inversión", serie: expo_combustibles, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
-  - {id: balanza_energetica, nombre: "Balanza comercial energética", seccion: "Sector externo e inversión", serie: balanza_energetica, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy",
+  - {id: expo_combustibles, nombre: "Exportaciones: combustibles y energía", seccion: "Sector externo e inversión", serie: expo_combustibles, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T}
+  - {id: balanza_energetica, nombre: "Balanza comercial energética", seccion: "Sector externo e inversión", serie: balanza_energetica, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T,
      nota: "Exportaciones de combustibles y energía menos importaciones de combustibles y lubricantes."}
   - {id: terminos_intercambio, nombre: "Términos del intercambio", seccion: "Sector externo e inversión", serie: terminos_intercambio, tipo_valor: indice, unidad: "índice 2004=100", frecuencia: T}
   - {id: gasto_jubilaciones, nombre: "Gasto en jubilaciones y pensiones contributivas", seccion: "Estado y fiscal", serie: gasto_jubilaciones, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
-  - {id: subsidios_energia, nombre: "Subsidios económicos a la energía", seccion: "Estado y fiscal", serie: subsidios_energia, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: subsidios_energia, nombre: "Subsidios económicos a la energía", seccion: "Estado y fiscal", serie: subsidios_energia, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses", frecuencia: T}
   - {id: transf_capital_provincias, nombre: "Transferencias de capital a provincias", seccion: "Estado y fiscal", serie: transf_capital_provincias, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
      nota: "Fondos nacionales para obras y otros gastos de capital de provincias y CABA. No incluye coparticipación."}
   - {id: icc, nombre: "Confianza del consumidor (UTDT)", seccion: "Opinión pública", serie: icc, tipo_valor: tasa, unidad: "índice 0 a 100"}

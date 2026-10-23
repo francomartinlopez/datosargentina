@@ -122,3 +122,10 @@ def test_vista_historica_mensual():
     v = vistas.calcular_vistas(s, "indice", params, [], "mensual")
     assert v["vista_historica"] == "mensual"
     assert v["vistas"]["desde_2003"][0] == ["2003-02-01", 10.0]
+
+
+def test_acumulado_12m_trimestral():
+    idx = pd.date_range("2024-01-01", periods=6, freq="QS")
+    s = pd.Series([1.0, 2, 3, 4, 5, 6], index=idx)
+    a = transformar.acumulado_12m(s)
+    assert a.iloc[0] == 10 and a.iloc[-1] == 18

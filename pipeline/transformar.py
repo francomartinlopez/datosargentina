@@ -91,6 +91,11 @@ def a_moneda_constante(s: pd.Series, deflactor: pd.Series) -> pd.Series:
 
 
 def acumulado_12m(s: pd.Series) -> pd.Series:
-    """Suma móvil de 12 meses, para flujos fiscales muy estacionales (exige 12 meses completos)."""
+    """Suma móvil de 12 meses, para flujos fiscales muy estacionales (exige 12 meses completos).
+    Si la serie es trimestral, suma los últimos 4 trimestres."""
+    s = s.dropna().sort_index()
+    if len(s) > 2 and s.index.to_series().diff().dt.days.median() > 60:
+        s = s.asfreq("QS")
+        return s.rolling(4, min_periods=4).sum().dropna()
     s = s.asfreq("MS")
     return s.rolling(12, min_periods=12).sum().dropna()
