@@ -24,8 +24,8 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ['301.1_DECIL_1_IPCF_0_T_12', '301.1_DECIL_2_IPCF_0_T_12', '301.1_DECIL_1_IPPCF_0_T_11', '301.1_DECIL_2_IPPCF_0_T_11']
-BUSQUEDAS = ['Distribución personal del ingreso decil 1 ingreso per cápita familiar', 'Distribución personal del ingreso decil 2 ingreso per cápita familiar', 'decil 1 ingreso per capita familiar pesos corrientes']
+IDS = []
+BUSQUEDAS = ['cuenta corriente balance de pagos', 'inversión extranjera directa balance de pagos', 'viajes balance de pagos servicios', 'cuenta financiera balance de pagos', 'deuda bruta administración central', 'deuda pública organismos internacionales', 'deuda pública tenedores privados', 'resultado financiero provincias', 'resultado primario provincias', 'ahorro inversión provincias Córdoba', 'coparticipación federal transferencias automáticas provincias', 'transferencias automáticas Buenos Aires', 'recursos tributarios provincias']
 
 
 def sondear_id(i: str) -> dict:

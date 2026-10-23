@@ -33,12 +33,18 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
-    "ingresos": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_{MM}_{AA}.xls"),
-    "ingresos_2025_06": ["https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_06_25.xls"],
-    "ingresos_2019_06": ["https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_06_19.xls",
-                         "https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_07_19.xls"],
+    "balanza_pagos": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_bal_pag_{MM}_{AA}.xls")
+                     + variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_balanza_de_pagos_{MM}_{AA}.xls")
+                     + variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_bp_{MM}_{AA}.xls")
+                     + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_bal_pag.xls"],
 }
-PAGINAS = {}
+PAGINAS = {
+    "deuda": "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda",
+    "dnap_provincias": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/provincias",
+    "dnap_ejecuciones": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/ejecuciones-presupuestarias",
+    "dnap_transferencias": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/transferencias",
+    "indec_cuentas_internacionales": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-35-45",
+}
 
 
 def resumir_planilla(contenido: bytes, nombre: str) -> str:
@@ -82,6 +88,19 @@ def main() -> None:
             enlaces[clave] = {"status": r.status_code, "enlaces": links[:80]}
         except Exception as e:
             enlaces[clave] = {"error": repr(e)}
+    # último archivo de deuda trimestral publicado
+    try:
+        cand = [u for u in enlaces.get("deuda", {}).get("enlaces", []) if re.search(r"deuda_publica_\d{2}-\d{2}-\d{4}", u)]
+        def clave(u):
+            d, m, a = re.search(r"deuda_publica_(\d{2})-(\d{2})-(\d{4})", u).groups()
+            return (a, m, d)
+        if cand:
+            ult = sorted(cand, key=clave)[-1]
+            r = requests.get(ult, headers=CAB, timeout=120)
+            (SALIDA / "deuda.xlsx").write_bytes(r.content)
+            (SALIDA / "deuda.txt").write_text(ult + "\n" + resumir_planilla(r.content, "deuda"), encoding="utf-8")
+    except Exception as e:
+        (SALIDA / "deuda_error.txt").write_text(repr(e), encoding="utf-8")
     (SALIDA / "informe.json").write_text(json.dumps({"archivos": informe, "paginas": enlaces}, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
