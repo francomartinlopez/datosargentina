@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-23
 
-Indicadores publicados: 182
+Indicadores publicados: 186
 
 ## Alertas
 
@@ -180,6 +180,12 @@ Indicadores publicados: 182
 - morosidad_tarjetas_nb: sin dato nuevo (último 2026-02)
 - morosidad_electro: sin dato nuevo (último 2026-02)
 - morosidad_coop: sin dato nuevo (último 2026-02)
+- pnfc_tarjetas: sin dato nuevo (último 2026-02)
+- pnfc_personales: sin dato nuevo (último 2026-02)
+- pnfc_resto: sin dato nuevo (último 2026-02)
+- ucii: sin dato nuevo (último 2026-07)
+- escrituras_caba: sin dato nuevo (último 2026-09)
+- fbcf_corriente: sin dato nuevo (último 2025-10)
 - ventas_autos: sin dato nuevo (último 2026-09)
 - produccion_autos: sin dato nuevo (último 2026-09)
 - faena_vacuna: sin dato nuevo (último 2026-04)
@@ -192,6 +198,16 @@ Indicadores publicados: 182
 - merval: sin dato nuevo (último 2026-10)
 - adr_ggal: sin dato nuevo (último 2026-10)
 - adr_ypf: sin dato nuevo (último 2026-10)
+- imig_jubilaciones: sin dato nuevo (último 2026-04)
+- imig_pensiones_nc: sin dato nuevo (último 2026-04)
+- imig_asignaciones: sin dato nuevo (último 2026-04)
+- imig_pami: sin dato nuevo (último 2026-04)
+- imig_otros_programas: sin dato nuevo (último 2026-04)
+- imig_subsidios_energia: sin dato nuevo (último 2026-04)
+- imig_subsidios_transporte: sin dato nuevo (último 2026-04)
+- imig_salarios: sin dato nuevo (último 2026-04)
+- imig_funcionamiento: sin dato nuevo (último 2026-04)
+- imig_intereses: sin dato nuevo (último 2026-04)
 - gpn_total: sin dato nuevo (último 2023-01)
 - gpn_prevision: sin dato nuevo (último 2023-01)
 - gpn_asistencia: sin dato nuevo (último 2023-01)
