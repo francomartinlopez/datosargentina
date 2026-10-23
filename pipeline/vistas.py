@@ -109,6 +109,8 @@ def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list
                     vista_historica: str = "nivel") -> dict:
     s = s.dropna().sort_index()
     inicio = pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)
+    if len(s) > 2 and s.index.to_series().diff().dt.days.median() > 300:
+        inicio = pd.Timestamp(inicio.year, 1, 1)  # serie anual: se incluye el año de inicio completo
     ia = interanual(s, tipo_valor)
     historica = mensual(s) if vista_historica == "mensual" else s
     return {
