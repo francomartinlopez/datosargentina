@@ -48,6 +48,8 @@ ARCHIVOS = {
     "magyp_buscar_consumo": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=consumo&rows=50"],
     "magyp_buscar_porcinos": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=porcinos&rows=50"],
     "magyp_buscar_leche": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=lacteo&rows=50"],
+    "carnes_pdf": ['https://www.argentina.gob.ar/sites/default/files/202610_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202609_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202608_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202607_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202606_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202605_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202604_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202603_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202602_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202601_consumo_per_capita_movil_carnes_vf.pdf', 'https://www.argentina.gob.ar/sites/default/files/202610_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202609_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202608_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202607_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202606_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202605_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202604_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202603_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202602_consumo_per_capita_movil_carnes.pdf', 'https://www.argentina.gob.ar/sites/default/files/202601_consumo_per_capita_movil_carnes.pdf'],
+    "carnes_pdf_2024": ["https://www.argentina.gob.ar/sites/default/files/202406_consumo_per_capita_movil_carnes_vf.pdf"],
     "rigi_dataset": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"],
     "rigi_evaluacion": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=evaluacion"],
     "ucii": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/capacidad_{MM}_{AA}.xls", 4) + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_capacidad_instalada.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cuadros_capacidad_instalada.xls"],
@@ -107,7 +109,11 @@ def main() -> None:
             except Exception as e:
                 informe[clave].append({"url": u, "error": repr(e)})
     # páginas cuyo HTML se guarda crudo para buscar los datos que cargan por JavaScript
-    for clave, u in {"rigi": "https://www.argentina.gob.ar/economia/rigi"}.items():
+    for clave, u in {"rigi": "https://www.argentina.gob.ar/economia/rigi", "ocla_port": "https://www.ocla.org.ar/portafolio/11/",
+                     "magyp_aves": "https://www.magyp.gob.ar/sitio/areas/aves/estadistica/carne/index.php",
+                     "magyp_porc": "https://www.magyp.gob.ar/sitio/areas/porcinos/estadistica/",
+                     "magyp_bov": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
+                     "agro_consumo": "https://www.argentina.gob.ar/agricultura/alimentos-y-bioeconomia/consumo-de-carnes"}.items():
         try:
             r = requests.get(u, headers=CAB, timeout=60)
             (SALIDA / f"{clave}.html").write_text(r.text[:600000], encoding="utf-8")
