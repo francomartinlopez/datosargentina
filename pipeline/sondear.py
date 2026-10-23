@@ -26,7 +26,7 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 IDS = ["166.2_F_BRUTAIJO_0_0_19", "4.2_DGCP_2004_T_25", "4.4_DGCP_2004_T_25"]
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ['Prestación Alimentar titulares', 'Tarjeta Alimentar', 'Potenciar Trabajo titulares', 'formación bruta de capital fijo millones de pesos corrientes trimestral', 'Inversión bruta interna fija precios corrientes', 'inversión extranjera directa flujo trimestral balanza de pagos', 'escrituras', 'consumo aparente carne vacuna', 'utilización capacidad instalada bloques sectoriales nivel general']
+BUSQUEDAS = ["Utilización de la capacidad instalada en la industria"]
 
 
 def sondear_id(i: str) -> dict:
@@ -47,7 +47,7 @@ def sondear_id(i: str) -> dict:
 
 def buscar(q: str) -> list[dict]:
     try:
-        r = requests.get(BUSCAR, params={"q": q, "limit": 12}, headers=CAB, timeout=60)
+        r = requests.get(BUSCAR, params={"q": q, "limit": 100}, headers=CAB, timeout=60)
         out = []
         for x in r.json().get("data", []):
             f = x.get("field", {})
