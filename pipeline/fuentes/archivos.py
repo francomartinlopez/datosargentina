@@ -149,6 +149,18 @@ def indec_supermercados_provincias(h: dict | None = None) -> pd.DataFrame:
     return out[out.index.notna()].dropna(how="all").sort_index()
 
 
+def indec_supermercados_precios(h: dict | None = None) -> pd.Series:
+    """Cuadro 2: índice de precios implícitos de supermercados (nacional, 2017=100)."""
+    df = (h or hojas("supermercados"))["Cuadro 2"]
+    fila = next(i for i in range(len(df)) if _texto(df.iat[i, 0]).lower() == "período")
+    col = next(j for j, v in enumerate(df.iloc[fila]) if "precios implícitos" in _texto(v).lower())
+    fechas = pd.to_datetime(df.iloc[fila + 1:, 0], errors="coerce", format="mixed")
+    s = pd.Series(pd.to_numeric(df.iloc[fila + 1:, col], errors="coerce").values, index=fechas)
+    s = s[s.index.notna()].dropna()
+    s.index = s.index.to_period("M").to_timestamp()
+    return s.sort_index()
+
+
 LECTORES = {
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,

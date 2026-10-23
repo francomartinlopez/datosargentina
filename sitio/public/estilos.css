@@ -217,6 +217,7 @@ table.tabla { border-collapse: collapse; font-size: 14px; width: 100%; max-width
 .rank-barra { position: absolute; top: 2px; height: 12px; border-radius: 3px; }
 .rank-barra.pos { background: var(--s1); }
 .rank-barra.neg { background: #e34948; }
+.rank-num.dentro { color: #fff; }
 .rank-num { position: absolute; top: -1px; padding: 0 4px; font-size: 12px; color: var(--tinta-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 @media (max-width: 520px) { .rank-fila { grid-template-columns: 110px 1fr; font-size: 12px; } }
 

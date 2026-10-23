@@ -386,7 +386,8 @@ function fichaGrupo(g) {
         el("span", { class: "rank-nombre", text: m.nombre }),
         el("span", { class: "rank-pista" },
           el("span", { class: "rank-barra " + (v < 0 ? "neg" : "pos"), style: v < 0 ? `right:50%;width:${ancho}%` : `left:50%;width:${ancho}%` }),
-          el("span", { class: "rank-num", style: v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`, text: fmtRank(v) })));
+          // barras largas: el número va adentro para no salirse de la ficha
+          el("span", { class: "rank-num" + (ancho > 30 ? " dentro" : ""), style: ancho > 30 ? (v < 0 ? `right:${50 + ancho - 1}%;transform:translateX(100%)` : `left:${50 + ancho - 1}%;transform:translateX(-100%)`) : (v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`), text: fmtRank(v) })));
       barras.append(fila);
     });
     detalle.innerHTML = "";

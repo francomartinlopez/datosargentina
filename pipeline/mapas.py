@@ -34,9 +34,15 @@ def supermercados(ipc: pd.Series, base: str) -> dict:
     df.index = df.index.to_period("M").to_timestamp()
     if {"24 partidos del Gran Buenos Aires", "Resto de Buenos Aires"} <= set(df.columns):
         df["Buenos Aires"] = df.pop("24 partidos del Gran Buenos Aires") + df.pop("Resto de Buenos Aires")
+    # Deflactor: precios implícitos de los supermercados (así el total coincide con el índice a
+    # precios constantes de INDEC); si no está, el IPC nacional.
+    try:
+        deflactor = archivos.indec_supermercados_precios()
+    except Exception:
+        deflactor = ipc
     provincias = {}
     for col in df.columns:
-        real = transformar.a_moneda_constante(df[col].dropna(), ipc)
+        real = transformar.a_moneda_constante(df[col].dropna(), deflactor)
         nombre = "Total del país" if col == "Total del país" else NOMBRES_IGN.get(col, col)
         provincias[nombre] = variaciones(real, base)
     return {
@@ -45,8 +51,8 @@ def supermercados(ipc: pd.Series, base: str) -> dict:
         "seccion": "Actividad",
         "unidad": "variación % de las ventas a precios constantes",
         "fecha": df.index[-1].strftime("%Y-%m-%d"),
-        "fuente": "INDEC, Encuesta de supermercados; deflactado con el IPC nacional",
-        "nota": "Ventas a precios corrientes deflactadas con el IPC nacional (no hay precios provinciales para todo el período). La variación mensual no está desestacionalizada.",
+        "fuente": "INDEC, Encuesta de supermercados",
+        "nota": "Ventas a precios corrientes de cada jurisdicción deflactadas con el índice de precios implícitos nacional de supermercados (INDEC no publica precios por provincia). La variación mensual no está desestacionalizada.",
         "provincias": provincias,
     }
 
