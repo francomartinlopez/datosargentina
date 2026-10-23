@@ -13,7 +13,7 @@ const GESTIONES = [
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
 const ORDEN_SECCIONES = ["Precios", "Actividad", "Empleo e ingresos", "Pobreza y programas sociales",
-  "Sector externo e inversión", "Estado y fiscal", "Dólar y finanzas", "Opinión pública"];
+  "Sector externo e inversión", "Estado y fiscal", "Dólar y finanzas", "Crédito y alquileres", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
   bcra: "BCRA",

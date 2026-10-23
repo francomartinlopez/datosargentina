@@ -64,6 +64,40 @@ series:
   dolar_ccl:           {fuente: argentinadatos, id: "cotizaciones/dolares/contadoconliqui", campo: venta, agregacion: promedio}
   dolar_mep:           {fuente: argentinadatos, id: "cotizaciones/dolares/bolsa", campo: venta, agregacion: promedio}
   riesgo_pais:         {fuente: argentinadatos, id: "finanzas/indices/riesgo-pais", campo: valor, agregacion: promedio}
+  # --- Ampliación fase 1 (IDs verificados con pipeline.sondear, oct-2026) ---
+  ipim:                {fuente: datosgobar, id: "448.1_NIVEL_GENERAL_0_0_13_46"}
+  autoservicios_desest: {fuente: datosgobar, id: "456.1_VENTAS_PREADA_0_M_44_40"}
+  shoppings_desest:    {fuente: datosgobar, id: "458.1_VENTAS_TOTADA_0_M_52_56"}
+  produccion_gas:      {fuente: datosgobar, id: "364.3_PRODUCCIoNRAL__25"}
+  produccion_petroleo: {fuente: datosgobar, id: "363.3_PRODUCCIONUDO__28"}
+  produccion_acero:    {fuente: datosgobar, id: "41.3_AC_0_A_11"}
+  asalariados_privados: {fuente: datosgobar, id: "151.1_AARIADODAD_2012_M_31"}
+  gasto_politica_ingresos: {fuente: datosgobar, id: "186.3_TOTAL_POLISOS_0_0_23"}
+  auh_gasto:           {fuente: datosgobar, id: "186.3_ASIGNACIONIAL_0_0_43"}
+  auh_prestaciones:    {fuente: datosgobar, id: "189.1_TOTAL_AUHAUH_0_0_9"}
+  auh_monto:           {fuente: datosgobar, id: "165.1_AAUH_0_0_3"}
+  pnc_gasto:           {fuente: datosgobar, id: "186.3_PENSIONES_VAS_0_0_26"}
+  expo_primarios:      {fuente: datosgobar, id: "75.3_IETPP_0_M_43"}
+  expo_moa:            {fuente: datosgobar, id: "75.3_ITMOA_0_M_13"}
+  expo_moi:            {fuente: datosgobar, id: "75.3_ITM_0_M_13"}
+  expo_combustibles:   {fuente: datosgobar, id: "75.3_ITCE_0_M_30"}
+  impo_combustibles:   {fuente: datosgobar, id: "74.3_IICL_0_M_42"}
+  terminos_intercambio: {fuente: datosgobar, id: "82.2_ITI_2004_T_27"}
+  gasto_jubilaciones:  {fuente: datosgobar, id: "452.2_JUBILACIONVAS_0_T_36_18"}
+  subsidios_energia:   {fuente: datosgobar, id: "452.2_ENERGIAGIA_0_T_7_56"}
+  transf_capital_provincias: {fuente: datosgobar, id: "372.9_GTOS_CAP_T017__50_32"}
+  icc:                 {fuente: datosgobar, id: "380.3_ICC_NACIONNAL_0_T_12"}
+  dolar_tarjeta:       {fuente: argentinadatos, id: "cotizaciones/dolares/tarjeta", campo: venta, agregacion: promedio}
+  depositos_privados_ars: {fuente: bcra, id: 100, agregacion: cierre}
+  depositos_privados_usd: {fuente: bcra, id: 108, agregacion: cierre}
+  compras_divisas_bcra: {fuente: bcra, id: 78, agregacion: suma}
+  prestamos_hipotecarios: {fuente: bcra, id: 112, agregacion: cierre}
+  prestamos_prendarios: {fuente: bcra, id: 113, agregacion: cierre}
+  prestamos_personales: {fuente: bcra, id: 114, agregacion: cierre}
+  prestamos_tarjetas:  {fuente: bcra, id: 115, agregacion: cierre}
+  tasa_personales:     {fuente: bcra, id: 14, agregacion: promedio}
+  tasa_tarjetas:       {fuente: bcra, id: 1215, agregacion: promedio}
+  icl:                 {fuente: bcra, id: 40, agregacion: promedio}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -79,6 +113,9 @@ empalmes:
 calculos:
   saldo_comercial: {operacion: resta, a: exportaciones, b: importaciones}
   brecha_ccl:      {operacion: brecha, a: dolar_ccl, b: dolar_mayorista}
+  balanza_energetica: {operacion: resta, a: expo_combustibles, b: impo_combustibles}
+  brecha_mep:      {operacion: brecha, a: dolar_mep, b: dolar_mayorista}
+  brecha_tarjeta:  {operacion: brecha, a: dolar_tarjeta, b: dolar_mayorista}
   # La serie IMIG de resultado financiero viene vacía en la API: se calcula como primario menos intereses netos
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
 
@@ -112,3 +149,43 @@ indicadores:
   - {id: prestamos_privados, nombre: "Préstamos al sector privado (real)", seccion: "Dólar y finanzas", serie: prestamos_privados, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
   - {id: tasa_plazo_fijo, nombre: "Tasa de plazo fijo a 30 días", seccion: "Dólar y finanzas", serie: tasa_plazo_fijo, tipo_valor: tasa, unidad: "% TNA"}
   - {id: riesgo_pais, nombre: "Riesgo país", seccion: "Dólar y finanzas", serie: riesgo_pais, tipo_valor: tasa, unidad: "puntos básicos", portada: true}
+  # --- Ampliación fase 1 ---
+  - {id: ipim, nombre: "Precios mayoristas (IPIM)", seccion: Precios, serie: ipim, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
+  - {id: autoservicios, nombre: "Ventas en autoservicios mayoristas", seccion: Actividad, serie: autoservicios_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: shoppings, nombre: "Ventas en centros de compras", seccion: Actividad, serie: shoppings_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: produccion_petroleo, nombre: "Producción de petróleo", seccion: Actividad, serie: produccion_petroleo, tipo_valor: flujo, unidad: "miles de m³ por mes"}
+  - {id: produccion_gas, nombre: "Producción de gas natural", seccion: Actividad, serie: produccion_gas, tipo_valor: flujo, unidad: "millones de m³ por mes"}
+  - {id: produccion_acero, nombre: "Producción de acero crudo", seccion: Actividad, serie: produccion_acero, tipo_valor: flujo, unidad: "miles de toneladas por mes"}
+  - {id: asalariados_privados, nombre: "Asalariados privados registrados", seccion: "Empleo e ingresos", serie: asalariados_privados, tipo_valor: nivel, unidad: "miles de personas"}
+  - {id: gasto_politica_ingresos, nombre: "Gasto en programas sociales (política de ingresos)", seccion: "Pobreza y programas sociales", serie: gasto_politica_ingresos, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: auh_prestaciones, nombre: "AUH: prestaciones liquidadas", seccion: "Pobreza y programas sociales", serie: auh_prestaciones, tipo_valor: nivel, unidad: "prestaciones (hijos)"}
+  - {id: auh_monto, nombre: "AUH: monto por hijo (real)", seccion: "Pobreza y programas sociales", serie: auh_monto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
+  - {id: auh_gasto, nombre: "AUH: gasto total", seccion: "Pobreza y programas sociales", serie: auh_gasto, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: pnc_gasto, nombre: "Pensiones no contributivas: gasto", seccion: "Pobreza y programas sociales", serie: pnc_gasto, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: expo_primarios, nombre: "Exportaciones: productos primarios", seccion: "Sector externo e inversión", serie: expo_primarios, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: expo_moa, nombre: "Exportaciones: manufacturas agropecuarias (MOA)", seccion: "Sector externo e inversión", serie: expo_moa, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: expo_moi, nombre: "Exportaciones: manufacturas industriales (MOI)", seccion: "Sector externo e inversión", serie: expo_moi, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: expo_combustibles, nombre: "Exportaciones: combustibles y energía", seccion: "Sector externo e inversión", serie: expo_combustibles, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: balanza_energetica, nombre: "Balanza comercial energética", seccion: "Sector externo e inversión", serie: balanza_energetica, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy",
+     nota: "Exportaciones de combustibles y energía menos importaciones de combustibles y lubricantes."}
+  - {id: terminos_intercambio, nombre: "Términos del intercambio", seccion: "Sector externo e inversión", serie: terminos_intercambio, tipo_valor: indice, unidad: "índice 2004=100", frecuencia: T}
+  - {id: gasto_jubilaciones, nombre: "Gasto en jubilaciones y pensiones contributivas", seccion: "Estado y fiscal", serie: gasto_jubilaciones, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: subsidios_energia, nombre: "Subsidios económicos a la energía", seccion: "Estado y fiscal", serie: subsidios_energia, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: transf_capital_provincias, nombre: "Transferencias de capital a provincias", seccion: "Estado y fiscal", serie: transf_capital_provincias, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Fondos nacionales para obras y otros gastos de capital de provincias y CABA. No incluye coparticipación."}
+  - {id: icc, nombre: "Confianza del consumidor (UTDT)", seccion: "Opinión pública", serie: icc, tipo_valor: tasa, unidad: "índice"}
+  - {id: dolar_tarjeta, nombre: "Dólar tarjeta (real)", seccion: "Dólar y finanzas", serie: dolar_tarjeta, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}
+  - {id: brecha_mep, nombre: "Brecha MEP vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_mep, tipo_valor: tasa, unidad: "%"}
+  - {id: brecha_tarjeta, nombre: "Brecha tarjeta vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_tarjeta, tipo_valor: tasa, unidad: "%"}
+  - {id: compras_divisas_bcra, nombre: "Compras netas de divisas del BCRA", seccion: "Dólar y finanzas", serie: compras_divisas_bcra, tipo_valor: saldo, unidad: "millones de US$ por mes",
+     nota: "Suma mensual de la variación de reservas por compra y venta de divisas en el mercado (valores nominales)."}
+  - {id: depositos_privados_ars, nombre: "Depósitos privados en pesos (real)", seccion: "Dólar y finanzas", serie: depositos_privados_ars, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: depositos_privados_usd, nombre: "Depósitos privados en dólares", seccion: "Dólar y finanzas", serie: depositos_privados_usd, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: prestamos_personales, nombre: "Préstamos personales (real)", seccion: "Crédito y alquileres", serie: prestamos_personales, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: prestamos_tarjetas, nombre: "Financiación con tarjeta de crédito (real)", seccion: "Crédito y alquileres", serie: prestamos_tarjetas, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: prestamos_hipotecarios, nombre: "Préstamos hipotecarios (real)", seccion: "Crédito y alquileres", serie: prestamos_hipotecarios, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: prestamos_prendarios, nombre: "Préstamos prendarios (real)", seccion: "Crédito y alquileres", serie: prestamos_prendarios, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: tasa_personales, nombre: "Tasa de préstamos personales", seccion: "Crédito y alquileres", serie: tasa_personales, tipo_valor: tasa, unidad: "% TNA"}
+  - {id: tasa_tarjetas, nombre: "Tasa de tarjetas de crédito", seccion: "Crédito y alquileres", serie: tasa_tarjetas, tipo_valor: tasa, unidad: "% TNA"}
+  - {id: icl, nombre: "Alquileres: índice de contratos de locación (real)", seccion: "Crédito y alquileres", serie: icl, tipo_valor: nivel, moneda: ARS, unidad: "índice real",
+     nota: "ICL del BCRA (contratos de la ley 27.551) deflactado por el IPC. Mide la actualización de contratos vigentes, no el precio de nuevos alquileres."}

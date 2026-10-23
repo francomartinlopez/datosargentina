@@ -7,7 +7,9 @@ import pandas as pd
 def a_mensual(s: pd.Series, agregacion: str = "promedio") -> pd.Series:
     """Lleva una serie (diaria o mensual) a una fecha por mes (día 1).
 
-    agregacion: 'promedio' (tipo de cambio, tasas) o 'cierre' (stocks como reservas).
+    agregacion: 'promedio' (tipo de cambio, tasas), 'cierre' (stocks como reservas) o
+    'suma' (flujos diarios, como las compras de divisas del BCRA; el mes en curso se descarta
+    porque está incompleto).
     Una serie que ya es mensual o trimestral queda igual, solo se normaliza la fecha al día 1.
     """
     if s.empty:
@@ -15,6 +17,9 @@ def a_mensual(s: pd.Series, agregacion: str = "promedio") -> pd.Series:
     clave = s.index.to_period("M")
     if agregacion == "cierre":
         m = s.groupby(clave).last()
+    elif agregacion == "suma":
+        m = s.groupby(clave).sum()
+        m = m[m.index < pd.Timestamp.today().to_period("M")]
     else:
         m = s.groupby(clave).mean()
     m.index = m.index.to_timestamp()
