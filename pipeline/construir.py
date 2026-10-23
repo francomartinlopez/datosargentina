@@ -88,44 +88,63 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     return mensuales, alertas
 
 
+def preparar(nombre: str, ind: dict, mensuales: dict, deflactores: dict) -> pd.Series | None:
+    """Serie lista para publicar: escala, moneda constante, acumulado de 12 meses y sin fechas futuras."""
+    s = mensuales.get(nombre)
+    if s is None or s.empty:
+        return None
+    if ind.get("escala"):
+        s = s * ind["escala"]
+    moneda = ind.get("moneda")
+    if moneda:
+        if deflactores.get(moneda) is None:
+            return None
+        s = transformar.a_moneda_constante(s, deflactores[moneda])
+    if ind.get("acumulado_12m"):
+        s = transformar.acumulado_12m(s)
+    # algunas fuentes publican valores ya anunciados para meses futuros (p. ej. el salario mínimo)
+    s = s[s.index <= pd.Timestamp.today().normalize()]
+    return None if s.empty else s
+
+
 def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], list[str]]:
     params, gestiones = config["parametros"], config["gestiones"]
     deflactores = {"ARS": mensuales.get("ipc"), "USD": mensuales.get("cpi_eeuu")}
+    inicio = pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)
+    base = pd.Timestamp(params["base_gestion_actual"])
     fichas, alertas = [], []
     for ind in config["indicadores"]:
-        s = mensuales.get(ind["serie"])
-        if s is None or s.empty:
+        s = preparar(ind["serie"], ind, mensuales, deflactores)
+        if s is None:
             alertas.append(f"{ind['id']}: sin datos, no se publica")
-            continue
-        if ind.get("escala"):
-            s = s * ind["escala"]
-        moneda = ind.get("moneda")
-        if moneda:
-            if deflactores.get(moneda) is None:
-                alertas.append(f"{ind['id']}: falta el deflactor {moneda}, no se publica")
-                continue
-            s = transformar.a_moneda_constante(s, deflactores[moneda])
-        if ind.get("acumulado_12m"):
-            s = transformar.acumulado_12m(s)
-        # algunas fuentes publican valores ya anunciados para meses futuros (p. ej. el salario mínimo)
-        s = s[s.index <= pd.Timestamp.today().normalize()]
-        if s.empty:
-            alertas.append(f"{ind['id']}: sin datos hasta hoy, no se publica")
             continue
         try:
             calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones, ind.get("vista_historica", "nivel"))
         except Exception as e:  # un indicador con problemas no frena el resto
             alertas.append(f"{ind['id']}: error al calcular las vistas ({e}), no se publica")
             continue
-        fichas.append({
+        ficha = {
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
             "fuente": config["series"].get(ind["serie"], {}).get("fuente", "cálculo propio"),
             "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")), "grupo": ind.get("grupo"),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
             **calc,
-            "_serie": vistas.como_lista(s[s.index >= pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)]),
-        })
+            "_serie": vistas.como_lista(s[s.index >= inicio]),
+        }
+        # Serie desestacionalizada: la variación mensual se toma de ella y se dibuja junto a la original
+        if ind.get("desestacionalizada"):
+            d = preparar(ind["desestacionalizada"], ind, mensuales, deflactores)
+            if d is None:
+                alertas.append(f"{ind['id']}: falta la serie desestacionalizada")
+            else:
+                ficha["desest"] = {
+                    "intermensual": vistas._finito(vistas.intermensual(d, ind["tipo_valor"])),
+                    "fecha": d.index[-1].strftime("%Y-%m-%d"),
+                    "gestion_actual": vistas.como_lista(d[d.index > base]),
+                    "desde_2003": vistas.como_lista(d[d.index >= inicio]),
+                }
+        fichas.append(ficha)
     return fichas, alertas
 
 
@@ -153,7 +172,8 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str], config: di
             vistos.add(g)
             miembros = [x["id"] for x in fichas if x.get("grupo") == g]
             indice.append({"id": g, "nombre": grupos[g]["nombre"], "seccion": grupos[g]["seccion"], "tipo": "grupo",
-                           "nota": grupos[g].get("nota", ""), "miembros": miembros})
+                           "nota": grupos[g].get("nota", ""), "ranking": grupos[g].get("ranking", "variacion"),
+                           "unidad_ranking": grupos[g].get("unidad_ranking", ""), "miembros": miembros})
     (SALIDA / "portada.json").write_text(json.dumps(portada, ensure_ascii=False), encoding="utf-8")
     (SALIDA / "indice.json").write_text(json.dumps(indice, ensure_ascii=False), encoding="utf-8")
     largo = pd.concat([pd.DataFrame({"serie": n, "fecha": s.index, "valor": s.values}) for n, s in mensuales.items()])

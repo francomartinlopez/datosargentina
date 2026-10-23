@@ -82,6 +82,12 @@ const esDiferencia = (f) => f.tipo_valor === "tasa" || f.tipo_valor === "saldo";
 const esIndice = (f) => (/índice/.test(f.unidad) || /de 2004/.test(f.unidad)) && f.tipo_valor !== "tasa";
 
 function cifraPrincipal(f) {
+  // Con serie desestacionalizada, la variación mensual se toma de ella (convención de INDEC)
+  if (f.desest && f.desest.intermensual != null && !esDiferencia(f)) {
+    const base = esIndice(f) ? { grande: signo(f.interanual_ultimo) + "%", etiqueta: "interanual" }
+      : (() => { const vu = valorConUnidad(f.ultimo.valor, f.unidad); return { grande: vu.num, etiqueta: vu.resto }; })();
+    return { ...base, chica: `${signo(f.desest.intermensual)}% vs. mes anterior (desest.)` };
+  }
   const variacionMensual = esDiferencia(f)
     ? (f.tipo_valor === "saldo" ? signoMonto(f.intermensual, f.unidad) : signo(f.intermensual, decimales(f.intermensual || 0)) + sufijoDiferencia(f))
     : signo(f.intermensual) + "%";
@@ -134,7 +140,11 @@ function prepararVista(f, vista) {
       .filter((s) => s.puntos && s.puntos.length);
     return { series, tipoX: "meses", ...formatoY(f, vista, series), referencia: 0, bandas: false };
   }
-  const series = [{ nombre: f.nombre, color: css("--s1"), puntos: puntos(v), grueso: true }];
+  const conDesest = f.desest && (vista === "gestion_actual" || vista === "desde_2003") && f.vista_historica !== "mensual";
+  const series = conDesest
+    ? [{ nombre: "Original", color: css("--tinta-3"), puntos: puntos(v), grueso: false },
+       { nombre: "Desestacionalizada", color: css("--s1"), puntos: puntos(f.desest[vista]), grueso: true }]
+    : [{ nombre: f.nombre, color: css("--s1"), puntos: puntos(v), grueso: true }];
   const ref = vista === "interanual" ? 0 : (f.vista_historica === "mensual" || f.tipo_valor === "saldo" ? 0 : null);
   return { series, tipoX: "fecha", ...formatoY(f, vista, series), referencia: ref, bandas: vista !== "gestion_actual" };
 }
@@ -336,22 +346,47 @@ function tarjeta(f) {
 
 /* ---------- Grupos (p. ej. EMAE por sector) ---------- */
 
+function diferenciaNivel(m, desde) {
+  // Diferencia en la unidad de la serie entre el último dato y una fecha (o 12 meses antes)
+  const lista = m.vistas.desde_2003;
+  if (!lista || !lista.length) return null;
+  const [fu, vu] = lista[lista.length - 1];
+  let objetivo = desde;
+  if (!objetivo) { const d = fecha(fu); objetivo = `${d.getFullYear() - 1}-${String(d.getMonth() + 1).padStart(2, "0")}-01`; }
+  const previo = lista.find(([f]) => f === objetivo);
+  return previo ? vu - previo[1] : null;
+}
+
 function fichaGrupo(g) {
-  const ordenados = [...g.miembros].filter((m) => m.interanual_ultimo != null).sort((a, b) => b.interanual_ultimo - a.interanual_ultimo);
-  const maxAbs = Math.max(...ordenados.map((m) => Math.abs(m.interanual_ultimo)), 1);
+  const porDiferencia = g.ranking === "diferencia";
+  const medidas = porDiferencia
+    ? [{ id: "anio", texto: "Último año", valor: (m) => diferenciaNivel(m) }, { id: "gestion", texto: "Gestión actual", valor: (m) => diferenciaNivel(m, "2023-11-01") }]
+    : [{ id: "ia", texto: "Interanual", valor: (m) => m.interanual_ultimo }];
+  let medida = medidas[0];
+  const fmtRank = (v) => (porDiferencia ? signo(v, Math.abs(v) < 10 ? 1 : 0) + " mil" : signo(v) + "%");
   const detalle = el("div", { class: "grupo-detalle" });
-  let elegido = ordenados[0]?.id;
+  let elegido = null;
   const barras = el("div", { class: "ranking", role: "list" });
+  const botonesMedida = medidas.map((md) => el("button", { type: "button", "aria-pressed": String(md === medida), text: md.texto,
+    onclick: () => { medida = md; botonesMedida.forEach((b, i) => b.setAttribute("aria-pressed", String(medidas[i] === md))); pintar(); } }));
+  const subtitulo = el("p", { class: "unidad" });
   const pintar = () => {
+    const ordenados = g.miembros.map((m) => [m, medida.valor(m)]).filter(([, v]) => v != null).sort((a, b) => b[1] - a[1]);
+    const maxAbs = Math.max(...ordenados.map(([, v]) => Math.abs(v)), 1e-9);
+    if (!elegido && ordenados[0]) elegido = ordenados[0][0].id;
+    const ref = ordenados[0] ? periodo(ordenados[0][0].ultimo.fecha, ordenados[0][0].frecuencia) : "";
+    subtitulo.textContent = porDiferencia
+      ? `Variación en ${g.unidad_ranking || "unidades"} · ${medida.id === "anio" ? "últimos 12 meses" : "desde noviembre de 2023"} · ${ref}. Tocá un sector para ver su serie.`
+      : `Variación interanual por sector · ${ref}. Tocá un sector para ver su serie.`;
     barras.innerHTML = "";
-    ordenados.forEach((m) => {
-      const v = m.interanual_ultimo, ancho = (Math.abs(v) / maxAbs) * 50;
+    ordenados.forEach(([m, v]) => {
+      const ancho = (Math.abs(v) / maxAbs) * 45;
       const fila = el("button", { type: "button", class: "rank-fila", "aria-pressed": String(m.id === elegido), role: "listitem",
         onclick: () => { elegido = m.id; pintar(); } },
         el("span", { class: "rank-nombre", text: m.nombre }),
         el("span", { class: "rank-pista" },
           el("span", { class: "rank-barra " + (v < 0 ? "neg" : "pos"), style: v < 0 ? `right:50%;width:${ancho}%` : `left:50%;width:${ancho}%` }),
-          el("span", { class: "rank-num", style: v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`, text: signo(v) + "%" })));
+          el("span", { class: "rank-num", style: v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`, text: fmtRank(v) })));
       barras.append(fila);
     });
     detalle.innerHTML = "";
@@ -359,10 +394,9 @@ function fichaGrupo(g) {
     if (m) detalle.append(ficha(m, { anidada: true }));
   };
   pintar();
-  const ultimo = ordenados[0] ? periodo(ordenados[0].ultimo.fecha, ordenados[0].frecuencia) : "";
   return el("article", { class: "ficha ancha", id: g.id },
-    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: g.nombre }),
-      el("p", { class: "unidad", text: `Variación interanual por sector · ${ultimo}. Tocá un sector para ver su serie.` }))),
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: g.nombre }), subtitulo)),
+    medidas.length > 1 ? el("div", { class: "vistas", role: "group", "aria-label": "Medida" }, ...botonesMedida) : null,
     barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
 }
 

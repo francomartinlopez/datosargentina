@@ -121,6 +121,53 @@ series:
   emae_adm_publica:    {fuente: datosgobar, id: "11.3_C_2004_M_60"}
   emae_ensenanza:      {fuente: datosgobar, id: "11.3_CMMR_2004_M_10"}
   emae_salud:          {fuente: datosgobar, id: "11.3_HR_2004_M_24"}
+  # --- Series originales (sin desestacionalizar), para mostrar junto a la desestacionalizada ---
+  emae_original:       {fuente: datosgobar, id: "143.3_NO_PR_2004_A_21"}
+  ipi_original:        {fuente: datosgobar, id: "453.1_SERIE_ORIGNAL_0_0_14_46"}
+  isac_original:       {fuente: datosgobar, id: "33.2_ISAC_NIVELRAL_0_M_18_63"}
+  supermercados_original: {fuente: datosgobar, id: "455.1_VENTAS_PRENAL_0_M_34_10"}
+  autoservicios_original: {fuente: datosgobar, id: "456.1_VENTAS_PRENAL_0_M_34_85"}
+  shoppings_original:  {fuente: datosgobar, id: "458.1_VENTAS_TOTNAL_0_M_42_19"}
+  asalariados_privados_desest: {fuente: datosgobar, id: "151.1_AARIADOTAC_2012_M_26"}
+  # --- Asalariados privados registrados por rama (miles, sin estacionalidad salvo salud) ---
+  asal_agro:           {fuente: datosgobar, id: "152.1_ACULTUREST_2009_M_47"}
+  asal_pesca:          {fuente: datosgobar, id: "152.1_PA_SIN_EST_2009_M_13"}
+  asal_mineria:        {fuente: datosgobar, id: "152.1_EOTACIOEST_2009_M_34"}
+  asal_industria:      {fuente: datosgobar, id: "152.1_ISTRIASEST_2009_M_33"}
+  asal_egu:            {fuente: datosgobar, id: "152.1_SNISTROEST_2009_M_40"}
+  asal_construccion:   {fuente: datosgobar, id: "152.1_CTRUCCIEST_2009_M_20"}
+  asal_comercio:       {fuente: datosgobar, id: "152.1_CRCIO_REST_2009_M_29"}
+  asal_hoteles:        {fuente: datosgobar, id: "152.1_HLES_REEST_2009_M_28"}
+  asal_transporte:     {fuente: datosgobar, id: "152.1_TSPORTEEST_2009_M_39"}
+  asal_inmobiliarias:  {fuente: datosgobar, id: "152.1_AVIDADEEST_2009_M_56"}
+  asal_ensenanza:      {fuente: datosgobar, id: "152.1_ENANZA_EST_2009_M_17"}
+  asal_salud:          {fuente: datosgobar, id: "152.1_SICIOS_EST_2009_M_28"}   # con estacionalidad: la desestacionalizada se corta en 2009
+  asal_servicios:      {fuente: datosgobar, id: "152.1_SICIOS_EST_2009_M_50"}
+  # --- Asalariados privados registrados por provincia (miles, sin estacionalidad) ---
+  asal_prov_buenos_aires: {fuente: datosgobar, id: "154.2_BOS_AIRRES_S_0_0_12"}
+  asal_prov_caba: {fuente: datosgobar, id: "154.2_CABA_S_0_0_4"}
+  asal_prov_catamarca: {fuente: datosgobar, id: "154.2_CMARCARCA_S_0_0_9"}
+  asal_prov_chaco: {fuente: datosgobar, id: "154.2_COACO_S_0_0_5"}
+  asal_prov_chubut: {fuente: datosgobar, id: "154.2_CUTBUT_S_0_0_6"}
+  asal_prov_cordoba: {fuente: datosgobar, id: "154.2_COBAOBA_S_0_0_7"}
+  asal_prov_corrientes: {fuente: datosgobar, id: "154.2_CIENTESTES_S_0_0_10"}
+  asal_prov_entre_rios: {fuente: datosgobar, id: "154.2_EE_RIOSIOS_S_0_0_10"}
+  asal_prov_formosa: {fuente: datosgobar, id: "154.2_FOSAOSA_S_0_0_7"}
+  asal_prov_jujuy: {fuente: datosgobar, id: "154.2_JYJUY_S_0_0_5"}
+  asal_prov_la_pampa: {fuente: datosgobar, id: "154.2_LAMPAMPA_S_0_0_8"}
+  asal_prov_la_rioja: {fuente: datosgobar, id: "154.2_LIOJAOJA_S_0_0_8"}
+  asal_prov_mendoza: {fuente: datosgobar, id: "154.2_MOZAOZA_S_0_0_7"}
+  asal_prov_misiones: {fuente: datosgobar, id: "154.2_MONESNES_S_0_0_8"}
+  asal_prov_neuquen: {fuente: datosgobar, id: "154.2_NUENUEN_S_0_0_7"}
+  asal_prov_rio_negro: {fuente: datosgobar, id: "154.2_RNEGROGRO_S_0_0_9"}
+  asal_prov_salta: {fuente: datosgobar, id: "154.2_SALTA_S_0_0_5"}
+  asal_prov_san_juan: {fuente: datosgobar, id: "154.2_SJUANUAN_S_0_0_8"}
+  asal_prov_san_luis: {fuente: datosgobar, id: "154.2_SLUISUIS_S_0_0_8"}
+  asal_prov_santa_cruz: {fuente: datosgobar, id: "154.2_SA_CRUZRUZ_S_0_0_10"}
+  asal_prov_santa_fe: {fuente: datosgobar, id: "154.2_SA_FE_FE_S_0_0_8"}
+  asal_prov_santiago_del_estero: {fuente: datosgobar, id: "154.2_SIAGO_EERO_S_0_0_15"}
+  asal_prov_tierra_del_fuego: {fuente: datosgobar, id: "154.2_TRA_FUEEGO_S_0_0_12"}
+  asal_prov_tucuman: {fuente: datosgobar, id: "154.2_TMANMAN_S_0_0_7"}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -143,6 +190,8 @@ calculos:
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
 
 grupos:
+  - {id: empleo_sectores, nombre: "Empleo privado registrado por sector", seccion: "Empleo e ingresos", ranking: diferencia, unidad_ranking: "miles de puestos",
+     nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. No incluye intermediación financiera, que no se publica por rama en la API."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004."}
 
@@ -152,10 +201,10 @@ indicadores:
   - {id: inflacion_nucleo, nombre: "Inflación núcleo", seccion: Precios, serie: ipc_nucleo, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
   - {id: inflacion_regulados, nombre: "Inflación de regulados", seccion: Precios, serie: ipc_regulados, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
   - {id: inflacion_alimentos, nombre: "Inflación de alimentos y bebidas", seccion: Precios, serie: ipc_alimentos, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
-  - {id: emae, nombre: "Actividad económica (EMAE)", seccion: Actividad, serie: emae_desest, tipo_valor: indice, unidad: "índice 2004=100, desest.", portada: true}
-  - {id: ipi, nombre: "Producción industrial (IPI)", seccion: Actividad, serie: ipi_desest, tipo_valor: indice, unidad: "índice, desest."}
-  - {id: isac, nombre: "Construcción (ISAC)", seccion: Actividad, serie: isac_desest, tipo_valor: indice, unidad: "índice, desest."}
-  - {id: supermercados, nombre: "Ventas en supermercados", seccion: Actividad, serie: supermercados_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: emae, nombre: "Actividad económica (EMAE)", seccion: Actividad, serie: emae_original, desestacionalizada: emae_desest, tipo_valor: indice, unidad: "índice 2004=100", portada: true}
+  - {id: ipi, nombre: "Producción industrial (IPI)", seccion: Actividad, serie: ipi_original, desestacionalizada: ipi_desest, tipo_valor: indice, unidad: "índice"}
+  - {id: isac, nombre: "Construcción (ISAC)", seccion: Actividad, serie: isac_original, desestacionalizada: isac_desest, tipo_valor: indice, unidad: "índice"}
+  - {id: supermercados, nombre: "Ventas en supermercados", seccion: Actividad, serie: supermercados_original, desestacionalizada: supermercados_desest, tipo_valor: indice, unidad: "índice"}
   - {id: salario_privado, nombre: "Salario real privado registrado", seccion: "Empleo e ingresos", serie: salario_privado, tipo_valor: nivel, moneda: ARS, unidad: "índice real", portada: true}
   - {id: salario_publico, nombre: "Salario real público", seccion: "Empleo e ingresos", serie: salario_publico, tipo_valor: nivel, moneda: ARS, unidad: "índice real"}
   - {id: smvm, nombre: "Salario mínimo real", seccion: "Empleo e ingresos", serie: smvm, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
@@ -178,12 +227,12 @@ indicadores:
   - {id: riesgo_pais, nombre: "Riesgo país", seccion: "Dólar y finanzas", serie: riesgo_pais, tipo_valor: tasa, unidad: "puntos básicos", portada: true}
   # --- Ampliación fase 1 ---
   - {id: ipim, nombre: "Precios mayoristas (IPIM)", seccion: Precios, serie: ipim, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
-  - {id: autoservicios, nombre: "Ventas en autoservicios mayoristas", seccion: Actividad, serie: autoservicios_desest, tipo_valor: indice, unidad: "índice, desest."}
-  - {id: shoppings, nombre: "Ventas en centros de compras", seccion: Actividad, serie: shoppings_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: autoservicios, nombre: "Ventas en autoservicios mayoristas", seccion: Actividad, serie: autoservicios_original, desestacionalizada: autoservicios_desest, tipo_valor: indice, unidad: "índice"}
+  - {id: shoppings, nombre: "Ventas en centros de compras", seccion: Actividad, serie: shoppings_original, desestacionalizada: shoppings_desest, tipo_valor: indice, unidad: "índice"}
   - {id: produccion_petroleo, nombre: "Producción de petróleo", seccion: Actividad, serie: produccion_petroleo, tipo_valor: flujo, unidad: "miles de m³ por mes"}
   - {id: produccion_gas, nombre: "Producción de gas natural", seccion: Actividad, serie: produccion_gas, tipo_valor: flujo, unidad: "millones de m³ por mes"}
   - {id: produccion_acero, nombre: "Producción de acero crudo", seccion: Actividad, serie: produccion_acero, tipo_valor: flujo, unidad: "miles de toneladas por mes"}
-  - {id: asalariados_privados, nombre: "Asalariados privados registrados", seccion: "Empleo e ingresos", serie: asalariados_privados, tipo_valor: nivel, unidad: "miles de personas"}
+  - {id: asalariados_privados, nombre: "Asalariados privados registrados", seccion: "Empleo e ingresos", serie: asalariados_privados, desestacionalizada: asalariados_privados_desest, tipo_valor: nivel, unidad: "miles de personas"}
   - {id: gasto_politica_ingresos, nombre: "Gasto en programas sociales (política de ingresos)", seccion: "Pobreza y programas sociales", serie: gasto_politica_ingresos, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: auh_prestaciones, nombre: "AUH: prestaciones liquidadas", seccion: "Pobreza y programas sociales", serie: auh_prestaciones, tipo_valor: nivel, unidad: "prestaciones (hijos)"}
   - {id: auh_monto, nombre: "AUH: monto por hijo (real)", seccion: "Pobreza y programas sociales", serie: auh_monto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
@@ -241,3 +290,16 @@ indicadores:
   - {id: emae_adm_publica, nombre: "Administración pública y defensa", seccion: Actividad, serie: emae_adm_publica, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_ensenanza, nombre: "Enseñanza", seccion: Actividad, serie: emae_ensenanza, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_salud, nombre: "Salud", seccion: Actividad, serie: emae_salud, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: empleo_agro, nombre: "Agro", seccion: "Empleo e ingresos", serie: asal_agro, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_pesca, nombre: "Pesca", seccion: "Empleo e ingresos", serie: asal_pesca, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_mineria, nombre: "Minas y canteras", seccion: "Empleo e ingresos", serie: asal_mineria, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_industria, nombre: "Industria manufacturera", seccion: "Empleo e ingresos", serie: asal_industria, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_egu, nombre: "Electricidad, gas y agua", seccion: "Empleo e ingresos", serie: asal_egu, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_construccion, nombre: "Construcción", seccion: "Empleo e ingresos", serie: asal_construccion, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_comercio, nombre: "Comercio", seccion: "Empleo e ingresos", serie: asal_comercio, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_hoteles, nombre: "Hoteles y restaurantes", seccion: "Empleo e ingresos", serie: asal_hoteles, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_transporte, nombre: "Transporte y comunicaciones", seccion: "Empleo e ingresos", serie: asal_transporte, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_inmobiliarias, nombre: "Inmobiliarias y servicios empresariales", seccion: "Empleo e ingresos", serie: asal_inmobiliarias, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_ensenanza, nombre: "Enseñanza", seccion: "Empleo e ingresos", serie: asal_ensenanza, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_salud, nombre: "Salud y servicios sociales", seccion: "Empleo e ingresos", serie: asal_salud, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
+  - {id: empleo_servicios, nombre: "Servicios comunitarios y personales", seccion: "Empleo e ingresos", serie: asal_servicios, tipo_valor: nivel, unidad: "miles de personas", grupo: empleo_sectores}
