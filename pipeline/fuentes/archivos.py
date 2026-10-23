@@ -406,10 +406,14 @@ def leer_escribanos(contenido: bytes, mes: int) -> pd.Series:
     # la hoja con datos no siempre es la primera (algunos meses traen hojas vacías adelante)
     for df in pd.read_excel(io.BytesIO(contenido), header=None, sheet_name=None).values():
         for i in range(len(df)):
-            m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, 0]))
-            v = pd.to_numeric(df.iat[i, 1], errors="coerce") if df.shape[1] > 1 else None
-            if m and pd.notna(v):
-                out[pd.Timestamp(int(m.group(1)), mes, 1)] = float(v)
+            # la columna del año no siempre es la primera: se toma la primera celda "Año AAAA" de la fila
+            for j in range(df.shape[1] - 1):
+                m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, j]))
+                if m:
+                    v = pd.to_numeric(df.iat[i, j + 1], errors="coerce")
+                    if pd.notna(v):
+                        out[pd.Timestamp(int(m.group(1)), mes, 1)] = float(v)
+                    break
         if out:
             break
     return pd.Series(out, dtype=float)
