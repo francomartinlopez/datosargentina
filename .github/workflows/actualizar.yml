@@ -1,0 +1,40 @@
+name: Actualización mensual de datos
+
+on:
+  schedule:
+    - cron: "0 12 20 * *"   # día 20 de cada mes, 9:00 de Argentina
+  workflow_dispatch: {}     # permite lanzarla a mano desde la pestaña Actions
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Pruebas
+        run: python -m pytest -q
+
+      - name: Bajar y procesar datos
+        run: python -m pipeline.construir
+
+      - name: Proponer cambios para revisión
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: actualizacion-mensual
+          delete-branch: true
+          commit-message: "Actualización de datos"
+          title: "Actualización de datos"
+          body-path: data/informe.md
+          labels: datos

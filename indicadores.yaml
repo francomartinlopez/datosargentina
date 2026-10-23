@@ -1,0 +1,110 @@
+# Catálogo de indicadores — etapa 1 (núcleo de prueba)
+#
+# Cada serie de "series" es un dato crudo que se baja de una fuente.
+# Cada entrada de "indicadores" es lo que se publica en el sitio.
+#
+# tipo_valor:
+#   indice  -> nivel de un índice (IPC, EMAE): variaciones en %
+#   nivel   -> stock o monto (reservas, salario): variaciones en %, se puede deflactar
+#   flujo   -> monto de un período (exportaciones, recaudación): igual que nivel
+#   tasa    -> porcentaje o puntos (desocupación, tasas de interés, riesgo país): variaciones en puntos
+# moneda: ARS | USD | (vacío) -> si es ARS o USD se expresa en moneda constante del último mes.
+
+parametros:
+  inicio_historico: "2003-05-01"      # vista "desde 2003" (asunción de Néstor Kirchner)
+  base_gestion_actual: "2023-11-01"   # mes previo a la asunción del gobierno actual
+
+gestiones:
+  - {nombre: "Néstor Kirchner", asuncion: "2003-05-25", base: "2003-04-01"}
+  - {nombre: "Cristina Fernández de Kirchner I", asuncion: "2007-12-10", base: "2007-11-01"}
+  - {nombre: "Cristina Fernández de Kirchner II", asuncion: "2011-12-10", base: "2011-11-01"}
+  - {nombre: "Mauricio Macri", asuncion: "2015-12-10", base: "2015-11-01"}
+  - {nombre: "Alberto Fernández", asuncion: "2019-12-10", base: "2019-11-01"}
+  - {nombre: "Javier Milei", asuncion: "2023-12-10", base: "2023-11-01"}
+
+series:
+  # --- Precios: tramos para el IPC empalmado ---
+  ipc_gba_historico:   {fuente: datosgobar, id: "178.1_NL_GENERAL_0_0_13"}
+  ipc_san_luis:        {fuente: datosgobar, id: "197.1_NIVEL_GENERAL_2014_0_13"}
+  ipc_caba_2012:       {fuente: datosgobar, id: "193.1_NIVEL_GENERAL_JULI_0_13"}
+  ipc_caba_2021:       {fuente: datosgobar, id: "193.2_NIVEL_GENERAL_2021_0_13_2"}
+  ipc_nacional:        {fuente: datosgobar, id: "148.3_INIVELNAL_DICI_M_26"}
+  ipc_nucleo:          {fuente: datosgobar, id: "148.3_INUCLEONAL_DICI_M_19"}
+  ipc_regulados:       {fuente: datosgobar, id: "148.3_IREGULANAL_DICI_M_22"}
+  ipc_alimentos:       {fuente: datosgobar, id: "146.3_IALIMENNAL_DICI_M_45"}
+  # --- Actividad ---
+  emae_desest:         {fuente: datosgobar, id: "143.3_NO_PR_2004_A_31"}
+  ipi_desest:          {fuente: datosgobar, id: "453.1_SERIE_DESEADA_0_0_24_58"}
+  isac_desest:         {fuente: datosgobar, id: "33.2_ISAC_SIN_EDAD_0_M_23_56"}
+  supermercados_desest: {fuente: datosgobar, id: "455.1_VENTAS_PREADA_0_M_44_44"}
+  # --- Empleo e ingresos ---
+  salario_privado:     {fuente: datosgobar, id: "149.1_SOR_PRIADO_OCTU_0_25"}
+  salario_publico:     {fuente: datosgobar, id: "149.1_SOR_PUBICO_OCTU_0_14"}
+  smvm:                {fuente: datosgobar, id: "57.1_SMVMM_0_M_34"}
+  jubilacion_minima:   {fuente: datosgobar, id: "58.1_MP_0_M_13"}
+  desocupacion:        {fuente: datosgobar, id: "42.3_EPH_PUNTUATAL_0_M_30"}
+  # --- Sector externo ---
+  exportaciones:       {fuente: datosgobar, id: "75.3_IETG_0_M_31"}
+  importaciones:       {fuente: datosgobar, id: "76.3_ITG_0_M_17"}
+  # --- Fiscal ---
+  resultado_primario:  {fuente: datosgobar, id: "452.3_RESULTADO_RIO_0_M_18_54"}
+  resultado_financiero: {fuente: datosgobar, id: "452.3_RESULTADO_ERO_0_M_20_25"}
+  recaudacion:         {fuente: datosgobar, id: "172.3_TL_RECAION_M_0_0_17"}
+  # --- Opinión pública ---
+  icg:                 {fuente: datosgobar, id: "370.3_ICG_NIVEL_RAL_0_0_17_94"}
+  # --- BCRA (API v4) ---
+  reservas:            {fuente: bcra, id: 1, agregacion: cierre}
+  dolar_mayorista:     {fuente: bcra, id: 5, agregacion: promedio}
+  base_monetaria:      {fuente: bcra, id: 15, agregacion: promedio}
+  tasa_plazo_fijo:     {fuente: bcra, id: 12, agregacion: promedio}
+  prestamos_privados:  {fuente: bcra, id: 26, agregacion: cierre}
+  # --- ArgentinaDatos ---
+  dolar_ccl:           {fuente: argentinadatos, id: "cotizaciones/dolares/contadoconliqui", campo: venta, agregacion: promedio}
+  dolar_mep:           {fuente: argentinadatos, id: "cotizaciones/dolares/bolsa", campo: venta, agregacion: promedio}
+  riesgo_pais:         {fuente: argentinadatos, id: "finanzas/indices/riesgo-pais", campo: valor, agregacion: promedio}
+  # --- Deflactor en dólares ---
+  cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
+
+# IPC empalmado: se encadenan las variaciones mensuales de cada tramo.
+# 2007-2016 se reemplaza el IPC del INDEC (no confiable) por San Luis y CABA.
+empalmes:
+  ipc:
+    - {serie: ipc_gba_historico, hasta: "2006-12-01"}
+    - {serie: ipc_san_luis,      hasta: "2012-07-01"}
+    - {serie: ipc_caba_2012,     hasta: "2016-12-01"}
+    - {serie: ipc_nacional}
+
+calculos:
+  saldo_comercial: {operacion: resta, a: exportaciones, b: importaciones}
+  brecha_ccl:      {operacion: brecha, a: dolar_ccl, b: dolar_mayorista}
+
+indicadores:
+  - {id: inflacion, nombre: "Inflación (IPC)", seccion: Precios, serie: ipc, tipo_valor: indice, unidad: "índice", portada: true,
+     nota: "IPC empalmado: GBA hasta 2006, San Luis 2007–2012, CABA 2012–2016 e INDEC nacional desde 2017."}
+  - {id: inflacion_nucleo, nombre: "Inflación núcleo", seccion: Precios, serie: ipc_nucleo, tipo_valor: indice, unidad: "índice"}
+  - {id: inflacion_regulados, nombre: "Inflación de regulados", seccion: Precios, serie: ipc_regulados, tipo_valor: indice, unidad: "índice"}
+  - {id: inflacion_alimentos, nombre: "Inflación de alimentos y bebidas", seccion: Precios, serie: ipc_alimentos, tipo_valor: indice, unidad: "índice"}
+  - {id: emae, nombre: "Actividad económica (EMAE)", seccion: Actividad, serie: emae_desest, tipo_valor: indice, unidad: "índice 2004=100, desest.", portada: true}
+  - {id: ipi, nombre: "Producción industrial (IPI)", seccion: Actividad, serie: ipi_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: isac, nombre: "Construcción (ISAC)", seccion: Actividad, serie: isac_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: supermercados, nombre: "Ventas en supermercados", seccion: Actividad, serie: supermercados_desest, tipo_valor: indice, unidad: "índice, desest."}
+  - {id: salario_privado, nombre: "Salario real privado registrado", seccion: "Empleo e ingresos", serie: salario_privado, tipo_valor: nivel, moneda: ARS, unidad: "índice real", portada: true}
+  - {id: salario_publico, nombre: "Salario real público", seccion: "Empleo e ingresos", serie: salario_publico, tipo_valor: nivel, moneda: ARS, unidad: "índice real"}
+  - {id: smvm, nombre: "Salario mínimo real", seccion: "Empleo e ingresos", serie: smvm, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
+  - {id: jubilacion_minima, nombre: "Jubilación mínima real", seccion: "Pobreza y programas sociales", serie: jubilacion_minima, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
+  - {id: desocupacion, nombre: "Desocupación", seccion: "Empleo e ingresos", serie: desocupacion, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T, portada: true}
+  - {id: exportaciones, nombre: "Exportaciones", seccion: "Sector externo e inversión", serie: exportaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: importaciones, nombre: "Importaciones", seccion: "Sector externo e inversión", serie: importaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: saldo_comercial, nombre: "Saldo comercial", seccion: "Sector externo e inversión", serie: saldo_comercial, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy", portada: true}
+  - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: icg, nombre: "Confianza en el gobierno (UTDT)", seccion: "Opinión pública", serie: icg, tipo_valor: tasa, unidad: "índice 0 a 5", portada: true}
+  - {id: reservas, nombre: "Reservas brutas del BCRA", seccion: "Dólar y finanzas", serie: reservas, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", portada: true}
+  - {id: dolar_mayorista, nombre: "Dólar mayorista (real)", seccion: "Dólar y finanzas", serie: dolar_mayorista, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}
+  - {id: dolar_ccl, nombre: "Dólar CCL (real)", seccion: "Dólar y finanzas", serie: dolar_ccl, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar", portada: true}
+  - {id: brecha_ccl, nombre: "Brecha CCL vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_ccl, tipo_valor: tasa, unidad: "%"}
+  - {id: base_monetaria, nombre: "Base monetaria (real)", seccion: "Dólar y finanzas", serie: base_monetaria, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: prestamos_privados, nombre: "Préstamos al sector privado (real)", seccion: "Dólar y finanzas", serie: prestamos_privados, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: tasa_plazo_fijo, nombre: "Tasa de plazo fijo a 30 días", seccion: "Dólar y finanzas", serie: tasa_plazo_fijo, tipo_valor: tasa, unidad: "% TNA"}
+  - {id: riesgo_pais, nombre: "Riesgo país", seccion: "Dólar y finanzas", serie: riesgo_pais, tipo_valor: tasa, unidad: "puntos básicos", portada: true}
