@@ -24,23 +24,10 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = [
-    "448.1_NIVEL_GENERAL_0_0_13_46", "456.1_VENTAS_PREADA_0_M_44_40", "458.1_VENTAS_TOTADA_0_M_52_56",
-    "82.2_ITI_2004_T_27", "452.2_JUBILACIONVAS_0_T_36_18", "452.2_ENERGIAGIA_0_T_7_56",
-    "452.2_TRANSFERENIAL_0_T_53_66", "151.1_AARIADODAD_2012_M_31", "186.3_TOTAL_POLISOS_0_0_23",
-    "186.3_ASIGNACIONIAL_0_0_43", "189.1_TOTAL_AUHAUH_0_0_9", "165.1_AAUH_0_0_3",
-    "75.3_IETPP_0_M_43", "75.3_ITMOA_0_M_13", "75.3_ITM_0_M_13", "75.3_ITCE_0_M_30", "74.3_IICL_0_M_42",
-    "166.2_F_BRUTAIJO_0_0_19", "186.3_PENSIONES_VAS_0_0_26", "452.3_RESULTADO_ERO_0_M_20_25",
-    "453.1_SERIE_ORIGNAL_0_0_14_46", "33.2_ISAC_NIVELRAL_0_M_18_63", "143.3_NO_PR_2004_A_21",
-    "372.9_GTOS_CAP_T017__50_32", "452.3_PROGRAMA_IIAS_0_M_33_38",
-]
+IDS = []
 BUSQUEDAS = [
-    "capacidad instalada nivel general", "indice confianza consumidor", "tarjeta alimentar",
-    "potenciar trabajo", "pensiones no contributivas beneficiarios", "gasto primario sector publico nacional",
-    "gastos de capital sector publico nacional", "patentamientos", "producción de petróleo",
-    "producción de gas natural", "empleo público", "índice de salarios", "canasta básica total",
-    "pobreza", "turistas", "consumo de carne vacuna", "producción de leche", "escrituras",
-    "despachos de cemento", "producción de acero", "índice de contratos de locación",
+    "exportaciones manufacturas de origen agropecuario", "exportaciones combustibles y energia",
+    "subsidios economicos energia", "importaciones combustibles y lubricantes", "exportaciones productos primarios",
 ]
 ARGENTINADATOS = [
     "cotizaciones/dolares/tarjeta", "cotizaciones/dolares/oficial", "cotizaciones/dolares/blue",
@@ -82,7 +69,13 @@ def buscar(q: str) -> list[dict]:
 def main() -> None:
     SALIDA.mkdir(parents=True, exist_ok=True)
     (SALIDA / "ids.json").write_text(json.dumps([sondear_id(i) for i in IDS], ensure_ascii=False, indent=1), encoding="utf-8")
-    (SALIDA / "busquedas.json").write_text(json.dumps({q: buscar(q) for q in BUSQUEDAS}, ensure_ascii=False, indent=1), encoding="utf-8")
+    resultados = {q: buscar(q) for q in BUSQUEDAS}
+    # para cada resultado, verificar que la API devuelva valores (algunos IDs existen sin datos)
+    for q, lista in resultados.items():
+        for x in lista:
+            if x.get("id"):
+                x["ultimo_valor"] = sondear_id(x["id"]).get("ultimo_valor")
+    (SALIDA / "busquedas.json").write_text(json.dumps(resultados, ensure_ascii=False, indent=1), encoding="utf-8")
     try:
         r = requests.get("https://api.bcra.gob.ar/estadisticas/v4.0/monetarias", headers=CAB, timeout=60, verify=bcra.VERIFICAR)
         filas = r.json().get("results", [])
