@@ -775,7 +775,7 @@ async function gobierno() {
       "Normas propuestas desde diciembre de 2023 por el Gobierno, sus aliados o la oposición: recorrido, resultado, cambios en el trámite y judicialización.",
       leyes, (r) => itemDetalle({
         insignia: (r.resultado || "").split(/[(:]/)[0].trim(), titulo: r.norma, meta: r.impulsor, resumen: r.que_proponia,
-        campos: [["Recorrido", r.recorrido], ["Cambios en el trámite", r.cambios_en_el_tramite], ["Judicialización o aplicación", r.judicializacion_o_aplicacion], ["Estado al", fechaCorta(r.fecha_estado)]],
+        campos: [["Recorrido", r.recorrido], ["Cómo votó el oficialismo", r.voto_oficialismo], ["Cambios en el trámite", r.cambios_en_el_tramite], ["Judicialización o aplicación", r.judicializacion_o_aplicacion], ["Estado al", fechaCorta(r.fecha_estado)]],
         fuentesTexto: r.fuentes }), { porGestion: false }));
   }
   if (dichos) {
