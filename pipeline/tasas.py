@@ -17,13 +17,19 @@ from .fuentes import pedir
 BASE = "https://api.argentinadatos.com/v1/finanzas/"
 
 
+SIGLAS = {"Cmf": "CMF", "Bbva": "BBVA", "Icbc": "ICBC", "Hsbc": "HSBC", "Bica": "BICA", "Uala": "Ualá"}
+NOMBRES = {"Banco de la Nación Argentina": "Banco Nación", "Industrial and Commercial Bank of China (Argentina)": "ICBC Argentina",
+           "Banco de Galicia y Buenos Aires": "Banco Galicia", "Banco Santander Argentina": "Banco Santander"}
+
+
 def nombre_banco(n: str) -> str:
-    n = re.sub(r"\s+", " ", n.strip().title())
-    for a, b in ((" De La ", " de la "), (" De ", " de "), (" Del ", " del "), (" Y ", " y "), ("S.A.", ""), (" Sa", ""),
-                 ("Banco de la Nacion Argentina", "Banco Nación"), ("Ciudad de Buenos Aires", "Ciudad"), ("Bbva", "BBVA"),
-                 ("Icbc", "ICBC"), ("Hsbc", "HSBC"), ("Bica", "BICA")):
+    n = re.sub(r"\s+", " ", n.strip()).title()
+    for a, b in ((" De La ", " de la "), (" De ", " de "), (" Del ", " del "), (" Y ", " y "), (" And ", " and "), (" Of ", " of "),
+                 ("Compañia", "Compañía"), ("Cordoba", "Córdoba"), ("Nacion", "Nación")):
         n = n.replace(a, b)
-    return n.strip(" .")
+    n = re.sub(r"[\s,]+(S\.?\s?A\.?\s?U?\.?|Sau|Sa|Sociedad An[oó]nima( Unipersonal)?|Cooperativo Limitado)$", "", n).strip(" .")
+    n = " ".join(SIGLAS.get(w, w) for w in n.split(" "))
+    return NOMBRES.get(n, n)
 
 
 def plazo_fijo() -> list[dict]:

@@ -309,7 +309,7 @@ function ficha(f, { anidada = false } = {}) {
   const vistasDisponibles = VISTAS.filter((v) => (v.id === "comparativa" ? Object.keys(f.vistas.comparativa || {}).length : (f.vistas[v.id] || []).length));
   // Para saldos (pueden ser negativos) la vista inicial es la serie en su unidad
   // Con desestacionalizada se abre en "Desde 2003", donde se ven las dos líneas
-  const inicial = f.tipo_valor === "saldo" || f.desest ? "desde_2003" : "interanual";
+  const inicial = f.vista_inicial || (f.tipo_valor === "saldo" || f.desest ? "desde_2003" : "interanual");
   let actual = vistasDisponibles.find((v) => v.id === inicial) ? inicial : vistasDisponibles[0]?.id;
   const botones = vistasDisponibles.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === actual), text: v.texto, onclick: () => { actual = v.id; render(); } }));
   function render() {

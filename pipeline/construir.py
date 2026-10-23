@@ -162,6 +162,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
             "fuente": nombre_fuente(config["series"].get(ind["serie"], {})),
             "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")), "grupo": ind.get("grupo"),
+            **({"vista_inicial": ind["vista_inicial"]} if ind.get("vista_inicial") else {}),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
             **calc,
             "_serie": vistas.como_lista(s[s.index >= inicio]),

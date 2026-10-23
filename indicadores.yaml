@@ -433,7 +433,7 @@ indicadores:
      nota: "Automóviles vendidos en el país, nacionales e importados (ADEFA, vía Ministerio de Economía). Serie con estacionalidad."}
   - {id: produccion_autos, nombre: "Producción de autos", seccion: Actividad, serie: produccion_autos, tipo_valor: flujo, unidad: "unidades por mes", nota: "Automóviles fabricados en el país (ADEFA). Serie con estacionalidad."}
   - {id: faena_vacuna, nombre: "Faena de ganado vacuno", seccion: Actividad, serie: faena_vacuna, tipo_valor: flujo, unidad: "miles de cabezas por trimestre", frecuencia: T}
-  - {id: informalidad, nombre: "Asalariados sin descuento jubilatorio (informalidad)", seccion: "Empleo e ingresos", serie: informalidad, tipo_valor: tasa, escala: 100, unidad: "% de los asalariados", frecuencia: T,
+  - {id: informalidad, vista_inicial: desde_2003, nombre: "Asalariados sin descuento jubilatorio (informalidad)", seccion: "Empleo e ingresos", serie: informalidad, tipo_valor: tasa, escala: 100, unidad: "% de los asalariados", frecuencia: T,
      nota: "EPH (INDEC), 31 aglomerados urbanos. Proporción de asalariados a los que no se les hacen aportes jubilatorios."}
   - {id: empleo_publico, nombre: "Puestos asalariados registrados en el sector público", seccion: "Empleo e ingresos", serie: empleo_publico, tipo_valor: nivel, unidad: "miles de puestos", frecuencia: T,
      nota: "Cuenta de generación del ingreso (INDEC): nación, provincias y municipios. Un mismo trabajador puede ocupar más de un puesto."}
@@ -445,9 +445,9 @@ indicadores:
      unidad: "millones de pesos de hoy, últimos 12 meses", nota: "Gasto devengado de la Administración Nacional (Ministerio de Economía)."}
   - {id: fae_privados, nombre: "Compra neta de dólares del sector privado (formación de activos externos)", seccion: "Sector externo e inversión", serie: fae_privados, tipo_valor: saldo, moneda: USD, escala: -1, acumulado_12m: true,
      unidad: "millones de US$ de hoy, últimos 12 meses", nota: "Balance cambiario del BCRA: compras menos ventas de moneda extranjera para atesoramiento del sector privado no financiero (personas y empresas). Positivo = compra neta."}
-  - {id: presion_tributaria, nombre: "Presión tributaria nacional", seccion: "Estado y fiscal", serie: presion_tributaria, tipo_valor: tasa, unidad: "% del PIB, últimos 12 meses", frecuencia: T,
+  - {id: presion_tributaria, vista_inicial: desde_2003, nombre: "Presión tributaria nacional", seccion: "Estado y fiscal", serie: presion_tributaria, tipo_valor: tasa, unidad: "% del PIB, últimos 12 meses", frecuencia: T,
      nota: "Recaudación nacional (impuestos, derechos de exportación y seguridad social, AFIP/ARCA) de los últimos 12 meses sobre el PIB nominal de los últimos 4 trimestres (INDEC). No incluye impuestos provinciales ni municipales."}
-  - {id: gasto_publico_pib, nombre: "Gasto público nacional", seccion: "Estado y fiscal", serie: gpn_total, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, nota: "Serie de gasto público consolidado; último año disponible: 2023."}
+  - {id: gasto_publico_pib, vista_inicial: desde_2003, nombre: "Gasto público nacional", seccion: "Estado y fiscal", serie: gpn_total, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, nota: "Serie de gasto público consolidado; último año disponible: 2023."}
   - {id: gpn_prevision, nombre: "Previsión social (jubilaciones y pensiones)", seccion: "Estado y fiscal", serie: gpn_prevision, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
   - {id: gpn_economicos, nombre: "Servicios económicos (energía, transporte, subsidios)", seccion: "Estado y fiscal", serie: gpn_economicos, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
   - {id: gpn_asistencia, nombre: "Promoción y asistencia social", seccion: "Estado y fiscal", serie: gpn_asistencia, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
@@ -467,11 +467,11 @@ indicadores:
      nota: "Cierre mensual del Merval dividido por el dólar contado con liquidación promedio del mes."}
   - {id: adr_ggal, nombre: "Acción de Grupo Galicia en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: adr_ggal, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por ADR", nota: "Cierre mensual ajustado por dividendos y divisiones."}
   - {id: adr_ypf, nombre: "Acción de YPF en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: adr_ypf, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por ADR", nota: "Cierre mensual ajustado por dividendos y divisiones."}
-  - {id: morosidad, nombre: "Morosidad de los préstamos al sector privado", seccion: "Crédito y alquileres", serie: morosidad, tipo_valor: tasa, unidad: "% de la cartera en situación irregular",
+  - {id: morosidad, vista_inicial: desde_2003, nombre: "Morosidad de los préstamos al sector privado", seccion: "Crédito y alquileres", serie: morosidad, tipo_valor: tasa, unidad: "% de la cartera en situación irregular",
      nota: "Irregularidad de la cartera de financiaciones al sector privado del sistema financiero (BCRA, Informe sobre bancos)."}
-  - {id: homicidios, nombre: "Homicidios dolosos", seccion: "Seguridad", serie: homicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
+  - {id: homicidios, vista_inicial: desde_2003, nombre: "Homicidios dolosos", seccion: "Seguridad", serie: homicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
      nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad)."}
-  - {id: suicidios, nombre: "Suicidios", seccion: "Seguridad", serie: suicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
+  - {id: suicidios, vista_inicial: desde_2003, nombre: "Suicidios", seccion: "Seguridad", serie: suicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
      nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad). Si vos o alguien cercano lo necesita: Línea 135 (CABA y GBA) o 0800-345-1435, gratis y las 24 horas."}
-  - {id: calificacion_sp, nombre: "Calificación de la deuda soberana (S&P)", seccion: "Deuda pública", serie: calificacion_sp, tipo_valor: tasa, unidad: "escalón: 0 = default (SD), 3 = CCC−, 4 = CCC, 5 = CCC+, 6 = B−, 7 = B, 8 = B+",
+  - {id: calificacion_sp, nombre: "Calificación de la deuda soberana (S&P)", seccion: "Deuda pública", serie: calificacion_sp, tipo_valor: tasa, vista_inicial: desde_2003, unidad: "escalón: 0 = default (SD), 3 = CCC−, 4 = CCC, 5 = CCC+, 6 = B−, 7 = B, 8 = B+",
      nota: "Calificación de largo plazo en moneda extranjera de S&P Global, al cierre de cada mes. Grado de inversión empieza en BBB−, que sería el escalón 12. Carga manual desde 2010 con el historial publicado por countryeconomy.com y FXEmpire."}
