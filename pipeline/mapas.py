@@ -80,7 +80,7 @@ def empleo(mensuales: dict, base: str) -> dict:
         "unidad": "variación % de los asalariados privados registrados",
         "fecha": max(fechas).strftime("%Y-%m-%d"),
         "fuente": "SIPA (Ministerio de Capital Humano) vía datos.gob.ar",
-        "nota": "Series sin estacionalidad. Cada trabajador se asigna a la provincia donde lo declara su empleador.",
+        "nota": "Series sin estacionalidad, salvo Entre Ríos, Formosa, Jujuy y San Juan (con estacionalidad: su variación mensual no es comparable). Cada trabajador se asigna a la provincia donde lo declara su empleador.",
         "provincias": provincias,
     }
 

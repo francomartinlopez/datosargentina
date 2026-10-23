@@ -112,7 +112,6 @@ series:
   emae_mineria:        {fuente: datosgobar, id: "11.3_ISD_2004_M_26"}
   emae_industria:      {fuente: datosgobar, id: "11.3_VMASD_2004_M_23"}
   emae_egu:            {fuente: datosgobar, id: "11.3_ITC_2004_M_21"}
-  emae_construccion:   {fuente: datosgobar, id: "11.3_VMATC_2004_M_12"}
   emae_comercio:       {fuente: datosgobar, id: "11.3_AGCS_2004_M_41"}
   emae_hoteles:        {fuente: datosgobar, id: "11.3_P_2004_M_20"}
   emae_transporte:     {fuente: datosgobar, id: "11.3_EMC_2004_M_25"}
@@ -132,7 +131,7 @@ series:
   # --- Asalariados privados registrados por rama (miles, sin estacionalidad salvo salud) ---
   asal_agro:           {fuente: datosgobar, id: "152.1_ACULTUREST_2009_M_47"}
   asal_pesca:          {fuente: datosgobar, id: "152.1_PA_SIN_EST_2009_M_13"}
-  asal_mineria:        {fuente: datosgobar, id: "152.1_EOTACIOEST_2009_M_34"}
+  asal_mineria:        {fuente: datosgobar, id: "152.1_EOTACIOEST_2009_M_30"}   # con estacionalidad (la otra no trae valores)
   asal_industria:      {fuente: datosgobar, id: "152.1_ISTRIASEST_2009_M_33"}
   asal_egu:            {fuente: datosgobar, id: "152.1_SNISTROEST_2009_M_40"}
   asal_construccion:   {fuente: datosgobar, id: "152.1_CTRUCCIEST_2009_M_20"}
@@ -142,7 +141,7 @@ series:
   asal_inmobiliarias:  {fuente: datosgobar, id: "152.1_AVIDADEEST_2009_M_56"}
   asal_ensenanza:      {fuente: datosgobar, id: "152.1_ENANZA_EST_2009_M_17"}
   asal_salud:          {fuente: datosgobar, id: "152.1_SICIOS_EST_2009_M_28"}   # con estacionalidad: la desestacionalizada se corta en 2009
-  asal_servicios:      {fuente: datosgobar, id: "152.1_SICIOS_EST_2009_M_50"}
+  asal_servicios:      {fuente: datosgobar, id: "152.1_SICIOS_EST_2009_M_46"}   # con estacionalidad (la otra no trae valores)
   # --- Asalariados privados registrados por provincia (miles, sin estacionalidad) ---
   asal_prov_buenos_aires: {fuente: datosgobar, id: "154.2_BOS_AIRRES_S_0_0_12"}
   asal_prov_caba: {fuente: datosgobar, id: "154.2_CABA_S_0_0_4"}
@@ -151,9 +150,9 @@ series:
   asal_prov_chubut: {fuente: datosgobar, id: "154.2_CUTBUT_S_0_0_6"}
   asal_prov_cordoba: {fuente: datosgobar, id: "154.2_COBAOBA_S_0_0_7"}
   asal_prov_corrientes: {fuente: datosgobar, id: "154.2_CIENTESTES_S_0_0_10"}
-  asal_prov_entre_rios: {fuente: datosgobar, id: "154.2_EE_RIOSIOS_S_0_0_10"}
-  asal_prov_formosa: {fuente: datosgobar, id: "154.2_FOSAOSA_S_0_0_7"}
-  asal_prov_jujuy: {fuente: datosgobar, id: "154.2_JYJUY_S_0_0_5"}
+  asal_prov_entre_rios: {fuente: datosgobar, id: "154.1_EE_RIOSIOS_C_0_0_10"}   # con estacionalidad
+  asal_prov_formosa: {fuente: datosgobar, id: "154.1_FOSAOSA_C_0_0_7"}   # con estacionalidad
+  asal_prov_jujuy: {fuente: datosgobar, id: "154.1_JYJUY_C_0_0_5"}   # con estacionalidad
   asal_prov_la_pampa: {fuente: datosgobar, id: "154.2_LAMPAMPA_S_0_0_8"}
   asal_prov_la_rioja: {fuente: datosgobar, id: "154.2_LIOJAOJA_S_0_0_8"}
   asal_prov_mendoza: {fuente: datosgobar, id: "154.2_MOZAOZA_S_0_0_7"}
@@ -161,7 +160,7 @@ series:
   asal_prov_neuquen: {fuente: datosgobar, id: "154.2_NUENUEN_S_0_0_7"}
   asal_prov_rio_negro: {fuente: datosgobar, id: "154.2_RNEGROGRO_S_0_0_9"}
   asal_prov_salta: {fuente: datosgobar, id: "154.2_SALTA_S_0_0_5"}
-  asal_prov_san_juan: {fuente: datosgobar, id: "154.2_SJUANUAN_S_0_0_8"}
+  asal_prov_san_juan: {fuente: datosgobar, id: "154.1_SJUANUAN_C_0_0_8"}   # con estacionalidad
   asal_prov_san_luis: {fuente: datosgobar, id: "154.2_SLUISUIS_S_0_0_8"}
   asal_prov_santa_cruz: {fuente: datosgobar, id: "154.2_SA_CRUZRUZ_S_0_0_10"}
   asal_prov_santa_fe: {fuente: datosgobar, id: "154.2_SA_FE_FE_S_0_0_8"}
@@ -191,9 +190,9 @@ calculos:
 
 grupos:
   - {id: empleo_sectores, nombre: "Empleo privado registrado por sector", seccion: "Empleo e ingresos", ranking: diferencia, unidad_ranking: "miles de puestos",
-     nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. No incluye intermediación financiera, que no se publica por rama en la API."}
+     nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
-     nota: "Serie original (sin desestacionalizar) de INDEC, base 2004."}
+     nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
 indicadores:
   - {id: inflacion, nombre: "Inflación (IPC)", seccion: Precios, serie: ipc, tipo_valor: indice, vista_historica: mensual, unidad: "índice", portada: true,
@@ -281,7 +280,6 @@ indicadores:
   - {id: emae_mineria, nombre: "Minas y canteras", seccion: Actividad, serie: emae_mineria, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_industria, nombre: "Industria manufacturera", seccion: Actividad, serie: emae_industria, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_egu, nombre: "Electricidad, gas y agua", seccion: Actividad, serie: emae_egu, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
-  - {id: emae_construccion, nombre: "Construcción", seccion: Actividad, serie: emae_construccion, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_comercio, nombre: "Comercio", seccion: Actividad, serie: emae_comercio, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_hoteles, nombre: "Hoteles y restaurantes", seccion: Actividad, serie: emae_hoteles, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
   - {id: emae_transporte, nombre: "Transporte y comunicaciones", seccion: Actividad, serie: emae_transporte, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
