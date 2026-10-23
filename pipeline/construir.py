@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, distribucion, mapas, transformar, tasas, vistas
+from . import calidad, distribucion, mapas, transformar, rigi, tasas, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -227,7 +227,7 @@ def main() -> None:
     mensuales, alertas_proc = procesar(config, crudas)
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
-    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + tasas.construir(SALIDA)
+    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + tasas.construir(SALIDA) + rigi.construir(SALIDA)
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 

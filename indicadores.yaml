@@ -201,6 +201,41 @@ series:
   prov_resultado_primario: {fuente: archivo, lector: hacienda_provincias, campo: resultado_primario}
   prov_ingresos:       {fuente: archivo, lector: hacienda_provincias, campo: ingresos_totales}
   prov_origen_nacional: {fuente: archivo, lector: hacienda_provincias, campo: tributarios_nacionales}
+  # --- Fase 1: cierre ---
+  informalidad:        {fuente: datosgobar, id: "52.2_ASDJ_0_0_37"}
+  empleo_publico:      {fuente: datosgobar, id: "324.1_TOTAL_SECTADO__58"}
+  remuneracion_sipa:   {fuente: datosgobar, id: "153.1_RNERACIDIO_2009_M_21"}
+  homicidios:          {fuente: datosgobar, id: "t_snic_1_victimas_arg"}
+  suicidios:           {fuente: datosgobar, id: "t_snic_31_victimas_arg"}
+  morosidad:           {fuente: datosgobar, id: "332.2_SISTEMA_FIADA__53"}
+  ventas_autos:        {fuente: datosgobar, id: "330.3_VENTAS_MERLES__34"}
+  produccion_autos:    {fuente: datosgobar, id: "330.3_PRODUCCIONLES__22"}
+  faena_vacuna:        {fuente: datosgobar, id: "41.2_FCV_0_T_18"}
+  fae_privados:        {fuente: datosgobar, id: "182.1_C_K_FINC_CINC_0_M_56"}
+  gasto_auh:           {fuente: datosgobar, id: "186.3_ASIGNACIONIAL_0_0_43"}
+  pib_nominal:         {fuente: datosgobar, id: "4.4_OGP_2004_T_17"}
+  ipc_vivienda:        {fuente: datosgobar, id: "146.3_IVIVIENNAL_DICI_M_52"}
+  ipc_transporte:      {fuente: datosgobar, id: "146.3_ITRANSPNAL_DICI_M_23"}
+  ipc_educacion:       {fuente: datosgobar, id: "146.3_IEDUCACNAL_DICI_M_22"}
+  merval:              {fuente: yahoo, id: "^MERV"}
+  adr_ggal:            {fuente: yahoo, id: "GGAL"}
+  adr_ypf:             {fuente: yahoo, id: "YPF"}
+  gpn_total:           {fuente: datosgobar, id: "451.4_GPN_PIBPIB_0_0_7_95"}
+  gpn_prevision:       {fuente: datosgobar, id: "451.4_GPN_PREVISPIB_0_0_24_69"}
+  gpn_asistencia:      {fuente: datosgobar, id: "451.4_GPN_PROMOCPIB_0_0_35_70"}
+  gpn_economicos:      {fuente: datosgobar, id: "451.4_GPN_SERVICPIB_0_0_28_18"}
+  gpn_deuda:           {fuente: datosgobar, id: "451.4_GPN_SERVICPIB_0_0_31_93"}
+  gpn_defensa:         {fuente: datosgobar, id: "451.4_GPN_DEFENSPIB_0_0_25_96"}
+  gpn_funcionamiento:  {fuente: datosgobar, id: "451.4_GPN_FUNCIOPIB_0_0_29_33"}
+  gpn_educ_basica:     {fuente: datosgobar, id: "451.4_GPN_EDUCACPIB_0_0_24_66"}
+  gpn_educ_superior:   {fuente: datosgobar, id: "451.4_GPN_EDUCACPIB_0_0_31_0"}
+  gpn_salud_publica:   {fuente: datosgobar, id: "451.4_GPN_ATENCIPIB_0_0_22_87"}
+  gpn_pami:            {fuente: datosgobar, id: "451.4_GPN_INSSJYPIB_0_0_21_94"}
+  gpn_obras_sociales:  {fuente: datosgobar, id: "451.4_GPN_OBRAS_PIB_0_0_28_7"}
+  gpn_ciencia:         {fuente: datosgobar, id: "451.4_GPN_CIENCIPIB_0_0_23_73"}
+  gpn_vivienda:        {fuente: datosgobar, id: "451.4_GPN_VIVIENPIB_0_0_26_14"}
+  gpn_empleo:          {fuente: datosgobar, id: "451.4_GPN_PROGRAPIB_0_0_24_2"}
+  calificacion_sp:     {fuente: manual, id: calificacion_sp, escalonada: true}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -226,6 +261,9 @@ calculos:
   brecha_tarjeta:  {operacion: brecha, a: dolar_tarjeta, b: dolar_mayorista}
   # La serie IMIG de resultado financiero viene vacía en la API: se calcula como primario menos intereses netos
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
+  presion_tributaria: {operacion: porcentaje_pib, a: recaudacion, b: pib_nominal}
+  merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
+  salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
   - {id: deuda_composicion, nombre: "Deuda por instrumento y acreedor", seccion: "Deuda pública", ranking: diferencia, unidad_ranking: "miles de millones de US$ de hoy",
@@ -233,6 +271,8 @@ grupos:
      nota: "Deuda bruta de la Administración Central (Secretaría de Finanzas), saldos a fin de trimestre desde 2019. Bonos y letras incluyen los que están en manos de organismos públicos (BCRA, FGS, Banco Nación): Finanzas no publica la apertura por tenedor en esta serie."}
   - {id: empleo_sectores, nombre: "Empleo privado registrado por sector", seccion: "Empleo e ingresos", ranking: diferencia, unidad_ranking: "miles de puestos",
      nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
+  - {id: gasto_funcion, nombre: "Gasto público nacional por función", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
+     nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -382,3 +422,56 @@ indicadores:
   - {id: prov_resultado_primario, nombre: "Resultado primario de las provincias (consolidado)", seccion: "Estado y fiscal", serie: prov_resultado_primario, tipo_valor: saldo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A}
   - {id: prov_origen_nacional, nombre: "Recursos de origen nacional de las provincias", seccion: "Estado y fiscal", serie: prov_origen_nacional, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A,
      nota: "Coparticipación federal y otros impuestos nacionales distribuidos a las provincias."}
+
+  # --- Fase 1: cierre ---
+  - {id: inflacion_vivienda, nombre: "Inflación de vivienda, agua, electricidad y gas", seccion: Precios, serie: ipc_vivienda, tipo_valor: indice, vista_historica: mensual, unidad: "índice",
+     nota: "División del IPC nacional del INDEC que incluye alquileres y las tarifas de agua, electricidad y gas."}
+  - {id: inflacion_transporte, nombre: "Inflación de transporte", seccion: Precios, serie: ipc_transporte, tipo_valor: indice, vista_historica: mensual, unidad: "índice",
+     nota: "Incluye combustibles, compra de vehículos y transporte público."}
+  - {id: inflacion_educacion, nombre: "Inflación de educación", seccion: Precios, serie: ipc_educacion, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
+  - {id: ventas_autos, nombre: "Ventas de autos al mercado interno", seccion: Actividad, serie: ventas_autos, tipo_valor: flujo, unidad: "unidades por mes",
+     nota: "Automóviles vendidos en el país, nacionales e importados (ADEFA, vía Ministerio de Economía). Serie con estacionalidad."}
+  - {id: produccion_autos, nombre: "Producción de autos", seccion: Actividad, serie: produccion_autos, tipo_valor: flujo, unidad: "unidades por mes", nota: "Automóviles fabricados en el país (ADEFA). Serie con estacionalidad."}
+  - {id: faena_vacuna, nombre: "Faena de ganado vacuno", seccion: Actividad, serie: faena_vacuna, tipo_valor: flujo, unidad: "miles de cabezas por trimestre", frecuencia: T}
+  - {id: informalidad, nombre: "Asalariados sin descuento jubilatorio (informalidad)", seccion: "Empleo e ingresos", serie: informalidad, tipo_valor: tasa, escala: 100, unidad: "% de los asalariados", frecuencia: T,
+     nota: "EPH (INDEC), 31 aglomerados urbanos. Proporción de asalariados a los que no se les hacen aportes jubilatorios."}
+  - {id: empleo_publico, nombre: "Puestos asalariados registrados en el sector público", seccion: "Empleo e ingresos", serie: empleo_publico, tipo_valor: nivel, unidad: "miles de puestos", frecuencia: T,
+     nota: "Cuenta de generación del ingreso (INDEC): nación, provincias y municipios. Un mismo trabajador puede ocupar más de un puesto."}
+  - {id: remuneracion_sipa, nombre: "Sueldo promedio privado registrado (real)", seccion: "Empleo e ingresos", serie: remuneracion_sipa, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes",
+     nota: "Remuneración bruta promedio de los asalariados privados registrados (SIPA). Incluye aguinaldo en junio y diciembre."}
+  - {id: salario_usd, nombre: "Sueldo promedio privado en dólares (CCL)", seccion: "Empleo e ingresos", serie: salario_usd, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por mes",
+     nota: "Remuneración bruta promedio SIPA dividida por el dólar contado con liquidación promedio del mes. Incluye aguinaldo en junio y diciembre."}
+  - {id: gasto_auh, nombre: "Gasto en Asignación Universal por Hijo (real)", seccion: "Pobreza y programas sociales", serie: gasto_auh, tipo_valor: flujo, moneda: ARS, acumulado_12m: true,
+     unidad: "millones de pesos de hoy, últimos 12 meses", nota: "Gasto devengado de la Administración Nacional (Ministerio de Economía)."}
+  - {id: fae_privados, nombre: "Compra neta de dólares del sector privado (formación de activos externos)", seccion: "Sector externo e inversión", serie: fae_privados, tipo_valor: saldo, moneda: USD, escala: -1, acumulado_12m: true,
+     unidad: "millones de US$ de hoy, últimos 12 meses", nota: "Balance cambiario del BCRA: compras menos ventas de moneda extranjera para atesoramiento del sector privado no financiero (personas y empresas). Positivo = compra neta."}
+  - {id: presion_tributaria, nombre: "Presión tributaria nacional", seccion: "Estado y fiscal", serie: presion_tributaria, tipo_valor: tasa, unidad: "% del PIB, últimos 12 meses", frecuencia: T,
+     nota: "Recaudación nacional (impuestos, derechos de exportación y seguridad social, AFIP/ARCA) de los últimos 12 meses sobre el PIB nominal de los últimos 4 trimestres (INDEC). No incluye impuestos provinciales ni municipales."}
+  - {id: gasto_publico_pib, nombre: "Gasto público nacional", seccion: "Estado y fiscal", serie: gpn_total, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, nota: "Serie de gasto público consolidado; último año disponible: 2023."}
+  - {id: gpn_prevision, nombre: "Previsión social (jubilaciones y pensiones)", seccion: "Estado y fiscal", serie: gpn_prevision, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_economicos, nombre: "Servicios económicos (energía, transporte, subsidios)", seccion: "Estado y fiscal", serie: gpn_economicos, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_asistencia, nombre: "Promoción y asistencia social", seccion: "Estado y fiscal", serie: gpn_asistencia, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_funcionamiento, nombre: "Funcionamiento del Estado", seccion: "Estado y fiscal", serie: gpn_funcionamiento, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_deuda, nombre: "Intereses de la deuda", seccion: "Estado y fiscal", serie: gpn_deuda, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_pami, nombre: "PAMI (atención de la salud)", seccion: "Estado y fiscal", serie: gpn_pami, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_obras_sociales, nombre: "Obras sociales (atención de la salud)", seccion: "Estado y fiscal", serie: gpn_obras_sociales, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_salud_publica, nombre: "Atención pública de la salud", seccion: "Estado y fiscal", serie: gpn_salud_publica, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_defensa, nombre: "Defensa y seguridad", seccion: "Estado y fiscal", serie: gpn_defensa, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_educ_superior, nombre: "Educación superior y universitaria", seccion: "Estado y fiscal", serie: gpn_educ_superior, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_educ_basica, nombre: "Educación básica", seccion: "Estado y fiscal", serie: gpn_educ_basica, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_vivienda, nombre: "Vivienda y urbanismo", seccion: "Estado y fiscal", serie: gpn_vivienda, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_ciencia, nombre: "Ciencia y técnica", seccion: "Estado y fiscal", serie: gpn_ciencia, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: gpn_empleo, nombre: "Programas de empleo", seccion: "Estado y fiscal", serie: gpn_empleo, tipo_valor: tasa, unidad: "% del PIB", frecuencia: A, grupo: gasto_funcion}
+  - {id: merval, nombre: "Merval en pesos (real)", seccion: "Dólar y finanzas", serie: merval, tipo_valor: nivel, moneda: ARS, unidad: "puntos en pesos de hoy", nota: "Índice S&P Merval, cierre de cada mes."}
+  - {id: merval_usd, nombre: "Merval en dólares (CCL)", seccion: "Dólar y finanzas", serie: merval_usd, tipo_valor: nivel, moneda: USD, unidad: "puntos en US$ de hoy",
+     nota: "Cierre mensual del Merval dividido por el dólar contado con liquidación promedio del mes."}
+  - {id: adr_ggal, nombre: "Acción de Grupo Galicia en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: adr_ggal, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por ADR", nota: "Cierre mensual ajustado por dividendos y divisiones."}
+  - {id: adr_ypf, nombre: "Acción de YPF en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: adr_ypf, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por ADR", nota: "Cierre mensual ajustado por dividendos y divisiones."}
+  - {id: morosidad, nombre: "Morosidad de los préstamos al sector privado", seccion: "Crédito y alquileres", serie: morosidad, tipo_valor: tasa, unidad: "% de la cartera en situación irregular",
+     nota: "Irregularidad de la cartera de financiaciones al sector privado del sistema financiero (BCRA, Informe sobre bancos)."}
+  - {id: homicidios, nombre: "Homicidios dolosos", seccion: "Seguridad", serie: homicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
+     nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad)."}
+  - {id: suicidios, nombre: "Suicidios", seccion: "Seguridad", serie: suicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
+     nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad). Si vos o alguien cercano lo necesita: Línea 135 (CABA y GBA) o 0800-345-1435, gratis y las 24 horas."}
+  - {id: calificacion_sp, nombre: "Calificación de la deuda soberana (S&P)", seccion: "Deuda pública", serie: calificacion_sp, tipo_valor: tasa, unidad: "escalón: 0 = default (SD), 3 = CCC−, 4 = CCC, 5 = CCC+, 6 = B−, 7 = B, 8 = B+",
+     nota: "Calificación de largo plazo en moneda extranjera de S&P Global, al cierre de cada mes. Grado de inversión empieza en BBB−, que sería el escalón 12. Carga manual desde 2010 con el historial publicado por countryeconomy.com y FXEmpire."}

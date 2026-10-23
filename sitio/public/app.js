@@ -13,12 +13,13 @@ const GESTIONES = [
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
 const ORDEN_SECCIONES = ["Precios", "Actividad", "Empleo e ingresos", "Pobreza y programas sociales",
-  "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Opinión pública"];
+  "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Seguridad", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
   bcra: "BCRA",
   argentinadatos: "ArgentinaDatos",
   fred: "FRED",
+  yahoo: "Yahoo Finance",
   "cálculo propio": "Cálculo propio",
 };
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
@@ -394,7 +395,88 @@ function compararMiembro(m, periodo, porDiferencia) {
   return a != null && b ? (a / b - 1) * 100 : null;
 }
 
+function filaNivel(nombre, v, max, texto, attrs = {}) {
+  const ancho = max ? (Math.max(v, 0) / max) * 88 : 0;
+  return el(attrs.onclick ? "button" : "div", { class: "rank-fila nivel", role: "listitem", ...(attrs.onclick ? { type: "button" } : {}), ...attrs },
+    el("span", { class: "rank-nombre", text: nombre }),
+    el("span", { class: "rank-pista" },
+      el("span", { class: "rank-barra pos", style: `left:0;width:${ancho}%` }),
+      el("span", { class: "rank-num" + (ancho > 60 ? " dentro" : ""), style: ancho > 60 ? `left:${ancho - 1}%;transform:translateX(-100%)` : `left:${ancho}%`, text: texto })));
+}
+
+function fichaGrupoNivel(g) {
+  // ranking del último valor publicado (p. ej. gasto por función en % del PIB)
+  const ordenados = g.miembros.filter((m) => m.ultimo && m.ultimo.valor != null).sort((a, b) => b.ultimo.valor - a.ultimo.valor);
+  const max = Math.max(...ordenados.map((m) => m.ultimo.valor), 1e-9);
+  let elegido = ordenados[0] && ordenados[0].id;
+  const barras = el("div", { class: "ranking", role: "list" });
+  const detalle = el("div", { class: "grupo-detalle" });
+  const ref = ordenados[0] ? periodo(ordenados[0].ultimo.fecha, ordenados[0].frecuencia) : "";
+  const pintar = () => {
+    barras.innerHTML = "";
+    ordenados.forEach((m) => barras.append(filaNivel(m.nombre, m.ultimo.valor, max, fmt(m.ultimo.valor, 1) + (g.sufijo_ranking ?? ""),
+      { "aria-pressed": String(m.id === elegido), onclick: () => { elegido = m.id; pintar(); } })));
+    detalle.innerHTML = "";
+    const m = g.miembros.find((x) => x.id === elegido);
+    if (m) detalle.append(ficha(m, { anidada: true }));
+  };
+  pintar();
+  return el("article", { class: "ficha ancha", id: g.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: g.nombre }),
+      el("p", { class: "unidad", text: `${g.unidad_ranking || ""} · último dato: ${ref}. Tocá una fila para ver su serie.` }))),
+    barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
+}
+
+/* ---------- Tasas de hoy (foto del día) ---------- */
+
+function fichaTasas(d) {
+  const bloque = (titulo, filas, texto) => {
+    const max = Math.max(...filas.map((f) => f.tna), 1e-9);
+    const lista = el("div", { class: "ranking", role: "list" });
+    filas.forEach((f) => lista.append(filaNivel(f.nombre, f.tna, max, fmt(f.tna, 1) + "%")));
+    return el("div", { class: "tasas-bloque" }, el("h4", { text: titulo }), el("p", { class: "unidad", text: texto }), lista);
+  };
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `Tasa nominal anual (TNA) en pesos · ${fechaCorta(d.fecha)}` }))),
+    el("div", { class: "tasas" },
+      bloque("Plazo fijo a 30 días por banco", d.plazo_fijo, "Tasa para clientes que informa cada banco al BCRA."),
+      bloque("Fondos de dinero (cuentas remuneradas)", d.fondos, "Los 12 fondos más grandes. Es donde las billeteras virtuales invierten el saldo; la tasa surge de la variación de la cuotaparte en el último día hábil.")),
+    el("p", { class: "nota", text: d.nota }),
+    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
+}
+
+/* ---------- RIGI: proyectos aprobados ---------- */
+
+function fichaRigi(d) {
+  const mm = (v) => "US$ " + fmt(v, 0) + " M";
+  const maxS = Math.max(...d.sectores.map((s) => s.inversion), 1e-9);
+  const sectores = el("div", { class: "ranking", role: "list" });
+  d.sectores.forEach((s) => sectores.append(filaNivel(`${s.sector} (${s.proyectos})`, s.inversion, maxS, mm(s.inversion))));
+  const t = el("table", { class: "tabla rigi" });
+  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos"].map((h) => el("th", { scope: "col", text: h })))));
+  const tb = el("tbody");
+  d.proyectos.forEach((p) => tb.append(el("tr", {},
+    el("td", {}, p.norma ? el("a", { href: p.norma, target: "_blank", rel: "noopener", text: p.nombre, title: p.descripcion }) : p.nombre, el("small", { class: "rigi-empresa", text: p.empresa })),
+    el("td", { text: p.sector }), el("td", { text: p.provincias.join(", ") }),
+    el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }))));
+  t.append(tb);
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `Inversión comprometida en millones de dólares · consultado el ${fechaCorta(d.fecha)}` }))),
+    el("div", { class: "estratos" },
+      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Proyectos aprobados" }), el("p", { class: "estrato-valor", text: String(d.proyectos.length) })),
+      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Inversión comprometida" }), el("p", { class: "estrato-valor", text: mm(d.total_inversion) })),
+      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Empleos estimados" }), el("p", { class: "estrato-valor", text: fmt(d.total_empleos, 0) }))),
+    el("h4", { class: "subtitulo-ficha", text: "Por sector" }), sectores,
+    el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }),
+    el("div", { class: "tabla-envoltura" }, t),
+    el("p", { class: "nota", text: d.nota }),
+    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
+}
+
 function fichaGrupo(g) {
+  if (g.ranking === "nivel") return fichaGrupoNivel(g);
   const porDiferencia = g.ranking === "diferencia";
   let per = PERIODOS_RANKING[0];
   const esc = g.escala_ranking || 1, suf = g.sufijo_ranking ?? " mil";
@@ -775,6 +857,8 @@ async function iniciar() {
   const mapasCargados = (await Promise.all(listaMapas.map((m) => leer(`mapas/${m}`)))).filter(Boolean);
   const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
   const piramide = await leer("distribucion_ingreso");
+  const tasas = await leer("tasas");
+  const rigi = await leer("rigi");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -783,7 +867,7 @@ async function iniciar() {
 
   const nav = document.getElementById("nav-secciones");
   const secciones = document.getElementById("secciones");
-  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion)])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
+  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion), ...(tasas ? [tasas.seccion] : [])])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
   for (const s of nombres) {
     const id = slug(s);
     nav.append(el("a", { href: `#${id}`, text: s }));
@@ -791,6 +875,8 @@ async function iniciar() {
     fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
     if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
     if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
+    if (tasas && tasas.seccion === s) grilla.append(fichaTasas(tasas));
+    if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();
