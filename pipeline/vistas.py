@@ -2,10 +2,10 @@
 
 - intermensual: variación contra el período anterior (último dato)
 - interanual: variación contra el mismo mes del año anterior (serie completa)
-- gestion_actual: base 100 en el mes previo a la asunción del gobierno actual
+- gestion_actual: la misma serie que desde_2003, desde el primer mes del gobierno actual
 - desde_2003: la serie en nivel desde mayo de 2003 (o el primer dato válido)
-- comparativa: una serie por gestión, base 100 el mes previo a la asunción,
-  indexada por meses transcurridos desde la asunción
+- comparativa: una serie por gestión con la variación interanual de cada mes,
+  indexada por meses de mandato (1 = primer mes de gobierno)
 
 Para tipo_valor 'tasa' las variaciones se expresan en diferencia de puntos y las
 vistas de base son diferencias contra el mes base, no índices. Lo mismo para
@@ -66,17 +66,21 @@ def desde_base(s: pd.Series, base: str, tipo_valor: str) -> pd.Series | None:
     return tramo / valor_base * 100
 
 
-def comparativa(s: pd.Series, gestiones: list[dict], tipo_valor: str) -> dict:
-    """{nombre_gestion: [[meses_desde_asuncion, valor], ...]} recortado al fin de cada mandato."""
+def comparativa(ia: pd.Series, gestiones: list[dict]) -> dict:
+    """{nombre_gestion: [[mes_de_mandato, variacion_interanual], ...]}.
+
+    Cada gestión va desde el mes siguiente a su mes base hasta el mes base de la
+    siguiente (el último mes completo de su mandato).
+    """
     salida = {}
     for i, g in enumerate(gestiones):
+        base_ts = pd.Timestamp(g["base"])
         fin = pd.Timestamp(gestiones[i + 1]["base"]) if i + 1 < len(gestiones) else None
-        tramo = desde_base(s, g["base"], tipo_valor)
-        if tramo is None:
-            continue
+        tramo = ia[ia.index > base_ts]
         if fin is not None:
             tramo = tramo[tramo.index <= fin]
-        base_ts = pd.Timestamp(g["base"])
+        if tramo.empty:
+            continue
         meses = [(f.year - base_ts.year) * 12 + (f.month - base_ts.month) for f in tramo.index]
         salida[g["nombre"]] = [[m, round(float(v), 4)] for m, v in zip(meses, tramo.values)]
     return salida
@@ -104,8 +108,8 @@ def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list
         "vista_historica": vista_historica,
         "vistas": {
             "interanual": como_lista(ia[ia.index >= inicio]),
-            "gestion_actual": como_lista(desde_base(s, params["base_gestion_actual"], tipo_valor)),
+            "gestion_actual": como_lista(historica[historica.index > pd.Timestamp(params["base_gestion_actual"])]),
             "desde_2003": como_lista(historica[historica.index >= inicio]),
-            "comparativa": comparativa(s, gestiones, tipo_valor),
+            "comparativa": comparativa(ia, gestiones),
         },
     }

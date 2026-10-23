@@ -114,11 +114,11 @@ function describirVista(f, vista) {
     case "interanual":
       return dif ? "Diferencia contra el mismo período del año anterior." : "Variación % contra el mismo período del año anterior.";
     case "gestion_actual":
-      return dif ? "Diferencia contra noviembre de 2023, el mes previo a la asunción." : "Índice: noviembre de 2023 = 100 (mes previo a la asunción).";
+      return f.vista_historica === "mensual" ? "Variación % mensual desde diciembre de 2023." : "Serie en su unidad desde diciembre de 2023.";
     case "desde_2003":
       return f.vista_historica === "mensual" ? "Variación % mensual desde 2003." : "Serie en su unidad desde 2003 o desde el primer dato disponible.";
     case "comparativa":
-      return dif ? "Diferencia contra el mes previo a cada asunción, por meses de mandato." : "Mes previo a cada asunción = 100, por meses de mandato.";
+      return dif ? "Diferencia interanual de cada mes, por meses de mandato." : "Variación % interanual de cada mes, por meses de mandato."
   }
 }
 
@@ -130,26 +130,26 @@ function prepararVista(f, vista) {
   if (vista === "comparativa") {
     const series = GESTIONES.map((g, i) => ({ nombre: g.corto, color: css(COLORES[i]), puntos: v[g.nombre] ? puntos(v[g.nombre]) : null, grueso: i === GESTIONES.length - 1 }))
       .filter((s) => s.puntos && s.puntos.length);
-    return { series, tipoX: "meses", ...formatoY(f, vista, series), referencia: dif ? 0 : 100, bandas: false };
+    return { series, tipoX: "meses", ...formatoY(f, vista, series), referencia: 0, bandas: false };
   }
   const series = [{ nombre: f.nombre, color: css("--s1"), puntos: puntos(v), grueso: true }];
-  const ref = vista === "interanual" ? 0 : vista === "gestion_actual" ? (dif ? 0 : 100) : (f.vista_historica === "mensual" || f.tipo_valor === "saldo" ? 0 : null);
+  const ref = vista === "interanual" ? 0 : (f.vista_historica === "mensual" || f.tipo_valor === "saldo" ? 0 : null);
   return { series, tipoX: "fecha", ...formatoY(f, vista, series), referencia: ref, bandas: vista !== "gestion_actual" };
 }
 
 function formatoY(f, vista, series) {
   const maxAbs = Math.max(...series.flatMap((s) => s.puntos.map((p) => Math.abs(p[1]))), 0);
   const dif = esDiferencia(f);
-  const porcentaje = (vista === "interanual" && !dif) || (vista === "desde_2003" && f.vista_historica === "mensual");
+  const enNivel = vista === "desde_2003" || vista === "gestion_actual";
+  const porcentaje = ((vista === "interanual" || vista === "comparativa") && !dif) || (enNivel && f.vista_historica === "mensual");
   if (porcentaje) return { eje: (y) => fmt(y, decimales(maxAbs) > 1 ? 1 : 0) + "%", tip: (y) => fmt(y, 1) + "%", unidadEje: "" };
-  if ((vista === "gestion_actual" || vista === "comparativa") && !dif) return { eje: (y) => fmt(y, 0), tip: (y) => fmt(y, 1), unidadEje: "" };
   const mg = magnitud(f.unidad, maxAbs);
-  const suf = dif && vista !== "desde_2003" ? sufijoDiferencia(f) : "";
+  const suf = dif && !enNivel ? sufijoDiferencia(f) : "";
   const dec = decimales(maxAbs / mg.div);
   return {
     eje: (y) => fmt(y / mg.div, Math.max(0, dec - 1)) + suf,
-    tip: (y) => (dif && vista !== "desde_2003" ? signo(y / mg.div, dec) : fmt(y / mg.div, dec)) + suf,
-    unidadEje: vista === "desde_2003" || f.tipo_valor === "saldo" ? mg.unidad : "",
+    tip: (y) => (dif && !enNivel ? signo(y / mg.div, dec) : fmt(y / mg.div, dec)) + suf,
+    unidadEje: enNivel || f.tipo_valor === "saldo" ? mg.unidad : "",
   };
 }
 
@@ -225,7 +225,8 @@ function dibujar(contenedor, cfg) {
       for (let a = Math.ceil(a0 / paso) * paso; a <= a1; a += paso) { const d = +new Date(a, 0, 1); if (d >= x0) ticksX.push([d, String(a)]); }
     }
   } else {
-    for (let mth = 0; mth <= x1; mth += 12) ticksX.push([mth, mth === 0 ? "asunción" : `año ${mth / 12}`]);
+    for (let mth = 12; mth <= x1; mth += 12) ticksX.push([mth, `año ${mth / 12}`]);
+    if (x0 <= 1) ticksX.unshift([x0, "mes 1"]);
   }
   for (const [x, lab] of ticksX) {
     const t = svgEl("text", { x: X(x), y: H - 6, "text-anchor": "middle" });
@@ -263,7 +264,7 @@ function dibujar(contenedor, cfg) {
     cruz.setAttribute("x1", X(xRef)); cruz.setAttribute("x2", X(xRef)); cruz.setAttribute("visibility", "visible");
     const cab = cfg.tipoX === "fecha"
       ? (cfg.frecuencia === "T" ? periodo(new Date(xRef).toISOString().slice(0, 10), "T") : `${MESES_LARGO[new Date(xRef).getMonth()]} ${new Date(xRef).getFullYear()}`)
-      : (xRef === 0 ? "Mes previo a la asunción" : `Mes ${xRef} de mandato`);
+      : `Mes ${xRef} de mandato`;
     tip.innerHTML = "";
     tip.append(el("div", { class: "t-fecha", text: cab }));
     filas.sort((a, b) => b[1] - a[1]).forEach(([s, y]) => {

@@ -78,9 +78,11 @@ def test_vistas_indice():
     v = vistas.calcular_vistas(s, "indice", params, gestiones)
     assert v["intermensual"] == pytest.approx(1.0)
     assert v["interanual_ultimo"] == pytest.approx((1.01 ** 12 - 1) * 100)
-    assert v["vistas"]["gestion_actual"][0] == ["2023-11-01", 100.0]
-    assert v["vistas"]["comparativa"]["A"][0] == [0, 100.0]
-    assert v["vistas"]["comparativa"]["A"][-1][0] == 34   # termina cuando empieza B
+    # gestión actual: la serie mes a mes desde el primer mes de gobierno
+    assert v["vistas"]["gestion_actual"][0] == ["2023-12-01", round(100 * 1.01 ** 47, 4)]
+    # por gestión: interanual de cada mes, desde el primer mes de mandato
+    assert v["vistas"]["comparativa"]["A"][0] == [1, round((1.01 ** 12 - 1) * 100, 4)]
+    assert v["vistas"]["comparativa"]["A"][-1][0] == 34   # termina en el mes base de B
 
 
 def test_vistas_tasa_en_puntos():
