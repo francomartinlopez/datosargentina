@@ -461,7 +461,8 @@ function fichaGrupo(g) {
   const porDiferencia = g.ranking === "diferencia";
   let per = PERIODOS_RANKING[0];
   const esc = g.escala_ranking || 1, suf = g.sufijo_ranking ?? " mil";
-  const fmtRank = (v) => (porDiferencia ? signo(v * esc, Math.abs(v * esc) < 10 ? 1 : 0) + suf : signo(v) + "%");
+  const decRank = (x) => (Math.abs(x) < 1 ? 2 : Math.abs(x) < 10 ? 1 : 0);
+  const fmtRank = (v) => (porDiferencia ? signo(v * esc, decRank(v * esc)) + suf : signo(v) + "%");
   const detalle = el("div", { class: "grupo-detalle" });
   let elegido = null;
   const barras = el("div", { class: "ranking", role: "list" });
