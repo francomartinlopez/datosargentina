@@ -1,7 +1,40 @@
 # Informe de actualización 2026-10-23
 
-Indicadores publicados: 28
+Indicadores publicados: 63
 
 ## Alertas
 
-- Sin alertas
+- ipc_gba_historico: sin dato nuevo (último 2008-04)
+- ipc_san_luis: sin dato nuevo (último 2026-06)
+- ipc_caba_2012: sin dato nuevo (último 2022-02)
+- ipc_caba_2021: sin dato nuevo (último 2026-09)
+- ipc_nacional: sin dato nuevo (último 2026-08)
+- ipc_nucleo: sin dato nuevo (último 2026-08)
+- ipc_regulados: sin dato nuevo (último 2026-08)
+- ipc_alimentos: sin dato nuevo (último 2026-08)
+- emae_desest: sin dato nuevo (último 2026-07)
+- ipi_desest: sin dato nuevo (último 2026-08)
+- isac_desest: sin dato nuevo (último 2026-08)
+- supermercados_desest: sin dato nuevo (último 2026-07)
+- salario_privado: sin dato nuevo (último 2026-07)
+- salario_publico: sin dato nuevo (último 2026-07)
+- smvm: sin dato nuevo (último 2027-04)
+- jubilacion_minima: sin dato nuevo (último 2026-09)
+- desocupacion: sin dato nuevo (último 2026-04)
+- exportaciones: sin dato nuevo (último 2026-08)
+- importaciones: sin dato nuevo (último 2026-08)
+- resultado_primario: sin dato nuevo (último 2026-08)
+- intereses_netos: sin dato nuevo (último 2026-08)
+- recaudacion: sin dato nuevo (último 2026-09)
+- icg: sin dato nuevo (último 2026-09)
+- reservas: sin dato nuevo (último 2026-10)
+- dolar_mayorista: sin dato nuevo (último 2026-10)
+- base_monetaria: sin dato nuevo (último 2026-10)
+- tasa_plazo_fijo: sin dato nuevo (último 2026-10)
+- prestamos_privados: sin dato nuevo (último 2026-10)
+- dolar_ccl: sin dato nuevo (último 2026-10)
+- dolar_mep: sin dato nuevo (último 2026-10)
+- riesgo_pais: sin dato nuevo (último 2026-10)
+- impo_combustibles: variación inusual en el último dato (195.7%)
+- prestamos_tarjetas: variación inusual en el último dato (-11.1%)
+- cpi_eeuu: sin dato nuevo (último 2026-09)
