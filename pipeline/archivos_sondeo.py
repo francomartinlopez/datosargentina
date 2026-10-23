@@ -43,6 +43,11 @@ ARCHIVOS = {
     "escribanos_comp": [f"https://www.colegio-escribanos.org.ar/noticias/{m}-Comparativo-anual-por-mes.xls" for m in ("Octubre-2025",)],
     "escribanos_nov": ["https://www.colegio-escribanos.org.ar/noticias/Noviembre-2025-Comparativo-anual-por-mes.xls"],
     "escribanos_dic": ["https://www.colegio-escribanos.org.ar/noticias/Diciembre-2025-Comparativo-anual-por-mes.xls"],
+    "magyp_bovinos_ckan": ["https://datos.magyp.gob.ar/api/3/action/package_show?id=indicadores-mensuales-sector-bovino"],
+    "magyp_aves_ckan": ["https://datos.magyp.gob.ar/api/3/action/package_show?id=consumo-de-carne-aviar"],
+    "magyp_buscar_consumo": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=consumo&rows=50"],
+    "magyp_buscar_porcinos": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=porcinos&rows=50"],
+    "magyp_buscar_leche": ["https://datos.magyp.gob.ar/api/3/action/package_search?q=lacteo&rows=50"],
     "rigi_dataset": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"],
     "rigi_evaluacion": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=evaluacion"],
     "ucii": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/capacidad_{MM}_{AA}.xls", 4) + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_capacidad_instalada.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cuadros_capacidad_instalada.xls"],
@@ -57,6 +62,10 @@ PAGINAS = {
     "magyp_bovinos": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
     "escribanos": "https://www.colegio-escribanos.org.ar/2025/11/26/cantidad-de-escrituras-de-compraventa-realizadas-en-octubre-2025/",
     "escribanos_cat": "https://www.colegio-escribanos.org.ar/category/estadisticas-de-escrituras/",
+    "ocla_portafolio": "https://www.ocla.org.ar/portafolio/11/",
+    "ocla_consumo": "https://ocla.org.ar/noticias/35452417-poblacion-y-consumo-domestico",
+    "magyp_aves_carne": "https://www.magyp.gob.ar/sitio/areas/aves/estadistica/carne/index.php",
+    "magyp_porcinos": "https://www.magyp.gob.ar/sitio/areas/porcinos/estadistica/",
     "seguridad_snic": "https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos",
 }
 
