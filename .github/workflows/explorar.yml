@@ -1,0 +1,35 @@
+name: Exploración de fuentes
+
+# Corre scripts de relevamiento (por ejemplo, gabinetes desde Wikidata) y deja el
+# resultado en la rama "exploracion" para revisarlo. No toca main ni el sitio.
+
+on:
+  workflow_dispatch:
+    inputs:
+      modulo:
+        description: "Módulo a correr (por ejemplo pipeline.gabinetes)"
+        required: true
+        default: pipeline.gabinetes
+
+permissions:
+  contents: write
+
+jobs:
+  explorar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m ${{ inputs.modulo }}
+      - name: Guardar resultado en la rama exploracion
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B exploracion
+          git add -f data/
+          git commit -m "Exploración: ${{ inputs.modulo }}" || echo "sin cambios"
+          git push -f origin exploracion
