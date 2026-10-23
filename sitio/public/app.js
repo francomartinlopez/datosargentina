@@ -409,8 +409,8 @@ function fichaGrupo(g) {
     if (!elegido && ordenados[0]) elegido = ordenados[0][0].id;
     const ref = ordenados[0] ? periodo(ordenados[0][0].ultimo.fecha, ordenados[0][0].frecuencia) : "";
     const que = per.id === "anio" ? "contra el mismo mes del año anterior"
-      : porDiferencia ? `contra ${fechaCorta(per.base)}, el mes previo a la asunción`
-      : `promedio de los últimos 12 meses contra los 12 meses previos a la asunción (${fechaCorta(per.base)})`;
+      : porDiferencia ? `contra ${periodo(per.base, "M")}, el mes previo a la asunción`
+      : `promedio de los últimos 12 meses contra los 12 meses previos a la asunción (hasta ${periodo(per.base, "M")})`;
     subtitulo.textContent = `${porDiferencia ? `Variación en ${g.unidad_ranking || "unidades"}` : "Variación %"} ${que} · último dato: ${ref}. Tocá un sector para ver su serie.`;
     barras.innerHTML = "";
     if (!ordenados.length) barras.append(el("p", { class: "vacio", text: "No hay datos para ese período." }));
@@ -464,7 +464,8 @@ function fichaPiramide(d) {
       cuerpo.append(el("div", { class: "pir-fila" },
         el("span", { class: "pir-decil" }, el("strong", { text: String(x.decil) }), el("small", { text: rango })),
         el("span", { class: "pir-pista" }, el("span", { class: "pir-barra", style: `width:${(x.ingreso_medio / max) * 100}%;background:${colores[e]}` }),
-          el("span", { class: "pir-num", text: pesos(x.ingreso_medio) })),
+          // barras cortas: el monto va afuera, en tinta normal
+          el("span", { class: "pir-num" + ((x.ingreso_medio / max) < 0.14 ? " afuera" : ""), style: (x.ingreso_medio / max) < 0.14 ? `left:calc(${(x.ingreso_medio / max) * 100}% + 6px)` : "", text: pesos(x.ingreso_medio) })),
         el("span", { class: "pir-cant", text: fmt(cant / 1000, 2) + " M" })));
     });
     resumen.innerHTML = "";
