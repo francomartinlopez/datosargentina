@@ -50,6 +50,9 @@ PAGINAS = {
     "bcra_bancos": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_mensual_sobre_bancos.asp",
     "bcra_cambiario": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Evolucion_del_mercado_de_cambios.asp",
     "bcra_series": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp",
+    "indec_ucii": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-6-22",
+    "magyp_bovinos": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
+    "escribanos": "https://www.colegio-escribanos.org.ar/?p=104280",
     "seguridad_snic": "https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos",
 }
 

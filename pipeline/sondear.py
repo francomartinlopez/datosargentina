@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ["332.2_ENTIDADES_ADA__52", "332.2_BANCOS_PRIADA__59", "332.2_BANCOS_PRIADA__52", "332.2_BANCOS_PUBADA__55", "332.2_BANCOS_PRIADA__51", "332.2_SISTEMA_FIADA__53"]
+IDS = ["166.2_F_BRUTAIJO_0_0_19", "4.2_DGCP_2004_T_25", "4.4_DGCP_2004_T_25"]
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ["irregularidad cartera privada entidades financieras no bancarias", "irregularidad cartera privada bancos privados nacionales"]
+BUSQUEDAS = ['Prestación Alimentar titulares', 'Tarjeta Alimentar', 'Potenciar Trabajo titulares', 'formación bruta de capital fijo millones de pesos corrientes trimestral', 'Inversión bruta interna fija precios corrientes', 'inversión extranjera directa flujo trimestral balanza de pagos', 'escrituras', 'consumo aparente carne vacuna', 'utilización capacidad instalada bloques sectoriales nivel general']
 
 
 def sondear_id(i: str) -> dict:
