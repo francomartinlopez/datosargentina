@@ -53,7 +53,8 @@ PAGINAS = {
     "bcra_series": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp",
     "indec_ucii": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-6-22",
     "magyp_bovinos": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
-    "escribanos": "https://www.colegio-escribanos.org.ar/?p=104280",
+    "escribanos": "https://www.colegio-escribanos.org.ar/2025/11/26/cantidad-de-escrituras-de-compraventa-realizadas-en-octubre-2025/",
+    "escribanos_cat": "https://www.colegio-escribanos.org.ar/category/estadisticas-de-escrituras/",
     "seguridad_snic": "https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos",
 }
 
