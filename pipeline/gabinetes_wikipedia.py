@@ -57,24 +57,57 @@ def tablas(titulo: str) -> list[pd.DataFrame]:
 
 
 def normalizar(df: pd.DataFrame, gestion: str) -> pd.DataFrame:
+    """Lleva una tabla de ministros a: gestion, cartera, titular, inicio, fin.
+
+    Las tablas tienen encabezados de una o dos filas; con dos se usa la de abajo
+    (Nombre, Inicio, Final). Las tablas de secretarías se descartan.
+    """
     df = df.copy()
-    df.columns = [str(c[0] if isinstance(c, tuple) else c) + (f".{i}" if isinstance(c, tuple) and list(df.columns).count(c) > 1 else "")
-                  for i, c in enumerate(df.columns)]
-    cartera = next((c for c in df.columns if c.lower().startswith(("ministerio", "cartera", "cargo"))), df.columns[0])
-    titulares = [c for c in df.columns if c.lower().startswith("titular")]
+    df.columns = [str(c[-1] if isinstance(c, tuple) else c) for c in df.columns]
+    bajas = [c.lower() for c in df.columns]
+    if any("secretar" in c for c in bajas[1:]):
+        return pd.DataFrame()
+    cartera = next((c for c in df.columns if c.lower().startswith(("ministerio", "cartera", "cargo"))), None)
+    nombre = [c for c in df.columns if c.lower().startswith(("nombre", "titular"))]
     inicio = next((c for c in df.columns if c.lower().startswith("inicio")), None)
     fin = next((c for c in df.columns if c.lower().startswith(("final", "fin"))), None)
-    if not titulares or inicio is None:
+    if cartera is None or not nombre or inicio is None:
         return pd.DataFrame()
-    titular = df[titulares].astype(str).apply(lambda r: next((v for v in r[::-1] if v not in ("nan", "")), ""), axis=1)
+    titular = df[nombre].astype(str).apply(lambda r: next((v for v in r[::-1] if v not in ("nan", "")), ""), axis=1)
+    limpiar = lambda x: x.astype(str).str.replace(r"\[.*?\]", "", regex=True).str.replace("\u200b", "").str.strip()
     out = pd.DataFrame({
         "gestion": gestion,
-        "cartera": df[cartera].astype(str).str.replace(r"\[.*?\]", "", regex=True).str.strip(),
-        "titular": titular.str.replace(r"\[.*?\]", "", regex=True).str.strip(),
+        "cartera": limpiar(df[cartera]),
+        "titular": limpiar(titular),
         "inicio": df[inicio].map(fecha),
         "fin": df[fin].map(fecha) if fin else None,
     })
     return out.dropna(subset=["inicio"]).drop_duplicates(subset=["cartera", "titular", "inicio"])
+
+
+def clasificar(m: pd.DataFrame) -> pd.DataFrame:
+    """Motivo de salida de cada ministro:
+    - hasta_el_final: terminó con la gestión (o sigue en funciones)
+    - reemplazo: otra persona asumió la misma cartera (renuncia o desplazamiento)
+    - traslado: la misma persona pasó a otra cartera
+    - reestructuracion: la cartera se eliminó, fusionó o cambió de nombre
+    """
+    m = m.copy()
+    hoy = pd.Timestamp.today().normalize()
+    motivos = []
+    for _, r in m.iterrows():
+        _, desde, hasta = GESTIONES[r.gestion]
+        hasta = pd.Timestamp(hasta) if hasta else hoy
+        if pd.isna(r.fin) or r.fin >= hasta - pd.Timedelta(days=15):
+            motivos.append("hasta_el_final")
+            continue
+        misma = m[(m.gestion == r.gestion) & (m.cartera == r.cartera) & (m.titular != r.titular)
+                  & (m.inicio >= r.fin - pd.Timedelta(days=5)) & (m.inicio <= r.fin + pd.Timedelta(days=90))]
+        otra = m[(m.gestion == r.gestion) & (m.titular == r.titular) & (m.cartera != r.cartera)
+                 & (m.inicio >= r.fin - pd.Timedelta(days=5)) & (m.inicio <= r.fin + pd.Timedelta(days=30))]
+        motivos.append("reemplazo" if len(misma) else "traslado" if len(otra) else "reestructuracion")
+    m["motivo_salida"] = motivos
+    return m
 
 
 def resumen(m: pd.DataFrame) -> pd.DataFrame:
@@ -87,14 +120,15 @@ def resumen(m: pd.DataFrame) -> pd.DataFrame:
         desde, hasta = pd.Timestamp(desde), pd.Timestamp(hasta) if hasta else hoy
         anios = (hasta - desde).days / 365.25
         originales = d[d.inicio <= desde + pd.Timedelta(days=15)]
-        salidas = d[d.fin.notna() & (d.fin < hasta - pd.Timedelta(days=15))]
         fin_real = d.fin.fillna(hasta)
+        n = d.motivo_salida.value_counts()
         filas.append({
-            "gestion": g, "anios": round(anios, 2), "ministros_totales": len(d),
-            "salidas_anticipadas": len(salidas), "salidas_por_anio": round(len(salidas) / anios, 2),
+            "gestion": g, "anios": round(anios, 2), "ministros": len(d),
+            "reemplazos": int(n.get("reemplazo", 0)), "reemplazos_por_anio": round(n.get("reemplazo", 0) / anios, 2),
+            "traslados": int(n.get("traslado", 0)), "reestructuraciones": int(n.get("reestructuracion", 0)),
             "permanencia_promedio_meses": round(((fin_real - d.inicio).dt.days / 30.44).mean(), 1),
             "originales": len(originales),
-            "originales_hasta_el_final": int((originales.fin.isna() | (originales.fin >= hasta - pd.Timedelta(days=15))).sum()),
+            "originales_hasta_el_final": int((originales.motivo_salida == "hasta_el_final").sum()),
         })
     return pd.DataFrame(filas)
 
@@ -115,7 +149,7 @@ def main() -> None:
                 partes.append(n[n.cartera.str.contains("Ministerio|Jefatura", case=False)])
                 break
         time.sleep(3)
-    m = pd.concat(partes, ignore_index=True)
+    m = clasificar(pd.concat(partes, ignore_index=True))
     m.to_csv(SALIDA / "ministros.csv", index=False)
     resumen(m).to_csv(SALIDA / "resumen.csv", index=False)
     print(resumen(m).to_string())
