@@ -38,6 +38,8 @@ ARCHIVOS = {
     "byma": ["https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price"],
     "yahoo_ypf": ["https://query1.finance.yahoo.com/v8/finance/chart/YPF?range=max&interval=1mo"],
     "yahoo_argt": ["https://query1.finance.yahoo.com/v8/finance/chart/ARGT?range=max&interval=1mo"],
+    "pnfc_series": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/Series-Report-Non-Financial-Credit-Providers-junio-2026.xlsx"],
+    "pnfc_anexo": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/anexo-estadistico-proveedores-no-financieros-credito-junio-2026.xlsx"],
     "rigi_dataset": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"],
     "rigi_evaluacion": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=evaluacion"],
     "ucii": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/capacidad_{MM}_{AA}.xls", 4) + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_capacidad_instalada.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cuadros_capacidad_instalada.xls"],
