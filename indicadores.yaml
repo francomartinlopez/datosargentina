@@ -196,6 +196,11 @@ series:
   deuda_bilaterales:   {fuente: archivo, lector: finanzas_deuda, campo: organismos_oficiales}
   deuda_adelantos:     {fuente: archivo, lector: finanzas_deuda, campo: adelantos_bcra}
   deuda_otros:         {fuente: archivo, lector: finanzas_deuda, campo: otros}
+  # --- Provincias (Hacienda, serie anual AIF, millones de pesos corrientes) ---
+  prov_resultado_financiero: {fuente: archivo, lector: hacienda_provincias, campo: resultado_financiero}
+  prov_resultado_primario: {fuente: archivo, lector: hacienda_provincias, campo: resultado_primario}
+  prov_ingresos:       {fuente: archivo, lector: hacienda_provincias, campo: ingresos_totales}
+  prov_origen_nacional: {fuente: archivo, lector: hacienda_provincias, campo: tributarios_nacionales}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -371,3 +376,9 @@ indicadores:
   - {id: deuda_c_bilaterales, nombre: "Organismos oficiales bilaterales (Club de París y otros)", seccion: "Deuda pública", serie: deuda_bilaterales, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
   - {id: deuda_c_adelantos, nombre: "Adelantos transitorios del BCRA", seccion: "Deuda pública", serie: deuda_adelantos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
   - {id: deuda_c_otros, nombre: "Otros (préstamos, pagarés, avales y deuda en pago diferido)", seccion: "Deuda pública", serie: deuda_otros, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  # --- Provincias (consolidado) ---
+  - {id: prov_resultado_financiero, nombre: "Resultado financiero de las provincias (consolidado)", seccion: "Estado y fiscal", serie: prov_resultado_financiero, tipo_valor: saldo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A,
+     nota: "Suma de las 24 jurisdicciones, base devengado (Secretaría de Hacienda). Datos anuales desde 2005."}
+  - {id: prov_resultado_primario, nombre: "Resultado primario de las provincias (consolidado)", seccion: "Estado y fiscal", serie: prov_resultado_primario, tipo_valor: saldo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A}
+  - {id: prov_origen_nacional, nombre: "Recursos de origen nacional de las provincias", seccion: "Estado y fiscal", serie: prov_origen_nacional, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A,
+     nota: "Coparticipación federal y otros impuestos nacionales distribuidos a las provincias."}

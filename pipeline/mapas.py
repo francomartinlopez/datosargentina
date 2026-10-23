@@ -91,6 +91,49 @@ def empleo(mensuales: dict, base: str) -> dict:
     }
 
 
+HOJAS_IGN = {"Ciudad": "Ciudad Autónoma de Buenos Aires", "Tierra del Fuego": "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+             "Consolidado": "Total del país"}
+
+
+def fiscal() -> dict:
+    """Resultado fiscal y dependencia de recursos nacionales por provincia (último año y cambio desde 2023)."""
+    hojas = archivos.provincias_serie()
+    ultimo = max(df.index.max() for df in hojas.values())
+    base = pd.Timestamp(2023, 1, 1)
+    provincias = {}
+    for hoja, df in hojas.items():
+        nombre = HOJAS_IGN.get(hoja, hoja)
+        if ultimo not in df.index:
+            continue
+        pct = lambda c, f: (round(float(df.at[f, c] / df.at[f, "ingresos_totales"] * 100), 2)
+                            if f in df.index and df.at[f, "ingresos_totales"] else None)
+        rf, rf_base = pct("resultado_financiero", ultimo), pct("resultado_financiero", base)
+        provincias[nombre] = {
+            "resultado_financiero": rf,
+            "resultado_primario": pct("resultado_primario", ultimo),
+            "cambio_financiero": round(rf - rf_base, 2) if rf is not None and rf_base is not None else None,
+            "origen_nacional": pct("tributarios_nacionales", ultimo),
+        }
+    a = ultimo.year
+    return {
+        "id": "fiscal_provincias",
+        "nombre": "Cuentas fiscales de las provincias",
+        "seccion": "Estado y fiscal",
+        "unidad": "% de los ingresos totales de cada provincia",
+        "fecha": ultimo.strftime("%Y-%m-%d"),
+        "periodo": str(a),
+        "fuente": "Secretaría de Hacienda, Coordinación Fiscal Provincial (esquema ahorro-inversión-financiamiento)",
+        "nota": "Administración pública no financiera de cada provincia, base devengado. Expresado en % de sus ingresos totales para poder comparar provincias de distinto tamaño.",
+        "vistas": [
+            {"id": "resultado_financiero", "texto": f"Resultado financiero {a}", "desc": f"Resultado financiero (después de intereses) en % de los ingresos, {a}.", "sufijo": "%"},
+            {"id": "resultado_primario", "texto": f"Resultado primario {a}", "desc": f"Resultado primario (antes de intereses) en % de los ingresos, {a}.", "sufijo": "%"},
+            {"id": "cambio_financiero", "texto": "Cambio desde 2023", "desc": f"Cambio del resultado financiero entre 2023 y {a}, en puntos porcentuales de los ingresos.", "sufijo": " pp"},
+            {"id": "origen_nacional", "texto": "Recursos nacionales", "desc": f"Coparticipación y otros impuestos nacionales que recibe cada provincia, en % de sus ingresos, {a}.", "sufijo": "%", "secuencial": True},
+        ],
+        "provincias": provincias,
+    }
+
+
 def construir(mensuales: dict, params: dict, salida: Path) -> list[str]:
     """Genera los mapas disponibles. Devuelve alertas (un mapa que falla no frena el resto)."""
     alertas = []
@@ -98,7 +141,8 @@ def construir(mensuales: dict, params: dict, salida: Path) -> list[str]:
     carpeta.mkdir(parents=True, exist_ok=True)
     ipc = mensuales.get("ipc")
     tareas = {"supermercados": lambda: supermercados(ipc, params["base_gestion_actual"]),
-              "empleo": lambda: empleo(mensuales, params["base_gestion_actual"])}
+              "empleo": lambda: empleo(mensuales, params["base_gestion_actual"]),
+              "fiscal": fiscal}
     for nombre, funcion in tareas.items():
         try:
             mapa = funcion()

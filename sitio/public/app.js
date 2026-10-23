@@ -47,6 +47,7 @@ function periodo(f, frecuencia) {
   const d = fecha(f);
   if (frecuencia === "T") return `${["I", "II", "III", "IV"][Math.floor(d.getMonth() / 3)]} trim. ${d.getFullYear()}`;
   if (frecuencia === "S") return `${d.getMonth() < 6 ? "1.er" : "2.º"} sem. ${d.getFullYear()}`;
+  if (frecuencia === "A") return String(d.getFullYear());
   return `${MESES_LARGO[d.getMonth()]} ${d.getFullYear()}`;
 }
 
@@ -91,7 +92,7 @@ function cifraPrincipal(f) {
   const variacionMensual = esDiferencia(f)
     ? (f.tipo_valor === "saldo" ? signoMonto(f.intermensual, f.unidad) : signo(f.intermensual, decimales(f.intermensual || 0)) + sufijoDiferencia(f))
     : signo(f.intermensual) + "%";
-  const contra = f.frecuencia === "T" ? "vs. trimestre anterior" : f.frecuencia === "S" ? "vs. semestre anterior" : "vs. mes anterior";
+  const contra = f.frecuencia === "T" ? "vs. trimestre anterior" : f.frecuencia === "S" ? "vs. semestre anterior" : f.frecuencia === "A" ? "vs. año anterior" : "vs. mes anterior";
   if (f.vista_historica === "mensual") {
     return { grande: fmt(f.intermensual) + "%", etiqueta: "mensual", chica: `interanual ${fmt(f.interanual_ultimo)}%` };
   }
@@ -518,18 +519,29 @@ function colorDivergente(v, max) {
   return v > 0 ? azules[paso] : rojos[paso];
 }
 
+function colorSecuencial(v, max) {
+  const azules = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95"];
+  if (v == null) return css("--grilla");
+  return azules[Math.min(5, Math.floor((v / (max || 1)) * 6))];
+}
+
 function fichaMapa(m, geo) {
-  let vista = "interanual";
+  const VISTAS = m.vistas || VISTAS_MAPA.map((v) => ({ ...v, sufijo: "%" }));
+  let vista = VISTAS.find((v) => v.id === "interanual") ? "interanual" : VISTAS[0].id;
   const H = 420;
   const cont = el("div", { class: "mapa" });
   const leyenda = el("div", { class: "mapa-leyenda" });
   const tabla = el("ol", { class: "mapa-lista" });
   const desc = el("p", { class: "leyenda-vista" });
-  const botones = VISTAS_MAPA.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === vista), text: v.texto, onclick: () => { vista = v.id; render(); } }));
+  const botones = VISTAS.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === vista), text: v.texto, onclick: () => { vista = v.id; render(); } }));
   const tip = document.getElementById("tooltip");
   function render() {
-    botones.forEach((b, i) => b.setAttribute("aria-pressed", String(VISTAS_MAPA[i].id === vista)));
-    desc.textContent = VISTAS_MAPA.find((v) => v.id === vista).desc;
+    botones.forEach((b, i) => b.setAttribute("aria-pressed", String(VISTAS[i].id === vista)));
+    const vv = VISTAS.find((v) => v.id === vista);
+    const suf = vv.sufijo || "%";
+    const fmtV = (v) => (v == null ? "s/d" : (vv.secuencial ? fmt(v, 1) : signo(v)) + suf);
+    const colorDe = (v, max) => (vv.secuencial ? colorSecuencial(v, max) : colorDivergente(v, max));
+    desc.textContent = vv.desc;
     const vals = Object.entries(m.provincias).filter(([n]) => n !== "Total del país").map(([n, x]) => [n, x[vista]]);
     const max = Math.max(...vals.map(([, v]) => Math.abs(v ?? 0)), 0.1);
     const W = Math.min(cont.clientWidth || 300, 340);
@@ -538,10 +550,10 @@ function fichaMapa(m, geo) {
     const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", "aria-label": `${m.nombre}: ${desc.textContent}` });
     geo.features.forEach((f) => {
       const n = f.properties.nombre, v = m.provincias[n]?.[vista];
-      const p = svgEl("path", { d: path(f.geometry), fill: colorDivergente(v, max), stroke: css("--superficie"), "stroke-width": 0.8 });
+      const p = svgEl("path", { d: path(f.geometry), fill: colorDe(v, max), stroke: css("--superficie"), "stroke-width": 0.8 });
       const mostrar = (ev) => {
         tip.innerHTML = "";
-        tip.append(el("div", { class: "t-fecha", text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("div", { class: "t-fila" }, el("span", { text: VISTAS_MAPA.find((x) => x.id === vista).texto }), el("span", { text: v == null ? "s/d" : signo(v) + "%" })));
+        tip.append(el("div", { class: "t-fecha", text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("div", { class: "t-fila" }, el("span", { text: vv.texto }), el("span", { text: fmtV(v) })));
         tip.hidden = false;
         tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 14) + "px";
         tip.style.top = Math.max(8, ev.clientY - tip.offsetHeight - 12) + "px";
@@ -553,17 +565,17 @@ function fichaMapa(m, geo) {
     });
     cont.append(svg);
     leyenda.innerHTML = "";
-    const escala = [-max, -max / 2, 0, max / 2, max];
-    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDivergente(v === 0 ? 0 : v, max)}` }), signo(v, max < 10 ? 1 : 0) + "%")));
+    const escala = vv.secuencial ? [0, max / 3, (2 * max) / 3, max] : [-max, -max / 2, 0, max / 2, max];
+    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDe(v === 0 ? 0 : v * 0.999, max)}` }), (vv.secuencial ? fmt(v, 0) : signo(v, max < 10 ? 1 : 0)) + suf)));
     tabla.innerHTML = "";
     [...vals].sort((a, b) => (b[1] ?? -1e9) - (a[1] ?? -1e9)).forEach(([n, v]) =>
-      tabla.append(el("li", {}, el("span", { text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("span", { text: v == null ? "s/d" : signo(v) + "%" }))));
+      tabla.append(el("li", {}, el("span", { text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("span", { text: fmtV(v) }))));
   }
   const total = m.provincias["Total del país"];
   const art = el("article", { class: "ficha ancha", id: m.id },
     el("div", { class: "ficha-cab" },
-      el("div", {}, el("h3", { text: m.nombre }), el("p", { class: "unidad", text: `${m.unidad} · ${periodo(m.fecha, "M")}` })),
-      total ? el("div", { class: "cifra" }, el("span", { class: "grande" }, signo(total.interanual) + "%", el("small", { text: " interanual" })), el("span", { class: "chica", text: "total del país" })) : null),
+      el("div", {}, el("h3", { text: m.nombre }), el("p", { class: "unidad", text: `${m.unidad} · ${m.periodo || periodo(m.fecha, "M")}` })),
+      total ? el("div", { class: "cifra" }, el("span", { class: "grande" }, signo(total[VISTAS[m.vistas ? 0 : 1].id]) + (VISTAS[m.vistas ? 0 : 1].sufijo || "%"), el("small", { text: " " + VISTAS[m.vistas ? 0 : 1].texto.toLowerCase() })), el("span", { class: "chica", text: "total del país" })) : null),
     el("div", { class: "vistas", role: "group", "aria-label": "Vista del mapa" }, ...botones), desc,
     el("div", { class: "mapa-cuerpo" }, el("div", {}, cont, leyenda), tabla),
     m.nota ? el("p", { class: "nota", text: m.nota }) : null,

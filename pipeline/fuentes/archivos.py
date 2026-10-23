@@ -32,6 +32,7 @@ ARCHIVOS = {
     "cin": INDEC + "economia/cin_{T}_{AAAA}.xls",
 }
 PAGINA_DEUDA = "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda"
+PAGINA_PROVINCIAS = "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ejecuciones"
 FIRMAS = (b"\xd0\xcf\x11\xe0", b"PK\x03\x04")  # xls (OLE2) y xlsx (zip)
 
 
@@ -302,6 +303,53 @@ def finanzas_deuda_residencia(campo: str) -> pd.Series:
     return s[~s.index.duplicated(keep="last")].sort_index()
 
 
+# ---------- Ejecución presupuestaria provincial (serie anual AIF por provincia) ----------
+
+RENGLONES_PROVINCIA = {
+    "ingresos_totales": "VI. INGRESOS TOTALES",
+    "gastos_totales": "VII. GASTOS TOTALES",
+    "resultado_financiero": "VIII. RESULTADO FINANC",
+    "resultado_primario": "IX. RESULTADO PRIMARIO",
+    "tributarios_nacionales": "- DE ORÍGEN NACI",
+    "personal": "- PERSONAL",
+}
+
+
+@lru_cache(maxsize=None)
+def provincias_serie() -> dict[str, pd.DataFrame]:
+    """{hoja (provincia o 'Consolidado'): DataFrame años x renglón} en millones de pesos corrientes."""
+    r = requests.get(PAGINA_PROVINCIAS, headers=CABECERAS, timeout=TIMEOUT)
+    enlaces = sorted(set(re.findall(r'href="([^"]*serie_aif-apnf-(\d{4})[^"]*\.xlsx)"', r.text)), key=lambda x: x[1])
+    if not enlaces:
+        raise RuntimeError("No se encontró la serie AIF provincial")
+    url = enlaces[-1][0]
+    url = url if url.startswith("http") else "https://www.argentina.gob.ar" + url
+    contenido = requests.get(url, headers=CABECERAS, timeout=TIMEOUT).content
+    return leer_provincias(pd.read_excel(io.BytesIO(contenido), sheet_name=None, header=None))
+
+
+def leer_provincias(h: dict) -> dict[str, pd.DataFrame]:
+    salida = {}
+    for hoja, df in h.items():
+        try:
+            fila = next(i for i in range(len(df)) if _texto(df.iat[i, 0]).upper() == "CONCEPTO")
+        except StopIteration:
+            continue
+        anios = {j: int(float(v)) for j, v in enumerate(df.iloc[fila]) if re.fullmatch(r"\d{4}(\.0)?", _texto(v))}
+        datos = {}
+        for clave, prefijo in RENGLONES_PROVINCIA.items():
+            i = next((k for k in range(fila + 1, len(df)) if _texto(df.iat[k, 0]).upper().startswith(prefijo)), None)
+            if i is not None:
+                datos[clave] = {pd.Timestamp(a, 1, 1): pd.to_numeric(df.iat[i, j], errors="coerce") for j, a in anios.items()}
+        salida[re.sub(r"\s+", " ", hoja).strip()] = pd.DataFrame(datos).sort_index()
+    return salida
+
+
+def hacienda_provincias(campo: str) -> pd.Series:
+    """Consolidado de las 24 jurisdicciones, anual. campo: un renglón de RENGLONES_PROVINCIA."""
+    return provincias_serie()["Consolidado"][campo].dropna()
+
+
 LECTORES = {
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,
@@ -310,6 +358,7 @@ LECTORES = {
     "indec_cin": indec_cin,
     "finanzas_deuda": finanzas_deuda,
     "finanzas_deuda_residencia": finanzas_deuda_residencia,
+    "hacienda_provincias": hacienda_provincias,
 }
 
 
