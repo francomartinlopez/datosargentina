@@ -26,8 +26,11 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 IDS = []
 BUSQUEDAS = [
-    "exportaciones manufacturas de origen agropecuario", "exportaciones combustibles y energia",
-    "subsidios economicos energia", "importaciones combustibles y lubricantes", "exportaciones productos primarios",
+    "EMAE agricultura ganaderia", "EMAE pesca", "EMAE explotacion de minas", "EMAE industria manufacturera",
+    "EMAE electricidad gas agua", "EMAE construccion", "EMAE comercio mayorista minorista", "EMAE hoteles restaurantes",
+    "EMAE transporte comunicaciones", "EMAE intermediacion financiera", "EMAE actividades inmobiliarias",
+    "EMAE administracion publica", "EMAE enseñanza", "EMAE servicios sociales salud", "EMAE otras actividades servicios",
+    "EMAE impuestos netos de subsidios",
 ]
 ARGENTINADATOS = [
     "cotizaciones/dolares/tarjeta", "cotizaciones/dolares/oficial", "cotizaciones/dolares/blue",
