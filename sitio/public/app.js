@@ -410,10 +410,10 @@ function fichaGrupo(g) {
     const maxAbs = Math.max(...ordenados.map(([, v]) => Math.abs(v)), 1e-9);
     if (!elegido && ordenados[0]) elegido = ordenados[0][0].id;
     const ref = ordenados[0] ? periodo(ordenados[0][0].ultimo.fecha, ordenados[0][0].frecuencia) : "";
-    const que = per.id === "anio" ? "contra el mismo mes del año anterior"
+    const que = per.id === "anio" ? "contra un año antes"
       : porDiferencia ? `contra ${periodo(per.base, "M")}, el mes previo a la asunción`
       : `promedio de los últimos 12 meses contra los 12 meses previos a la asunción (hasta ${periodo(per.base, "M")})`;
-    subtitulo.textContent = `${porDiferencia ? `Variación en ${g.unidad_ranking || "unidades"}` : "Variación %"} ${que} · último dato: ${ref}. Tocá un sector para ver su serie.`;
+    subtitulo.textContent = `${porDiferencia ? `Variación en ${g.unidad_ranking || "unidades"}` : "Variación %"} ${que} · último dato: ${ref}. Tocá una fila para ver su serie.`;
     barras.innerHTML = "";
     if (!ordenados.length) barras.append(el("p", { class: "vacio", text: "No hay datos para ese período." }));
     ordenados.forEach(([m, v]) => {

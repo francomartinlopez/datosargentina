@@ -103,6 +103,18 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     return mensuales, alertas
 
 
+FUENTES_ARCHIVO = {"indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda"}
+
+
+def nombre_fuente(definicion: dict) -> str:
+    """Clave de fuente para el sitio; en las planillas se toma el organismo del lector (indec_..., finanzas_...)."""
+    if not definicion:
+        return "cálculo propio"
+    if definicion.get("fuente") == "archivo":
+        return FUENTES_ARCHIVO.get(definicion.get("lector", "").split("_")[0], "archivo")
+    return definicion.get("fuente", "cálculo propio")
+
+
 def preparar(nombre: str, ind: dict, mensuales: dict, deflactores: dict) -> pd.Series | None:
     """Serie lista para publicar: escala, moneda constante, acumulado de 12 meses y sin fechas futuras."""
     s = mensuales.get(nombre)
@@ -141,7 +153,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
         ficha = {
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
-            "fuente": config["series"].get(ind["serie"], {}).get("fuente", "cálculo propio"),
+            "fuente": nombre_fuente(config["series"].get(ind["serie"], {})),
             "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")), "grupo": ind.get("grupo"),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
             **calc,
