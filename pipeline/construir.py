@@ -96,7 +96,12 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
             s = transformar.a_moneda_constante(s, deflactores[moneda])
         if ind.get("acumulado_12m"):
             s = transformar.acumulado_12m(s)
-        calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones)
+        # algunas fuentes publican valores ya anunciados para meses futuros (p. ej. el salario mínimo)
+        s = s[s.index <= pd.Timestamp.today().normalize()]
+        if s.empty:
+            alertas.append(f"{ind['id']}: sin datos hasta hoy, no se publica")
+            continue
+        calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones, ind.get("vista_historica", "nivel"))
         fichas.append({
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
@@ -104,6 +109,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
             "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
             **calc,
+            "_serie": vistas.como_lista(s[s.index >= pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)]),
         })
     return fichas, alertas
 
@@ -114,8 +120,10 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str]) -> None:
     ahora = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     for f in fichas:
         f["actualizado"] = ahora
+        serie = f.pop("_serie")
         (SALIDA / f"{f['id']}.json").write_text(json.dumps(f, ensure_ascii=False), encoding="utf-8")
-        pd.DataFrame(f["vistas"]["desde_2003"], columns=["fecha", "valor"]).to_csv(SALIDA / f"{f['id']}.csv", index=False)
+        # el CSV de descarga es la serie en nivel (moneda constante cuando corresponde), desde 2003
+        pd.DataFrame(serie, columns=["fecha", "valor"]).to_csv(SALIDA / f"{f['id']}.csv", index=False)
     portada = [{k: f[k] for k in ("id", "nombre", "unidad", "ultimo", "intermensual", "interanual_ultimo")}
                for f in fichas if f["portada"]]
     indice = [{k: f[k] for k in ("id", "nombre", "seccion")} for f in fichas]

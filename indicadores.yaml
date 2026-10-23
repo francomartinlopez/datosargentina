@@ -8,6 +8,8 @@
 #   nivel   -> stock o monto (reservas, salario): variaciones en %, se puede deflactar
 #   flujo   -> monto de un período (exportaciones, recaudación): igual que nivel
 #   tasa    -> porcentaje o puntos (desocupación, tasas de interés, riesgo país): variaciones en puntos
+#   saldo   -> monto que cambia de signo (resultado fiscal, saldo comercial): variaciones como diferencia
+# vista_historica: mensual -> la vista "desde 2003" muestra la variación mensual (índices de precios)
 # moneda: ARS | USD | (vacío) -> si es ARS o USD se expresa en moneda constante del último mes.
 
 parametros:
@@ -81,11 +83,11 @@ calculos:
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
 
 indicadores:
-  - {id: inflacion, nombre: "Inflación (IPC)", seccion: Precios, serie: ipc, tipo_valor: indice, unidad: "índice", portada: true,
+  - {id: inflacion, nombre: "Inflación (IPC)", seccion: Precios, serie: ipc, tipo_valor: indice, vista_historica: mensual, unidad: "índice", portada: true,
      nota: "IPC empalmado: GBA hasta 2006, San Luis 2007–2012, CABA 2012–2016 e INDEC nacional desde 2017."}
-  - {id: inflacion_nucleo, nombre: "Inflación núcleo", seccion: Precios, serie: ipc_nucleo, tipo_valor: indice, unidad: "índice"}
-  - {id: inflacion_regulados, nombre: "Inflación de regulados", seccion: Precios, serie: ipc_regulados, tipo_valor: indice, unidad: "índice"}
-  - {id: inflacion_alimentos, nombre: "Inflación de alimentos y bebidas", seccion: Precios, serie: ipc_alimentos, tipo_valor: indice, unidad: "índice"}
+  - {id: inflacion_nucleo, nombre: "Inflación núcleo", seccion: Precios, serie: ipc_nucleo, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
+  - {id: inflacion_regulados, nombre: "Inflación de regulados", seccion: Precios, serie: ipc_regulados, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
+  - {id: inflacion_alimentos, nombre: "Inflación de alimentos y bebidas", seccion: Precios, serie: ipc_alimentos, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
   - {id: emae, nombre: "Actividad económica (EMAE)", seccion: Actividad, serie: emae_desest, tipo_valor: indice, unidad: "índice 2004=100, desest.", portada: true}
   - {id: ipi, nombre: "Producción industrial (IPI)", seccion: Actividad, serie: ipi_desest, tipo_valor: indice, unidad: "índice, desest."}
   - {id: isac, nombre: "Construcción (ISAC)", seccion: Actividad, serie: isac_desest, tipo_valor: indice, unidad: "índice, desest."}
@@ -97,9 +99,9 @@ indicadores:
   - {id: desocupacion, nombre: "Desocupación", seccion: "Empleo e ingresos", serie: desocupacion, tipo_valor: tasa, escala: 100, unidad: "% de la PEA", frecuencia: T, portada: true}
   - {id: exportaciones, nombre: "Exportaciones", seccion: "Sector externo e inversión", serie: exportaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
   - {id: importaciones, nombre: "Importaciones", seccion: "Sector externo e inversión", serie: importaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
-  - {id: saldo_comercial, nombre: "Saldo comercial", seccion: "Sector externo e inversión", serie: saldo_comercial, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
-  - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses", portada: true}
-  - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: saldo_comercial, nombre: "Saldo comercial", seccion: "Sector externo e inversión", serie: saldo_comercial, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy"}
+  - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: saldo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses", portada: true}
+  - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: saldo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: icg, nombre: "Confianza en el gobierno (UTDT)", seccion: "Opinión pública", serie: icg, tipo_valor: tasa, unidad: "índice 0 a 5", portada: true}
   - {id: reservas, nombre: "Reservas brutas del BCRA", seccion: "Dólar y finanzas", serie: reservas, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", portada: true}

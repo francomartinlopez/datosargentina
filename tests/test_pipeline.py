@@ -104,3 +104,19 @@ def test_deflactor_se_extiende_y_acumulado():
     assert list(real.values) == [200.0, 100.0, 100.0]
     acum = transformar.acumulado_12m(mensual([1.0] * 14))
     assert len(acum) == 3 and acum.iloc[-1] == 12.0
+
+
+def test_saldo_usa_diferencias():
+    idx = pd.date_range("2022-01-01", periods=13, freq="MS")
+    s = pd.Series([-10.0] * 12 + [5.0], index=idx)
+    assert vistas.interanual(s, "saldo").iloc[-1] == 15.0
+    assert vistas.intermensual(s, "saldo") == 15.0
+
+
+def test_vista_historica_mensual():
+    idx = pd.date_range("2003-01-01", periods=6, freq="MS")
+    s = pd.Series([100, 110, 121, 121, 121, 121], index=idx, dtype=float)
+    params = {"inicio_historico": "2003-01-01", "base_gestion_actual": "2003-02-01"}
+    v = vistas.calcular_vistas(s, "indice", params, [], "mensual")
+    assert v["vista_historica"] == "mensual"
+    assert v["vistas"]["desde_2003"][0] == ["2003-02-01", 10.0]

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datos de Argentina</title>
+<meta name="description" content="Economía y gobierno de Argentina desde 2003, con datos públicos en moneda constante. Actualización mensual.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header class="cabecera">
+  <div class="contenedor">
+    <h1>Datos de Argentina</h1>
+    <p class="bajada">Economía y gobierno desde 2003, con datos públicos. Pesos y dólares en moneda constante de hoy.</p>
+    <p class="meta" id="actualizado"></p>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Secciones">
+  <div class="contenedor" id="nav-secciones"></div>
+</nav>
+
+<main class="contenedor">
+  <section id="portada" aria-labelledby="t-portada">
+    <h2 id="t-portada" class="oculto">Valores clave</h2>
+    <div class="tarjetas" id="tarjetas"></div>
+  </section>
+
+  <div id="secciones"></div>
+
+  <section id="gobierno" class="seccion" hidden>
+    <h2>Gobierno</h2>
+    <p class="intro">Registros con nombre propio, para todas las gestiones desde 2003. Cada caso tiene fecha, estado y fuentes.</p>
+    <div id="gobierno-bloques"></div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p><strong>Metodología.</strong> Las series en pesos se deflactan con un IPC empalmado (GBA hasta 2006, San Luis 2007–2012, CABA 2012–2016 e INDEC nacional desde 2017); las series en dólares, con el IPC de Estados Unidos. "Gestión actual" toma como base el mes previo a la asunción (noviembre de 2023). "Por gestión" compara cada gobierno desde el mes previo a su asunción.</p>
+    <p>Código y datos: <a href="https://github.com/francomartinlopez/datosargentina">github.com/francomartinlopez/datosargentina</a></p>
+  </div>
+</footer>
+
+<div class="tooltip" id="tooltip" role="status" aria-live="polite" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

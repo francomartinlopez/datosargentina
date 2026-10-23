@@ -8,7 +8,12 @@
   indexada por meses transcurridos desde la asunción
 
 Para tipo_valor 'tasa' las variaciones se expresan en diferencia de puntos y las
-vistas de base son diferencias contra el mes base, no índices.
+vistas de base son diferencias contra el mes base, no índices. Lo mismo para
+'saldo' (montos que cambian de signo, como el resultado fiscal o el saldo
+comercial): la variación es la diferencia en la misma unidad.
+
+vista_historica = 'mensual' cambia la vista desde 2003 por la variación mensual
+(se usa en los índices de precios, donde el nivel no es informativo).
 """
 from __future__ import annotations
 
@@ -16,7 +21,8 @@ import pandas as pd
 
 
 def _es_tasa(tipo_valor: str) -> bool:
-    return tipo_valor == "tasa"
+    """Tipos cuya variación se mide como diferencia y no como porcentaje."""
+    return tipo_valor in ("tasa", "saldo")
 
 
 def interanual(s: pd.Series, tipo_valor: str) -> pd.Series:
@@ -82,16 +88,24 @@ def como_lista(s: pd.Series | None) -> list:
     return [[f.strftime("%Y-%m-%d"), round(float(v), 4)] for f, v in s.dropna().items()]
 
 
-def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list[dict]) -> dict:
+def mensual(s: pd.Series) -> pd.Series:
+    return ((s / s.shift(1) - 1) * 100).dropna()
+
+
+def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list[dict],
+                    vista_historica: str = "nivel") -> dict:
     s = s.dropna().sort_index()
-    inicio = pd.Timestamp(params["inicio_historico"])
+    inicio = pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)
+    ia = interanual(s, tipo_valor)
+    historica = mensual(s) if vista_historica == "mensual" else s
     return {
         "intermensual": intermensual(s, tipo_valor),
-        "interanual_ultimo": (lambda ia: float(ia.iloc[-1]) if not ia.empty else None)(interanual(s, tipo_valor)),
+        "interanual_ultimo": float(ia.iloc[-1]) if not ia.empty else None,
+        "vista_historica": vista_historica,
         "vistas": {
-            "interanual": como_lista(interanual(s, tipo_valor)),
+            "interanual": como_lista(ia[ia.index >= inicio]),
             "gestion_actual": como_lista(desde_base(s, params["base_gestion_actual"], tipo_valor)),
-            "desde_2003": como_lista(s[s.index >= inicio - pd.DateOffset(months=1)]),
+            "desde_2003": como_lista(historica[historica.index >= inicio]),
             "comparativa": comparativa(s, gestiones, tipo_valor),
         },
     }
