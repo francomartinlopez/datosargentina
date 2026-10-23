@@ -57,8 +57,9 @@ def tablas(titulo: str) -> list[pd.DataFrame]:
 
 
 def normalizar(df: pd.DataFrame, gestion: str) -> pd.DataFrame:
-    cols = {c: str(c) for c in df.columns}
-    df = df.rename(columns=cols)
+    df = df.copy()
+    df.columns = [str(c[0] if isinstance(c, tuple) else c) + (f".{i}" if isinstance(c, tuple) and list(df.columns).count(c) > 1 else "")
+                  for i, c in enumerate(df.columns)]
     cartera = next((c for c in df.columns if c.lower().startswith(("ministerio", "cartera", "cargo"))), df.columns[0])
     titulares = [c for c in df.columns if c.lower().startswith("titular")]
     inicio = next((c for c in df.columns if c.lower().startswith("inicio")), None)
