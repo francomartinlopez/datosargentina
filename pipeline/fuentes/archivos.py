@@ -402,13 +402,16 @@ MESES_NOMBRE = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", 
 
 def leer_escribanos(contenido: bytes, mes: int) -> pd.Series:
     """Cada planilla mensual trae ese mismo mes de todos los años desde 2016: 'Año AAAA' | actos."""
-    df = pd.read_excel(io.BytesIO(contenido), header=None)
     out = {}
-    for i in range(len(df)):
-        m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, 0]))
-        v = pd.to_numeric(df.iat[i, 1], errors="coerce")
-        if m and pd.notna(v):
-            out[pd.Timestamp(int(m.group(1)), mes, 1)] = float(v)
+    # la hoja con datos no siempre es la primera (algunos meses traen hojas vacías adelante)
+    for df in pd.read_excel(io.BytesIO(contenido), header=None, sheet_name=None).values():
+        for i in range(len(df)):
+            m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, 0]))
+            v = pd.to_numeric(df.iat[i, 1], errors="coerce") if df.shape[1] > 1 else None
+            if m and pd.notna(v):
+                out[pd.Timestamp(int(m.group(1)), mes, 1)] = float(v)
+        if out:
+            break
     return pd.Series(out, dtype=float)
 
 

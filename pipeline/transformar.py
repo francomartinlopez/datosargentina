@@ -121,7 +121,8 @@ def porcentaje_pib(flujo: pd.Series, pib: pd.Series) -> pd.Series:
     return pd.Series(out, dtype=float).sort_index()
 
 
-def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = None, divisor_b: float = 1) -> pd.Series:
+def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = None, divisor_b: float = 1,
+                  acumular: int = 1) -> pd.Series:
     """a (trimestral) como % de b (trimestral), con a convertida por una serie mensual opcional
     (p. ej. dólares a pesos con el promedio del tipo de cambio del trimestre)."""
     a = a.dropna()
@@ -132,4 +133,7 @@ def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = No
         a = a * trimestral.reindex(a.index)
     b = b.dropna() / divisor_b
     a, b = a.align(b, join="inner")
+    if acumular > 1:  # suma de los últimos n períodos de cada una (suaviza flujos muy volátiles)
+        a = a.rolling(acumular, min_periods=acumular).sum()
+        b = b.rolling(acumular, min_periods=acumular).sum()
     return (a / b * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)

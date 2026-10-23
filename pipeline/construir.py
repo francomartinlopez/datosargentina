@@ -102,7 +102,7 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
                 continue
             mensuales[nombre] = transformar.porcentaje_de(mensuales[c["a"]], mensuales[c["b"]],
-                                                          mensuales.get(c.get("multiplicar")), c.get("divisor_b", 1))
+                                                          mensuales.get(c.get("multiplicar")), c.get("divisor_b", 1), c.get("acumular", 1))
             continue
         if c["operacion"] == "porcentaje_pib":  # flujo mensual de 12 meses / PIB nominal de 4 trimestres, en %
             faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]

@@ -279,7 +279,7 @@ calculos:
   presion_tributaria: {operacion: porcentaje_pib, a: recaudacion, b: pib_nominal}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
-  ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4}
+  ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
@@ -512,5 +512,5 @@ indicadores:
   - {id: ucii, nombre: "Uso de la capacidad instalada de la industria", seccion: Actividad, serie: ucii, tipo_valor: tasa, unidad: "% de la capacidad", nota: "INDEC, nivel general. Serie con estacionalidad: enero suele ser el mes más bajo."}
   - {id: escrituras_caba, nombre: "Escrituras de compraventa en la Ciudad de Buenos Aires", seccion: "Crédito y alquileres", serie: escrituras_caba, tipo_valor: flujo, unidad: "actos por mes",
      nota: "Colegio de Escribanos de la Ciudad de Buenos Aires. Solo CABA: no hay una serie nacional de escrituras. Serie con estacionalidad (diciembre suele ser el mes más alto)."}
-  - {id: ied_inversion, nombre: "Inversión extranjera directa como % de la inversión total", seccion: "Sector externo e inversión", serie: ied_inversion, tipo_valor: tasa, unidad: "% de la formación bruta de capital fijo", frecuencia: T,
-     nota: "Ingresos netos de inversión extranjera directa del trimestre (balanza de pagos, INDEC) pasados a pesos con el dólar mayorista promedio, sobre la formación bruta de capital fijo a precios corrientes (INDEC). Indica qué parte de la inversión del país se financia con capital extranjero directo."}
+  - {id: ied_inversion, nombre: "Inversión extranjera directa como % de la inversión total", seccion: "Sector externo e inversión", serie: ied_inversion, tipo_valor: tasa, unidad: "% de la formación bruta de capital fijo, últimos 4 trimestres", frecuencia: T,
+     nota: "Ingresos netos de inversión extranjera directa de los últimos 4 trimestres (balanza de pagos, INDEC) pasados a pesos con el dólar mayorista promedio, sobre la formación bruta de capital fijo a precios corrientes (INDEC). Indica qué parte de la inversión del país se financia con capital extranjero directo."}
