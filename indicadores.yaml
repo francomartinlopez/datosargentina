@@ -169,8 +169,6 @@ series:
   asal_prov_tucuman: {fuente: datosgobar, id: "154.2_TMANMAN_S_0_0_7"}
   # --- Distribución del ingreso (EPH, trimestral, pesos corrientes) ---
   ipcf_total:          {fuente: datosgobar, id: "301.1_TOTAL_IPCFPCF_0_T_10"}
-  ipcf_decil_1: {fuente: datosgobar, id: "301.1_DECIL_1_IPPCF_0_T_12"}
-  ipcf_decil_2: {fuente: datosgobar, id: "301.1_DECIL_2_IPPCF_0_T_12"}
   ipcf_decil_3: {fuente: datosgobar, id: "301.1_DECIL_3_IPPCF_0_T_12"}
   ipcf_decil_4: {fuente: datosgobar, id: "301.1_DECIL_4_IPPCF_0_T_12"}
   ipcf_decil_5: {fuente: datosgobar, id: "301.1_DECIL_5_IPPCF_0_T_12"}
@@ -195,7 +193,9 @@ empalmes:
 calculos:
   saldo_comercial: {operacion: resta, a: exportaciones, b: importaciones}
   brecha_ccl:      {operacion: brecha, a: dolar_ccl, b: dolar_mayorista}
-  ipcf_estrato_bajo:  {operacion: promedio, series: [ipcf_decil_1, ipcf_decil_2, ipcf_decil_3, ipcf_decil_4]}
+  # Deciles 1 y 2 vienen vacíos en la API: como cada decil tiene el 10% de las personas, el promedio
+  # total es el promedio de los 10 deciles y el estrato bajo = (10·total − deciles 5 a 10) / 4
+  ipcf_estrato_bajo:  {operacion: combinacion, terminos: {ipcf_total: 2.5, ipcf_decil_5: -0.25, ipcf_decil_6: -0.25, ipcf_decil_7: -0.25, ipcf_decil_8: -0.25, ipcf_decil_9: -0.25, ipcf_decil_10: -0.25}}
   ipcf_estrato_medio: {operacion: promedio, series: [ipcf_decil_5, ipcf_decil_6, ipcf_decil_7, ipcf_decil_8]}
   ipcf_estrato_alto:  {operacion: promedio, series: [ipcf_decil_9, ipcf_decil_10]}
   balanza_energetica: {operacion: resta, a: expo_combustibles, b: impo_combustibles}
@@ -320,7 +320,8 @@ indicadores:
   # --- Ingresos de los hogares (EPH) ---
   - {id: ingreso_per_capita, nombre: "Ingreso per cápita familiar (real)", seccion: "Empleo e ingresos", serie: ipcf_total, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T, portada: true,
      nota: "Ingreso disponible de los hogares por integrante, promedio de la EPH (31 aglomerados), en pesos de hoy. Incluye ingresos laborales y no laborales (jubilaciones, planes, rentas)."}
-  - {id: ingreso_estrato_bajo, nombre: "Ingreso per cápita: estrato bajo (deciles 1 a 4)", seccion: "Empleo e ingresos", serie: ipcf_estrato_bajo, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
+  - {id: ingreso_estrato_bajo, nombre: "Ingreso per cápita: estrato bajo (deciles 1 a 4)", seccion: "Empleo e ingresos", serie: ipcf_estrato_bajo, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T,
+     nota: "Los deciles 1 y 2 no se publican en la serie de datos.gob.ar: el estrato bajo se obtiene del promedio total menos los deciles 5 a 10 (cada decil reúne al 10% de las personas)."}
   - {id: ingreso_estrato_medio, nombre: "Ingreso per cápita: estrato medio (deciles 5 a 8)", seccion: "Empleo e ingresos", serie: ipcf_estrato_medio, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
   - {id: ingreso_estrato_alto, nombre: "Ingreso per cápita: estrato alto (deciles 9 y 10)", seccion: "Empleo e ingresos", serie: ipcf_estrato_alto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
   - {id: gini, nombre: "Desigualdad: coeficiente de Gini", seccion: "Empleo e ingresos", serie: gini, tipo_valor: tasa, unidad: "coeficiente (0 = igualdad total)", frecuencia: T,

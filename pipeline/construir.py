@@ -80,6 +80,14 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
             continue
         mensuales[nombre] = transformar.empalmar([(mensuales[t["serie"]], t.get("hasta")) for t in tramos])
     for nombre, c in config.get("calculos", {}).items():
+        if c["operacion"] == "combinacion":  # suma ponderada: {serie: coeficiente, ...}
+            faltan = [x for x in c["terminos"] if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            partes = pd.concat([mensuales[x] * k for x, k in c["terminos"].items()], axis=1, join="inner")
+            mensuales[nombre] = partes.sum(axis=1)
+            continue
         if c["operacion"] == "promedio":  # promedio simple de varias series (p. ej. deciles de un estrato)
             faltan = [x for x in c["series"] if x not in mensuales]
             if faltan:
