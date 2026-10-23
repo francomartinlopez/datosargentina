@@ -24,8 +24,8 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = []
-BUSQUEDAS = ['ingreso per cápita familiar', 'ingreso medio per cápita familiar decil', 'ingreso total familiar promedio', 'coeficiente de Gini ingreso per cápita familiar', 'ingreso disponible bruto']
+IDS = ['301.1_DECIL_1_IPCF_0_T_12', '301.1_DECIL_2_IPCF_0_T_12', '301.1_DECIL_1_IPPCF_0_T_11', '301.1_DECIL_2_IPPCF_0_T_11']
+BUSQUEDAS = ['Distribución personal del ingreso decil 1 ingreso per cápita familiar', 'Distribución personal del ingreso decil 2 ingreso per cápita familiar', 'decil 1 ingreso per capita familiar pesos corrientes']
 
 
 def sondear_id(i: str) -> dict:
