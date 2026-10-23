@@ -17,6 +17,8 @@ vista_historica = 'mensual' cambia la vista desde 2003 por la variación mensual
 """
 from __future__ import annotations
 
+import math
+
 import pandas as pd
 
 
@@ -82,14 +84,21 @@ def comparativa(ia: pd.Series, gestiones: list[dict]) -> dict:
         if tramo.empty:
             continue
         meses = [(f.year - base_ts.year) * 12 + (f.month - base_ts.month) for f in tramo.index]
-        salida[g["nombre"]] = [[m, round(float(v), 4)] for m, v in zip(meses, tramo.values)]
+        salida[g["nombre"]] = [[m, round(float(v), 4)] for m, v in zip(meses, tramo.values) if math.isfinite(v)]
     return salida
 
 
 def como_lista(s: pd.Series | None) -> list:
+    """Lista [fecha, valor] sin valores no finitos (una variación contra un período en cero
+    da infinito, que no es JSON válido)."""
     if s is None:
         return []
-    return [[f.strftime("%Y-%m-%d"), round(float(v), 4)] for f, v in s.dropna().items()]
+    s = s.replace([float("inf"), float("-inf")], float("nan")).dropna()
+    return [[f.strftime("%Y-%m-%d"), round(float(v), 4)] for f, v in s.items()]
+
+
+def _finito(v: float | None) -> float | None:
+    return v if v is not None and math.isfinite(v) else None
 
 
 def mensual(s: pd.Series) -> pd.Series:
@@ -103,8 +112,8 @@ def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list
     ia = interanual(s, tipo_valor)
     historica = mensual(s) if vista_historica == "mensual" else s
     return {
-        "intermensual": intermensual(s, tipo_valor),
-        "interanual_ultimo": float(ia.iloc[-1]) if not ia.empty else None,
+        "intermensual": _finito(intermensual(s, tipo_valor)),
+        "interanual_ultimo": _finito(float(ia.iloc[-1])) if not ia.empty else None,
         "vista_historica": vista_historica,
         "vistas": {
             "interanual": como_lista(ia[ia.index >= inicio]),

@@ -510,7 +510,10 @@ async function gobierno() {
 
 async function iniciar() {
   const indice = await (await fetch(`${DATOS}indice.json`)).json();
-  const fichas = await Promise.all(indice.map(async (i) => (await fetch(`${DATOS}${i.id}.json`)).json()));
+  // un archivo con problemas no tumba la página: ese indicador simplemente no se muestra
+  const fichas = (await Promise.all(indice.map(async (i) => {
+    try { return await (await fetch(`${DATOS}${i.id}.json`)).json(); } catch { return null; }
+  }))).filter(Boolean);
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 

@@ -136,7 +136,7 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str]) -> None:
     for f in fichas:
         f["actualizado"] = ahora
         serie = f.pop("_serie")
-        (SALIDA / f"{f['id']}.json").write_text(json.dumps(f, ensure_ascii=False), encoding="utf-8")
+        (SALIDA / f"{f['id']}.json").write_text(json.dumps(f, ensure_ascii=False, allow_nan=False), encoding="utf-8")
         # el CSV de descarga es la serie en nivel (moneda constante cuando corresponde), desde 2003
         pd.DataFrame(serie, columns=["fecha", "valor"]).to_csv(SALIDA / f"{f['id']}.csv", index=False)
     portada = [{k: f[k] for k in ("id", "nombre", "unidad", "ultimo", "intermensual", "interanual_ultimo")}

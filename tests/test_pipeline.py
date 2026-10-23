@@ -129,3 +129,12 @@ def test_acumulado_12m_trimestral():
     s = pd.Series([1.0, 2, 3, 4, 5, 6], index=idx)
     a = transformar.acumulado_12m(s)
     assert a.iloc[0] == 10 and a.iloc[-1] == 18
+
+
+def test_variacion_contra_cero_no_rompe_json():
+    import json
+    idx = pd.date_range("2022-01-01", periods=14, freq="MS")
+    s = pd.Series([0.0] * 2 + [5.0] * 12, index=idx)
+    params = {"inicio_historico": "2022-01-01", "base_gestion_actual": "2022-06-01"}
+    v = vistas.calcular_vistas(s, "flujo", params, [])
+    json.dumps(v, allow_nan=False)
