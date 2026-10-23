@@ -262,6 +262,18 @@ series:
   gpn_vivienda:        {fuente: datosgobar, id: "451.4_GPN_VIVIENPIB_0_0_26_14"}
   gpn_empleo:          {fuente: datosgobar, id: "451.4_GPN_PROGRAPIB_0_0_24_2"}
   calificacion_sp:     {fuente: manual, id: calificacion_sp, escalonada: true}
+  # --- Consumo por habitante: FAO (vía Our World in Data) + cifras oficiales ---
+  fao_vacuna:          {fuente: owid, id: per-capita-meat-type, campo: beef_and_buffalo}
+  fao_aviar:           {fuente: owid, id: per-capita-meat-type, campo: poultry}
+  fao_porcina:         {fuente: owid, id: per-capita-meat-type, campo: meat__pig}
+  fao_leche:           {fuente: owid, id: per-capita-milk-consumption, campo: milk__excluding_butter}
+  consumo_vacuna_sagyp_2024: {fuente: manual, id: consumo_vacuna_sagyp_2024}
+  consumo_vacuna_sagyp: {fuente: manual, id: consumo_vacuna_sagyp}
+  consumo_aviar_sagyp_2024: {fuente: manual, id: consumo_aviar_sagyp_2024}
+  consumo_aviar_sagyp: {fuente: manual, id: consumo_aviar_sagyp}
+  consumo_porcina_sagyp_2024: {fuente: manual, id: consumo_porcina_sagyp_2024}
+  consumo_porcina_sagyp: {fuente: manual, id: consumo_porcina_sagyp}
+  consumo_leche_ocla:  {fuente: manual, id: consumo_leche_ocla}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -273,6 +285,21 @@ empalmes:
     - {serie: ipc_san_luis,      hasta: "2012-07-01"}
     - {serie: ipc_caba_2012,     hasta: "2016-12-01"}
     - {serie: ipc_nacional}
+  consumo_vacuna:
+    - {serie: fao_vacuna, hasta: "2015-01-01"}
+    - {serie: consumo_vacuna_sagyp_2024, hasta: "2024-01-01"}
+    - {serie: consumo_vacuna_sagyp}
+  consumo_aviar:
+    - {serie: fao_aviar, hasta: "2015-01-01"}
+    - {serie: consumo_aviar_sagyp_2024, hasta: "2024-01-01"}
+    - {serie: consumo_aviar_sagyp}
+  consumo_porcina:
+    - {serie: fao_porcina, hasta: "2015-01-01"}
+    - {serie: consumo_porcina_sagyp_2024, hasta: "2024-01-01"}
+    - {serie: consumo_porcina_sagyp}
+  consumo_leche:
+    - {serie: fao_leche, hasta: "2022-01-01"}
+    - {serie: consumo_leche_ocla}
 
 calculos:
   saldo_comercial: {operacion: resta, a: exportaciones, b: importaciones}
@@ -551,3 +578,11 @@ indicadores:
   - {id: pib_intereses, nombre: "Intereses de la deuda (netos)", seccion: "Estado y fiscal", serie: pib_intereses, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
   - {id: tasa_real_plazo_fijo, nombre: "Tasa real de plazo fijo", seccion: "Dólar y finanzas", serie: tasa_real_plazo_fijo, tipo_valor: tasa, vista_inicial: desde_2003, unidad: "% anual, descontada la inflación",
      nota: "Tasa promedio de plazo fijo a 30 días (BCRA) menos la inflación del mismo mes (IPC empalmado), anualizada. Negativa: el plazo fijo perdió contra la inflación."}
+  - {id: consumo_vacuna, nombre: "Consumo de carne vacuna por habitante", seccion: Consumo, serie: consumo_vacuna, tipo_valor: nivel, frecuencia: A, vista_inicial: desde_2003, unidad: "kg por habitante por año", portada: true,
+     nota: "Consumo aparente por habitante. 2015 en adelante: Secretaría de Agricultura, Ganadería y Pesca (SAGyP); 2024 y 2025 con la revisión de población del INDEC, y 2015–2023 llevados a ese nivel manteniendo sus variaciones oficiales. Antes de 2015: variaciones de las hojas de balance de FAO (vía Our World in Data), empalmadas con la serie oficial."}
+  - {id: consumo_aviar, nombre: "Consumo de carne aviar (pollo) por habitante", seccion: Consumo, serie: consumo_aviar, tipo_valor: nivel, frecuencia: A, vista_inicial: desde_2003, unidad: "kg por habitante por año",
+     nota: "Consumo aparente por habitante. 2015 en adelante: Secretaría de Agricultura, Ganadería y Pesca (SAGyP); 2024 y 2025 con la revisión de población del INDEC, y 2015–2023 llevados a ese nivel manteniendo sus variaciones oficiales. Antes de 2015: variaciones de las hojas de balance de FAO (vía Our World in Data), empalmadas con la serie oficial."}
+  - {id: consumo_porcina, nombre: "Consumo de carne porcina por habitante", seccion: Consumo, serie: consumo_porcina, tipo_valor: nivel, frecuencia: A, vista_inicial: desde_2003, unidad: "kg por habitante por año",
+     nota: "Consumo aparente por habitante. 2015 en adelante: Secretaría de Agricultura, Ganadería y Pesca (SAGyP); 2024 y 2025 con la revisión de población del INDEC, y 2015–2023 llevados a ese nivel manteniendo sus variaciones oficiales. Antes de 2015: variaciones de las hojas de balance de FAO (vía Our World in Data), empalmadas con la serie oficial."}
+  - {id: consumo_leche, nombre: "Consumo de leche y lácteos por habitante", seccion: Consumo, serie: consumo_leche, tipo_valor: nivel, frecuencia: A, vista_inicial: desde_2003, unidad: "litros de leche equivalente por habitante por año",
+     nota: "2022 en adelante: Observatorio de la Cadena Láctea Argentina (OCLA), con la proyección de población vigente del INDEC; incluye leche fluida y todos los lácteos expresados en litros de leche. Antes de 2022: variaciones de las hojas de balance de FAO (leche y derivados, sin manteca), empalmadas con la serie de OCLA."}

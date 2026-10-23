@@ -46,10 +46,11 @@ def empalmar(tramos: list[tuple[pd.Series, str | None]]) -> pd.Series:
         variaciones.append(v)
     var = pd.concat(variaciones)
     var = var[~var.index.duplicated(keep="last")].sort_index()
-    esperado = pd.date_range(var.index[0], var.index[-1], freq="MS")
+    anual = len(var) > 1 and var.index.to_series().diff().dt.days.median() > 300
+    esperado = pd.date_range(var.index[0], var.index[-1], freq="YS" if anual else "MS")
     faltan = esperado.difference(var.index)
     if len(faltan):
-        raise ValueError(f"Empalme con huecos: faltan {len(faltan)} meses, el primero {faltan[0]:%Y-%m}")
+        raise ValueError(f"Empalme con huecos: faltan {len(faltan)} períodos, el primero {faltan[0]:%Y-%m}")
 
     # Reconstruir el nivel hacia atrás desde el último dato de la fuente vigente
     ultimo = tramos[-1][0].sort_index().dropna()
@@ -57,7 +58,7 @@ def empalmar(tramos: list[tuple[pd.Series, str | None]]) -> pd.Series:
     factores = (1 + var).cumprod()
     nivel = factores / factores.iloc[-1] * nivel_final
     # agregar el primer mes (base) que no tiene variación
-    primero = var.index[0] - pd.DateOffset(months=1)
+    primero = var.index[0] - (pd.DateOffset(years=1) if anual else pd.DateOffset(months=1))
     nivel.loc[primero] = nivel.iloc[0] / (1 + var.iloc[0])
     return nivel.sort_index()
 

@@ -12,7 +12,7 @@ const GESTIONES = [
   { nombre: "Javier Milei", corto: "Milei", desde: "2023-12-10", hasta: null },
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
-const ORDEN_SECCIONES = ["Precios", "Actividad", "Empleo e ingresos", "Pobreza y programas sociales",
+const ORDEN_SECCIONES = ["Precios", "Actividad", "Consumo", "Empleo e ingresos", "Pobreza y programas sociales",
   "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Seguridad", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
