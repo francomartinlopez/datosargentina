@@ -32,12 +32,11 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
     return out
 
 
-ARCHIVOS = {}
-PAGINAS = {
-    "ejecuciones": "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ejecuciones",
-    "ejecucion": "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial",
-    "recursos_origen_nacional": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/esquema-de-financiamiento-y-distribucion-de-recursos-de-origen-nacional",
-    "interior_apnf": "https://www.argentina.gob.ar/interior/subsecretaria-de-relaciones-con-provincias/administracion-publica-no-financiera",
+ARCHIVOS = {
+    "yahoo_merval": ["https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?range=max&interval=1mo"],
+    "yahoo_ggal": ["https://query1.finance.yahoo.com/v8/finance/chart/GGAL?range=max&interval=1mo"],
+    "byma": ["https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price"],
+    "magyp_bovinos": ["https://datos.magyp.gob.ar/dataset/indicadores-mensuales-bovinos"],
 }
 
 
@@ -64,6 +63,9 @@ def main() -> None:
             try:
                 r = requests.get(u, headers=CAB, timeout=60)
                 informe[clave].append({"url": u, "status": r.status_code, "bytes": len(r.content), "tipo": r.headers.get("content-type")})
+                if r.status_code == 200 and "json" in (r.headers.get("content-type") or ""):
+                    (SALIDA / f"{clave}.json").write_bytes(r.content[:400000])
+                    break
                 if r.status_code == 200 and len(r.content) > 500 and "html" not in (r.headers.get("content-type") or ""):
                     ext = u.rsplit(".", 1)[-1]
                     (SALIDA / f"{clave}.{ext}").write_bytes(r.content)
