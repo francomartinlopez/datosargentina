@@ -33,29 +33,10 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
-    "pobreza": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_pobreza_{MM}_{AA}.xls"),
-    "oferta_demanda": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_oferta_demanda_{MM}_{AA}.xls"),
-    "balanza_pagos": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_balanza_pagos_{MM}_{AA}.xls")
-                      + variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_bal_pagos_{MM}_{AA}.xls"),
-    "canastas": ["https://www.indec.gob.ar/ftp/cuadros/sociedad/serie_cba_cbt.xls"],
-    "supermercados_prov": ["https://www.indec.gob.ar/ftp/cuadros/economia/serie_supermercados.xlsx",
-                           "https://www.indec.gob.ar/ftp/cuadros/economia/serie_supermercados.xls"],
-    "patentamientos_autos": ["https://estadisticas.produccion.gob.ar/app/dataset/6/distribution/6.3/autom-paten-series.csv"],
-    "patentamientos_motos": ["https://estadisticas.produccion.gob.ar/app/dataset/14/distribution/14.1/motos-paten-series.csv"],
-    "escrituras": ["https://estadisticas.produccion.gob.ar/app/dataset/7/distribution/7.1/escritura-canti-series.csv"],
-    "bovinos": ["https://datos.magyp.gob.ar/dataset/9e3a2b3d-8b9c-4c71-9e5a-1f0e0b1c2a3d/resource/serie-tiempo-indicadores-mensuales-bovinos.csv"],
-    "itcrm": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/ITCRMSerie.xlsx"],
+    "trabajo_registrado": [f"https://www.argentina.gob.ar/sites/default/files/trabajoregistrado_{a}{m:02d}_estadisticas.xlsx"
+                           for a, m in [(26, 8), (26, 7), (26, 6), (26, 5)]],
 }
-PAGINAS = {
-    "deuda": "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda",
-    "indec_pobreza": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-4-46-152",
-    "indec_bdp": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-35-45",
-    "indec_pib": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-9-47",
-    "trabajo_registrado": "https://www.argentina.gob.ar/trabajo/estadisticas/situacion-y-evolucion-del-trabajo-registrado",
-    "coparticipacion": "https://www.economia.gob.ar/dnap/transferencias.html",
-    "magyp_bovinos": "https://datos.magyp.gob.ar/dataset/indicadores-mensuales-bovinos",
-    "energia_produccion": "http://datos.energia.gob.ar/dataset/produccion-de-petroleo-y-gas-por-pozo",
-}
+PAGINAS = {}
 
 
 def resumir_planilla(contenido: bytes, nombre: str) -> str:

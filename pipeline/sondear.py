@@ -26,8 +26,9 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 IDS = []
 BUSQUEDAS = [
-    "EMAE. Construcción", "EMAE construcción base 2004 mensual", "EMAE. Otras actividades de servicios comunitarias",
-    "EMAE servicio doméstico", "EMAE impuestos netos", "EMAE. Electricidad",
+    "supermercados ventas totales precios constantes serie original", "autoservicios mayoristas ventas precios constantes serie original",
+    "centros de compras ventas totales precios constantes serie original", "asalariados sector privado sin estacionalidad",
+    "asalariados registrados sector privado rama de actividad", "trabajadores registrados sector privado industria mensual",
 ]
 ARGENTINADATOS = [
     "cotizaciones/dolares/tarjeta", "cotizaciones/dolares/oficial", "cotizaciones/dolares/blue",
