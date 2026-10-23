@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-23
 
-Indicadores publicados: 101
+Indicadores publicados: 165
 
 ## Alertas
 
@@ -28,10 +28,15 @@ Indicadores publicados: 101
 - recaudacion: sin dato nuevo (último 2026-09)
 - icg: sin dato nuevo (último 2026-09)
 - reservas: sin dato nuevo (último 2026-10)
+- reservas: la fuente revisó 1 datos anteriores
 - dolar_mayorista: sin dato nuevo (último 2026-10)
+- dolar_mayorista: la fuente revisó 1 datos anteriores
 - base_monetaria: sin dato nuevo (último 2026-10)
+- base_monetaria: la fuente revisó 1 datos anteriores
 - tasa_plazo_fijo: sin dato nuevo (último 2026-10)
+- tasa_plazo_fijo: la fuente revisó 1 datos anteriores
 - prestamos_privados: sin dato nuevo (último 2026-10)
+- prestamos_privados: la fuente revisó 2 datos anteriores
 - dolar_ccl: sin dato nuevo (último 2026-10)
 - dolar_mep: sin dato nuevo (último 2026-10)
 - riesgo_pais: sin dato nuevo (último 2026-10)
@@ -60,14 +65,21 @@ Indicadores publicados: 101
 - icc: sin dato nuevo (último 2026-09)
 - dolar_tarjeta: sin dato nuevo (último 2026-10)
 - depositos_privados_ars: sin dato nuevo (último 2026-10)
+- depositos_privados_ars: la fuente revisó 3 datos anteriores
 - depositos_privados_usd: sin dato nuevo (último 2026-10)
+- depositos_privados_usd: la fuente revisó 1 datos anteriores
 - compras_divisas_bcra: sin dato nuevo (último 2026-09)
 - prestamos_hipotecarios: sin dato nuevo (último 2026-10)
+- prestamos_hipotecarios: la fuente revisó 1 datos anteriores
 - prestamos_prendarios: sin dato nuevo (último 2026-10)
+- prestamos_prendarios: la fuente revisó 1 datos anteriores
 - prestamos_personales: sin dato nuevo (último 2026-10)
+- prestamos_personales: la fuente revisó 2 datos anteriores
 - prestamos_tarjetas: sin dato nuevo (último 2026-10)
-- prestamos_tarjetas: variación inusual en el último dato (-11.1%)
+- prestamos_tarjetas: la fuente revisó 2 datos anteriores
+- prestamos_tarjetas: variación inusual en el último dato (-7.8%)
 - tasa_personales: sin dato nuevo (último 2026-10)
+- tasa_personales: la fuente revisó 1 datos anteriores
 - tasa_tarjetas: sin dato nuevo (último 2026-09)
 - icl: sin dato nuevo (último 2026-10)
 - pobreza_personas: sin dato nuevo (último 2026-01)
@@ -134,4 +146,15 @@ Indicadores publicados: 101
 - asal_prov_santiago_del_estero: sin dato nuevo (último 2026-06)
 - asal_prov_tierra_del_fuego: sin dato nuevo (último 2026-06)
 - asal_prov_tucuman: sin dato nuevo (último 2026-06)
+- ipcf_total: sin dato nuevo (último 2026-01)
+- ipcf_decil_3: sin dato nuevo (último 2026-01)
+- ipcf_decil_4: sin dato nuevo (último 2026-01)
+- ipcf_decil_5: sin dato nuevo (último 2026-01)
+- ipcf_decil_6: sin dato nuevo (último 2026-01)
+- ipcf_decil_7: sin dato nuevo (último 2026-01)
+- ipcf_decil_8: sin dato nuevo (último 2026-01)
+- ipcf_decil_9: sin dato nuevo (último 2026-01)
+- ipcf_decil_10: sin dato nuevo (último 2026-01)
+- gini: sin dato nuevo (último 2026-01)
+- bdp_reservas: variación inusual en el último dato (34888.1%)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
