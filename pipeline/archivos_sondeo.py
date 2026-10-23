@@ -32,12 +32,13 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
     return out
 
 
-ARCHIVOS = {
-    "cin": ["https://www.indec.gob.ar/ftp/cuadros/economia/cin_II_2026.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cin_I_2026.xls"],
-    "cin_sh": ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_cin.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/sh_balanza_pagos.xls",
-               "https://www.indec.gob.ar/ftp/cuadros/economia/sh_cin_II_2026.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cin_serie_historica.xls"],
+ARCHIVOS = {}
+PAGINAS = {
+    "ejecuciones": "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial/ejecuciones",
+    "ejecucion": "https://www.argentina.gob.ar/economia/sechacienda/coordinacion-fiscal-provincial/ejecucion-presupuestaria-provincial",
+    "recursos_origen_nacional": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/esquema-de-financiamiento-y-distribucion-de-recursos-de-origen-nacional",
+    "interior_apnf": "https://www.argentina.gob.ar/interior/subsecretaria-de-relaciones-con-provincias/administracion-publica-no-financiera",
 }
-PAGINAS = {}
 
 
 def resumir_planilla(contenido: bytes, nombre: str) -> str:
