@@ -33,18 +33,11 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
-    "balanza_pagos": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_bal_pag_{MM}_{AA}.xls")
-                     + variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_balanza_de_pagos_{MM}_{AA}.xls")
-                     + variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/sh_bp_{MM}_{AA}.xls")
-                     + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_bal_pag.xls"],
+    "cin": ["https://www.indec.gob.ar/ftp/cuadros/economia/cin_II_2026.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cin_I_2026.xls"],
+    "cin_sh": ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_cin.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/sh_balanza_pagos.xls",
+               "https://www.indec.gob.ar/ftp/cuadros/economia/sh_cin_II_2026.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cin_serie_historica.xls"],
 }
-PAGINAS = {
-    "deuda": "https://www.argentina.gob.ar/economia/finanzas/datos-trimestrales-de-la-deuda",
-    "dnap_provincias": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/provincias",
-    "dnap_ejecuciones": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/ejecuciones-presupuestarias",
-    "dnap_transferencias": "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/transferencias",
-    "indec_cuentas_internacionales": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-35-45",
-}
+PAGINAS = {}
 
 
 def resumir_planilla(contenido: bytes, nombre: str) -> str:
