@@ -67,14 +67,25 @@ def descargar(config: dict, offline: bool) -> tuple[dict, list[str]]:
     return crudas, alertas
 
 
-def procesar(config: dict, crudas: dict) -> dict[str, pd.Series]:
+def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str]]:
+    """Lleva todo a mensual y arma empalmes y cálculos. Si falta un insumo, el derivado
+    se omite con una alerta en lugar de frenar la actualización."""
+    alertas = []
     mensuales = {n: transformar.a_mensual(s, config["series"][n].get("agregacion", "promedio"))
                  for n, s in crudas.items()}
     for nombre, tramos in config.get("empalmes", {}).items():
+        faltan = [t["serie"] for t in tramos if t["serie"] not in mensuales]
+        if faltan:
+            alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se arma el empalme")
+            continue
         mensuales[nombre] = transformar.empalmar([(mensuales[t["serie"]], t.get("hasta")) for t in tramos])
     for nombre, c in config.get("calculos", {}).items():
+        faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
+        if faltan:
+            alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+            continue
         mensuales[nombre] = transformar.calcular(c["operacion"], mensuales[c["a"]], mensuales[c["b"]])
-    return mensuales
+    return mensuales, alertas
 
 
 def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], list[str]]:
@@ -101,7 +112,11 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
         if s.empty:
             alertas.append(f"{ind['id']}: sin datos hasta hoy, no se publica")
             continue
-        calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones, ind.get("vista_historica", "nivel"))
+        try:
+            calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones, ind.get("vista_historica", "nivel"))
+        except Exception as e:  # un indicador con problemas no frena el resto
+            alertas.append(f"{ind['id']}: error al calcular las vistas ({e}), no se publica")
+            continue
         fichas.append({
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
@@ -142,7 +157,8 @@ def main() -> None:
     args = parser.parse_args()
     config = cargar_config()
     crudas, alertas = descargar(config, args.offline)
-    mensuales = procesar(config, crudas)
+    mensuales, alertas_proc = procesar(config, crudas)
+    alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
     escribir(fichas, mensuales, alertas + alertas_ind)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind)} alertas (ver data/informe.md)")
