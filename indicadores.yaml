@@ -208,6 +208,10 @@ series:
   homicidios:          {fuente: datosgobar, id: "t_snic_1_victimas_arg"}
   suicidios:           {fuente: datosgobar, id: "t_snic_31_victimas_arg"}
   morosidad:           {fuente: datosgobar, id: "332.2_SISTEMA_FIADA__53"}
+  morosidad_publicos:  {fuente: datosgobar, id: "332.2_BANCOS_PUBADA__55"}
+  morosidad_privados:  {fuente: datosgobar, id: "332.2_BANCOS_PRIADA__51"}
+  morosidad_privados_nac: {fuente: datosgobar, id: "332.2_BANCOS_PRIADA__59"}
+  morosidad_no_bancarias: {fuente: datosgobar, id: "332.2_ENTIDADES_ADA__52"}
   ventas_autos:        {fuente: datosgobar, id: "330.3_VENTAS_MERLES__34"}
   produccion_autos:    {fuente: datosgobar, id: "330.3_PRODUCCIONLES__22"}
   faena_vacuna:        {fuente: datosgobar, id: "41.2_FCV_0_T_18"}
@@ -273,6 +277,8 @@ grupos:
      nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
   - {id: gasto_funcion, nombre: "Gasto público nacional por función", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
      nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
+  - {id: morosidad_entidades, nombre: "Morosidad por tipo de entidad", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
+     nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech no son entidades financieras y no están incluidas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -475,3 +481,7 @@ indicadores:
      nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad). Si vos o alguien cercano lo necesita: Línea 135 (CABA y GBA) o 0800-345-1435, gratis y las 24 horas."}
   - {id: calificacion_sp, nombre: "Calificación de la deuda soberana (S&P)", seccion: "Deuda pública", serie: calificacion_sp, tipo_valor: tasa, vista_inicial: desde_2003, unidad: "escalón: 0 = default (SD), 3 = CCC−, 4 = CCC, 5 = CCC+, 6 = B−, 7 = B, 8 = B+",
      nota: "Calificación de largo plazo en moneda extranjera de S&P Global, al cierre de cada mes. Grado de inversión empieza en BBB−, que sería el escalón 12. Carga manual desde 2010 con el historial publicado por countryeconomy.com y FXEmpire."}
+  - {id: morosidad_publicos, nombre: "Bancos públicos", seccion: "Crédito y alquileres", serie: morosidad_publicos, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_privados, nombre: "Bancos privados (total)", seccion: "Crédito y alquileres", serie: morosidad_privados, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_privados_nac, nombre: "Bancos privados de capital nacional", seccion: "Crédito y alquileres", serie: morosidad_privados_nac, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_no_bancarias, nombre: "Entidades financieras no bancarias", seccion: "Crédito y alquileres", serie: morosidad_no_bancarias, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
