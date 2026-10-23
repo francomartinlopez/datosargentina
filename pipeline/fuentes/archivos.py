@@ -394,7 +394,49 @@ def bcra_pnfc(campo: str, h: dict | None = None) -> pd.Series:
     return leer_pnfc(h if h is not None else pnfc_hojas(), campo)
 
 
+# ---------- Colegio de Escribanos de la Ciudad de Buenos Aires ----------
+
+ESCRIBANOS = "https://www.colegio-escribanos.org.ar/noticias/{mes}-{anio}-Comparativo-anual-por-mes.xls"
+MESES_NOMBRE = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+
+def leer_escribanos(contenido: bytes, mes: int) -> pd.Series:
+    """Cada planilla mensual trae ese mismo mes de todos los años desde 2016: 'Año AAAA' | actos."""
+    df = pd.read_excel(io.BytesIO(contenido), header=None)
+    out = {}
+    for i in range(len(df)):
+        m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, 0]))
+        v = pd.to_numeric(df.iat[i, 1], errors="coerce")
+        if m and pd.notna(v):
+            out[pd.Timestamp(int(m.group(1)), mes, 1)] = float(v)
+    return pd.Series(out, dtype=float)
+
+
+def escribanos_compraventas(campo: str | None = None) -> pd.Series:
+    """Escrituras de compraventa en CABA: se juntan las planillas de los últimos 14 meses
+    (cada una aporta su mes en todos los años), lo que arma la serie mensual completa."""
+    hoy = pd.Timestamp(date.today()).replace(day=1)
+    partes = []
+    for k in range(1, 15):
+        f = hoy - pd.DateOffset(months=k)
+        nombres = [MESES_NOMBRE[f.month - 1]] + (["Setiembre"] if f.month == 9 else [])
+        for nombre in nombres:
+            try:
+                r = requests.get(ESCRIBANOS.format(mes=nombre, anio=f.year), headers=CABECERAS, timeout=TIMEOUT)
+            except requests.RequestException:
+                continue
+            if r.status_code == 200 and r.content[:4] in FIRMAS:
+                partes.append(leer_escribanos(r.content, f.month))
+                break
+    if not partes:
+        raise RuntimeError("No se encontraron planillas del Colegio de Escribanos")
+    s = pd.concat(partes)
+    s = s[~s.index.duplicated(keep="first")].sort_index()
+    return s
+
+
 LECTORES = {
+    "escribanos_compraventas": escribanos_compraventas,
     "bcra_pnfc": bcra_pnfc,
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,

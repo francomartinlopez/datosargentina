@@ -217,6 +217,12 @@ series:
   morosidad_tarjetas_nb: {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Otras emisoras de tarjetas de crédito"}
   morosidad_electro:   {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Venta de electrodomésticos"}
   morosidad_coop:      {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Cooperativas y mutuales"}
+  pnfc_tarjetas:       {fuente: archivo, lector: bcra_pnfc, campo: "7. Tipo de asistencia|Tarjetas de crédito"}
+  pnfc_personales:     {fuente: archivo, lector: bcra_pnfc, campo: "7. Tipo de asistencia|Préstamos personales"}
+  pnfc_resto:          {fuente: archivo, lector: bcra_pnfc, campo: "7. Tipo de asistencia|Resto de asistencias"}
+  ucii:                {fuente: datosgobar, id: "31.3_UNG_2004_M_18"}
+  escrituras_caba:     {fuente: archivo, lector: escribanos_compraventas}
+  fbcf_corriente:      {fuente: datosgobar, id: "166.2_F_BRUTAIJO_0_0_19"}
   ventas_autos:        {fuente: datosgobar, id: "330.3_VENTAS_MERLES__34"}
   produccion_autos:    {fuente: datosgobar, id: "330.3_PRODUCCIONLES__22"}
   faena_vacuna:        {fuente: datosgobar, id: "41.2_FCV_0_T_18"}
@@ -272,6 +278,8 @@ calculos:
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
   presion_tributaria: {operacion: porcentaje_pib, a: recaudacion, b: pib_nominal}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
+  # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
+  ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
@@ -284,6 +292,8 @@ grupos:
      nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
   - {id: morosidad_entidades, nombre: "Morosidad por tipo de prestamista: bancos, financieras y billeteras", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
      nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
+  - {id: morosidad_pnfc_tipo, nombre: "Morosidad en fintech, billeteras y otros prestamistas no financieros, por tipo de crédito", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
+     nota: "Irregularidad de la cartera de los proveedores no financieros de crédito (BCRA, Central de Deudores). Resto incluye préstamos prendarios, hipotecarios y otras financiaciones. Se publica dos veces por año con unos meses de rezago."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -321,7 +331,8 @@ indicadores:
   - {id: ipim, nombre: "Precios mayoristas (IPIM)", seccion: Precios, serie: ipim, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
   - {id: autoservicios, nombre: "Ventas en autoservicios mayoristas", seccion: Actividad, serie: autoservicios_original, desestacionalizada: autoservicios_desest, tipo_valor: indice, unidad: "índice"}
   - {id: shoppings, nombre: "Ventas en centros de compras", seccion: Actividad, serie: shoppings_original, desestacionalizada: shoppings_desest, tipo_valor: indice, unidad: "índice"}
-  - {id: produccion_petroleo, nombre: "Producción de petróleo", seccion: Actividad, serie: produccion_petroleo, tipo_valor: flujo, unidad: "miles de m³ por mes"}
+  - {id: produccion_petroleo, nombre: "Producción de petróleo", seccion: Actividad, serie: produccion_petroleo, tipo_valor: flujo, unidad: "miles de m³ por mes",
+     nota: "Atención: la fuente (Secretaría de Energía vía datos.gob.ar) no publica datos nuevos desde noviembre de 2025."}
   - {id: produccion_gas, nombre: "Producción de gas natural", seccion: Actividad, serie: produccion_gas, tipo_valor: flujo, unidad: "millones de m³ por mes"}
   - {id: produccion_acero, nombre: "Producción de acero crudo", seccion: Actividad, serie: produccion_acero, tipo_valor: flujo, unidad: "miles de toneladas por mes"}
   - {id: asalariados_privados, nombre: "Asalariados privados registrados", seccion: "Empleo e ingresos", serie: asalariados_privados, desestacionalizada: asalariados_privados_desest, tipo_valor: nivel, unidad: "miles de personas"}
@@ -429,7 +440,7 @@ indicadores:
   - {id: deuda_c_otros, nombre: "Otros (préstamos, pagarés, avales y deuda en pago diferido)", seccion: "Deuda pública", serie: deuda_otros, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
   # --- Provincias (consolidado) ---
   - {id: prov_resultado_financiero, nombre: "Resultado financiero de las provincias (consolidado)", seccion: "Estado y fiscal", serie: prov_resultado_financiero, tipo_valor: saldo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A,
-     nota: "Suma de las 24 jurisdicciones, base devengado (Secretaría de Hacienda). Datos anuales desde 2005."}
+     nota: "Suma de las 24 jurisdicciones, base devengado (Secretaría de Hacienda). Datos anuales desde 2005. En 2025 Hacienda no publicó datos de La Pampa, y Santiago del Estero registra un superávit atípicamente alto (más del 20% de sus ingresos)."}
   - {id: prov_resultado_primario, nombre: "Resultado primario de las provincias (consolidado)", seccion: "Estado y fiscal", serie: prov_resultado_primario, tipo_valor: saldo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A}
   - {id: prov_origen_nacional, nombre: "Recursos de origen nacional de las provincias", seccion: "Estado y fiscal", serie: prov_origen_nacional, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy por año", frecuencia: A,
      nota: "Coparticipación federal y otros impuestos nacionales distribuidos a las provincias."}
@@ -495,3 +506,11 @@ indicadores:
   - {id: morosidad_tarjetas_nb, nombre: "Emisoras de tarjetas no bancarias", seccion: "Crédito y alquileres", serie: morosidad_tarjetas_nb, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
   - {id: morosidad_electro, nombre: "Casas de electrodomésticos", seccion: "Crédito y alquileres", serie: morosidad_electro, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
   - {id: morosidad_coop, nombre: "Cooperativas y mutuales", seccion: "Crédito y alquileres", serie: morosidad_coop, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: pnfc_tarjetas, nombre: "Tarjetas de crédito", seccion: "Crédito y alquileres", serie: pnfc_tarjetas, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_pnfc_tipo}
+  - {id: pnfc_personales, nombre: "Préstamos personales", seccion: "Crédito y alquileres", serie: pnfc_personales, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_pnfc_tipo}
+  - {id: pnfc_resto, nombre: "Resto de las financiaciones", seccion: "Crédito y alquileres", serie: pnfc_resto, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_pnfc_tipo}
+  - {id: ucii, nombre: "Uso de la capacidad instalada de la industria", seccion: Actividad, serie: ucii, tipo_valor: tasa, unidad: "% de la capacidad", nota: "INDEC, nivel general. Serie con estacionalidad: enero suele ser el mes más bajo."}
+  - {id: escrituras_caba, nombre: "Escrituras de compraventa en la Ciudad de Buenos Aires", seccion: "Crédito y alquileres", serie: escrituras_caba, tipo_valor: flujo, unidad: "actos por mes",
+     nota: "Colegio de Escribanos de la Ciudad de Buenos Aires. Solo CABA: no hay una serie nacional de escrituras. Serie con estacionalidad (diciembre suele ser el mes más alto)."}
+  - {id: ied_inversion, nombre: "Inversión extranjera directa como % de la inversión total", seccion: "Sector externo e inversión", serie: ied_inversion, tipo_valor: tasa, unidad: "% de la formación bruta de capital fijo", frecuencia: T,
+     nota: "Ingresos netos de inversión extranjera directa del trimestre (balanza de pagos, INDEC) pasados a pesos con el dólar mayorista promedio, sobre la formación bruta de capital fijo a precios corrientes (INDEC). Indica qué parte de la inversión del país se financia con capital extranjero directo."}

@@ -119,3 +119,17 @@ def porcentaje_pib(flujo: pd.Series, pib: pd.Series) -> pd.Series:
         if fin in f12.index and pd.notna(f12[fin]) and v:
             out[q] = float(f12[fin] / v * 100)
     return pd.Series(out, dtype=float).sort_index()
+
+
+def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = None, divisor_b: float = 1) -> pd.Series:
+    """a (trimestral) como % de b (trimestral), con a convertida por una serie mensual opcional
+    (p. ej. dólares a pesos con el promedio del tipo de cambio del trimestre)."""
+    a = a.dropna()
+    if multiplicar is not None:
+        m = multiplicar.dropna()
+        trimestral = m.groupby(m.index.to_period("Q")).mean()
+        trimestral.index = trimestral.index.to_timestamp()
+        a = a * trimestral.reindex(a.index)
+    b = b.dropna() / divisor_b
+    a, b = a.align(b, join="inner")
+    return (a / b * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)

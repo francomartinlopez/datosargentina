@@ -123,7 +123,9 @@ def fiscal() -> dict:
         "fecha": ultimo.strftime("%Y-%m-%d"),
         "periodo": str(a),
         "fuente": "Secretaría de Hacienda, Coordinación Fiscal Provincial (esquema ahorro-inversión-financiamiento)",
-        "nota": "Administración pública no financiera de cada provincia, base devengado. Expresado en % de sus ingresos totales para poder comparar provincias de distinto tamaño.",
+        "nota": "Administración pública no financiera de cada provincia, base devengado. Expresado en % de sus ingresos totales para poder comparar provincias de distinto tamaño."
+                + (f" La Pampa no tiene datos de {a} publicados por Hacienda." if provincias.get("La Pampa", {}).get("resultado_financiero") is None else "")
+                + (" Santiago del Estero muestra un superávit muy superior al resto, tal como lo publica Hacienda; puede reflejar diferencias en cómo registra sus cuentas." if (provincias.get("Santiago del Estero", {}).get("resultado_financiero") or 0) > 10 else ""),
         "vistas": [
             {"id": "resultado_financiero", "texto": f"Resultado financiero {a}", "desc": f"Resultado financiero (después de intereses) en % de los ingresos, {a}.", "sufijo": "%"},
             {"id": "resultado_primario", "texto": f"Resultado primario {a}", "desc": f"Resultado primario (antes de intereses) en % de los ingresos, {a}.", "sufijo": "%"},

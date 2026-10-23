@@ -95,6 +95,15 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 continue
             mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
             continue
+        if c["operacion"] == "porcentaje_de":  # (a × multiplicar) / (b / divisor_b) en %, trimestral
+            insumos = [c["a"], c["b"]] + ([c["multiplicar"]] if c.get("multiplicar") else [])
+            faltan = [x for x in insumos if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales[nombre] = transformar.porcentaje_de(mensuales[c["a"]], mensuales[c["b"]],
+                                                          mensuales.get(c.get("multiplicar")), c.get("divisor_b", 1))
+            continue
         if c["operacion"] == "porcentaje_pib":  # flujo mensual de 12 meses / PIB nominal de 4 trimestres, en %
             faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
             if faltan:
