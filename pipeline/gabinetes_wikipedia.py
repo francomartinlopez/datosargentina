@@ -57,4 +57,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import traceback
+    try:
+        main()
+    except Exception:
+        SALIDA.mkdir(parents=True, exist_ok=True)
+        (SALIDA / "error.txt").write_text(traceback.format_exc(), encoding="utf-8")
+        print(traceback.format_exc())
