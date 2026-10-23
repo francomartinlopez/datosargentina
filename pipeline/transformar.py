@@ -70,6 +70,10 @@ def calcular(operacion: str, a: pd.Series, b: pd.Series) -> pd.Series:
         return (a / b - 1) * 100
     if operacion == "cociente":
         return a / b
+    if operacion == "tasa_real":  # a = TNA en %, b = índice de precios; tasa real anualizada en %
+        inflacion = b / b.shift(1) - 1
+        real = (1 + a / 100 / 12) / (1 + inflacion) - 1
+        return (((1 + real) ** 12 - 1) * 100).dropna()
     raise ValueError(f"Operación desconocida: {operacion}")
 
 
@@ -108,8 +112,13 @@ def acumulado_12m(s: pd.Series) -> pd.Series:
 def porcentaje_pib(flujo: pd.Series, pib: pd.Series) -> pd.Series:
     """Flujo mensual acumulado en los 12 meses que terminan en cada trimestre, como % del PIB
     nominal de esos 4 trimestres. Resultado trimestral (fecha = primer mes del trimestre)."""
-    f = flujo.dropna().sort_index().asfreq("MS")
-    f12 = f.rolling(12, min_periods=12).sum()
+    f = flujo.dropna().sort_index()
+    trimestral = len(f) > 2 and f.index.to_series().diff().dt.days.median() > 60
+    if trimestral:  # flujo trimestral: suma de 4 trimestres, fechada al último mes de cada trimestre
+        f12 = f.asfreq("QS").rolling(4, min_periods=4).sum()
+        f12.index = f12.index + pd.DateOffset(months=2)
+    else:
+        f12 = f.asfreq("MS").rolling(12, min_periods=12).sum()
     # El PIB trimestral de INDEC en pesos corrientes se publica a tasa anual (cada trimestre
     # anualizado), así que el PIB de los últimos 4 trimestres es su promedio, no su suma.
     p4 = acumulado_12m(pib) / 4

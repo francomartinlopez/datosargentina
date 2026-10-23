@@ -235,6 +235,17 @@ series:
   merval:              {fuente: yahoo, id: "^MERV"}
   adr_ggal:            {fuente: yahoo, id: "GGAL"}
   adr_ypf:             {fuente: yahoo, id: "YPF"}
+  # IMIG trimestral (la apertura mensual tiene meses vacíos en la API)
+  imig_jubilaciones:   {fuente: datosgobar, id: "452.1_JUBILACIONVAS_0_A_36_30"}
+  imig_pensiones_nc:   {fuente: datosgobar, id: "452.2_PENSIONES_VAS_0_T_26_93"}
+  imig_asignaciones:   {fuente: datosgobar, id: "452.2_ASIGNACIONIJO_0_T_26_195"}
+  imig_pami:           {fuente: datosgobar, id: "452.2_PRESTACIONSJP_0_T_19_19"}
+  imig_otros_programas: {fuente: datosgobar, id: "452.2_OTROS_PROGMAS_0_T_15_7"}
+  imig_subsidios_energia: {fuente: datosgobar, id: "452.2_ENERGIAGIA_0_T_7_79"}
+  imig_subsidios_transporte: {fuente: datosgobar, id: "452.2_TRANSPORTERTE_0_T_10_81"}
+  imig_salarios:       {fuente: datosgobar, id: "452.2_SALARIOSIOS_0_T_8_28"}
+  imig_funcionamiento: {fuente: datosgobar, id: "452.2_OTROS_GASTNTO_0_T_27_58"}
+  imig_intereses:      {fuente: datosgobar, id: "452.2_INTERESES_TOS_0_T_15_4"}
   gpn_total:           {fuente: datosgobar, id: "451.4_GPN_PIBPIB_0_0_7_95"}
   gpn_prevision:       {fuente: datosgobar, id: "451.4_GPN_PREVISPIB_0_0_24_69"}
   gpn_asistencia:      {fuente: datosgobar, id: "451.4_GPN_PROMOCPIB_0_0_35_70"}
@@ -277,6 +288,17 @@ calculos:
   # La serie IMIG de resultado financiero viene vacía en la API: se calcula como primario menos intereses netos
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
   presion_tributaria: {operacion: porcentaje_pib, a: recaudacion, b: pib_nominal}
+  pib_jubilaciones: {operacion: porcentaje_pib, a: imig_jubilaciones, b: pib_nominal}
+  pib_pensiones_nc: {operacion: porcentaje_pib, a: imig_pensiones_nc, b: pib_nominal}
+  pib_asignaciones: {operacion: porcentaje_pib, a: imig_asignaciones, b: pib_nominal}
+  pib_pami: {operacion: porcentaje_pib, a: imig_pami, b: pib_nominal}
+  pib_otros_programas: {operacion: porcentaje_pib, a: imig_otros_programas, b: pib_nominal}
+  pib_subsidios_energia: {operacion: porcentaje_pib, a: imig_subsidios_energia, b: pib_nominal}
+  pib_subsidios_transporte: {operacion: porcentaje_pib, a: imig_subsidios_transporte, b: pib_nominal}
+  pib_salarios: {operacion: porcentaje_pib, a: imig_salarios, b: pib_nominal}
+  pib_funcionamiento: {operacion: porcentaje_pib, a: imig_funcionamiento, b: pib_nominal}
+  pib_intereses: {operacion: porcentaje_pib, a: imig_intereses, b: pib_nominal}
+  tasa_real_plazo_fijo: {operacion: tasa_real, a: tasa_plazo_fijo, b: ipc}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
@@ -288,7 +310,9 @@ grupos:
      nota: "Deuda bruta de la Administración Central (Secretaría de Finanzas), saldos a fin de trimestre desde 2019. Bonos y letras incluyen los que están en manos de organismos públicos (BCRA, FGS, Banco Nación): Finanzas no publica la apertura por tenedor en esta serie."}
   - {id: empleo_sectores, nombre: "Empleo privado registrado por sector", seccion: "Empleo e ingresos", ranking: diferencia, unidad_ranking: "miles de puestos",
      nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
-  - {id: gasto_funcion, nombre: "Gasto público nacional por función", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
+  - {id: gasto_concepto, nombre: "Gasto de la Administración Nacional por concepto", seccion: "Estado y fiscal", ranking: diferencia, unidad_ranking: "puntos del PIB", escala_ranking: 1, sufijo_ranking: " pp",
+     nota: "Gasto base caja del Sector Público Nacional no financiero (Informe Mensual de Ingresos y Gastos, Ministerio de Economía), últimos 4 trimestres en % del PIB nominal. Datos desde 2016. Para la apertura por función (educación, salud, defensa) con serie larga ver el gráfico de gasto por función, que llega hasta 2023."}
+  - {id: gasto_funcion, nombre: "Gasto público nacional por función (serie larga, hasta 2023)", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
      nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
   - {id: morosidad_entidades, nombre: "Morosidad por tipo de prestamista: bancos, financieras y billeteras", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
      nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
@@ -325,7 +349,8 @@ indicadores:
   - {id: brecha_ccl, nombre: "Brecha CCL vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_ccl, tipo_valor: tasa, unidad: "%"}
   - {id: base_monetaria, nombre: "Base monetaria (real)", seccion: "Dólar y finanzas", serie: base_monetaria, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
   - {id: prestamos_privados, nombre: "Préstamos al sector privado (real)", seccion: "Dólar y finanzas", serie: prestamos_privados, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy"}
-  - {id: tasa_plazo_fijo, nombre: "Tasa de plazo fijo a 30 días", seccion: "Dólar y finanzas", serie: tasa_plazo_fijo, tipo_valor: tasa, unidad: "% TNA"}
+  - {id: tasa_plazo_fijo, nombre: "Tasa de plazo fijo a 30 días", seccion: "Dólar y finanzas", serie: tasa_plazo_fijo, tipo_valor: tasa, vista_inicial: desde_2003, unidad: "% TNA",
+     nota: "Promedio de las tasas pagadas por los bancos por depósitos a 30 días (BCRA)."}
   - {id: riesgo_pais, nombre: "Riesgo país", seccion: "Dólar y finanzas", serie: riesgo_pais, tipo_valor: tasa, unidad: "puntos básicos", portada: true}
   # --- Ampliación fase 1 ---
   - {id: ipim, nombre: "Precios mayoristas (IPIM)", seccion: Precios, serie: ipim, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
@@ -514,3 +539,15 @@ indicadores:
      nota: "Colegio de Escribanos de la Ciudad de Buenos Aires. Solo CABA: no hay una serie nacional de escrituras. Serie con estacionalidad (diciembre suele ser el mes más alto)."}
   - {id: ied_inversion, nombre: "Inversión extranjera directa como % de la inversión total", seccion: "Sector externo e inversión", serie: ied_inversion, tipo_valor: tasa, unidad: "% de la formación bruta de capital fijo, últimos 4 trimestres", frecuencia: T,
      nota: "Ingresos netos de inversión extranjera directa de los últimos 4 trimestres (balanza de pagos, INDEC) pasados a pesos con el dólar mayorista promedio, sobre la formación bruta de capital fijo a precios corrientes (INDEC). Indica qué parte de la inversión del país se financia con capital extranjero directo."}
+  - {id: pib_jubilaciones, nombre: "Jubilaciones y pensiones contributivas", seccion: "Estado y fiscal", serie: pib_jubilaciones, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_pensiones_nc, nombre: "Pensiones no contributivas", seccion: "Estado y fiscal", serie: pib_pensiones_nc, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_asignaciones, nombre: "Asignaciones familiares y AUH", seccion: "Estado y fiscal", serie: pib_asignaciones, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_pami, nombre: "PAMI (prestaciones del INSSJP)", seccion: "Estado y fiscal", serie: pib_pami, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_otros_programas, nombre: "Otros programas sociales (Progresar, Potenciar y otros)", seccion: "Estado y fiscal", serie: pib_otros_programas, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_subsidios_energia, nombre: "Subsidios a la energía", seccion: "Estado y fiscal", serie: pib_subsidios_energia, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_subsidios_transporte, nombre: "Subsidios al transporte", seccion: "Estado y fiscal", serie: pib_subsidios_transporte, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_salarios, nombre: "Salarios del sector público nacional", seccion: "Estado y fiscal", serie: pib_salarios, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_funcionamiento, nombre: "Otros gastos de funcionamiento", seccion: "Estado y fiscal", serie: pib_funcionamiento, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: pib_intereses, nombre: "Intereses de la deuda (netos)", seccion: "Estado y fiscal", serie: pib_intereses, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
+  - {id: tasa_real_plazo_fijo, nombre: "Tasa real de plazo fijo", seccion: "Dólar y finanzas", serie: tasa_real_plazo_fijo, tipo_valor: tasa, vista_inicial: desde_2003, unidad: "% anual, descontada la inflación",
+     nota: "Tasa promedio de plazo fijo a 30 días (BCRA) menos la inflación del mismo mes (IPC empalmado), anualizada. Negativa: el plazo fijo perdió contra la inflación."}

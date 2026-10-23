@@ -427,25 +427,6 @@ function fichaGrupoNivel(g) {
     barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
 }
 
-/* ---------- Tasas de hoy (foto del día) ---------- */
-
-function fichaTasas(d) {
-  const bloque = (titulo, filas, texto) => {
-    const max = Math.max(...filas.map((f) => f.tna), 1e-9);
-    const lista = el("div", { class: "ranking", role: "list" });
-    filas.forEach((f) => lista.append(filaNivel(f.nombre, f.tna, max, fmt(f.tna, 1) + "%")));
-    return el("div", { class: "tasas-bloque" }, el("h4", { text: titulo }), el("p", { class: "unidad", text: texto }), lista);
-  };
-  return el("article", { class: "ficha ancha", id: d.id },
-    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
-      el("p", { class: "unidad", text: `Tasa nominal anual (TNA) en pesos · ${fechaCorta(d.fecha)}` }))),
-    el("div", { class: "tasas" },
-      bloque("Plazo fijo a 30 días por banco", d.plazo_fijo, "Tasa para clientes que informa cada banco al BCRA."),
-      bloque("Fondos de dinero (cuentas remuneradas)", d.fondos, "Los 12 fondos más grandes. Es donde las billeteras virtuales invierten el saldo; la tasa surge de la variación de la cuotaparte en el último día hábil.")),
-    el("p", { class: "nota", text: d.nota }),
-    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
-}
-
 /* ---------- RIGI: proyectos aprobados ---------- */
 
 function fichaRigi(d) {
@@ -857,7 +838,6 @@ async function iniciar() {
   const mapasCargados = (await Promise.all(listaMapas.map((m) => leer(`mapas/${m}`)))).filter(Boolean);
   const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
   const piramide = await leer("distribucion_ingreso");
-  const tasas = await leer("tasas");
   const rigi = await leer("rigi");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
@@ -867,7 +847,7 @@ async function iniciar() {
 
   const nav = document.getElementById("nav-secciones");
   const secciones = document.getElementById("secciones");
-  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion), ...(tasas ? [tasas.seccion] : [])])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
+  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion)])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
   for (const s of nombres) {
     const id = slug(s);
     nav.append(el("a", { href: `#${id}`, text: s }));
@@ -875,7 +855,6 @@ async function iniciar() {
     fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
     if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
     if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
-    if (tasas && tasas.seccion === s) grilla.append(fichaTasas(tasas));
     if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
