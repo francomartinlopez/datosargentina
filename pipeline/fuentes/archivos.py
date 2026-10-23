@@ -350,7 +350,52 @@ def hacienda_provincias(campo: str) -> pd.Series:
     return provincias_serie()["Consolidado"][campo].dropna()
 
 
+# ---------- BCRA: proveedores no financieros de crédito (fintech, billeteras, tarjetas no bancarias) ----------
+
+PNFC = "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/anexo-estadistico-proveedores-no-financieros-credito-{mes}-{anio}.xlsx"
+MESES_ES = ["diciembre", "noviembre", "octubre", "septiembre", "agosto", "julio", "junio", "mayo", "abril", "marzo", "febrero", "enero"]
+
+
+@lru_cache(maxsize=None)
+def pnfc_hojas() -> dict[str, pd.DataFrame]:
+    """Anexo estadístico del informe semestral más reciente (se prueban los meses hacia atrás)."""
+    hoy = date.today()
+    for anio in (hoy.year, hoy.year - 1, hoy.year - 2):
+        for mes in MESES_ES:
+            if anio == hoy.year and MESES_ES.index(mes) < 11 - (hoy.month - 1):
+                continue  # meses todavía no llegados
+            try:
+                r = requests.get(PNFC.format(mes=mes, anio=anio), headers=CABECERAS, timeout=TIMEOUT)
+            except requests.RequestException:
+                continue
+            if r.status_code == 200 and r.content[:4] in FIRMAS:
+                return pd.read_excel(io.BytesIO(r.content), sheet_name=None, header=None)
+    raise RuntimeError("No se encontró el anexo del informe de proveedores no financieros de crédito")
+
+
+def leer_pnfc(h: dict, campo: str) -> pd.Series:
+    """campo = "hoja|fila", tomada del bloque "Ratio de irregularidad" (en %)."""
+    hoja, fila = campo.split("|")
+    df = next(v for k, v in h.items() if k.strip().lower().startswith(hoja.strip().lower()))
+    inicio = next(i for i in range(len(df)) if _texto(df.iat[i, 0]).lower().startswith("ratio de irregularidad"))
+    fechas = df.iloc[inicio + 1]
+    for i in range(inicio + 2, len(df)):
+        if _texto(df.iat[i, 0]).lower() == fila.strip().lower():
+            vals = pd.to_numeric(df.iloc[i, 1:], errors="coerce").values
+            idx = pd.to_datetime(fechas.iloc[1:], errors="coerce")
+            s = pd.Series(vals, index=idx, dtype=float).dropna()
+            s = s[s.index.notna()] * 100
+            s.index = s.index.to_period("M").to_timestamp()
+            return s.sort_index()
+    raise ValueError(f"PNFC: no se encontró la fila {fila} en {hoja}")
+
+
+def bcra_pnfc(campo: str, h: dict | None = None) -> pd.Series:
+    return leer_pnfc(h if h is not None else pnfc_hojas(), campo)
+
+
 LECTORES = {
+    "bcra_pnfc": bcra_pnfc,
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,
     "indec_canastas": indec_canastas,

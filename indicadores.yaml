@@ -212,6 +212,11 @@ series:
   morosidad_privados:  {fuente: datosgobar, id: "332.2_BANCOS_PRIADA__51"}
   morosidad_privados_nac: {fuente: datosgobar, id: "332.2_BANCOS_PRIADA__59"}
   morosidad_no_bancarias: {fuente: datosgobar, id: "332.2_ENTIDADES_ADA__52"}
+  morosidad_pnfc:      {fuente: archivo, lector: bcra_pnfc, campo: "1. Total|Total"}
+  morosidad_fintech:   {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Fintech"}
+  morosidad_tarjetas_nb: {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Otras emisoras de tarjetas de crédito"}
+  morosidad_electro:   {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Venta de electrodomésticos"}
+  morosidad_coop:      {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Cooperativas y mutuales"}
   ventas_autos:        {fuente: datosgobar, id: "330.3_VENTAS_MERLES__34"}
   produccion_autos:    {fuente: datosgobar, id: "330.3_PRODUCCIONLES__22"}
   faena_vacuna:        {fuente: datosgobar, id: "41.2_FCV_0_T_18"}
@@ -277,8 +282,8 @@ grupos:
      nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
   - {id: gasto_funcion, nombre: "Gasto público nacional por función", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
      nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
-  - {id: morosidad_entidades, nombre: "Morosidad por tipo de entidad", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
-     nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech no son entidades financieras y no están incluidas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
+  - {id: morosidad_entidades, nombre: "Morosidad por tipo de prestamista: bancos, financieras y billeteras", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
+     nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -485,3 +490,8 @@ indicadores:
   - {id: morosidad_privados, nombre: "Bancos privados (total)", seccion: "Crédito y alquileres", serie: morosidad_privados, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
   - {id: morosidad_privados_nac, nombre: "Bancos privados de capital nacional", seccion: "Crédito y alquileres", serie: morosidad_privados_nac, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
   - {id: morosidad_no_bancarias, nombre: "Entidades financieras no bancarias", seccion: "Crédito y alquileres", serie: morosidad_no_bancarias, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_pnfc, nombre: "Proveedores no financieros de crédito (total)", seccion: "Crédito y alquileres", serie: morosidad_pnfc, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_fintech, nombre: "Fintech y billeteras virtuales", seccion: "Crédito y alquileres", serie: morosidad_fintech, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_tarjetas_nb, nombre: "Emisoras de tarjetas no bancarias", seccion: "Crédito y alquileres", serie: morosidad_tarjetas_nb, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_electro, nombre: "Casas de electrodomésticos", seccion: "Crédito y alquileres", serie: morosidad_electro, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
+  - {id: morosidad_coop, nombre: "Cooperativas y mutuales", seccion: "Crédito y alquileres", serie: morosidad_coop, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_entidades}
