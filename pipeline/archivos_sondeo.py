@@ -79,9 +79,20 @@ def main() -> None:
         try:
             r = requests.get(u, headers=CAB, timeout=60)
             links = sorted(set(urljoin(u, h) for h in re.findall(r'href="([^"]+\.(?:xlsx?|csv|zip))"', r.text, flags=re.I)))
-            enlaces[clave] = {"status": r.status_code, "enlaces": links[:80]}
+            enlaces[clave] = {"status": r.status_code, "enlaces": links[:300]}
         except Exception as e:
             enlaces[clave] = {"error": repr(e)}
+    # ejecuciones provinciales: el último archivo y el cuarto trimestre de 2023
+    try:
+        ej = [u for u in enlaces.get("ejecuciones", {}).get("enlaces", []) if "apnf" in u]
+        for nombre, u in (("prov_ultimo", ej[-1] if ej else None), ("prov_2023", next((x for x in ej if "2023_-_trim._iv" in x), None))):
+            if u:
+                c = requests.get(u, headers=CAB, timeout=120).content
+                ext = u.rsplit(".", 1)[-1]
+                (SALIDA / f"{nombre}.{ext}").write_bytes(c)
+                (SALIDA / f"{nombre}.txt").write_text(u + "\n" + resumir_planilla(c, nombre), encoding="utf-8")
+    except Exception as e:
+        (SALIDA / "prov_error.txt").write_text(repr(e), encoding="utf-8")
     # último archivo de deuda trimestral publicado
     try:
         cand = [u for u in enlaces.get("deuda", {}).get("enlaces", []) if re.search(r"deuda_publica_\d{2}-\d{2}-\d{4}", u)]
