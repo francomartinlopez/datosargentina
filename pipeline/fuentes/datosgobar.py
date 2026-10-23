@@ -4,6 +4,8 @@ Documentación: https://series-tiempo-ar-api-english.readthedocs.io/
 """
 from __future__ import annotations
 
+import time
+
 import pandas as pd
 
 from . import pedir
@@ -22,7 +24,18 @@ def parsear(payload: dict) -> pd.Series:
     return s[~s.index.duplicated(keep="last")].sort_index()
 
 
-def extraer(definicion: dict) -> pd.Series:
+def extraer(definicion: dict, reintentos: int = 3) -> pd.Series:
+    """La API a veces devuelve una respuesta vacía para una serie que existe (sobre todo
+    con muchos pedidos seguidos): se reintenta unas veces con espera antes de darla por vacía."""
+    for intento in range(reintentos):
+        s = _extraer(definicion)
+        if not s.empty:
+            return s
+        time.sleep(5 * (intento + 1))
+    return s
+
+
+def _extraer(definicion: dict) -> pd.Series:
     partes = []
     inicio = 0
     while True:

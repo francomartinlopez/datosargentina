@@ -70,7 +70,7 @@ series:
   shoppings_desest:    {fuente: datosgobar, id: "458.1_VENTAS_TOTADA_0_M_52_56"}
   produccion_gas:      {fuente: datosgobar, id: "364.3_PRODUCCIoNRAL__25"}
   produccion_petroleo: {fuente: datosgobar, id: "363.3_PRODUCCIONUDO__28"}
-  produccion_acero:    {fuente: datosgobar, id: "41.3_AC_0_A_11"}
+  produccion_acero:    {fuente: datosgobar, id: "359.3_ACERO_CRUDUDO__11"}
   asalariados_privados: {fuente: datosgobar, id: "151.1_AARIADODAD_2012_M_31"}
   gasto_politica_ingresos: {fuente: datosgobar, id: "186.3_TOTAL_POLISOS_0_0_23"}
   auh_gasto:           {fuente: datosgobar, id: "186.3_ASIGNACIONIAL_0_0_43"}
@@ -173,7 +173,7 @@ indicadores:
   - {id: subsidios_energia, nombre: "Subsidios económicos a la energía", seccion: "Estado y fiscal", serie: subsidios_energia, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: transf_capital_provincias, nombre: "Transferencias de capital a provincias", seccion: "Estado y fiscal", serie: transf_capital_provincias, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
      nota: "Fondos nacionales para obras y otros gastos de capital de provincias y CABA. No incluye coparticipación."}
-  - {id: icc, nombre: "Confianza del consumidor (UTDT)", seccion: "Opinión pública", serie: icc, tipo_valor: tasa, unidad: "índice"}
+  - {id: icc, nombre: "Confianza del consumidor (UTDT)", seccion: "Opinión pública", serie: icc, tipo_valor: tasa, unidad: "índice 0 a 100"}
   - {id: dolar_tarjeta, nombre: "Dólar tarjeta (real)", seccion: "Dólar y finanzas", serie: dolar_tarjeta, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}
   - {id: brecha_mep, nombre: "Brecha MEP vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_mep, tipo_valor: tasa, unidad: "%"}
   - {id: brecha_tarjeta, nombre: "Brecha tarjeta vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_tarjeta, tipo_valor: tasa, unidad: "%"}
