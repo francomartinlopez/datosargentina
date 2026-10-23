@@ -94,13 +94,13 @@ indicadores:
   - {id: salario_publico, nombre: "Salario real público", seccion: "Empleo e ingresos", serie: salario_publico, tipo_valor: nivel, moneda: ARS, unidad: "índice real"}
   - {id: smvm, nombre: "Salario mínimo real", seccion: "Empleo e ingresos", serie: smvm, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
   - {id: jubilacion_minima, nombre: "Jubilación mínima real", seccion: "Pobreza y programas sociales", serie: jubilacion_minima, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
-  - {id: desocupacion, nombre: "Desocupación", seccion: "Empleo e ingresos", serie: desocupacion, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T, portada: true}
+  - {id: desocupacion, nombre: "Desocupación", seccion: "Empleo e ingresos", serie: desocupacion, tipo_valor: tasa, escala: 100, unidad: "% de la PEA", frecuencia: T, portada: true}
   - {id: exportaciones, nombre: "Exportaciones", seccion: "Sector externo e inversión", serie: exportaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
   - {id: importaciones, nombre: "Importaciones", seccion: "Sector externo e inversión", serie: importaciones, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
   - {id: saldo_comercial, nombre: "Saldo comercial", seccion: "Sector externo e inversión", serie: saldo_comercial, tipo_valor: flujo, moneda: USD, unidad: "millones de US$ de hoy"}
-  - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy", portada: true}
-  - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy"}
-  - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, unidad: "millones de pesos de hoy"}
+  - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses", portada: true}
+  - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: icg, nombre: "Confianza en el gobierno (UTDT)", seccion: "Opinión pública", serie: icg, tipo_valor: tasa, unidad: "índice 0 a 5", portada: true}
   - {id: reservas, nombre: "Reservas brutas del BCRA", seccion: "Dólar y finanzas", serie: reservas, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", portada: true}
   - {id: dolar_mayorista, nombre: "Dólar mayorista (real)", seccion: "Dólar y finanzas", serie: dolar_mayorista, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}

@@ -95,3 +95,12 @@ def test_interanual_trimestral():
     s = pd.Series([10.0, 9.0, 8.0, 7.0, 6.0], index=pd.to_datetime(["2025-01-01", "2025-04-01", "2025-07-01", "2025-10-01", "2026-01-01"]))
     ia = vistas.interanual(s, "tasa")
     assert ia.loc["2026-01-01"] == pytest.approx(-4.0)
+
+
+def test_deflactor_se_extiende_y_acumulado():
+    nominal = mensual([100, 100, 100])
+    ipc = mensual([1.0, 2.0])
+    real = transformar.a_moneda_constante(nominal, ipc)
+    assert list(real.values) == [200.0, 100.0, 100.0]
+    acum = transformar.acumulado_12m(mensual([1.0] * 14))
+    assert len(acum) == 3 and acum.iloc[-1] == 12.0

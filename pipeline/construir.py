@@ -86,12 +86,16 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
         if s is None or s.empty:
             alertas.append(f"{ind['id']}: sin datos, no se publica")
             continue
+        if ind.get("escala"):
+            s = s * ind["escala"]
         moneda = ind.get("moneda")
         if moneda:
             if deflactores.get(moneda) is None:
                 alertas.append(f"{ind['id']}: falta el deflactor {moneda}, no se publica")
                 continue
             s = transformar.a_moneda_constante(s, deflactores[moneda])
+        if ind.get("acumulado_12m"):
+            s = transformar.acumulado_12m(s)
         calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones)
         fichas.append({
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],

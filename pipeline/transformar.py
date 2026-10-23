@@ -76,5 +76,16 @@ def a_moneda_constante(s: pd.Series, deflactor: pd.Series) -> pd.Series:
     """
     d = deflactor.dropna().sort_index()
     base = d.iloc[-1]
+    # Meses posteriores al último dato del deflactor (por ejemplo, reservas de octubre con IPC
+    # hasta septiembre): se usa el último deflactor disponible, sin inventar inflación.
+    if not s.empty and s.index[-1] > d.index[-1]:
+        extra = pd.date_range(d.index[-1], s.index[-1], freq="MS")[1:]
+        d = pd.concat([d, pd.Series(base, index=extra)])
     s, d = s.align(d, join="inner")
     return (s * base / d).dropna()
+
+
+def acumulado_12m(s: pd.Series) -> pd.Series:
+    """Suma móvil de 12 meses, para flujos fiscales muy estacionales (exige 12 meses completos)."""
+    s = s.asfreq("MS")
+    return s.rolling(12, min_periods=12).sum().dropna()
