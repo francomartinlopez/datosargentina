@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = []
+IDS = ['452.2_PRESTACIONSJP_0_T_19_86', '452.2_PENSIONES_VAS_0_T_26_164', '452.2_ASIGNACIONIJO_0_T_26_67', '452.2_TRANSPORTERTE_0_T_10_32', '452.2_OTRAS_FUNCNES_0_T_15_25', '452.2_SALARIOSIOS_0_T_8_22', '452.2_OTROS_GASTNTO_0_T_27_55', '452.2_OTROS_CORRSTO_0_T_22_78', '452.2_OTROS_CORRCAS_0_T_52_16', '452.2_TRANSFERENRAS_0_T_42_55', '452.2_TRANSFERENIAL_0_T_53_66', '452.2_TRANSFERENIAL_0_T_54_58', '452.2_TRANSFERENLUD_0_T_42_88', '452.2_OTROS_PROGMAS_0_T_15_7', '452.2_ENERGIAGIA_0_T_7_79', '452.2_JUBILACIONVAS_0_T_36_18']
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ['IMIG gasto primario', 'IMIG prestaciones sociales', 'IMIG jubilaciones y pensiones contributivas', 'IMIG subsidios económicos', 'IMIG remuneraciones', 'IMIG gastos de funcionamiento', 'IMIG transferencias corrientes a provincias', 'IMIG gastos de capital', 'IMIG universidades', 'IMIG asignaciones familiares', 'IMIG otros programas sociales', 'IMIG gasto total', 'tasa de interés depósitos a plazo fijo 30 días promedio serie histórica']
+BUSQUEDAS = ["IMIG gasto primario total", "IMIG gastos de capital total", "IMIG gasto total primario corriente"]
 
 
 def sondear_id(i: str) -> dict:
