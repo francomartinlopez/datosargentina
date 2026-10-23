@@ -80,6 +80,10 @@ def a_moneda_constante(s: pd.Series, deflactor: pd.Series) -> pd.Series:
     Los meses sin deflactor quedan afuera (no se inventan valores).
     """
     d = deflactor.dropna().sort_index()
+    # Meses faltantes en el medio del deflactor (p. ej. el IPC de EE.UU. de octubre de 2025, que no
+    # se publicó por el cierre del gobierno): se interpolan para no cortar la serie ni sus sumas.
+    if len(d) > 2 and d.index.to_series().diff().dt.days.median() < 40:
+        d = d.asfreq("MS").interpolate()
     base = d.iloc[-1]
     # Meses posteriores al último dato del deflactor (por ejemplo, reservas de octubre con IPC
     # hasta septiembre): se usa el último deflactor disponible, sin inventar inflación.
@@ -106,7 +110,9 @@ def porcentaje_pib(flujo: pd.Series, pib: pd.Series) -> pd.Series:
     nominal de esos 4 trimestres. Resultado trimestral (fecha = primer mes del trimestre)."""
     f = flujo.dropna().sort_index().asfreq("MS")
     f12 = f.rolling(12, min_periods=12).sum()
-    p4 = acumulado_12m(pib)
+    # El PIB trimestral de INDEC en pesos corrientes se publica a tasa anual (cada trimestre
+    # anualizado), así que el PIB de los últimos 4 trimestres es su promedio, no su suma.
+    p4 = acumulado_12m(pib) / 4
     out = {}
     for q, v in p4.items():
         fin = q + pd.DateOffset(months=2)
