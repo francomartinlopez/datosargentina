@@ -25,7 +25,8 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 GESTIONES = {
     "Néstor Kirchner": ("Anexo:Gabinete de Ministros de Néstor Kirchner", "2003-05-25", "2007-12-10"),
-    "Cristina Fernández de Kirchner": ("Anexo:Gabinete de Ministros de Cristina Fernández de Kirchner", "2007-12-10", "2015-12-10"),
+    "Cristina Fernández de Kirchner I": ("Anexo:Gabinete de Ministros de Cristina Fernández de Kirchner", "2007-12-10", "2011-12-10"),
+    "Cristina Fernández de Kirchner II": ("Anexo:Gabinete de Ministros de Cristina Fernández de Kirchner", "2011-12-10", "2015-12-10"),
     "Mauricio Macri": ("Anexo:Gabinete de Ministros de Mauricio Macri", "2015-12-10", "2019-12-10"),
     "Alberto Fernández": ("Anexo:Gabinete de Ministros de Alberto Fernández", "2019-12-10", "2023-12-10"),
     "Javier Milei": ("Anexo:Gabinete de Ministros de Javier Milei", "2023-12-10", None),
@@ -85,6 +86,28 @@ def normalizar(df: pd.DataFrame, gestion: str) -> pd.DataFrame:
     return out.dropna(subset=["inicio"]).drop_duplicates(subset=["cartera", "titular", "inicio"])
 
 
+def separar_mandatos(m: pd.DataFrame) -> pd.DataFrame:
+    """Reparte las filas de una página que cubre dos mandatos (CFK) según las fechas.
+
+    Un ministro que siguió en el cargo entre un mandato y otro queda en los dos: en el
+    primero termina el día del cambio de mandato y en el segundo empieza ese mismo día.
+    """
+    filas = []
+    for _, r in m.iterrows():
+        for g, (titulo, desde, hasta) in GESTIONES.items():
+            if titulo != r.pagina:
+                continue
+            d, h = pd.Timestamp(desde), pd.Timestamp(hasta) if hasta else pd.Timestamp.max
+            fin = r.fin if pd.notna(r.fin) else h
+            if r.inicio < h and fin > d:
+                nueva = r.copy()
+                nueva["gestion"] = g
+                nueva["inicio"] = max(r.inicio, d)
+                nueva["fin"] = min(fin, h) if hasta or pd.notna(r.fin) else r.fin
+                filas.append(nueva)
+    return pd.DataFrame(filas).drop(columns="pagina").reset_index(drop=True)
+
+
 def clasificar(m: pd.DataFrame) -> pd.DataFrame:
     """Motivo de salida de cada ministro:
     - hasta_el_final: terminó con la gestión (o sigue en funciones)
@@ -136,7 +159,11 @@ def resumen(m: pd.DataFrame) -> pd.DataFrame:
 def main() -> None:
     SALIDA.mkdir(parents=True, exist_ok=True)
     partes = []
+    vistas = set()
     for g, (titulo, _, _) in GESTIONES.items():
+        if titulo in vistas:
+            continue
+        vistas.add(titulo)
         ts = tablas(titulo)
         crudo = SALIDA / "crudo"
         crudo.mkdir(parents=True, exist_ok=True)
@@ -146,10 +173,11 @@ def main() -> None:
         for df in ts:
             n = normalizar(df, g)
             if not n.empty and n.cartera.str.contains("Ministerio|Jefatura", case=False).any():
-                partes.append(n[n.cartera.str.contains("Ministerio|Jefatura", case=False)])
+                n = n[n.cartera.str.contains("Ministerio|Jefatura", case=False)].assign(pagina=titulo)
+                partes.append(n)
                 break
         time.sleep(3)
-    m = clasificar(pd.concat(partes, ignore_index=True))
+    m = clasificar(separar_mandatos(pd.concat(partes, ignore_index=True)))
     m.to_csv(SALIDA / "ministros.csv", index=False)
     resumen(m).to_csv(SALIDA / "resumen.csv", index=False)
     print(resumen(m).to_string())
