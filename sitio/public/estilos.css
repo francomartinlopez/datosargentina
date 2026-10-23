@@ -200,3 +200,33 @@ table.tabla { border-collapse: collapse; font-size: 14px; width: 100%; max-width
 
 .pie { margin-top: 56px; padding: 24px 0 40px; border-top: 1px solid var(--borde); color: var(--tinta-2); font-size: 14px; }
 .pie p { max-width: 80ch; }
+
+/* Fichas anchas: grupos y mapas */
+.ficha.ancha { grid-column: 1 / -1; }
+.ficha.anidada { border: 0; box-shadow: none; padding: 16px 0 0; background: transparent; }
+.ranking { display: grid; gap: 2px; margin-top: 14px; }
+.rank-fila {
+  display: grid; grid-template-columns: minmax(140px, 260px) 1fr; gap: 10px; align-items: center;
+  border: 0; background: transparent; color: var(--tinta); font: inherit; font-size: 13px; text-align: left;
+  padding: 3px 6px; border-radius: 6px; cursor: pointer;
+}
+.rank-fila:hover { background: var(--insignia); }
+.rank-fila[aria-pressed="true"] { background: var(--insignia); font-weight: 600; }
+.rank-pista { position: relative; height: 16px; }
+.rank-pista::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--eje); }
+.rank-barra { position: absolute; top: 2px; height: 12px; border-radius: 3px; }
+.rank-barra.pos { background: var(--s1); }
+.rank-barra.neg { background: #e34948; }
+.rank-num { position: absolute; top: -1px; padding: 0 4px; font-size: 12px; color: var(--tinta-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 520px) { .rank-fila { grid-template-columns: 110px 1fr; font-size: 12px; } }
+
+.mapa-cuerpo { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 24px; margin-top: 8px; align-items: start; }
+@media (max-width: 640px) { .mapa-cuerpo { grid-template-columns: 1fr; } }
+.mapa { width: 100%; }
+.mapa svg { display: block; max-width: 100%; height: auto; }
+.mapa-leyenda { display: flex; gap: 10px; flex-wrap: wrap; font-size: 12px; color: var(--tinta-2); margin-top: 6px; }
+.mapa-leyenda span { display: flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+.mapa-leyenda i { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+.mapa-lista { margin: 0; padding: 0; list-style: none; columns: 2 200px; column-gap: 24px; font-size: 13px; }
+.mapa-lista li { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--grilla); break-inside: avoid; font-variant-numeric: tabular-nums; }
+.mapa-lista li span:first-child { color: var(--tinta-2); }

@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, transformar, vistas
+from . import calidad, mapas, transformar, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -121,7 +121,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
             "fuente": config["series"].get(ind["serie"], {}).get("fuente", "cálculo propio"),
-            "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")),
+            "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")), "grupo": ind.get("grupo"),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
             **calc,
             "_serie": vistas.como_lista(s[s.index >= pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)]),
@@ -129,7 +129,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
     return fichas, alertas
 
 
-def escribir(fichas: list[dict], mensuales: dict, alertas: list[str]) -> None:
+def escribir(fichas: list[dict], mensuales: dict, alertas: list[str], config: dict | None = None) -> None:
     SALIDA.mkdir(parents=True, exist_ok=True)
     PROCESADOS.mkdir(parents=True, exist_ok=True)
     ahora = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -141,7 +141,19 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str]) -> None:
         pd.DataFrame(serie, columns=["fecha", "valor"]).to_csv(SALIDA / f"{f['id']}.csv", index=False)
     portada = [{k: f[k] for k in ("id", "nombre", "unidad", "ultimo", "intermensual", "interanual_ultimo")}
                for f in fichas if f["portada"]]
-    indice = [{k: f[k] for k in ("id", "nombre", "seccion")} for f in fichas]
+    # Los indicadores que forman parte de un grupo (p. ej. el EMAE por sector) se muestran
+    # dentro de una sola ficha: el índice lleva la entrada del grupo en el lugar del primero.
+    grupos = {g["id"]: g for g in (config or {}).get("grupos", [])}
+    indice, vistos = [], set()
+    for f in fichas:
+        g = f.get("grupo")
+        if not g:
+            indice.append({k: f[k] for k in ("id", "nombre", "seccion")})
+        elif g not in vistos and g in grupos:
+            vistos.add(g)
+            miembros = [x["id"] for x in fichas if x.get("grupo") == g]
+            indice.append({"id": g, "nombre": grupos[g]["nombre"], "seccion": grupos[g]["seccion"], "tipo": "grupo",
+                           "nota": grupos[g].get("nota", ""), "miembros": miembros})
     (SALIDA / "portada.json").write_text(json.dumps(portada, ensure_ascii=False), encoding="utf-8")
     (SALIDA / "indice.json").write_text(json.dumps(indice, ensure_ascii=False), encoding="utf-8")
     largo = pd.concat([pd.DataFrame({"serie": n, "fecha": s.index, "valor": s.values}) for n, s in mensuales.items()])
@@ -160,8 +172,9 @@ def main() -> None:
     mensuales, alertas_proc = procesar(config, crudas)
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
-    escribir(fichas, mensuales, alertas + alertas_ind)
-    print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind)} alertas (ver data/informe.md)")
+    alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA)
+    escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
+    print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 
 
 if __name__ == "__main__":

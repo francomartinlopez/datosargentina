@@ -46,6 +46,7 @@ const fecha = (s) => { const [y, m, d] = s.split("-").map(Number); return new Da
 function periodo(f, frecuencia) {
   const d = fecha(f);
   if (frecuencia === "T") return `${["I", "II", "III", "IV"][Math.floor(d.getMonth() / 3)]} trim. ${d.getFullYear()}`;
+  if (frecuencia === "S") return `${d.getMonth() < 6 ? "1.er" : "2.º"} sem. ${d.getFullYear()}`;
   return `${MESES_LARGO[d.getMonth()]} ${d.getFullYear()}`;
 }
 
@@ -77,13 +78,14 @@ function sufijoDiferencia(f) {
   return "";
 }
 const esDiferencia = (f) => f.tipo_valor === "tasa" || f.tipo_valor === "saldo";
-const esIndice = (f) => /índice/.test(f.unidad) && f.tipo_valor !== "tasa";
+// Índices y valores a precios de un año base: se destaca la variación, no el nivel
+const esIndice = (f) => (/índice/.test(f.unidad) || /de 2004/.test(f.unidad)) && f.tipo_valor !== "tasa";
 
 function cifraPrincipal(f) {
   const variacionMensual = esDiferencia(f)
     ? (f.tipo_valor === "saldo" ? signoMonto(f.intermensual, f.unidad) : signo(f.intermensual, decimales(f.intermensual || 0)) + sufijoDiferencia(f))
     : signo(f.intermensual) + "%";
-  const contra = f.frecuencia === "T" ? "vs. trimestre anterior" : "vs. mes anterior";
+  const contra = f.frecuencia === "T" ? "vs. trimestre anterior" : f.frecuencia === "S" ? "vs. semestre anterior" : "vs. mes anterior";
   if (f.vista_historica === "mensual") {
     return { grande: fmt(f.intermensual) + "%", etiqueta: "mensual", chica: `interanual ${fmt(f.interanual_ultimo)}%` };
   }
@@ -263,7 +265,7 @@ function dibujar(contenedor, cfg) {
     if (!filas.length) return salir();
     cruz.setAttribute("x1", X(xRef)); cruz.setAttribute("x2", X(xRef)); cruz.setAttribute("visibility", "visible");
     const cab = cfg.tipoX === "fecha"
-      ? (cfg.frecuencia === "T" ? periodo(new Date(xRef).toISOString().slice(0, 10), "T") : `${MESES_LARGO[new Date(xRef).getMonth()]} ${new Date(xRef).getFullYear()}`)
+      ? periodo(`${new Date(xRef).getFullYear()}-${String(new Date(xRef).getMonth() + 1).padStart(2, "0")}-01`, cfg.frecuencia)
       : `Mes ${xRef} de mandato`;
     tip.innerHTML = "";
     tip.append(el("div", { class: "t-fecha", text: cab }));
@@ -287,7 +289,7 @@ function dibujar(contenedor, cfg) {
 
 /* ---------- Fichas de indicadores ---------- */
 
-function ficha(f) {
+function ficha(f, { anidada = false } = {}) {
   const c = cifraPrincipal(f);
   const grafico = el("div", { class: "grafico" });
   const leyendaVista = el("p", { class: "leyenda-vista" });
@@ -306,7 +308,7 @@ function ficha(f) {
     if (cfg.series.length > 1) cfg.series.forEach((s) => leyenda.append(el("li", {}, el("i", { style: `background:${s.color}` }), s.nombre)));
     dibujar(grafico, cfg);
   }
-  const art = el("article", { class: "ficha", id: f.id },
+  const art = el("article", { class: anidada ? "ficha anidada" : "ficha", id: anidada ? null : f.id },
     el("div", { class: "ficha-cab" },
       el("div", {}, el("h3", { text: f.nombre }), el("p", { class: "unidad", text: `Último dato: ${periodo(f.ultimo.fecha, f.frecuencia)}` })),
       el("div", { class: "cifra" },
@@ -330,6 +332,123 @@ function tarjeta(f) {
   return el("a", { class: "tarjeta", href: `#${f.id}` },
     el("p", { class: "nombre", text: f.nombre }), valor, corta ? null : el("p", { class: "unidad-t", text: c.etiqueta }),
     el("p", { class: "detalle", text: `${c.chica} · ${periodo(f.ultimo.fecha, f.frecuencia)}` }));
+}
+
+/* ---------- Grupos (p. ej. EMAE por sector) ---------- */
+
+function fichaGrupo(g) {
+  const ordenados = [...g.miembros].filter((m) => m.interanual_ultimo != null).sort((a, b) => b.interanual_ultimo - a.interanual_ultimo);
+  const maxAbs = Math.max(...ordenados.map((m) => Math.abs(m.interanual_ultimo)), 1);
+  const detalle = el("div", { class: "grupo-detalle" });
+  let elegido = ordenados[0]?.id;
+  const barras = el("div", { class: "ranking", role: "list" });
+  const pintar = () => {
+    barras.innerHTML = "";
+    ordenados.forEach((m) => {
+      const v = m.interanual_ultimo, ancho = (Math.abs(v) / maxAbs) * 50;
+      const fila = el("button", { type: "button", class: "rank-fila", "aria-pressed": String(m.id === elegido), role: "listitem",
+        onclick: () => { elegido = m.id; pintar(); } },
+        el("span", { class: "rank-nombre", text: m.nombre }),
+        el("span", { class: "rank-pista" },
+          el("span", { class: "rank-barra " + (v < 0 ? "neg" : "pos"), style: v < 0 ? `right:50%;width:${ancho}%` : `left:50%;width:${ancho}%` }),
+          el("span", { class: "rank-num", style: v < 0 ? `right:${50 + ancho}%` : `left:${50 + ancho}%`, text: signo(v) + "%" })));
+      barras.append(fila);
+    });
+    detalle.innerHTML = "";
+    const m = g.miembros.find((x) => x.id === elegido);
+    if (m) detalle.append(ficha(m, { anidada: true }));
+  };
+  pintar();
+  const ultimo = ordenados[0] ? periodo(ordenados[0].ultimo.fecha, ordenados[0].frecuencia) : "";
+  return el("article", { class: "ficha ancha", id: g.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: g.nombre }),
+      el("p", { class: "unidad", text: `Variación interanual por sector · ${ultimo}. Tocá un sector para ver su serie.` }))),
+    barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
+}
+
+/* ---------- Mapas por provincia ---------- */
+
+const VISTAS_MAPA = [
+  { id: "intermensual", texto: "Mensual", desc: "Variación % contra el mes anterior." },
+  { id: "interanual", texto: "Interanual", desc: "Variación % contra el mismo mes del año anterior." },
+  { id: "desde_gestion", texto: "Gestión actual", desc: "Variación % acumulada desde noviembre de 2023." },
+];
+
+function proyectar(geo, W, H, pad = 8) {
+  // Equirrectangular con corrección por latitud media: suficiente para un país
+  let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+  const recorrer = (c, fn) => (typeof c[0] === "number" ? fn(c) : c.forEach((d) => recorrer(d, fn)));
+  geo.features.forEach((f) => recorrer(f.geometry.coordinates, ([x, y]) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }));
+  const k = Math.cos(((y0 + y1) / 2) * Math.PI / 180);
+  const esc = Math.min((W - 2 * pad) / ((x1 - x0) * k), (H - 2 * pad) / (y1 - y0));
+  const ox = (W - (x1 - x0) * k * esc) / 2, oy = (H - (y1 - y0) * esc) / 2;
+  const P = ([x, y]) => [ox + (x - x0) * k * esc, oy + (y1 - y) * esc];
+  const anillo = (r) => r.map((c, i) => (i ? "L" : "M") + P(c).map((v) => v.toFixed(1)).join(",")).join("") + "Z";
+  return (g) => (g.type === "Polygon" ? g.coordinates.map(anillo).join("") : g.coordinates.map((pol) => pol.map(anillo).join("")).join(""));
+}
+
+function colorDivergente(v, max) {
+  // azul (positivo) – gris (cero) – rojo (negativo), en 5 pasos por lado
+  if (v == null) return css("--grilla");
+  const azules = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf"];
+  const rojos = ["#fbd5d2", "#f5aaa4", "#ec7d76", "#e34948", "#b8302f"];
+  const paso = Math.min(4, Math.floor((Math.abs(v) / (max || 1)) * 5));
+  if (Math.abs(v) < max * 0.02) return css("--insignia");
+  return v > 0 ? azules[paso] : rojos[paso];
+}
+
+function fichaMapa(m, geo) {
+  let vista = "interanual";
+  const H = 420;
+  const cont = el("div", { class: "mapa" });
+  const leyenda = el("div", { class: "mapa-leyenda" });
+  const tabla = el("ol", { class: "mapa-lista" });
+  const desc = el("p", { class: "leyenda-vista" });
+  const botones = VISTAS_MAPA.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === vista), text: v.texto, onclick: () => { vista = v.id; render(); } }));
+  const tip = document.getElementById("tooltip");
+  function render() {
+    botones.forEach((b, i) => b.setAttribute("aria-pressed", String(VISTAS_MAPA[i].id === vista)));
+    desc.textContent = VISTAS_MAPA.find((v) => v.id === vista).desc;
+    const vals = Object.entries(m.provincias).filter(([n]) => n !== "Total del país").map(([n, x]) => [n, x[vista]]);
+    const max = Math.max(...vals.map(([, v]) => Math.abs(v ?? 0)), 0.1);
+    const W = Math.min(cont.clientWidth || 300, 340);
+    const path = proyectar(geo, W, H);
+    cont.innerHTML = "";
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", "aria-label": `${m.nombre}: ${desc.textContent}` });
+    geo.features.forEach((f) => {
+      const n = f.properties.nombre, v = m.provincias[n]?.[vista];
+      const p = svgEl("path", { d: path(f.geometry), fill: colorDivergente(v, max), stroke: css("--superficie"), "stroke-width": 0.8 });
+      const mostrar = (ev) => {
+        tip.innerHTML = "";
+        tip.append(el("div", { class: "t-fecha", text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("div", { class: "t-fila" }, el("span", { text: VISTAS_MAPA.find((x) => x.id === vista).texto }), el("span", { text: v == null ? "s/d" : signo(v) + "%" })));
+        tip.hidden = false;
+        tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 14) + "px";
+        tip.style.top = Math.max(8, ev.clientY - tip.offsetHeight - 12) + "px";
+        p.setAttribute("stroke", css("--tinta")); p.setAttribute("stroke-width", 1.5);
+      };
+      p.addEventListener("mousemove", mostrar);
+      p.addEventListener("mouseleave", () => { tip.hidden = true; p.setAttribute("stroke", css("--superficie")); p.setAttribute("stroke-width", 0.8); });
+      svg.append(p);
+    });
+    cont.append(svg);
+    leyenda.innerHTML = "";
+    const escala = [-max, -max / 2, 0, max / 2, max];
+    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDivergente(v === 0 ? 0 : v, max)}` }), signo(v, max < 10 ? 1 : 0) + "%")));
+    tabla.innerHTML = "";
+    [...vals].sort((a, b) => (b[1] ?? -1e9) - (a[1] ?? -1e9)).forEach(([n, v]) =>
+      tabla.append(el("li", {}, el("span", { text: n.replace(", Antártida e Islas del Atlántico Sur", "") }), el("span", { text: v == null ? "s/d" : signo(v) + "%" }))));
+  }
+  const total = m.provincias["Total del país"];
+  const art = el("article", { class: "ficha ancha", id: m.id },
+    el("div", { class: "ficha-cab" },
+      el("div", {}, el("h3", { text: m.nombre }), el("p", { class: "unidad", text: `${m.unidad} · ${periodo(m.fecha, "M")}` })),
+      total ? el("div", { class: "cifra" }, el("span", { class: "grande" }, signo(total.interanual) + "%", el("small", { text: " interanual" })), el("span", { class: "chica", text: "total del país" })) : null),
+    el("div", { class: "vistas", role: "group", "aria-label": "Vista del mapa" }, ...botones), desc,
+    el("div", { class: "mapa-cuerpo" }, el("div", {}, cont, leyenda), tabla),
+    m.nota ? el("p", { class: "nota", text: m.nota }) : null,
+    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${m.fuente}` })));
+  new ResizeObserver(() => render()).observe(cont);
+  return art;
 }
 
 /* ---------- Gobierno (registros con nombre) ---------- */
@@ -513,9 +632,15 @@ async function gobierno() {
 async function iniciar() {
   const indice = await (await fetch(`${DATOS}indice.json`)).json();
   // un archivo con problemas no tumba la página: ese indicador simplemente no se muestra
+  const leer = async (id) => { try { return await (await fetch(`${DATOS}${id}.json`)).json(); } catch { return null; } };
   const fichas = (await Promise.all(indice.map(async (i) => {
-    try { return await (await fetch(`${DATOS}${i.id}.json`)).json(); } catch { return null; }
+    if (i.tipo !== "grupo") return leer(i.id);
+    const miembros = (await Promise.all(i.miembros.map(leer))).filter(Boolean);
+    return miembros.length ? { ...i, miembros, actualizado: miembros[0].actualizado } : null;
   }))).filter(Boolean);
+  const listaMapas = (await leer("mapas/indice")) || [];
+  const mapasCargados = (await Promise.all(listaMapas.map((m) => leer(`mapas/${m}`)))).filter(Boolean);
+  const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -524,12 +649,13 @@ async function iniciar() {
 
   const nav = document.getElementById("nav-secciones");
   const secciones = document.getElementById("secciones");
-  const nombres = [...new Set(fichas.map((f) => f.seccion))].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
+  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion)])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
   for (const s of nombres) {
     const id = slug(s);
     nav.append(el("a", { href: `#${id}`, text: s }));
     const grilla = el("div", { class: "grilla" });
-    fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(ficha(f)));
+    fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
+    if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();

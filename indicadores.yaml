@@ -98,6 +98,29 @@ series:
   tasa_personales:     {fuente: bcra, id: 14, agregacion: promedio}
   tasa_tarjetas:       {fuente: bcra, id: 1215, agregacion: promedio}
   icl:                 {fuente: bcra, id: 40, agregacion: promedio}
+  # --- Planillas (fuente: archivo) ---
+  pobreza_personas:    {fuente: archivo, lector: indec_pobreza, campo: "Pobreza/Personas"}
+  indigencia_personas: {fuente: archivo, lector: indec_pobreza, campo: "Indigencia/Personas"}
+  pib_real:            {fuente: archivo, lector: indec_oferta_demanda, campo: "Producto Interno Bruto"}
+  consumo_privado:     {fuente: archivo, lector: indec_oferta_demanda, campo: "Consumo privado"}
+  fbcf_real:           {fuente: archivo, lector: indec_oferta_demanda, campo: "Formación bruta de capital fijo"}
+  cbt:                 {fuente: archivo, lector: indec_canastas, campo: CBT}
+  itcrm:               {fuente: archivo, lector: bcra_itcrm, campo: ITCRM}
+  # --- EMAE por sector (base 2004, original) ---
+  emae_agro:           {fuente: datosgobar, id: "11.3_ISOM_2004_M_39"}
+  emae_pesca:          {fuente: datosgobar, id: "11.3_VIPAA_2004_M_5"}
+  emae_mineria:        {fuente: datosgobar, id: "11.3_ISD_2004_M_26"}
+  emae_industria:      {fuente: datosgobar, id: "11.3_VMASD_2004_M_23"}
+  emae_egu:            {fuente: datosgobar, id: "11.3_ITC_2004_M_21"}
+  emae_construccion:   {fuente: datosgobar, id: "11.3_VMATC_2004_M_12"}
+  emae_comercio:       {fuente: datosgobar, id: "11.3_AGCS_2004_M_41"}
+  emae_hoteles:        {fuente: datosgobar, id: "11.3_P_2004_M_20"}
+  emae_transporte:     {fuente: datosgobar, id: "11.3_EMC_2004_M_25"}
+  emae_financiero:     {fuente: datosgobar, id: "11.3_IM_2004_M_25"}
+  emae_inmobiliario:   {fuente: datosgobar, id: "11.3_SEGA_2004_M_48"}
+  emae_adm_publica:    {fuente: datosgobar, id: "11.3_C_2004_M_60"}
+  emae_ensenanza:      {fuente: datosgobar, id: "11.3_CMMR_2004_M_10"}
+  emae_salud:          {fuente: datosgobar, id: "11.3_HR_2004_M_24"}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -118,6 +141,10 @@ calculos:
   brecha_tarjeta:  {operacion: brecha, a: dolar_tarjeta, b: dolar_mayorista}
   # La serie IMIG de resultado financiero viene vacía en la API: se calcula como primario menos intereses netos
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
+
+grupos:
+  - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
+     nota: "Serie original (sin desestacionalizar) de INDEC, base 2004."}
 
 indicadores:
   - {id: inflacion, nombre: "Inflación (IPC)", seccion: Precios, serie: ipc, tipo_valor: indice, vista_historica: mensual, unidad: "índice", portada: true,
@@ -189,3 +216,28 @@ indicadores:
   - {id: tasa_tarjetas, nombre: "Tasa de tarjetas de crédito", seccion: "Crédito y alquileres", serie: tasa_tarjetas, tipo_valor: tasa, unidad: "% TNA"}
   - {id: icl, nombre: "Alquileres: índice de contratos de locación (real)", seccion: "Crédito y alquileres", serie: icl, tipo_valor: nivel, moneda: ARS, unidad: "índice real",
      nota: "ICL del BCRA (contratos de la ley 27.551) deflactado por el IPC. Mide la actualización de contratos vigentes, no el precio de nuevos alquileres."}
+  # --- Planillas y EMAE por sector ---
+  - {id: pib, nombre: "PIB real", seccion: Actividad, serie: pib_real, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
+  - {id: consumo_privado, nombre: "Consumo privado real", seccion: Actividad, serie: consumo_privado, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
+  - {id: inversion, nombre: "Inversión (formación bruta de capital fijo)", seccion: "Sector externo e inversión", serie: fbcf_real, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
+  - {id: pobreza, nombre: "Pobreza (personas)", seccion: "Pobreza y programas sociales", serie: pobreza_personas, tipo_valor: tasa, unidad: "% de las personas", frecuencia: S, portada: true,
+     nota: "31 aglomerados urbanos, por semestre. INDEC no publicó pobreza entre 2014 y el primer semestre de 2016."}
+  - {id: indigencia, nombre: "Indigencia (personas)", seccion: "Pobreza y programas sociales", serie: indigencia_personas, tipo_valor: tasa, unidad: "% de las personas", frecuencia: S}
+  - {id: cbt, nombre: "Canasta básica total (real)", seccion: "Pobreza y programas sociales", serie: cbt, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por adulto equivalente",
+     nota: "Línea de pobreza para un adulto. Un hogar tipo de cuatro personas equivale a unos 3,09 adultos."}
+  - {id: itcrm, nombre: "Tipo de cambio real multilateral", seccion: "Dólar y finanzas", serie: itcrm, tipo_valor: indice, unidad: "índice 17-12-2015 = 100",
+     nota: "Un valor más alto indica un peso más depreciado en términos reales frente a los socios comerciales."}
+  - {id: emae_agro, nombre: "Agro (agricultura, ganadería y silvicultura)", seccion: Actividad, serie: emae_agro, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_pesca, nombre: "Pesca", seccion: Actividad, serie: emae_pesca, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_mineria, nombre: "Minas y canteras", seccion: Actividad, serie: emae_mineria, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_industria, nombre: "Industria manufacturera", seccion: Actividad, serie: emae_industria, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_egu, nombre: "Electricidad, gas y agua", seccion: Actividad, serie: emae_egu, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_construccion, nombre: "Construcción", seccion: Actividad, serie: emae_construccion, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_comercio, nombre: "Comercio", seccion: Actividad, serie: emae_comercio, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_hoteles, nombre: "Hoteles y restaurantes", seccion: Actividad, serie: emae_hoteles, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_transporte, nombre: "Transporte y comunicaciones", seccion: Actividad, serie: emae_transporte, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_financiero, nombre: "Intermediación financiera", seccion: Actividad, serie: emae_financiero, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_inmobiliario, nombre: "Inmobiliarias y servicios empresariales", seccion: Actividad, serie: emae_inmobiliario, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_adm_publica, nombre: "Administración pública y defensa", seccion: Actividad, serie: emae_adm_publica, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_ensenanza, nombre: "Enseñanza", seccion: Actividad, serie: emae_ensenanza, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
+  - {id: emae_salud, nombre: "Salud", seccion: Actividad, serie: emae_salud, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
