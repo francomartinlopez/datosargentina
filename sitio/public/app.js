@@ -13,7 +13,7 @@ const GESTIONES = [
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
 const ORDEN_SECCIONES = ["Precios", "Actividad", "Empleo e ingresos", "Pobreza y programas sociales",
-  "Sector externo e inversión", "Estado y fiscal", "Dólar y finanzas", "Crédito y alquileres", "Opinión pública"];
+  "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
   bcra: "BCRA",
@@ -396,7 +396,8 @@ function compararMiembro(m, periodo, porDiferencia) {
 function fichaGrupo(g) {
   const porDiferencia = g.ranking === "diferencia";
   let per = PERIODOS_RANKING[0];
-  const fmtRank = (v) => (porDiferencia ? signo(v, Math.abs(v) < 10 ? 1 : 0) + " mil" : signo(v) + "%");
+  const esc = g.escala_ranking || 1, suf = g.sufijo_ranking ?? " mil";
+  const fmtRank = (v) => (porDiferencia ? signo(v * esc, Math.abs(v * esc) < 10 ? 1 : 0) + suf : signo(v) + "%");
   const detalle = el("div", { class: "grupo-detalle" });
   let elegido = null;
   const barras = el("div", { class: "ranking", role: "list" });

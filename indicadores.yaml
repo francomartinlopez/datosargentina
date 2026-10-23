@@ -178,6 +178,24 @@ series:
   ipcf_decil_9: {fuente: datosgobar, id: "301.1_DECIL_9_IPPCF_0_T_12"}
   ipcf_decil_10: {fuente: datosgobar, id: "301.1_DECIL_10_IPCF_0_T_13"}
   gini:                {fuente: datosgobar, id: "65.1_CGI_0_0_21"}
+  # --- Balanza de pagos (INDEC, cuentas internacionales, trimestral desde 2006, millones de US$) ---
+  bdp_cuenta_corriente: {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|1. Cuenta corriente"}
+  bdp_bienes:          {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|1.A.a Bienes"}
+  bdp_servicios:       {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|1.A.b Servicios"}
+  bdp_viajes:          {fuente: archivo, lector: indec_cin, campo: "Cuadro 4|1.A.b.4 Viajes"}
+  bdp_ingreso_primario: {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|1.B Ingreso primario"}
+  bdp_ied:             {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|3.1 Inversión directa>Pasivos"}
+  bdp_reservas:        {fuente: archivo, lector: indec_cin, campo: "Cuadro 1|3.5 Activos de reserva"}
+  # --- Deuda de la Administración Central (Secretaría de Finanzas, saldos trimestrales, millones de US$) ---
+  deuda_total_res:     {fuente: archivo, lector: finanzas_deuda_residencia, campo: total}
+  deuda_externa:       {fuente: archivo, lector: finanzas_deuda_residencia, campo: externa}
+  deuda_interna:       {fuente: archivo, lector: finanzas_deuda_residencia, campo: interna}
+  deuda_titulos:       {fuente: archivo, lector: finanzas_deuda, campo: titulos}
+  deuda_letras:        {fuente: archivo, lector: finanzas_deuda, campo: letras}
+  deuda_organismos:    {fuente: archivo, lector: finanzas_deuda, campo: organismos_internacionales}
+  deuda_bilaterales:   {fuente: archivo, lector: finanzas_deuda, campo: organismos_oficiales}
+  deuda_adelantos:     {fuente: archivo, lector: finanzas_deuda, campo: adelantos_bcra}
+  deuda_otros:         {fuente: archivo, lector: finanzas_deuda, campo: otros}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -205,6 +223,9 @@ calculos:
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
 
 grupos:
+  - {id: deuda_composicion, nombre: "Deuda por instrumento y acreedor", seccion: "Deuda pública", ranking: diferencia, unidad_ranking: "miles de millones de US$ de hoy",
+     escala_ranking: 0.001, sufijo_ranking: " mil M",
+     nota: "Deuda bruta de la Administración Central (Secretaría de Finanzas), saldos a fin de trimestre desde 2019. Bonos y letras incluyen los que están en manos de organismos públicos (BCRA, FGS, Banco Nación): Finanzas no publica la apertura por tenedor en esta serie."}
   - {id: empleo_sectores, nombre: "Empleo privado registrado por sector", seccion: "Empleo e ingresos", ranking: diferencia, unidad_ranking: "miles de puestos",
      nota: "Asalariados privados registrados (SIPA), series sin estacionalidad salvo salud. Minería, servicios comunitarios y salud usan la serie con estacionalidad. No incluye intermediación financiera, que no se publica por rama en la API."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
@@ -326,3 +347,27 @@ indicadores:
   - {id: ingreso_estrato_alto, nombre: "Ingreso per cápita: estrato alto (deciles 9 y 10)", seccion: "Empleo e ingresos", serie: ipcf_estrato_alto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por persona por mes", frecuencia: T}
   - {id: gini, nombre: "Desigualdad: coeficiente de Gini", seccion: "Empleo e ingresos", serie: gini, tipo_valor: tasa, unidad: "coeficiente (0 = igualdad total)", frecuencia: T,
      nota: "Gini del ingreso per cápita familiar. Va de 0 (todos ganan lo mismo) a 1 (una persona concentra todo el ingreso)."}
+  # --- Balanza de pagos ---
+  - {id: cuenta_corriente, nombre: "Cuenta corriente", seccion: "Sector externo e inversión", serie: bdp_cuenta_corriente, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T,
+     nota: "Saldo de bienes, servicios, rentas y transferencias con el resto del mundo (INDEC, desde 2006)."}
+  - {id: bdp_bienes, nombre: "Balanza de bienes (balanza de pagos)", seccion: "Sector externo e inversión", serie: bdp_bienes, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T}
+  - {id: bdp_servicios, nombre: "Balanza de servicios", seccion: "Sector externo e inversión", serie: bdp_servicios, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T}
+  - {id: bdp_viajes, nombre: "Turismo: saldo de viajes", seccion: "Sector externo e inversión", serie: bdp_viajes, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T,
+     nota: "Gasto de extranjeros en el país menos gasto de residentes en el exterior."}
+  - {id: bdp_ingreso_primario, nombre: "Intereses y utilidades (ingreso primario)", seccion: "Sector externo e inversión", serie: bdp_ingreso_primario, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T,
+     nota: "Intereses, utilidades y dividendos cobrados menos pagados al exterior."}
+  - {id: ied, nombre: "Inversión extranjera directa (ingresos netos)", seccion: "Sector externo e inversión", serie: bdp_ied, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T,
+     nota: "Pasivos de inversión directa de la balanza de pagos: aportes de no residentes a empresas en Argentina, neto de retiros. Un valor negativo es desinversión."}
+  - {id: bdp_reservas, nombre: "Variación de reservas (balanza de pagos)", seccion: "Sector externo e inversión", serie: bdp_reservas, tipo_valor: saldo, moneda: USD, unidad: "millones de US$ de hoy por trimestre", frecuencia: T}
+  # --- Deuda pública ---
+  - {id: deuda_total, nombre: "Deuda bruta de la Administración Central", seccion: "Deuda pública", serie: deuda_total_res, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, portada: true,
+     nota: "Saldo a fin de trimestre, sin la deuda elegible no presentada a los canjes. Fuente: Secretaría de Finanzas (desde 1994)."}
+  - {id: deuda_externa, nombre: "Deuda con no residentes (externa)", seccion: "Deuda pública", serie: deuda_externa, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T}
+  - {id: deuda_interna, nombre: "Deuda con residentes (interna)", seccion: "Deuda pública", serie: deuda_interna, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T,
+     nota: "Incluye la deuda con organismos públicos locales (BCRA, FGS, Banco Nación) y con privados residentes."}
+  - {id: deuda_c_titulos, nombre: "Bonos (títulos públicos)", seccion: "Deuda pública", serie: deuda_titulos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  - {id: deuda_c_letras, nombre: "Letras del Tesoro", seccion: "Deuda pública", serie: deuda_letras, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  - {id: deuda_c_organismos, nombre: "Organismos internacionales (FMI, BID, Banco Mundial y otros)", seccion: "Deuda pública", serie: deuda_organismos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  - {id: deuda_c_bilaterales, nombre: "Organismos oficiales bilaterales (Club de París y otros)", seccion: "Deuda pública", serie: deuda_bilaterales, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  - {id: deuda_c_adelantos, nombre: "Adelantos transitorios del BCRA", seccion: "Deuda pública", serie: deuda_adelantos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
+  - {id: deuda_c_otros, nombre: "Otros (préstamos, pagarés, avales y deuda en pago diferido)", seccion: "Deuda pública", serie: deuda_otros, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", frecuencia: T, grupo: deuda_composicion}
