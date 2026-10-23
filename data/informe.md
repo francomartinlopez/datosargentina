@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-23
 
-Indicadores publicados: 63
+Indicadores publicados: 96
 
 ## Alertas
 
@@ -35,6 +35,39 @@ Indicadores publicados: 63
 - dolar_ccl: sin dato nuevo (último 2026-10)
 - dolar_mep: sin dato nuevo (último 2026-10)
 - riesgo_pais: sin dato nuevo (último 2026-10)
+- ipim: sin dato nuevo (último 2026-08)
+- autoservicios_desest: sin dato nuevo (último 2026-07)
+- shoppings_desest: sin dato nuevo (último 2026-07)
+- produccion_gas: sin dato nuevo (último 2026-06)
+- produccion_petroleo: sin dato nuevo (último 2025-11)
+- produccion_acero: sin dato nuevo (último 2026-08)
+- asalariados_privados: sin dato nuevo (último 2026-06)
+- gasto_politica_ingresos: sin dato nuevo (último 2026-09)
+- auh_gasto: sin dato nuevo (último 2026-09)
+- auh_prestaciones: sin dato nuevo (último 2026-04)
+- auh_monto: sin dato nuevo (último 2026-09)
+- pnc_gasto: sin dato nuevo (último 2026-09)
+- expo_primarios: sin dato nuevo (último 2026-08)
+- expo_moa: sin dato nuevo (último 2026-08)
+- expo_moi: sin dato nuevo (último 2026-08)
+- expo_combustibles: sin dato nuevo (último 2026-04)
+- impo_combustibles: sin dato nuevo (último 2026-04)
 - impo_combustibles: variación inusual en el último dato (195.7%)
+- terminos_intercambio: sin dato nuevo (último 2026-04)
+- gasto_jubilaciones: sin dato nuevo (último 2026-08)
+- subsidios_energia: sin dato nuevo (último 2026-04)
+- transf_capital_provincias: sin dato nuevo (último 2026-08)
+- icc: sin dato nuevo (último 2026-09)
+- dolar_tarjeta: sin dato nuevo (último 2026-10)
+- depositos_privados_ars: sin dato nuevo (último 2026-10)
+- depositos_privados_usd: sin dato nuevo (último 2026-10)
+- compras_divisas_bcra: sin dato nuevo (último 2026-09)
+- prestamos_hipotecarios: sin dato nuevo (último 2026-10)
+- prestamos_prendarios: sin dato nuevo (último 2026-10)
+- prestamos_personales: sin dato nuevo (último 2026-10)
+- prestamos_tarjetas: sin dato nuevo (último 2026-10)
 - prestamos_tarjetas: variación inusual en el último dato (-11.1%)
+- tasa_personales: sin dato nuevo (último 2026-10)
+- tasa_tarjetas: sin dato nuevo (último 2026-09)
+- icl: sin dato nuevo (último 2026-10)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
