@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ["166.2_F_BRUTAIJO_0_0_19", "4.2_DGCP_2004_T_25", "4.4_DGCP_2004_T_25"]
+IDS = []
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ["Utilización de la capacidad instalada en la industria"]
+BUSQUEDAS = ['IMIG gasto primario', 'IMIG prestaciones sociales', 'IMIG jubilaciones y pensiones contributivas', 'IMIG subsidios económicos', 'IMIG remuneraciones', 'IMIG gastos de funcionamiento', 'IMIG transferencias corrientes a provincias', 'IMIG gastos de capital', 'IMIG universidades', 'IMIG asignaciones familiares', 'IMIG otros programas sociales', 'IMIG gasto total', 'tasa de interés depósitos a plazo fijo 30 días promedio serie histórica']
 
 
 def sondear_id(i: str) -> dict:
@@ -47,7 +47,7 @@ def sondear_id(i: str) -> dict:
 
 def buscar(q: str) -> list[dict]:
     try:
-        r = requests.get(BUSCAR, params={"q": q, "limit": 100}, headers=CAB, timeout=60)
+        r = requests.get(BUSCAR, params={"q": q, "limit": 40}, headers=CAB, timeout=60)
         out = []
         for x in r.json().get("data", []):
             f = x.get("field", {})
