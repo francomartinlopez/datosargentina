@@ -293,7 +293,9 @@ function ficha(f) {
   const leyendaVista = el("p", { class: "leyenda-vista" });
   const leyenda = el("ul", { class: "leyenda", hidden: true });
   const vistasDisponibles = VISTAS.filter((v) => (v.id === "comparativa" ? Object.keys(f.vistas.comparativa || {}).length : (f.vistas[v.id] || []).length));
-  let actual = vistasDisponibles.find((v) => v.id === "interanual") ? "interanual" : vistasDisponibles[0]?.id;
+  // Para saldos (pueden ser negativos) la vista inicial es la serie en su unidad
+  const inicial = f.tipo_valor === "saldo" ? "desde_2003" : "interanual";
+  let actual = vistasDisponibles.find((v) => v.id === inicial) ? inicial : vistasDisponibles[0]?.id;
   const botones = vistasDisponibles.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === actual), text: v.texto, onclick: () => { actual = v.id; render(); } }));
   function render() {
     botones.forEach((b, i) => b.setAttribute("aria-pressed", String(vistasDisponibles[i].id === actual)));
