@@ -33,8 +33,10 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
-    "trabajo_registrado": [f"https://www.argentina.gob.ar/sites/default/files/trabajoregistrado_{a}{m:02d}_estadisticas.xlsx"
-                           for a, m in [(26, 8), (26, 7), (26, 6), (26, 5)]],
+    "ingresos": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_{MM}_{AA}.xls"),
+    "ingresos_2025_06": ["https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_06_25.xls"],
+    "ingresos_2019_06": ["https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_06_19.xls",
+                         "https://www.indec.gob.ar/ftp/cuadros/sociedad/cuadros_informe_ingresos_07_19.xls"],
 }
 PAGINAS = {}
 

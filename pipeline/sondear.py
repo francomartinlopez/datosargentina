@@ -24,8 +24,8 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ['152.1_EOTACIOEST_2009_M_34', '152.1_SICIOS_EST_2009_M_50', '152.1_SICIOS_EST_2009_M_36', '152.1_HLES_REEST_2009_M_24', '152.1_TSPORTEEST_2009_M_35', '154.2_EE_RIOSIOS_S_0_0_10', '154.2_SJUANUAN_S_0_0_8', '154.2_FMOSAOSA_S_0_0_7', '154.2_FORMOSA_S_0_0_7', '154.2_JUJUY_S_0_0_5', '154.2_JJUYJUY_S_0_0_5', '154.1_FMOSAOSA_C_0_0_7', '154.1_JUJUY_C_0_0_5']
-BUSQUEDAS = ['Asalariados Sector privado Intermediación financiera', 'Asalariados Sector privado Provincia de Jujuy', 'Asalariados Sector privado Provincia de Formosa', 'Asalariados Sector privado Servicios sociales y de salud']
+IDS = []
+BUSQUEDAS = ['ingreso per cápita familiar', 'ingreso medio per cápita familiar decil', 'ingreso total familiar promedio', 'coeficiente de Gini ingreso per cápita familiar', 'ingreso disponible bruto']
 
 
 def sondear_id(i: str) -> dict:
