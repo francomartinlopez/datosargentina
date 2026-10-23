@@ -104,6 +104,10 @@ def main() -> None:
     partes = []
     for g, (titulo, _, _) in GESTIONES.items():
         ts = tablas(titulo)
+        crudo = SALIDA / "crudo"
+        crudo.mkdir(parents=True, exist_ok=True)
+        for i, df in enumerate(ts):
+            df.to_csv(crudo / f"{g.replace(' ', '_')}__{i}.csv", index=False)
         # la primera tabla con columna de ministerio es la de ministros (incluye la Jefatura de Gabinete)
         for df in ts:
             n = normalizar(df, g)
