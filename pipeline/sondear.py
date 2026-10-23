@@ -24,50 +24,8 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = []
-BUSQUEDAS = ['Asalariados Sector privado Agricultura Sin estacionalidad',
-    'Asalariados Sector privado Pesca Sin estacionalidad',
-    'Asalariados Sector privado Explotación de minas Sin estacionalidad',
-    'Asalariados Sector privado Industrias manufactureras Sin estacionalidad',
-    'Asalariados Sector privado Electricidad gas y agua Sin estacionalidad',
-    'Asalariados Sector privado Construcción Sin estacionalidad',
-    'Asalariados Sector privado Comercio Sin estacionalidad',
-    'Asalariados Sector privado Hoteles y restaurantes Sin estacionalidad',
-    'Asalariados Sector privado Transporte Sin estacionalidad',
-    'Asalariados Sector privado Intermediación financiera Sin estacionalidad',
-    'Asalariados Sector privado Actividades inmobiliarias Sin estacionalidad',
-    'Asalariados Sector privado Enseñanza Sin estacionalidad',
-    'Asalariados Sector privado Servicios sociales y de salud Sin estacionalidad',
-    'Asalariados Sector privado Otras actividades de servicios Sin estacionalidad',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Buenos Aires',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de CABA',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Catamarca',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Chaco',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Chubut',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Córdoba',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Corrientes',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Entre Ríos',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Formosa',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Jujuy',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de La Pampa',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de La Rioja',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Mendoza',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Misiones',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Neuquén',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Río Negro',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Salta',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de San Juan',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de San Luis',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Santa Cruz',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Santa Fe',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Santiago del Estero',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Tierra del Fuego',
-    'Asalariados Sector privado Sin Estacionalidad Provincia de Tucumán']
-ARGENTINADATOS = [
-    "cotizaciones/dolares/tarjeta", "cotizaciones/dolares/oficial", "cotizaciones/dolares/blue",
-    "finanzas/indices/inflacion", "finanzas/tasas/plazoFijo", "finanzas/fci/mercadoDinero/ultimo",
-    "finanzas/rendimientos",
-]
+IDS = ['152.1_EOTACIOEST_2009_M_34', '152.1_SICIOS_EST_2009_M_50', '152.1_SICIOS_EST_2009_M_36', '152.1_HLES_REEST_2009_M_24', '152.1_TSPORTEEST_2009_M_35', '154.2_EE_RIOSIOS_S_0_0_10', '154.2_SJUANUAN_S_0_0_8', '154.2_FMOSAOSA_S_0_0_7', '154.2_FORMOSA_S_0_0_7', '154.2_JUJUY_S_0_0_5', '154.2_JJUYJUY_S_0_0_5', '154.1_FMOSAOSA_C_0_0_7', '154.1_JUJUY_C_0_0_5']
+BUSQUEDAS = ['Asalariados Sector privado Intermediación financiera', 'Asalariados Sector privado Provincia de Jujuy', 'Asalariados Sector privado Provincia de Formosa', 'Asalariados Sector privado Servicios sociales y de salud']
 
 
 def sondear_id(i: str) -> dict:
