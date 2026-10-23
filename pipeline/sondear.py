@@ -26,11 +26,8 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 IDS = []
 BUSQUEDAS = [
-    "EMAE agricultura ganaderia", "EMAE pesca", "EMAE explotacion de minas", "EMAE industria manufacturera",
-    "EMAE electricidad gas agua", "EMAE construccion", "EMAE comercio mayorista minorista", "EMAE hoteles restaurantes",
-    "EMAE transporte comunicaciones", "EMAE intermediacion financiera", "EMAE actividades inmobiliarias",
-    "EMAE administracion publica", "EMAE enseñanza", "EMAE servicios sociales salud", "EMAE otras actividades servicios",
-    "EMAE impuestos netos de subsidios",
+    "EMAE. Construcción", "EMAE construcción base 2004 mensual", "EMAE. Otras actividades de servicios comunitarias",
+    "EMAE servicio doméstico", "EMAE impuestos netos", "EMAE. Electricidad",
 ]
 ARGENTINADATOS = [
     "cotizaciones/dolares/tarjeta", "cotizaciones/dolares/oficial", "cotizaciones/dolares/blue",
