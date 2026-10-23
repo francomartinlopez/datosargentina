@@ -36,7 +36,16 @@ ARCHIVOS = {
     "yahoo_merval": ["https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?range=max&interval=1mo"],
     "yahoo_ggal": ["https://query1.finance.yahoo.com/v8/finance/chart/GGAL?range=max&interval=1mo"],
     "byma": ["https://open.bymadata.com.ar/vanoms-be-core/rest/api/bymadata/free/index-price"],
-    "magyp_bovinos": ["https://datos.magyp.gob.ar/dataset/indicadores-mensuales-bovinos"],
+    "yahoo_ypf": ["https://query1.finance.yahoo.com/v8/finance/chart/YPF?range=max&interval=1mo"],
+    "yahoo_argt": ["https://query1.finance.yahoo.com/v8/finance/chart/ARGT?range=max&interval=1mo"],
+    "bcra_entidades": ["https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/entfin.xls", "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/panhis.xls"],
+}
+
+PAGINAS = {
+    "bcra_bancos": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Informe_mensual_sobre_bancos.asp",
+    "bcra_cambiario": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Evolucion_del_mercado_de_cambios.asp",
+    "bcra_series": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp",
+    "seguridad_snic": "https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos",
 }
 
 
@@ -80,7 +89,7 @@ def main() -> None:
     for clave, u in PAGINAS.items():
         try:
             r = requests.get(u, headers=CAB, timeout=60)
-            links = sorted(set(urljoin(u, h) for h in re.findall(r'href="([^"]+\.(?:xlsx?|csv|zip))"', r.text, flags=re.I)))
+            links = sorted(set(urljoin(u, h) for h in re.findall(r'href="([^"]+\.(?:xlsx?|csv|zip|xlsm))"', r.text, flags=re.I)))
             enlaces[clave] = {"status": r.status_code, "enlaces": links[:300]}
         except Exception as e:
             enlaces[clave] = {"error": repr(e)}
