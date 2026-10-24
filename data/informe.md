@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 209
+Indicadores publicados: 214
 
 ## Alertas
 
@@ -179,6 +179,14 @@ Indicadores publicados: 209
 - morosidad_pnfc: sin dato nuevo (último 2026-02)
 - morosidad_fintech: sin dato nuevo (último 2026-02)
 - morosidad_tarjetas_nb: sin dato nuevo (último 2026-02)
+- mora_familias: sin dato nuevo (último 2026-08)
+- mora_fam_personales: sin dato nuevo (último 2026-08)
+- mora_fam_tarjetas: sin dato nuevo (último 2026-08)
+- mora_fam_prendarios: sin dato nuevo (último 2026-08)
+- mora_fam_hipotecarios: sin dato nuevo (último 2026-08)
+- mora_empresas: sin dato nuevo (último 2026-08)
+- prestamos_personas: sin dato nuevo (último 2026-08)
+- remuneracion_asalariados: sin dato nuevo (último 2026-01)
 - morosidad_electro: sin dato nuevo (último 2026-02)
 - morosidad_coop: sin dato nuevo (último 2026-02)
 - pnfc_tarjetas: sin dato nuevo (último 2026-02)
