@@ -62,6 +62,7 @@ ARCHIVOS = {
     "oede_flujos3": ["https://www.argentina.gob.ar/sites/default/files/flujos_de_creacion_y_destruccion_de_empleo_3.xlsx"],
     "bcra_series": ["https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/series.xlsm", "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/series.xlsm"],
     "bcra_balance": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/Balance_semanal.xls", "https://www.bcra.gob.ar/Pdfs/PublicacionesEstadisticas/balance.xls"],
+    "bcra_balance_pdf": ["https://www.bcra.gob.ar/pdfs/publicacionesestadisticas/econ0200.pdf", "https://bcra.gob.ar/pdfs/publicacionesestadisticas/econ0200.pdf"],
     "rigi_dataset": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"],
     "rigi_evaluacion": ["https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=evaluacion"],
     "ucii": variantes_indec("https://www.indec.gob.ar/ftp/cuadros/economia/capacidad_{MM}_{AA}.xls", 4) + ["https://www.indec.gob.ar/ftp/cuadros/economia/sh_capacidad_instalada.xls", "https://www.indec.gob.ar/ftp/cuadros/economia/cuadros_capacidad_instalada.xls"],

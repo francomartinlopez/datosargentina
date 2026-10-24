@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = []
+IDS = ['300.1_AP_ACT_RESTER_0_M_21', '300.1_AP_PAS_CUEDAS_0_M_39', '300.1_AP_PAS_OBLTER_0_M_36', '300.1_AP_PAS_OBLASE_0_M_36', '300.1_AP_PAS_OTRPAS_0_M_16', '300.1_TIPO_CAMBIBIO_0_M_11', '300.1_AP_PAS_OBLNES_0_M_49', '300.1_AP_PAS_OBLVAS_0_M_49', '300.1_AP_PAS_ASIDEG_0_M_23', '300.1_AP_PAS_DEUITO_0_M_46']
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ["Apertura pasivo", "Apertura activo", "Estado Resumido de Activos y Pasivos del BCRA pasivo"]
+BUSQUEDAS = []
 
 
 def sondear_id(i: str) -> dict:
@@ -61,6 +61,12 @@ def buscar(q: str) -> list[dict]:
 
 def main() -> None:
     SALIDA.mkdir(parents=True, exist_ok=True)
+    for i in IDS:
+        try:
+            r = requests.get(SERIES, params={"ids": i, "format": "csv", "limit": 5000}, headers=CAB, timeout=60)
+            (SALIDA / f"serie_{i}.csv").write_text(r.text, encoding="utf-8")
+        except Exception:
+            pass
     (SALIDA / "ids.json").write_text(json.dumps([sondear_id(i) for i in IDS], ensure_ascii=False, indent=1), encoding="utf-8")
     resultados = {q: buscar(q) for q in BUSQUEDAS}
     # para cada resultado, verificar que la API devuelva valores (algunos IDs existen sin datos)
