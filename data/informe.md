@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 195
+Indicadores publicados: 196
 
 ## Alertas
 
@@ -239,4 +239,12 @@ Indicadores publicados: 195
 - empresas_aperturas: sin dato nuevo (último 2026-01)
 - empresas_cierres: sin dato nuevo (último 2026-01)
 - empresas_neto: sin dato nuevo (último 2026-01)
+- bcra_encajes_usd: sin dato nuevo (último 2025-10)
+- bcra_organismos: sin dato nuevo (último 2025-10)
+- bcra_pases: sin dato nuevo (último 2025-10)
+- bcra_tc_balance: sin dato nuevo (último 2025-10)
+- bcra_pase_2016: sin dato nuevo (último 2026-10)
+- cny_por_usd: sin dato nuevo (último 2026-10)
+- swap_china_yuan: sin dato nuevo (último 2026-10)
+- swap_eeuu_activado: sin dato nuevo (último 2026-10)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
