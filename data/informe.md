@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 196
+Indicadores publicados: 199
 
 ## Alertas
 
@@ -247,4 +247,5 @@ Indicadores publicados: 196
 - cny_por_usd: sin dato nuevo (último 2026-10)
 - swap_china_yuan: sin dato nuevo (último 2026-10)
 - swap_eeuu_activado: sin dato nuevo (último 2026-10)
+- fmi_desembolsos_2025: sin dato nuevo (último 2026-10)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
