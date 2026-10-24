@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ['300.1_AP_ACT_RESTER_0_M_21', '300.1_AP_PAS_CUEDAS_0_M_39', '300.1_AP_PAS_OBLTER_0_M_36', '300.1_AP_PAS_OBLASE_0_M_36', '300.1_AP_PAS_OTRPAS_0_M_16', '300.1_TIPO_CAMBIBIO_0_M_11', '300.1_AP_PAS_OBLNES_0_M_49', '300.1_AP_PAS_OBLVAS_0_M_49', '300.1_AP_PAS_ASIDEG_0_M_23', '300.1_AP_PAS_DEUITO_0_M_46']
+IDS = []
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = []
+BUSQUEDAS = ['presión tributaria consolidada', 'recaudación tributaria provincial', 'recaudación provincias impuestos propios', 'ingresos brutos recaudación provincial', 'recaudación municipal', 'carga tributaria nación provincias municipios', 'recursos tributarios provinciales']
 
 
 def sondear_id(i: str) -> dict:
@@ -47,7 +47,7 @@ def sondear_id(i: str) -> dict:
 
 def buscar(q: str) -> list[dict]:
     try:
-        r = requests.get(BUSCAR, params={"q": q, "limit": 100}, headers=CAB, timeout=60)
+        r = requests.get(BUSCAR, params={"q": q, "limit": 25}, headers=CAB, timeout=60)
         out = []
         for x in r.json().get("data", []):
             f = x.get("field", {})
