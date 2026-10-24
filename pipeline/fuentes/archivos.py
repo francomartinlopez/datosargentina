@@ -544,15 +544,21 @@ ESCRIBANOS = "https://www.colegio-escribanos.org.ar/noticias/{mes}-{anio}-Compar
 MESES_NOMBRE = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 
-def leer_escribanos(contenido: bytes, mes: int) -> pd.Series:
-    """Cada planilla mensual trae ese mismo mes de todos los años desde 2016: 'Año AAAA' | actos."""
+def leer_escribanos(contenido: bytes, mes: int, campo: str | None = None) -> pd.Series:
+    """Cada planilla mensual trae ese mismo mes de todos los años desde 2016: 'Año AAAA' | actos
+    y, más a la derecha, 'Año AAAA' | monto en pesos (campo="monto")."""
     out = {}
     # la hoja con datos no siempre es la primera (algunos meses traen hojas vacías adelante)
     for df in pd.read_excel(io.BytesIO(contenido), header=None, sheet_name=None).values():
         for i in range(len(df)):
             # la columna del año no siempre es la primera: se toma la primera celda "Año AAAA" de la fila
+            # (o la segunda, para el monto)
+            vistos = 0
             for j in range(df.shape[1] - 1):
                 m = re.match(r"Año\s+(\d{4})", _texto(df.iat[i, j]))
+                if m and campo == "monto" and vistos == 0:
+                    vistos = 1
+                    continue
                 if m:
                     v = pd.to_numeric(df.iat[i, j + 1], errors="coerce")
                     if pd.notna(v):
@@ -563,9 +569,36 @@ def leer_escribanos(contenido: bytes, mes: int) -> pd.Series:
     return pd.Series(out, dtype=float)
 
 
+@lru_cache(maxsize=None)
+def _escribanos_planillas() -> tuple:
+    hoy = pd.Timestamp(date.today()).replace(day=1)
+    out = []
+    for k in range(1, 15):
+        f = hoy - pd.DateOffset(months=k)
+        nombres = [MESES_NOMBRE[f.month - 1]] + (["Setiembre"] if f.month == 9 else [])
+        for nombre in nombres:
+            try:
+                r = requests.get(ESCRIBANOS.format(mes=nombre, anio=f.year), headers=CABECERAS, timeout=TIMEOUT)
+            except requests.RequestException:
+                continue
+            if r.status_code == 200 and r.content[:4] in FIRMAS:
+                out.append((r.content, f.month))
+                break
+    return tuple(out)
+
+
 def escribanos_compraventas(campo: str | None = None) -> pd.Series:
     """Escrituras de compraventa en CABA: se juntan las planillas de los últimos 14 meses
-    (cada una aporta su mes en todos los años), lo que arma la serie mensual completa."""
+    (cada una aporta su mes en todos los años), lo que arma la serie mensual completa.
+    campo: None = cantidad de actos; "monto" = monto total escriturado en pesos."""
+    partes = [leer_escribanos(c, mes, campo) for c, mes in _escribanos_planillas()]
+    if not partes:
+        raise RuntimeError("No se encontraron planillas del Colegio de Escribanos")
+    s = pd.concat(partes)
+    return s[~s.index.duplicated(keep="first")].sort_index()
+
+
+def _escribanos_viejo(campo: str | None = None) -> pd.Series:
     hoy = pd.Timestamp(date.today()).replace(day=1)
     partes = []
     for k in range(1, 15):

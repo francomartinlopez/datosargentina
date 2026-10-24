@@ -590,6 +590,25 @@ function fichaPoblacion(d) {
     el("div", { class: "ficha-pie" }, el("span", { text: "Fuente: INDEC, Encuesta Permanente de Hogares (microdatos). Cálculo propio." })));
 }
 
+/* ---------- Principales problemas (encuestas, varias líneas) ---------- */
+
+function fichaProblemas(d) {
+  const grafico = el("div", { class: "grafico" });
+  const leyenda = el("ul", { class: "leyenda" });
+  const series = d.series.map((s, i) => ({ nombre: s.nombre, color: css(COLORES[i % COLORES.length]), puntos: s.puntos.map(([x, y]) => [fecha(x), y]), grueso: true }));
+  series.forEach((s) => { const u = s.puntos[s.puntos.length - 1]; leyenda.append(el("li", {}, el("i", { style: `background:${s.color}` }), `${s.nombre} (${fmt(u[1], 0)}%)`)); });
+  const cfg = { series, tipoX: "fecha", eje: (y) => fmt(y, 0) + "%", tip: (y) => fmt(y, 0) + "%", unidadEje: "", referencia: null, bandas: true,
+                titulo: d.nombre, frecuencia: "M" };
+  const ultima = d.series.flatMap((s) => s.puntos.map((p) => p[0])).sort().pop();
+  const art = el("article", { class: "ficha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }), el("p", { class: "unidad", text: `${d.unidad} · último dato: ${periodo(ultima, "M")}` }))),
+    grafico, leyenda,
+    el("p", { class: "nota", text: d.nota }),
+    el("div", { class: "ficha-pie" }, el("span", {}, "Fuente: ", el("a", { href: d.fuente_url, target: "_blank", rel: "noopener", text: d.fuente }))));
+  new ResizeObserver(() => dibujar(grafico, cfg)).observe(grafico);
+  return art;
+}
+
 /* ---------- Imagen de dirigentes (encuestas) ---------- */
 
 function fichaImagen(d) {
@@ -1045,6 +1064,7 @@ async function iniciar() {
   const rigi = await leer("rigi");
   const imagen = await leer("encuestas_imagen");
   const poblacion = await leer("poblacion_actividad");
+  const problemas = await leer("encuestas_problemas");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -1062,6 +1082,7 @@ async function iniciar() {
     if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
     if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
     if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
+    if (problemas && problemas.seccion === s) grilla.append(fichaProblemas(problemas));
     if (imagen && imagen.seccion === s) grilla.append(fichaImagen(imagen));
     if (poblacion && poblacion.seccion === s) grilla.append(fichaPoblacion(poblacion));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));

@@ -139,7 +139,8 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
             if faltan:
                 alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
                 continue
-            mensuales[nombre] = transformar.stock_sobre_flujo_anual(mensuales[c["a"]], mensuales[c["b"]], c.get("factor", 1))
+            mensuales[nombre] = transformar.stock_sobre_flujo_anual(mensuales[c["a"]], mensuales[c["b"]], c.get("factor", 1),
+                                                                    mensuales.get(c.get("multiplicar")))
             continue
         if c["operacion"] == "porcentaje_de":  # (a × multiplicar) / (b / divisor_b) en %, trimestral
             insumos = [c["a"], c["b"]] + ([c["multiplicar"]] if c.get("multiplicar") else [])

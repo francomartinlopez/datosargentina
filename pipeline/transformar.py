@@ -161,10 +161,13 @@ def indice_ponderado(series: list[pd.Series], pesos: list[float], base: str) -> 
     return (df.sum(axis=1) / sum(pesos)).astype(float)
 
 
-def stock_sobre_flujo_anual(stock: pd.Series, flujo: pd.Series, factor: float = 1) -> pd.Series:
+def stock_sobre_flujo_anual(stock: pd.Series, flujo: pd.Series, factor: float = 1, multiplicar: pd.Series | None = None) -> pd.Series:
     """Stock mensual (saldo a fin de mes) como % de un flujo trimestral anualizado (promedio de los
     últimos 4 trimestres = flujo de un año). Trimestral: saldo del último mes de cada trimestre."""
     s = stock.dropna() * factor
+    if multiplicar is not None:  # p. ej. deuda en dólares a pesos con el tipo de cambio del mes
+        s, m = s.align(multiplicar.dropna(), join="inner")
+        s = s * m
     q = s.groupby(s.index.to_period("Q")).last()
     meses = s.groupby(s.index.to_period("Q")).apply(lambda x: x.index.max().month)
     q = q[(meses % 3) == 0]  # solo trimestres completos
