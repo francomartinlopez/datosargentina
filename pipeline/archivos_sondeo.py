@@ -33,6 +33,8 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "atlas_2609": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf"],
+    "atlas_2608": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_08_2026_aa84843133a7af6c.pdf"],
     "bcra_ib_anexo": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/informe-bancos-anexo.xlsx"],
     "yahoo_merval": ["https://query1.finance.yahoo.com/v8/finance/chart/%5EMERV?range=max&interval=1mo"],
     "yahoo_ggal": ["https://query1.finance.yahoo.com/v8/finance/chart/GGAL?range=max&interval=1mo"],
