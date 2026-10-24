@@ -538,6 +538,39 @@ def indec_eph_ingresos(campo: str) -> pd.Series:
     return pd.Series(pd.to_numeric(t[campo], errors="coerce").values, index=fechas, dtype=float).dropna().sort_index()
 
 
+# ---------- Grupo Construya: Índice Construya (tabla mensual publicada en su web) ----------
+
+CONSTRUYA = "https://www.grupoconstruya.com.ar/servicios/indice_construya"
+MESES_ES_NUM = {m.lower(): i + 1 for i, m in enumerate(["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
+                                                         "Septiembre", "Octubre", "Noviembre", "Diciembre"])}
+
+
+def leer_construya(texto_html: str, campo: str = "original") -> pd.Series:
+    import html as html_mod
+    txt = re.sub(r"\s+", " ", html_mod.unescape(re.sub(r"<[^>]+>", " ", texto_html)))
+    filas = re.findall(r"Mes: (\w+) (\d{4}) Con Estacionalidad: ([\d.,]+).*?Desestacionalizado: ([\d.,]+)", txt)
+    num = lambda v: float(v.replace(".", "").replace(",", "."))
+    out = {}
+    for mes, anio, orig, desest in filas:
+        m = MESES_ES_NUM.get(mes.lower().replace("setiembre", "septiembre"))
+        if m:
+            out[pd.Timestamp(int(anio), m, 1)] = num(desest if campo == "desestacionalizado" else orig)
+    if not out:
+        raise ValueError("Construya: no se encontró la tabla del índice")
+    return pd.Series(out, dtype=float).sort_index()
+
+
+@lru_cache(maxsize=None)
+def _construya_html() -> str:
+    r = requests.get(CONSTRUYA, headers=CABECERAS, timeout=TIMEOUT)
+    r.raise_for_status()
+    return r.content.decode("utf-8", "replace")
+
+
+def construya_indice(campo: str = "original") -> pd.Series:
+    return leer_construya(_construya_html(), campo or "original")
+
+
 # ---------- Colegio de Escribanos de la Ciudad de Buenos Aires ----------
 
 ESCRIBANOS = "https://www.colegio-escribanos.org.ar/noticias/{mes}-{anio}-Comparativo-anual-por-mes.xls"
@@ -670,6 +703,7 @@ LECTORES = {
     "bcra_pnfc": bcra_pnfc,
     "bcra_ib_lineas": bcra_ib_lineas,
     "indec_eph_ingresos": indec_eph_ingresos,
+    "construya_indice": construya_indice,
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,
     "indec_canastas": indec_canastas,

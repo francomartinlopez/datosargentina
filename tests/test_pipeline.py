@@ -1,3 +1,4 @@
+from pathlib import Path
 import pandas as pd
 import pytest
 
@@ -138,3 +139,11 @@ def test_variacion_contra_cero_no_rompe_json():
     params = {"inicio_historico": "2022-01-01", "base_gestion_actual": "2022-06-01"}
     v = vistas.calcular_vistas(s, "flujo", params, [])
     json.dumps(v, allow_nan=False)
+
+
+def test_sin_fichas_solas_en_la_grilla():
+    """Cada tramo de fichas comunes entre fichas anchas debe ser par (ver pipeline/diseno.py)."""
+    import yaml
+    from pipeline import diseno
+    config = yaml.safe_load(open(Path(__file__).resolve().parents[1] / "indicadores.yaml", encoding="utf-8"))
+    assert diseno.huecos(config) == []

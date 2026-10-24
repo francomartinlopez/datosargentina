@@ -600,7 +600,7 @@ function fichaProblemas(d) {
   const cfg = { series, tipoX: "fecha", eje: (y) => fmt(y, 0) + "%", tip: (y) => fmt(y, 0) + "%", unidadEje: "", referencia: null, bandas: true,
                 titulo: d.nombre, frecuencia: "M" };
   const ultima = d.series.flatMap((s) => s.puntos.map((p) => p[0])).sort().pop();
-  const art = el("article", { class: "ficha", id: d.id },
+  const art = el("article", { class: "ficha ancha", id: d.id },
     el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }), el("p", { class: "unidad", text: `${d.unidad} · último dato: ${periodo(ultima, "M")}` }))),
     grafico, leyenda,
     el("p", { class: "nota", text: d.nota }),

@@ -241,6 +241,16 @@ series:
   pnfc_resto:          {fuente: archivo, lector: bcra_pnfc, campo: "7. Tipo de asistencia|Resto de asistencias"}
   ucii:                {fuente: datosgobar, id: "31.3_UNG_2004_M_18"}
   escrituras_caba:     {fuente: archivo, lector: escribanos_compraventas}
+  construya:           {fuente: archivo, lector: construya_indice, campo: original}
+  construya_desest:    {fuente: archivo, lector: construya_indice, campo: desestacionalizado}
+  came_ventas:         {fuente: manual, id: came_ventas_minoristas}
+  ipc_corrupcion:      {fuente: manual, id: ipc_corrupcion}
+  odsa_ia:             {fuente: manual, id: odsa_inseguridad_alimentaria}
+  odsa_ia_severa:      {fuente: manual, id: odsa_inseguridad_alimentaria_severa}
+  prod_soja:           {fuente: datosgobar, id: "AGRO_A_Soja_0003"}
+  prod_maiz:           {fuente: datosgobar, id: "AGRO_A_Maiz_0003"}
+  prod_trigo:          {fuente: datosgobar, id: "AGRO_A_Trigo_0003"}
+  prod_girasol:        {fuente: datosgobar, id: "AGRO_A_Girasol_0003"}
   escrituras_monto:    {fuente: archivo, lector: escribanos_compraventas, campo: monto}
   cemento:             {fuente: datosgobar, id: "453.2_CEMENTONTO_0_0_7_59"}
   subocupacion:        {fuente: datosgobar, id: "46.2_ECTST_0_T_36"}
@@ -390,6 +400,7 @@ calculos:
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
   salario_total:   {operacion: indice_ponderado, series: [salario_privado, salario_publico, salario_no_registrado], pesos: [50.16, 29.91, 19.93], base: "2016-10-01"}
+  granos_total:     {operacion: combinacion, terminos: {prod_soja: 1, prod_maiz: 1, prod_trigo: 1, prod_girasol: 1}}
   sueldo_en_canastas: {operacion: cociente, a: remuneracion_sipa, b: cbt}
   escritura_pesos:  {operacion: cociente, a: escrituras_monto, b: escrituras_caba}
   escritura_usd:    {operacion: cociente, a: escritura_pesos, b: dolar_mayorista}
@@ -485,6 +496,10 @@ indicadores:
   - {id: ipim, nombre: "Precios mayoristas (IPIM)", seccion: Precios, serie: ipim, tipo_valor: indice, vista_historica: mensual, unidad: "índice"}
   - {id: autoservicios, nombre: "Ventas en autoservicios mayoristas", seccion: Actividad, serie: autoservicios_original, desestacionalizada: autoservicios_desest, tipo_valor: indice, unidad: "índice"}
   - {id: shoppings, nombre: "Ventas en centros de compras", seccion: Actividad, serie: shoppings_original, desestacionalizada: shoppings_desest, tipo_valor: indice, unidad: "índice"}
+  - {id: came_ventas, nombre: "Ventas minoristas pymes (CAME)", seccion: Actividad, serie: came_ventas, tipo_valor: indice, unidad: "índice dic-2022=100",
+     nota: "Índice de ventas minoristas pymes de la Confederación Argentina de la Mediana Empresa: cantidades vendidas en comercios pymes de todo el país, a precios constantes. Serie con estacionalidad. Los meses de 2023 se calcularon con el índice de 2024 y la variación interanual que publica CAME. Encuesta propia de la cámara, no es una estadística oficial."}
+  - {id: construya, nombre: "Índice Construya", seccion: Actividad, serie: construya, desestacionalizada: construya_desest, tipo_valor: indice, unidad: "índice",
+     nota: "Grupo Construya: volumen de insumos para la construcción vendidos al sector privado por las empresas líderes (ladrillos, cemento, cal, aceros largos, sanitarios, pinturas, cerámicos y otros). Suele anticipar la construcción privada."}
   - {id: produccion_petroleo, nombre: "Producción de petróleo", seccion: Actividad, serie: produccion_petroleo, tipo_valor: flujo, unidad: "miles de m³ por mes",
      nota: "Atención: la fuente (Secretaría de Energía vía datos.gob.ar) no publica datos nuevos desde noviembre de 2025."}
   - {id: produccion_gas, nombre: "Producción de gas natural", seccion: Actividad, serie: produccion_gas, tipo_valor: flujo, unidad: "millones de m³ por mes"}
@@ -509,6 +524,8 @@ indicadores:
   - {id: transf_capital_provincias, nombre: "Transferencias de capital a provincias", seccion: "Estado y fiscal", serie: transf_capital_provincias, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
      nota: "Fondos nacionales para obras y otros gastos de capital de provincias y CABA. No incluye coparticipación."}
   - {id: icc, nombre: "Confianza del consumidor (UTDT)", seccion: "Opinión pública", serie: icc, tipo_valor: tasa, unidad: "índice 0 a 100"}
+  - {id: ipc_corrupcion, vista_inicial: desde_2003, nombre: "Índice de Percepción de la Corrupción", seccion: "Opinión pública", serie: ipc_corrupcion, tipo_valor: tasa, frecuencia: A, unidad: "puntos de 0 (muy corrupto) a 100 (muy transparente)",
+     nota: "Transparencia Internacional (en Argentina, Poder Ciudadano). Mide cómo perciben la corrupción en el sector público expertos y empresarios, a partir de varias encuestas internacionales. La escala de 0 a 100 rige desde 2012; los años anteriores no son comparables. Cada dato corresponde al año evaluado y se publica a comienzos del año siguiente."}
   - {id: dolar_tarjeta, nombre: "Dólar tarjeta (real)", seccion: "Dólar y finanzas", serie: dolar_tarjeta, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}
   - {id: brecha_mep, nombre: "Brecha MEP vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_mep, tipo_valor: tasa, unidad: "%"}
   - {id: brecha_tarjeta, nombre: "Brecha tarjeta vs. mayorista", seccion: "Dólar y finanzas", serie: brecha_tarjeta, tipo_valor: tasa, unidad: "%"}
@@ -535,6 +552,10 @@ indicadores:
   - {id: indigencia, nombre: "Indigencia (personas)", seccion: "Pobreza y programas sociales", serie: indigencia_personas, tipo_valor: tasa, unidad: "% de las personas", frecuencia: S}
   - {id: cbt, nombre: "Canasta básica total (real)", seccion: "Pobreza y programas sociales", serie: cbt, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por adulto equivalente",
      nota: "Línea de pobreza para un adulto. Un hogar tipo de cuatro personas equivale a unos 3,09 adultos."}
+  - {id: odsa_ia, vista_inicial: desde_2003, nombre: "Inseguridad alimentaria (UCA)", seccion: "Pobreza y programas sociales", serie: odsa_ia, tipo_valor: tasa, frecuencia: A, unidad: "% de los hogares",
+     nota: "Observatorio de la Deuda Social Argentina (UCA), Encuesta de la Deuda Social Argentina, aglomerados urbanos. Hogares que redujeron la dieta de alimentos por problemas económicos en los últimos 12 meses. Los datos de 2010 a 2016 son empalmes y los de 2020 y 2021 deben tomarse con reserva por los cambios de la pandemia (según el propio ODSA)."}
+  - {id: odsa_ia_severa, vista_inicial: desde_2003, nombre: "Inseguridad alimentaria severa (UCA)", seccion: "Pobreza y programas sociales", serie: odsa_ia_severa, tipo_valor: tasa, frecuencia: A, unidad: "% de los hogares",
+     nota: "Observatorio de la Deuda Social Argentina (UCA). Hogares donde algún integrante pasó hambre por problemas económicos en los últimos 12 meses (experiencia de hambre). Mismas salvedades que la serie total."}
   - {id: itcrm, nombre: "Tipo de cambio real multilateral", seccion: "Dólar y finanzas", serie: itcrm, tipo_valor: indice, unidad: "índice 17-12-2015 = 100",
      nota: "Un valor más alto indica un peso más depreciado en términos reales frente a los socios comerciales."}
   - {id: emae_agro, nombre: "Agro (agricultura, ganadería y silvicultura)", seccion: Actividad, serie: emae_agro, tipo_valor: indice, unidad: "índice 2004=100", grupo: emae_sectores}
@@ -698,6 +719,10 @@ indicadores:
      nota: "Ingresos netos de inversión extranjera directa de los últimos 4 trimestres (balanza de pagos, INDEC) pasados a pesos con el dólar mayorista promedio, sobre la formación bruta de capital fijo a precios corrientes (INDEC). Indica qué parte de la inversión del país se financia con capital extranjero directo."}
   - {id: soja_precio, vista_inicial: desde_2003, nombre: "Precio internacional de la soja", seccion: "Sector externo e inversión", serie: soja_precio, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por tonelada",
      nota: "Precio de referencia mensual del poroto de soja (FMI, vía FRED), en dólares de hoy. La soja y sus derivados son el principal rubro de exportación del país."}
+  - {id: granos_total, vista_inicial: desde_2003, nombre: "Producción de los cuatro granos principales", seccion: "Sector externo e inversión", serie: granos_total, tipo_valor: nivel, frecuencia: A, escala: 0.000001, unidad: "millones de toneladas por campaña",
+     nota: "Soja, maíz, trigo y girasol, que suman más del 90% de la cosecha de granos. Estimaciones finales de la Secretaría de Agricultura, Ganadería y Pesca por campaña. Las estimaciones de la Bolsa de Comercio de Rosario pueden diferir levemente. La campaña de cada año es la que se siembra ese año y se cosecha al siguiente; las sequías (2008-09, 2017-18, 2022-23) explican las caídas fuertes."}
+  - {id: prod_soja, vista_inicial: desde_2003, nombre: "Producción de soja", seccion: "Sector externo e inversión", serie: prod_soja, tipo_valor: nivel, frecuencia: A, escala: 0.000001, unidad: "millones de toneladas por campaña",
+     nota: "Estimación final de la Secretaría de Agricultura, Ganadería y Pesca por campaña. La soja y sus derivados son el principal rubro de exportación del país."}
   - {id: pib_jubilaciones, nombre: "Jubilaciones y pensiones contributivas", seccion: "Estado y fiscal", serie: pib_jubilaciones, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
   - {id: pib_pensiones_nc, nombre: "Pensiones no contributivas", seccion: "Estado y fiscal", serie: pib_pensiones_nc, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
   - {id: pib_asignaciones, nombre: "Asignaciones familiares y AUH", seccion: "Estado y fiscal", serie: pib_asignaciones, tipo_valor: tasa, unidad: "% del PIB, últimos 4 trimestres", frecuencia: T, grupo: gasto_concepto}
