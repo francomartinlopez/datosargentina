@@ -119,7 +119,7 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     return mensuales, alertas
 
 
-FUENTES_ARCHIVO = {"indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda"}
+FUENTES_ARCHIVO = {"oede": "Secretaría de Trabajo (OEDE)", "escribanos": "Colegio de Escribanos de la Ciudad de Buenos Aires", "indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda"}
 
 
 def nombre_fuente(definicion: dict) -> str:

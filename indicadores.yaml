@@ -274,6 +274,10 @@ series:
   consumo_porcina_sagyp_2024: {fuente: manual, id: consumo_porcina_sagyp_2024}
   consumo_porcina_sagyp: {fuente: manual, id: consumo_porcina_sagyp}
   consumo_leche_ocla:  {fuente: manual, id: consumo_leche_ocla}
+  empresas_activas:    {fuente: archivo, lector: oede_empresas, campo: empresas}
+  empresas_aperturas:  {fuente: archivo, lector: oede_empresas, campo: aperturas}
+  empresas_cierres:    {fuente: archivo, lector: oede_empresas, campo: cierres}
+  empresas_neto:       {fuente: archivo, lector: oede_empresas, campo: neto}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -586,3 +590,9 @@ indicadores:
      nota: "Consumo aparente por habitante. 2015 en adelante: Secretaría de Agricultura, Ganadería y Pesca (SAGyP); 2024 y 2025 con la revisión de población del INDEC, y 2015–2023 llevados a ese nivel manteniendo sus variaciones oficiales. Antes de 2015: variaciones de las hojas de balance de FAO (vía Our World in Data), empalmadas con la serie oficial."}
   - {id: consumo_leche, nombre: "Consumo de leche y lácteos por habitante", seccion: Consumo, serie: consumo_leche, tipo_valor: nivel, frecuencia: A, vista_inicial: desde_2003, unidad: "litros de leche equivalente por habitante por año",
      nota: "2022 en adelante: Observatorio de la Cadena Láctea Argentina (OCLA), con la proyección de población vigente del INDEC; incluye leche fluida y todos los lácteos expresados en litros de leche. Antes de 2022: variaciones de las hojas de balance de FAO (leche y derivados, sin manteca), empalmadas con la serie de OCLA."}
+  - {id: empresas_activas, nombre: "Empresas con empleo registrado", seccion: Actividad, serie: empresas_activas, tipo_valor: nivel, frecuencia: T, vista_inicial: desde_2003, unidad: "empresas", portada: true,
+     nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras."}
+  - {id: empresas_neto, nombre: "Creación neta de empresas (aperturas menos cierres)", seccion: Actividad, serie: empresas_neto, tipo_valor: saldo, frecuencia: T, unidad: "empresas por trimestre",
+     nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras. El saldo puede no coincidir exactamente con la diferencia de aperturas y cierres por reclasificaciones."}
+  - {id: empresas_aperturas, nombre: "Aperturas de empresas", seccion: Actividad, serie: empresas_aperturas, tipo_valor: flujo, frecuencia: T, unidad: "empresas por trimestre", nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras."}
+  - {id: empresas_cierres, nombre: "Cierres de empresas", seccion: Actividad, serie: empresas_cierres, tipo_valor: flujo, frecuencia: T, unidad: "empresas por trimestre", nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras."}

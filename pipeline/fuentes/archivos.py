@@ -442,7 +442,53 @@ def escribanos_compraventas(campo: str | None = None) -> pd.Series:
     return s
 
 
+# ---------- OEDE (Secretaría de Trabajo): aperturas y cierres de empresas ----------
+
+PAGINA_OEDE = "https://www.argentina.gob.ar/trabajo/estadisticas/oede-estadisticas-nacionales"
+COLUMNAS_OEDE = {"aperturas": 1, "cierres": 6, "neto": 8, "empresas": 9}
+
+
+@lru_cache(maxsize=None)
+def oede_flujos_hoja() -> pd.DataFrame:
+    """Tabla 5 (sin estacionalidad) de la planilla de flujos más reciente publicada en la página de OEDE."""
+    html = requests.get(PAGINA_OEDE, headers=CABECERAS, timeout=TIMEOUT).text
+    enlaces = sorted(set(re.findall(r'(?:https://www\.argentina\.gob\.ar)?(/sites/default/files/flujos_de_creacion_y_destruccion_de_empleo[^"\']*\.xlsx)', html)))
+    mejor, ultimo = None, None
+    for e in enlaces:
+        r = requests.get("https://www.argentina.gob.ar" + e, headers=CABECERAS, timeout=TIMEOUT)
+        if r.status_code != 200 or r.content[:4] not in FIRMAS:
+            continue
+        df = pd.read_excel(io.BytesIO(r.content), sheet_name="T5", header=None)
+        fechas = [f for f in (_trimestre_oede(_texto(v)) for v in df[0]) if f is not None]
+        if fechas and (ultimo is None or max(fechas) > ultimo):
+            mejor, ultimo = df, max(fechas)
+    if mejor is None:
+        raise RuntimeError("No se encontró la planilla de flujos de OEDE")
+    return mejor
+
+
+def _trimestre_oede(etiqueta: str) -> pd.Timestamp | None:
+    m = re.match(r"([1-4])°\s*trim\.?\s*(\d{4})", etiqueta)
+    return pd.Timestamp(int(m.group(2)), 3 * int(m.group(1)) - 2, 1) if m else None
+
+
+def leer_oede(df: pd.DataFrame, campo: str) -> pd.Series:
+    col = COLUMNAS_OEDE[campo]
+    out = {}
+    for i in range(len(df)):
+        f = _trimestre_oede(_texto(df.iat[i, 0]))
+        v = pd.to_numeric(df.iat[i, col], errors="coerce")
+        if f is not None and pd.notna(v):
+            out[f] = float(v)
+    return pd.Series(out, dtype=float).sort_index()
+
+
+def oede_empresas(campo: str) -> pd.Series:
+    return leer_oede(oede_flujos_hoja(), campo)
+
+
 LECTORES = {
+    "oede_empresas": oede_empresas,
     "escribanos_compraventas": escribanos_compraventas,
     "bcra_pnfc": bcra_pnfc,
     "indec_pobreza": indec_pobreza,
