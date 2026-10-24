@@ -1,0 +1,46 @@
+=== Hoja: Hoja4 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Hoja1 (12 filas x 9 columnas)
+            0                  1   2   3          4                    5   6         7         8
+0         Año  Cantidad de Actos NaN NaN        Año                Monto NaN       NaN       NaN
+1    Año 2015               3461 NaN NaN   Año 2015        4436693677.67 NaN       NaN       NaN
+2    Año 2016               5020 NaN NaN   Año 2016        9525262304.23 NaN  0.450448  1.146928
+3    Año 2017               6805 NaN NaN   Año 2017   16499749136.790001 NaN  0.355578  0.732209
+4    Año 2018               3689 NaN NaN   Año 2018   16941041144.219999 NaN -0.457899  0.026745
+5    Año 2019               2410 NaN NaN   Año 2019       14901829008.77 NaN -0.346706 -0.120371
+6   Año 2020                2512 NaN NaN  Año 2020    38601960262.959999 NaN  0.042324  1.590418
+7    Año 2021               2844 NaN NaN   Año 2021   32987858451.759998 NaN  0.132166 -0.145436
+8    Año 2022               3369 NaN NaN   Año 2022   45295961567.650002 NaN  0.184599  0.373110
+9    Año 2023               4068 NaN NaN   Año 2023  132080637359.889999 NaN  0.207480  1.915947
+10   Año 2024               5755 NaN NaN   Año 2024  584653078712.579956 NaN  0.414700  3.426486
+11   Año 2025               5250 NaN NaN   Año 2025  885985732069.209961 NaN -0.087750  0.515404
+... últimas filas:
+            0     1   2   3          4                    5   6         7         8
+6   Año 2020   2512 NaN NaN  Año 2020    38601960262.959999 NaN  0.042324  1.590418
+7    Año 2021  2844 NaN NaN   Año 2021   32987858451.759998 NaN  0.132166 -0.145436
+8    Año 2022  3369 NaN NaN   Año 2022   45295961567.650002 NaN  0.184599  0.373110
+9    Año 2023  4068 NaN NaN   Año 2023  132080637359.889999 NaN  0.207480  1.915947
+10   Año 2024  5755 NaN NaN   Año 2024  584653078712.579956 NaN  0.414700  3.426486
+11   Año 2025  5250 NaN NaN   Año 2025  885985732069.209961 NaN -0.087750  0.515404
+=== Hoja: Hoja2 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Hoja3 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []

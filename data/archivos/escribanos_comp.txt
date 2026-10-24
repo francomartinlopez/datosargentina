@@ -1,0 +1,47 @@
+=== Hoja: Hoja4 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Hoja1 (13 filas x 10 columnas)
+           0                  1   2   3         4                     5   6   7         8         9
+0        Año  Cantidad de Actos NaN NaN       Año                 Monto NaN NaN       NaN       NaN
+1        NaN                NaN NaN NaN       NaN                   NaN NaN NaN     Actos     Monto
+2   Año 2015               3520 NaN NaN  Año 2015         3494950119.24 NaN NaN       NaN       NaN
+3   Año 2016               4153 NaN NaN  Año 2016          7839602507.1 NaN NaN   0.17983  1.243123
+4   Año 2017               6188 NaN NaN  Año 2017        14956343079.73 NaN NaN  0.490007  0.907794
+5   Año 2018               3671 NaN NaN  Año 2018    17747210213.860001 NaN NaN -0.406755  0.186601
+6   Año 2019               3152 NaN NaN  Año 2019        19956989454.32 NaN NaN -0.141378  0.124514
+7   Año 2020               2528 NaN NaN  Año 2020    22017433441.619999 NaN NaN  -0.19797  0.103244
+8   Año 2021               2574 NaN NaN  Año 2021    23627041829.119999 NaN NaN  0.018196  0.073106
+9   Año 2022               2974 NaN NaN  Año 2022        40544550059.68 NaN NaN    0.1554  0.716023
+10  Año 2023               4559 NaN NaN  Año 2023   191250756420.899994 NaN NaN  0.532952  3.717052
+11  Año 2024               5987 NaN NaN  Año 2024   635115211979.319946 NaN NaN  0.313227  2.320851
+12  Año 2025               7018 NaN NaN  Año 2025  1175883679039.149902 NaN NaN  0.172206  0.851449
+... últimas filas:
+           0     1   2   3         4                     5   6   7         8         9
+7   Año 2020  2528 NaN NaN  Año 2020    22017433441.619999 NaN NaN  -0.19797  0.103244
+8   Año 2021  2574 NaN NaN  Año 2021    23627041829.119999 NaN NaN  0.018196  0.073106
+9   Año 2022  2974 NaN NaN  Año 2022        40544550059.68 NaN NaN    0.1554  0.716023
+10  Año 2023  4559 NaN NaN  Año 2023   191250756420.899994 NaN NaN  0.532952  3.717052
+11  Año 2024  5987 NaN NaN  Año 2024   635115211979.319946 NaN NaN  0.313227  2.320851
+12  Año 2025  7018 NaN NaN  Año 2025  1175883679039.149902 NaN NaN  0.172206  0.851449
+=== Hoja: Hoja2 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Hoja3 (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []

@@ -1,0 +1,320 @@
+=== Hoja: Reservas (1158 filas x 8 columnas)
+          0       1        2                        3              4                5                            6                            7
+0       NaN     NaN      NaN                      NaN            NaN              NaN  MONETARY AND FINANCIAL F...                          NaN
+1       NaN     NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                          NaN
+2       NaN     NaN      NaN                      NaN            NaN              NaN                          NaN                          NaN
+3       NaN     NaN      NaN                      NaN            NaN              NaN  B.C.R.A.'s INTERNATIONAL...                          NaN
+4       NaN     NaN      NaN                      NaN            NaN              NaN                          NaN                          NaN
+5      Year   Month      NaN  Monetary expression (m)            NaN              NaN                          NaN                          NaN
+6       NaN     NaN      NaN              Description    Quantity of      Equivalence                          NaN                          NaN
+7       NaN     NaN      NaN                      NaN       previous  of the original                          NaN                          NaN
+8       NaN     NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                          NaN
+9       NaN     NaN      NaN                      NaN     in the new         with the                End day stock  Monthly average of daily...
+10      NaN     NaN      NaN                      NaN       monetary     actual mone-                          NaN                          NaN
+11      NaN     NaN      NaN                      NaN           unit        tary unit                          NaN                          NaN
+12      NaN     NaN      NaN                      NaN            NaN              NaN  PANORAMA MONETARIO Y FIN...                          NaN
+13      NaN     NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                          NaN
+14      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN                          NaN
+15      NaN     NaN      NaN                      NaN            NaN              NaN  RESERVAS INTERNACIONALES...                          NaN
+16      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN                          NaN
+17      Año     Mes      NaN  Expresión monetaria (m)            NaN              NaN                          NaN                          NaN
+18      NaN     NaN      NaN              Descripción       Unidades     Equivalencia                          NaN                          NaN
+19      NaN     NaN      NaN                      NaN     monetarias     de la unidad                          NaN                          NaN
+20      NaN     NaN      NaN                      NaN     originales        monetaria                          NaN                          NaN
+21      NaN     NaN      NaN                      NaN  representadas         original                       Saldos  Promedio mensual de sald...
+22      NaN     NaN      NaN                      NaN            NaN           con la                          NaN                          NaN
+23      NaN     NaN      NaN                      NaN            NaN           actual                          NaN                          NaN
+24      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN                          NaN
+25  bcrafec  sismes   sisobs                      NaN            NaN              NaN                          NaN                        pan28
+26  1939.13     NaN  1939.13                      NaN            NaN              NaN                            1                            2
+27  1940.01    Ene.  1940.01                      U$S        1000000                1                        492.8                          NaN
+28  1940.02    Feb.  1940.02                      U$S        1000000                1                        490.1                          NaN
+29  1940.03    Mar.  1940.03                      U$S        1000000                1                        495.4                          NaN
+... últimas filas:
+            0     1        2    3        4    5      6             7
+1152  2026.08  Ago.  2026.08  U$S  1000000    1  48259  49700.258065
+1153  2026.09  Set.  2026.09  U$S  1000000    1  46092       49683.9
+1154   2026.1  Oct.   2026.1  U$S  1000000    1      0           NaN
+1155  2026.11  Nov.  2026.11  U$S  1000000    1      0           NaN
+1156  2026.12  Dic.  2026.12  U$S  1000000    1      0           NaN
+1157  2026.13   NaN  2026.13  NaN      NaN  NaN    NaN           NaN
+=== Hoja: Cuadro (1157 filas x 40 columnas)
+         0       1        2                        3              4                5                            6               7            8                            9                            10                           11          12                           13
+0       NaN     NaN      NaN                      NaN            NaN              NaN  MONETARY AND FINANCIAL F...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+1       NaN     NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+2       NaN     NaN      NaN                      NaN            NaN              NaN                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+3       NaN     NaN      NaN                      NaN            NaN              NaN  B.C.R.A.'s MAIN LIABILIT...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+4       NaN     NaN      NaN                      NaN            NaN              NaN                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+5      Year   Month      NaN  Monetary expression (m)            NaN              NaN         Monetary liabilities             NaN          NaN                          NaN                          NaN             BCRA's Notes (1)         NaN  Repo-operations net posi...
+6       NaN     NaN      NaN              Description    Quantity of      Equivalence                        Total   Monetary base          NaN                          NaN  Deposits in foreign curr...                     In local          In                        Total
+7       NaN     NaN      NaN                      NaN       previous  of the original                          NaN           Total     Monetary  Current account in $ hel...                          NaN                     currency     foreign                          NaN
+8       NaN     NaN      NaN                      NaN  monetary unit    monetary unit                          NaN             NaN  circulation                          NaN                          NaN                          NaN    currency                          NaN
+9       NaN     NaN      NaN                      NaN     in the new         with the                          NaN             NaN          (8)                          NaN                          NaN                          NaN       (u$s)                          NaN
+10      NaN     NaN      NaN                      NaN       monetary     actual mone-                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+11      NaN     NaN      NaN                      NaN           unit        tary unit                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+12      NaN     NaN      NaN                      NaN            NaN              NaN  PANORAMA MONETARIO Y FIN...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+13      NaN     NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+14      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+15      NaN     NaN      NaN                      NaN            NaN              NaN  PRINCIPALES PASIVOS DEL ...             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+16      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+17      Año     Mes      NaN  Expresión monetaria (m)            NaN              NaN           Pasivos monetarios             NaN          NaN                          NaN                          NaN  Letras y Notas del BCRA ...         NaN  Posición neta de pases (12)
+18      NaN     NaN      NaN              Descripción       Unidades     Equivalencia                        Total  Base monetaria          NaN                          NaN  Depósitos en moneda extr...                           En          En                        Total
+19      NaN     NaN      NaN                      NaN     monetarias     de la unidad                          NaN           Total  Circulación  Cuenta corriente en $ en...                          NaN                        pesos     dólares                          NaN
+20      NaN     NaN      NaN                      NaN     originales        monetaria                          NaN             NaN    monetaria                          NaN                          NaN                          NaN  estadouni-                          NaN
+21      NaN     NaN      NaN                      NaN  representadas         original                          NaN             NaN          (7)                          NaN                          NaN                          NaN      denses                          NaN
+22      NaN     NaN      NaN                      NaN            NaN           con la                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+23      NaN     NaN      NaN                      NaN            NaN           actual                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+24      NaN     NaN      NaN                      NaN            NaN              NaN                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+25  bcrafec  sismes   sisobs                      NaN            NaN              NaN                        pan30           pan31        pan32                        pan33                        pan34                        pan45       pan46                        pan37
+26  1939.13     NaN  1939.13                      NaN            NaN              NaN                            3               4            5                            6                            7                            8           9                           10
+27  1940.01    Ene.  1940.01                      m$n        1000000              0.0                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+28  1940.02    Feb.  1940.02                      m$n        1000000              0.0                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+29  1940.03    Mar.  1940.03                      m$n        1000000              0.0                          NaN             NaN          NaN                          NaN                          NaN                          NaN         NaN                          NaN
+... últimas filas:
+           0     1        2      3        4  5                6                7                8                9                10             11              12   13
+1151  2026.07  Jul.  2026.07  Pesos  1000000  1  69021424.548387  45618684.774194  28599799.322581  17018885.451613  23402739.774194  221608.450343  8409618.047828    0
+1152  2026.08  Ago.  2026.08  Pesos  1000000  1   69678193.16129  46377012.129032  28620470.967742   17756541.16129  23301181.032258  230160.266594  7401536.776831    0
+1153  2026.09  Set.  2026.09  Pesos  1000000  1  69972068.966667  46273501.566667         28623795  17649706.566667       23698567.4  247687.770616   7401791.48627    0
+1154   2026.1  Oct.   2026.1  Pesos  1000000  1              NaN              NaN              NaN              NaN              NaN            NaN             NaN  NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000000  1              NaN              NaN              NaN              NaN              NaN            NaN             NaN  NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000000  1              NaN              NaN              NaN              NaN              NaN            NaN             NaN  NaN
+=== Hoja: M0 (1157 filas x 11 columnas)
+         0        1        2                        3              4                5                            6                      7            8             9                10
+0       NaN      NaN      NaN                      NaN            NaN              NaN           MONETARY AGREGATES                    NaN          NaN           NaN              NaN
+1       NaN      NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                    NaN          NaN           NaN              NaN
+2       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+3       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+4       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+5      Year    Month      NaN  Monetary expression (m)            NaN              NaN           Monetary base (M0)                    NaN          NaN           NaN              NaN
+6       NaN      NaN      NaN              Description    Quantity of      Equivalence                        Total   Monetary circulation          NaN           NaN  Current account
+7       NaN      NaN      NaN                      NaN       previous  of the original                          NaN                  Total  Outside the           In          deposits
+8       NaN      NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                    NaN    financial     financial          made by
+9       NaN      NaN      NaN                      NaN     in the new         with the                          NaN                    NaN       system  institutions        financial
+10      NaN      NaN      NaN                      NaN       monetary     actual mone-                          NaN                    NaN          NaN           NaN     institutions
+11      NaN      NaN      NaN                      NaN           unit        tary unit                          NaN                    NaN          NaN           NaN              NaN
+12      NaN      NaN      NaN                      NaN            NaN              NaN         AGREGADOS MONETARIOS                    NaN          NaN           NaN              NaN
+13      NaN      NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                    NaN          NaN           NaN              NaN
+14      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+15      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+16      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+17      Año      Mes      NaN  Expresión monetaria (m)            NaN              NaN  Base monetaria (M0), sal...                    NaN          NaN           NaN              NaN
+18      NaN      NaN      NaN              Descripción       Unidades     Equivalencia                        Total  Circulación monetaria          NaN           NaN     Depósitos de
+19      NaN      NaN      NaN                      NaN     monetarias     de la unidad                          NaN                  Total   Fuera del             En    entidades fi-
+20      NaN      NaN      NaN                      NaN     originales        monetaria                          NaN                    NaN      sistema     entidades     nancieras en
+21      NaN      NaN      NaN                      NaN  representadas         original                          NaN                    NaN   financiero   financieras           cuenta
+22      NaN      NaN      NaN                      NaN            NaN           con la                          NaN                    NaN          NaN           NaN        corriente
+23      NaN      NaN      NaN                      NaN            NaN           actual                          NaN                    NaN          NaN           NaN              NaN
+24      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                    NaN          NaN           NaN              NaN
+25  bcrafec  bcrames  bcraobs                      NaN            NaN              NaN                       bcra29                 bcra30       bcra31        bcra32           bcra33
+26  1939.13      NaN  1939.13                      NaN            NaN              NaN                          352                    369          386           404              421
+27  1940.01     Ene.  1940.01                      m$n        1000000              0.0                          NaN                    NaN          NaN           NaN              NaN
+28  1940.02     Feb.  1940.02                      m$n        1000000              0.0                          NaN                    NaN          NaN           NaN              NaN
+29  1940.03     Mar.  1940.03                      m$n        1000000              0.0                          NaN                    NaN          NaN           NaN              NaN
+... últimas filas:
+           0     1        2      3     4  5            6            7            8           9            10
+1151  2026.07  Jul.  2026.07  Pesos  1000  1  46193621743  28793896044  26525187340  2268708704  17399725699
+1152  2026.08  Ago.  2026.08  Pesos  1000  1  47451536857  28549418913  26521419091  2027999822  18902117944
+1153  2026.09  Set.  2026.09  Pesos  1000  1          NaN          NaN          NaN         NaN          NaN
+1154   2026.1  Oct.   2026.1  Pesos  1000  1          NaN          NaN          NaN         NaN          NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000  1          NaN          NaN          NaN         NaN          NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000  1          NaN          NaN          NaN         NaN          NaN
+=== Hoja: M1 (1157 filas x 17 columnas)
+         0        1        2                        3              4                5                            6                   7           8                            9           10                          11                           12                           13
+0       NaN      NaN      NaN                      NaN            NaN              NaN           MONETARY AGREGATES                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+1       NaN      NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+2       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+3       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+4       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+5      Year    Month      NaN  Monetary expression (m)            NaN              NaN                           M1                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+6       NaN      NaN      NaN              Description    Quantity of      Equivalence                        Total   Domestic currency         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+7       NaN      NaN      NaN                      NaN       previous  of the original                          NaN               Total   Bills and            Currrent accounts         NaN                         NaN                          NaN                          NaN
+8       NaN      NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                 NaN       coins                        Total     Private                      Public                          NaN                          NaN
+9       NaN      NaN      NaN                      NaN     in the new         with the                          NaN                 NaN         NaN                          NaN      sector                      sector                          NaN                          NaN
+10      NaN      NaN      NaN                      NaN       monetary     actual mone-                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+11      NaN      NaN      NaN                      NaN           unit        tary unit                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+12      NaN      NaN      NaN                      NaN            NaN              NaN         AGREGADOS MONETARIOS                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+13      NaN      NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+14      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+15      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+16      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+17      Año      Mes      NaN  Expresión monetaria (m)            NaN              NaN      M1, saldos a fin de mes                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+18      NaN      NaN      NaN              Descripción       Unidades     Equivalencia                        Total  En moneda nacional         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+19      NaN      NaN      NaN                      NaN     monetarias     de la unidad                          NaN               Total    Billetes  Depósitos en cuentas cor...         NaN                         NaN                          NaN                          NaN
+20      NaN      NaN      NaN                      NaN     originales        monetaria                          NaN                 NaN   y monedas                        Total  Del sector  Del sector público (netos)                          NaN                          NaN
+21      NaN      NaN      NaN                      NaN  representadas         original                          NaN                 NaN   fuera del                          NaN     privado                       Total  Depósitos en cuentas cor...  Utilización de Fondos Un...
+22      NaN      NaN      NaN                      NaN            NaN           con la                          NaN                 NaN     sistema                          NaN         NaN                         NaN                          NaN                          NaN
+23      NaN      NaN      NaN                      NaN            NaN           actual                          NaN                 NaN  financiero                          NaN         NaN                         NaN                          NaN                          NaN
+24      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+25  bcrafec  bcrames  bcraobs                      NaN            NaN              NaN                        sis23                 NaN       sis24                        sis25       sis26                       sis27                          NaN                          NaN
+26  1939.13      NaN  1939.13                      NaN            NaN              NaN                          438                 554         868                         2198        2251                        2299                         3118                         3225
+27  1940.01     Ene.  1940.01                      m$n        1000000              0.0                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+28  1940.02     Feb.  1940.02                      m$n        1000000              0.0                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+29  1940.03     Mar.  1940.03                      m$n        1000000              0.0                          NaN                 NaN         NaN                          NaN         NaN                         NaN                          NaN                          NaN
+... últimas filas:
+           0     1        2      3     4  5            6            7            8            9            10           11           12           13
+1151  2026.07  Jul.  2026.07  Pesos  1000  1  60070409181  60027636539  26525187340  33502449199  22446107260  11056341939  21780212458  10723870519
+1152  2026.08  Ago.  2026.08  Pesos  1000  1  61583330443  61550159476  26521419091  35028740385  22895180837  12133559548  23159131349  11025571801
+1153  2026.09  Set.  2026.09  Pesos  1000  1          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+1154   2026.1  Oct.   2026.1  Pesos  1000  1          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000  1          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000  1          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+=== Hoja: M2 (1157 filas x 17 columnas)
+         0        1        2                        3              4                5                            6                   7     8                            9        10       11                 12    13
+0       NaN      NaN      NaN                      NaN            NaN              NaN           MONETARY AGREGATES                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+1       NaN      NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+2       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+3       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+4       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+5      Year    Month      NaN  Monetary expression (m)            NaN              NaN                           M2                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+6       NaN      NaN      NaN              Description    Quantity of      Equivalence                        Total      Local currency   NaN                          NaN      NaN      NaN   Foreign currency   NaN
+7       NaN      NaN      NaN                      NaN       previous  of the original                          NaN               Total    M1              Saving accounts      NaN      NaN              Total    M1
+8       NaN      NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                 NaN   NaN                        Total  Private   Public                NaN   NaN
+9       NaN      NaN      NaN                      NaN     in the new         with the                          NaN                 NaN   NaN                          NaN   sector   sector                NaN   NaN
+10      NaN      NaN      NaN                      NaN       monetary     actual mone-                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+11      NaN      NaN      NaN                      NaN           unit        tary unit                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+12      NaN      NaN      NaN                      NaN            NaN              NaN         AGREGADOS MONETARIOS                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+13      NaN      NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+14      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+15      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+16      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+17      Año      Mes      NaN  Expresión monetaria (m)            NaN              NaN      M2, saldos a fin de mes                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+18      NaN      NaN      NaN              Descripción       Unidades     Equivalencia                        Total  En moneda nacional   NaN                          NaN      NaN      NaN  Moneda extranjera   NaN
+19      NaN      NaN      NaN                      NaN     monetarias     de la unidad                          NaN               Total    M1  Depósitos en caja de aho...      NaN      NaN              Total    M1
+20      NaN      NaN      NaN                      NaN     originales        monetaria                          NaN                 NaN   NaN                        Total   Sector   Sector                NaN   NaN
+21      NaN      NaN      NaN                      NaN  representadas         original                          NaN                 NaN   NaN                          NaN  privado  público                NaN   NaN
+22      NaN      NaN      NaN                      NaN            NaN           con la                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+23      NaN      NaN      NaN                      NaN            NaN           actual                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+24      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+25  bcrafec  bcrames  bcraobs                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN   ent100    ent82                NaN   NaN
+26  1939.13      NaN  1939.13                      NaN            NaN              NaN                         3543                3544  3545                         3546     3547     3548               3549  3550
+27  1940.01     Ene.  1940.01                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+28  1940.02     Feb.  1940.02                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+29  1940.03     Mar.  1940.03                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN      NaN      NaN                NaN   NaN
+... últimas filas:
+           0     1        2      3     4  5             6            7            8            9            10          11           12        13
+1151  2026.07  Jul.  2026.07  Pesos  1000  1  140275091423  95244329000  60027636539  35216692461  34152741359  1063951102  45030762423  42772642
+1152  2026.08  Ago.  2026.08  Pesos  1000  1  141299934230  95671905009  61550159476  34121745533  33074620357  1047125176  45628029221  33170967
+1153  2026.09  Set.  2026.09  Pesos  1000  1           NaN          NaN          NaN            0          NaN         NaN          NaN       NaN
+1154   2026.1  Oct.   2026.1  Pesos  1000  1           NaN          NaN          NaN            0          NaN         NaN          NaN       NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000  1           NaN          NaN          NaN            0          NaN         NaN          NaN       NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000  1           NaN          NaN          NaN            0          NaN         NaN          NaN       NaN
+=== Hoja: M3 (1158 filas x 24 columnas)
+         0        1        2                        3              4                5                            6                   7     8                       9        10       11               12       13
+0       NaN      NaN      NaN                      NaN            NaN              NaN           MONETARY AGREGATES                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+1       NaN      NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+2       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+3       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+4       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+5      Year    Month      NaN  Monetary expression (m)            NaN              NaN                           M3                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+6       NaN      NaN      NaN              Description    Quantity of      Equivalence                        Total      Local currency   NaN                     NaN      NaN      NaN              NaN      NaN
+7       NaN      NaN      NaN                      NaN       previous  of the original                          NaN               Total    M2     Fixed term deposits      NaN      NaN   Other deposits      NaN
+8       NaN      NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                 NaN   NaN                   Total  Private   Public            Total  Private
+9       NaN      NaN      NaN                      NaN     in the new         with the                          NaN                 NaN   NaN                     NaN   sector   sector              NaN   sector
+10      NaN      NaN      NaN                      NaN       monetary     actual mone-                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+11      NaN      NaN      NaN                      NaN           unit        tary unit                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+12      NaN      NaN      NaN                      NaN            NaN              NaN         AGREGADOS MONETARIOS                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+13      NaN      NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+14      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+15      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+16      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+17      Año      Mes      NaN  Expresión monetaria (m)            NaN              NaN      M3, saldos a fin de mes                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+18      NaN      NaN      NaN              Descripción       Unidades     Equivalencia                        Total  En moneda nacional   NaN                     NaN      NaN      NaN              NaN      NaN
+19      NaN      NaN      NaN                      NaN     monetarias     de la unidad                          NaN               Total    M2  Depósitos a plazo fijo      NaN      NaN  Otros depósitos      NaN
+20      NaN      NaN      NaN                      NaN     originales        monetaria                          NaN                 NaN   NaN                   Total   Sector   Sector            Total   Sector
+21      NaN      NaN      NaN                      NaN  representadas         original                          NaN                 NaN   NaN                     NaN  privado  público              NaN  privado
+22      NaN      NaN      NaN                      NaN            NaN           con la                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+23      NaN      NaN      NaN                      NaN            NaN           actual                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+24      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+25  bcrafec  bcrames  bcraobs                      NaN            NaN              NaN                          NaN                 NaN   NaN                     NaN   ent101    ent83              NaN      NaN
+26  1939.13      NaN  1939.13                      NaN            NaN              NaN                         3554                3555  3730                    3556     3557     3558             3735     3736
+27  1940.01     Ene.  1940.01                      m$n        1000000              0.0                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+28  1940.02     Feb.  1940.02                      m$n        1000000              0.0                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+29  1940.03     Mar.  1940.03                      m$n        1000000              0.0                          NaN                 NaN   NaN                     NaN      NaN      NaN              NaN      NaN
+... últimas filas:
+           0     1        2      3     4    5             6             7            8            9            10           11          12          13
+1152  2026.08  Ago.  2026.08  Pesos  1000    1  254440706244  188758511805  95671905009  89928855326  67844293347  22084561979  3157751470  2083907158
+1153  2026.09  Set.  2026.09  Pesos  1000    1           NaN           NaN          NaN            0          NaN          NaN           0         NaN
+1154   2026.1  Oct.   2026.1  Pesos  1000    1           NaN           NaN          NaN            0          NaN          NaN           0         NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000    1           NaN           NaN          NaN            0          NaN          NaN           0         NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000    1           NaN           NaN          NaN            0          NaN          NaN           0         NaN
+1157  2026.13   NaN  2026.13    NaN   NaN  NaN           NaN           NaN          NaN          NaN          NaN          NaN         NaN         NaN
+=== Hoja: M3_total (1158 filas x 21 columnas)
+         0        1        2                        3              4                5                            6                   7     8                            9                            10                           11                      12               13
+0       NaN      NaN      NaN                      NaN            NaN              NaN           MONETARY AGREGATES                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+1       NaN      NaN      NaN                      NaN            NaN              NaN  Monetary Statistics Depa...                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+2       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+3       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+4       NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+5      Year    Month      NaN  Monetary expression (m)            NaN              NaN                           M3                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+6       NaN      NaN      NaN              Description    Quantity of      Equivalence                        Total      Local currency   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+7       NaN      NaN      NaN                      NaN       previous  of the original                          NaN               Total    M3            Foreign residents                          NaN                          NaN                     NaN              NaN
+8       NaN      NaN      NaN                      NaN  monetary unit    monetary unit                          NaN                 NaN   NaN                        Total            Currrent accounts              Saving accounts     Fixed term deposits   other deposits
+9       NaN      NaN      NaN                      NaN     in the new         with the                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+10      NaN      NaN      NaN                      NaN       monetary     actual mone-                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+11      NaN      NaN      NaN                      NaN           unit        tary unit                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+12      NaN      NaN      NaN                      NaN            NaN              NaN         AGREGADOS MONETARIOS                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+13      NaN      NaN      NaN                      NaN            NaN              NaN  Gerencia de Estadísticas...                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+14      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+15      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+16      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+17      Año      Mes      NaN  Expresión monetaria (m)            NaN              NaN  M3 - Total, saldos a fin...                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+18      NaN      NaN      NaN              Descripción       Unidades     Equivalencia                        Total  En moneda nacional   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+19      NaN      NaN      NaN                      NaN     monetarias     de la unidad                          NaN               Total    M3  Depósitos de residentes ...                          NaN                          NaN                     NaN              NaN
+20      NaN      NaN      NaN                      NaN     originales        monetaria                          NaN                 NaN   NaN                        Total  Depósitos en cuentas cor...  Depósitos en caja de aho...  Depósitos a plazo fijo  Otros depósitos
+21      NaN      NaN      NaN                      NaN  representadas         original                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+22      NaN      NaN      NaN                      NaN            NaN           con la                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+23      NaN      NaN      NaN                      NaN            NaN           actual                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+24      NaN      NaN      NaN                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+25  bcrafec  bcrames  bcraobs                      NaN            NaN              NaN                          NaN                 NaN   NaN                          NaN                       ent101                        ent83                   ent28              NaN
+26  1939.13      NaN  1939.13                      NaN            NaN              NaN                         3565                3566  3567                         3568                         3569                         3570                    3571             3741
+27  1940.01     Ene.  1940.01                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+28  1940.02     Feb.  1940.02                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+29  1940.03     Mar.  1940.03                      m$n        1000000              0.0                          NaN                 NaN   NaN                          NaN                          NaN                          NaN                     NaN              NaN
+... últimas filas:
+           0     1        2      3     4    5             6             7             8          9         10         11         12    13
+1152  2026.08  Ago.  2026.08  Pesos  1000    1  254959044896  189205159709  188758511805  446647904  15496663  113508297  317640949  1995
+1153  2026.09  Set.  2026.09  Pesos  1000    1           NaN           NaN           NaN          0       NaN        NaN        NaN   NaN
+1154   2026.1  Oct.   2026.1  Pesos  1000    1           NaN           NaN           NaN          0       NaN        NaN        NaN   NaN
+1155  2026.11  Nov.  2026.11  Pesos  1000    1           NaN           NaN           NaN          0       NaN        NaN        NaN   NaN
+1156  2026.12  Dic.  2026.12  Pesos  1000    1           NaN           NaN           NaN          0       NaN        NaN        NaN   NaN
+1157  2026.13   NaN  2026.13    NaN   NaN  NaN           NaN           NaN           NaN        NaN       NaN        NaN        NaN   NaN
+=== Hoja: Observaciones (398 filas x 5 columnas)
+                     0   1    2                            3    4
+0                  NaN NaN  NaN  MONETARY AND FINANCIAL F...  NaN
+1                  NaN NaN  NaN  Monetary Statistics Depa...  NaN
+2                  NaN NaN  NaN                          NaN  NaN
+3   NOTES AND COMMENTS NaN  NaN                          NaN  NaN
+4                  NaN NaN  NaN                          NaN  NaN
+5                  NaN NaN  NaN                          NaN  NaN
+6                  NaN NaN  NaN  PANORAMA MONETARIO Y FIN...  NaN
+7                  NaN NaN  NaN  Gerencia de Estadísticas...  NaN
+8                  NaN NaN  NaN                          NaN  NaN
+9        OBSERVACIONES NaN  NaN                          NaN  NaN
+10                 NaN NaN  NaN                          NaN  NaN
+11                 NaN NaN  NaN                          NaN  NaN
+12                 NaN NaN  NaN                          NaN  NaN
+13                 NaN NaN  NaN  NOTA: Para convertir la ...  NaN
+14                 NaN NaN  NaN                          NaN  NaN
+15                 NaN NaN  NaN                          NaN  NaN
+16                 NaN NaN  NaN                          NaN  NaN
+17                 NaN NaN    -  En junio de 2011 se proc...  NaN
+18                 NaN NaN  NaN                          NaN  NaN
+19                 NaN NaN  NaN                          NaN  NaN
+20                 NaN NaN  (1)  Hasta el 31 de octubre d...  NaN
+21                 NaN NaN  NaN                          NaN  NaN
+22                 NaN NaN  NaN                          NaN  NaN
+23                 NaN NaN  NaN  Entre noviembre de 2001 ...  NaN
+24                 NaN NaN  NaN                          NaN  NaN
+25                 NaN NaN  (2)  Para la valuación de los...  NaN
+26                 NaN NaN  NaN                          NaN  NaN
+27                 NaN NaN  (3)  Entre el 22 de febrero d...  NaN
+28                 NaN NaN  NaN                          NaN  NaN
+29                 NaN NaN  (4)  No se deducen los import...  NaN
+... últimas filas:
+       0   1     2                            3    4
+392  NaN NaN   NaN                          NaN  NaN
+393  NaN NaN   NaN                          NaN  NaN
+394  NaN NaN   NaN                          NaN  NaN
+395  NaN NaN  (11)  The BCRA's operations ar...  NaN
+396  NaN NaN   NaN                          NaN  NaN
+397  NaN NaN  (12)  Stock of repos arranged ...  NaN

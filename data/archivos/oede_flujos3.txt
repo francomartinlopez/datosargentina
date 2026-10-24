@@ -1,0 +1,307 @@
+=== Hoja: Carátula (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Índice (9 filas x 7 columnas)
+    0   1   2   3   4   5                            6
+0 NaN NaN NaN NaN NaN NaN  Flujos de creación y des...
+1 NaN NaN NaN NaN NaN NaN                          NaN
+2 NaN NaN NaN NaN NaN NaN  T.1. Flujos de creación ...
+3 NaN NaN NaN NaN NaN NaN  T.2. Flujos de creación ...
+4 NaN NaN NaN NaN NaN NaN  T.3. Flujos de creación ...
+5 NaN NaN NaN NaN NaN NaN  T.4. Empresas clasificad...
+6 NaN NaN NaN NaN NaN NaN  T.5. Empresas clasificad...
+7 NaN NaN NaN NaN NaN NaN  T.6. Empresas clasificad...
+8 NaN NaN NaN NaN NaN NaN          Notas Metodológicas
+... últimas filas:
+    0   1   2   3   4   5                            6
+3 NaN NaN NaN NaN NaN NaN  T.2. Flujos de creación ...
+4 NaN NaN NaN NaN NaN NaN  T.3. Flujos de creación ...
+5 NaN NaN NaN NaN NaN NaN  T.4. Empresas clasificad...
+6 NaN NaN NaN NaN NaN NaN  T.5. Empresas clasificad...
+7 NaN NaN NaN NaN NaN NaN  T.6. Empresas clasificad...
+8 NaN NaN NaN NaN NaN NaN          Notas Metodológicas
+=== Hoja: T1 (128 filas x 10 columnas)
+                              0                         1              2       3                            4        5       6            7                 8                 9
+0                       Tabla 1                       NaN            NaN     NaN                          NaN      NaN     NaN          NaN               NaN  Volver al índice
+1   Flujos de creación y des...                       NaN            NaN     NaN                          NaN      NaN     NaN          NaN               NaN               NaN
+2            Puestos de trabajo                       NaN            NaN     NaN                          NaN      NaN     NaN          NaN               NaN               NaN
+3                      Período   Creación bruta de empleo            NaN     NaN  Destrucción bruta de empleo      NaN     NaN  Cambio Neto  Empleo total (*)               NaN
+4                           NaN                 Aperturas  Continuadoras   Total                Continuadoras  Cierres   Total          NaN               NaN               NaN
+5                  2° trim 1996                     68245         198131  266376                       169024    56127  225151        41225           3465523               NaN
+6                  3° trim 1996                     76209         201366  277575                       158515    56159  214674        62901           3528424               NaN
+7                  4° trim 1996                     64330         222953  287283                       142037    46672  188709        98574           3626998               NaN
+8                  1° trim 1997                     73583         242689  316272                       162534    56195  218729        97543           3724541               NaN
+9                  2° trim 1997                     66232         234713  300945                       189974    59600  249574        51371           3775912               NaN
+10                 3° trim 1997                     90211         207260  297471                       173306    64453  237759        59712           3835624               NaN
+11                 4° trim 1997                     63166         257948  321114                       150678    53045  203723       117391           3953015               NaN
+12                 1° trim 1998                     76717         276824  353541                       188274    61926  250200       103341           4056356               NaN
+13                 2° trim 1998                     67326         233081  300407                       221797    66330  288127        12280           4068636               NaN
+14                 3° trim 1998                     72335         212063  284398                       191516    68400  259916        24482           4093118               NaN
+15                 4° trim 1998                     58023         214907  272930                       187735    59554  247289        25641           4118759               NaN
+16                 1° trim 1999                     72148         221985  294133                       218757    89542  308299       -14166           4104593               NaN
+17                 2° trim 1999                     53838         203472  257310                       244537    65158  309695       -52385           4052208               NaN
+18                 3° trim 1999                     56246         166193  222439                       207824    54982  262806       -40367           4011841               NaN
+19                 4° trim 1999                     53060         195192  248252                       182738    52311  235049        13203           4025044               NaN
+20                 1° trim 2000                     63171         209057  272228                       204695    65651  270346         1882           4026926               NaN
+21                 2° trim 2000                     50959         186276  237235                       231235    64474  295709       -58474           3968452               NaN
+22                 3° trim 2000                     63275         187261  250536                       188341    60103  248444         2092           3970544               NaN
+23                 4° trim 2000                     60288         213150  273438                       168090    59236  227326        46112           4016656               NaN
+24                 1° trim 2001                     59237         209602  268839                       187818    61356  249174        19665           4036321               NaN
+25                 2° trim 2001                     50172         184672  234844                       227226    63239  290465       -55621           3980700               NaN
+26                 3° trim 2001                     44961         145132  190093                       221727    69409  291136      -101043           3879657               NaN
+27                 4° trim 2001                     43031         145109  188140                       215866    65784  281650       -93510           3786147               NaN
+28                 1° trim 2002                     36561         123174  159735                       260654    75960  336614      -176879           3609268               NaN
+29                 2° trim 2002                     36038         124339  160377                       207954    51267  259221       -98844           3510424               NaN
+... últimas filas:
+                               0      1       2       3       4      5       6       7        8    9
+122                 3° trim 2025  40170  190751  230921  220120  47346  267466  -36545  6633249  NaN
+123                 4° trim 2025  37286  209704  246990  215919  45864  261783  -14793  6618456  NaN
+124                 1° trim 2026  47192  220965  268157  225462  43458  268920    -763  6617693  NaN
+125                          NaN    NaN     NaN     NaN     NaN    NaN     NaN     NaN      NaN  NaN
+126  Nota: * Surge del boleti...    NaN     NaN     NaN     NaN    NaN     NaN     NaN      NaN  NaN
+127  Fuente: STEySS, DNEyEL, ...    NaN     NaN     NaN     NaN    NaN     NaN     NaN      NaN  NaN
+=== Hoja: T2 (131 filas x 16384 columnas)
+                             0                         1              2       3                            4        5       6              7              8                 9   10  11  12  13
+0                       Tabla 2                       NaN            NaN     NaN                          NaN      NaN     NaN            NaN            NaN  Volver al índice NaN NaN NaN NaN
+1   Flujos de creación y des...                       NaN            NaN     NaN                          NaN      NaN     NaN            NaN            NaN               NaN NaN NaN NaN NaN
+2            Puestos de trabajo                       NaN            NaN     NaN                          NaN      NaN     NaN            NaN            NaN               NaN NaN NaN NaN NaN
+3                      Período   Creación bruta de empleo            NaN     NaN  Destrucción bruta de empleo      NaN     NaN  Cambio Neto1/  Empleo total*               NaN NaN NaN NaN NaN
+4                           NaN                 Aperturas  Continuadoras   Total                Continuadoras  Cierres   Total            NaN            NaN               NaN NaN NaN NaN NaN
+5                  2° trim 1996                     71786         202383  274169                       147923    53443  201366          72803        3474136               NaN NaN NaN NaN NaN
+6                  3° trim 1996                     73891         220026  293917                       161312    54228  215540          78377        3552000               NaN NaN NaN NaN NaN
+7                  4° trim 1996                     70154         219838  289992                       161929    52597  214526          75466        3620406               NaN NaN NaN NaN NaN
+8                  1° trim 1997                     66325         223003  289328                       158556    54711  213267          76061        3701857               NaN NaN NaN NaN NaN
+9                  2° trim 1997                     70068         238815  308883                       170623    56640  227263          81620        3782052               NaN NaN NaN NaN NaN
+10                 3° trim 1997                     88058         226078  314136                       176501    62668  239169          74967        3859516               NaN NaN NaN NaN NaN
+11                 4° trim 1997                     68477         254441  322918                       171692    59387  231079          91839        3946064               NaN NaN NaN NaN NaN
+12                 1° trim 1998                     69588         257795  327383                       188774    60198  248972          78411        4030272               NaN NaN NaN NaN NaN
+13                 2° trim 1998                     71332         236553  307885                       193607    63077  256684          51201        4078991               NaN NaN NaN NaN NaN
+14                 3° trim 1998                     70653         231319  301972                       195412    67082  262494          39478        4116250               NaN NaN NaN NaN NaN
+15                 4° trim 1998                     62465         210650  273115                       213969    65983  279952          -6837        4111153               NaN NaN NaN NaN NaN
+16                 1° trim 1999                     65162         203957  269119                       219568    86940  306508         -37389        4081435               NaN NaN NaN NaN NaN
+17                 2° trim 1999                     58196         206585  264781                       212558    62147  274705          -9924        4061028               NaN NaN NaN NaN NaN
+18                 3° trim 1999                     54861         185362  240223                       212892    54364  267256         -27033        4033735               NaN NaN NaN NaN NaN
+19                 4° trim 1999                     56727         190319  247046                       208004    57134  265138         -18092        4017464               NaN NaN NaN NaN NaN
+20                 1° trim 2000                     56382         192437  248819                       206239    64008  270247         -21428        4000396               NaN NaN NaN NaN NaN
+21                 2° trim 2000                     55568         188081  243649                       199914    61460  261374         -17725        3978717               NaN NaN NaN NaN NaN
+22                 3° trim 2000                     62099         207473  269572                       193322    59956  253278          16294        3991244               NaN NaN NaN NaN NaN
+23                 4° trim 2000                     63321         207127  270448                       191555    63870  255425          15023        4010823               NaN NaN NaN NaN NaN
+24                 1° trim 2001                     52783         193939  246722                       190101    60092  250193          -3471        4013386               NaN NaN NaN NaN NaN
+25                 2° trim 2001                     54896         185766  240662                       194971    60126  255097         -14435        3989487               NaN NaN NaN NaN NaN
+26                 3° trim 2001                     43677         166493  210170                       228192    69853  298045         -87875        3899627               NaN NaN NaN NaN NaN
+27                 4° trim 2001                     45837         137822  183659                       246494    70122  316616        -132957        3780730               NaN NaN NaN NaN NaN
+28                 1° trim 2002                     30604         108320  138924                       258219    74909  333128        -194204        3590689               NaN NaN NaN NaN NaN
+29                 2° trim 2002                     40269         123935  164204                       181795    48477  230272         -66068        3515781               NaN NaN NaN NaN NaN
+... últimas filas:
+                              0    1    2    3    4    5    6    7    8    9   10  11  12  13
+125                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+126                       Notas:  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+127  1/ Existen ciertas difer...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+128  * Surge del boletin de e...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+129                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+130  Fuente: STEySS, DNEyEL, ...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN
+=== Hoja: T3 (1687 filas x 10 columnas)
+                              0        1                         2              3      4                            5        6      7            8                 9
+0                       Tabla 3      NaN                       NaN            NaN    NaN                          NaN      NaN    NaN          NaN  Volver al índice
+1   Flujos de creación y des...      NaN                       NaN            NaN    NaN                          NaN      NaN    NaN          NaN               NaN
+2            Puestos de trabajo      NaN                       NaN            NaN    NaN                          NaN      NaN    NaN          NaN               NaN
+3                         Letra  Periodo  Creación bruta de empleo            NaN    NaN  Destrucción bruta de empleo      NaN    NaN  Cambio neto               NaN
+4                       Periodo  Periodo                 Aperturas  Continuadoras  Total                Continuadoras  Cierres  Total  Cambio neto               NaN
+5                             A   199602                     12125          21327  33452                        26294     4969  31263         2189               NaN
+6                             A   199603                      8055          20845  28900                        22468    11061  33529        -4629               NaN
+7                             A   199604                      5551          22715  28266                        16539     5132  21671         6595               NaN
+8                             A   199701                      8247          32455  40702                        15105     4785  19890        20812               NaN
+9                             A   199702                     10754          25231  35985                        31053     6261  37314        -1329               NaN
+10                            A   199703                      5863          18042  23905                        25390    10370  35760       -11855               NaN
+11                            A   199704                      4641          24606  29247                        18753     5297  24050         5197               NaN
+12                            A   199801                      8122          32920  41042                        16496     4678  21174        19868               NaN
+13                            A   199802                      7307          21570  28877                        36646     6262  42908       -14031               NaN
+14                            A   199803                      5830          17618  23448                        21473     6863  28336        -4888               NaN
+15                            A   199804                      4539          21377  25916                        18534     5399  23933         1983               NaN
+16                            A   199901                      7157          30692  37849                        17033     5611  22644        15205               NaN
+17                            A   199902                      6129          19680  25809                        34665     6049  40714       -14905               NaN
+18                            A   199903                      4779          14885  19664                        22466     6457  28923        -9259               NaN
+19                            A   199904                      4390          19250  23640                        18776     4335  23111          529               NaN
+20                            A   200001                      6977          28149  35126                        16109     5737  21846        13280               NaN
+21                            A   200002                      7295          21839  29134                        33656     4750  38406        -9272               NaN
+22                            A   200003                      6297          15592  21889                        19617     6014  25631        -3742               NaN
+23                            A   200004                      3633          22253  25886                        20733     5464  26197         -311               NaN
+24                            A   200101                      4757          29542  34299                        15253     4936  20189        14110               NaN
+25                            A   200102                      6151          24353  30504                        32190     4201  36391        -5887               NaN
+26                            A   200103                      3793          14537  18330                        25604     7589  33193       -14863               NaN
+27                            A   200104                      3348          17990  21338                        24706     5517  30223        -8885               NaN
+28                            A   200201                      4353          25031  29384                        16482     5766  22248         7136               NaN
+29                            A   200202                      4922          21671  26593                        27994     4085  32079        -5486               NaN
+... últimas filas:
+                                0       1     2      3      4      5     6      7      8    9
+1681                            O  202502  2197  10962  13159  16330  3226  19556  -6397  NaN
+1682                            O  202503  2071   8682  10753  10865  2378  13243  -2490  NaN
+1683                            O  202504  2817  12466  15283   9577  2552  12129   3154  NaN
+1684                            O  202601  3925  12141  16066  13482  2812  16294   -228  NaN
+1685                          NaN     NaN   NaN    NaN    NaN    NaN   NaN    NaN    NaN  NaN
+1686  Fuente: STEySS, DNEyEL, ...     NaN   NaN    NaN    NaN    NaN   NaN    NaN    NaN  NaN
+=== Hoja: T4 (127 filas x 11 columnas)
+                             0                            1              2      3                  4                            5        6      7                        8                    9                 10
+0                       Tabla 4                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN  Volver al índice
+1   Empresas clasificadas se...                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN               NaN
+2           Empresas con empleo                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN               NaN
+3                      Período   Empresas creadoras de em...            NaN    NaN  Empresas estables  Empresas destructoras de...      NaN    NaN  Cambio neto de empresas  Empresas con empleo               NaN
+4                           NaN                    Aperturas  Continuadoras  Total      Continuadoras                Continuadoras  Cierres  Total                      NaN                  NaN               NaN
+5                  2° trim 1996                        21514          53371  74885             262727                        44595    16176  60771                     5338               382207               NaN
+6                  3° trim 1996                        24965          54887  79852             270153                        41168    15999  57167                     8966               391173               NaN
+7                  4° trim 1996                        19204          52167  71371             284630                        40143    14233  54376                     4971               396144               NaN
+8                  1° trim 1997                        22636          53045  75681             280949                        45695    16455  62150                     6181               402325               NaN
+9                  2° trim 1997                        20458          57571  78029             277987                        49178    17589  66767                     2869               405194               NaN
+10                 3° trim 1997                        20746          53266  74012             288049                        47213    16666  63879                     4080               409274               NaN
+11                 4° trim 1997                        18648          58861  77509             292108                        42447    15858  58305                     2790               412064               NaN
+12                 1° trim 1998                        20969          57458  78427             288986                        49263    16357  65620                     4612               416676               NaN
+13                 2° trim 1998                        18570          58286  76856             285437                        54527    18426  72953                      144               416820               NaN
+14                 3° trim 1998                        20197          55958  76155             295208                        49796    15858  65654                     4339               421159               NaN
+15                 4° trim 1998                        18088          53425  71513             297742                        52682    17310  69992                      778               421937               NaN
+16                 1° trim 1999                        20431          51243  71674             285103                        55840    29751  85591                    -9320               412617               NaN
+17                 2° trim 1999                        17047          49762  66809             284071                        59181    19603  78784                    -2556               410061               NaN
+18                 3° trim 1999                        15923          44232  60155             295839                        53091    16899  69990                     -976               409085               NaN
+19                 4° trim 1999                        15210          46707  61917             299438                        47866    15074  62940                      136               409221               NaN
+20                 1° trim 2000                        18956          49206  68162             290357                        52448    17210  69658                     1746               410967               NaN
+21                 2° trim 2000                        15910          46884  62794             286173                        57888    20022  77910                    -4112               406855               NaN
+22                 3° trim 2000                        17487          48108  65595             291165                        49844    17738  67582                     -251               406604               NaN
+23                 4° trim 2000                        16198          52623  68821             294335                        43859    15787  59646                      411               407015               NaN
+24                 1° trim 2001                        16920          50611  67531             291178                        49097    16129  65226                      791               407806               NaN
+25                 2° trim 2001                        14803          46854  61657             285839                        56929    18184  75113                    -3381               404425               NaN
+26                 3° trim 2001                        13384          39844  53228             290905                        55180    18496  73676                    -5112               399313               NaN
+27                 4° trim 2001                        12387          37624  50011             289282                        52828    19579  72407                    -7192               392121               NaN
+28                 1° trim 2002                         9956          31118  41074             280970                        58595    21438  80033                   -11482               380639               NaN
+29                 2° trim 2002                         9365          29579  38944             281257                        52346    17457  69803                    -8092               372547               NaN
+... últimas filas:
+                              0      1      2      3       4      5      6      7      8       9    10
+121                 2° trim 2025  16696  65312  82008  388486  79381  20228  99609  -3532  549875  NaN
+122                 3° trim 2025  15576  63013  78589  399060  69205  18597  87802  -3021  546854  NaN
+123                 4° trim 2025  13750  61543  75293  396291  69625  19395  89020  -5645  541209  NaN
+124                 1° trim 2026  15231  61290  76521  391804  70102  18013  88115  -2782  538427  NaN
+125                          NaN    NaN    NaN    NaN     NaN    NaN    NaN    NaN    NaN     NaN  NaN
+126  Fuente: STEySS, DNEyEL, ...    NaN    NaN    NaN     NaN    NaN    NaN    NaN    NaN     NaN  NaN
+=== Hoja: T5 (127 filas x 11 columnas)
+                             0                    1              2      3              4                       5        6      7               8                    9                 10
+0                       Tabla 5                  NaN            NaN    NaN            NaN                     NaN      NaN    NaN             NaN                  NaN  Volver al índice
+1   Empresas clasificadas se...                  NaN            NaN    NaN            NaN                     NaN      NaN    NaN             NaN                  NaN               NaN
+2           Empresas con empleo                  NaN            NaN    NaN            NaN                     NaN      NaN    NaN             NaN                  NaN               NaN
+3                      Período   Creadoras de empleo            NaN    NaN       Estables  Destructoras de empleo      NaN    NaN  Cambio neto 1/  Empresas con empleo               NaN
+4                           NaN            Aperturas  Continuadoras  Total  Continuadoras           Continuadoras  Cierres  Total             NaN                  NaN               NaN
+5                  2° trim 1996                22286          52234  74520         269048                   40178    14953  55131            7333               383746               NaN
+6                  3° trim 1996                24604          56069  80673         267500                   41553    15964  57517            8640               389726               NaN
+7                  4° trim 1996                20577          51968  72545         278772                   44630    15434  60064            5143               395947               NaN
+8                  1° trim 1997                20810          53203  74013         282799                   45244    16586  61830            4224               402056               NaN
+9                  2° trim 1997                21215          56378  77593         284220                   44759    16216  60975            4999               406572               NaN
+10                 3° trim 1997                20479          54617  75096         285388                   47529    16641  64170            3838               408013               NaN
+11                 4° trim 1997                19928          58542  78470         286335                   47052    17217  64269            2711               411857               NaN
+12                 1° trim 1998                19281          57488  76769         290861                   48854    16501  65355            2780               416484               NaN
+13                 2° trim 1998                19248          57253  76501         291547                   49923    16924  66847            2324               417971               NaN
+14                 3° trim 1998                20029          57419  77448         292472                   50118    15887  66005            4142               420038               NaN
+15                 4° trim 1998                19220          52973  72193         292200                   57417    18765  76182             455               421810               NaN
+16                 1° trim 1999                18781          51055  69836         287001                   55584    30119  85703          -11338               412421               NaN
+17                 2° trim 1999                17742          48942  66684         289946                   54257    17904  72161            -162               410887               NaN
+18                 3° trim 1999                15805          46012  61817         293057                   53381    17012  70393           -1207               408255               NaN
+19                 4° trim 1999                16045          45778  61823         294222                   52792    16293  69085            -248               408837               NaN
+20                 1° trim 2000                17486          48878  66364         292463                   52481    17479  69960               7               411308               NaN
+21                 2° trim 2000                16602          46589  63191         291813                   52426    18212  70638           -1610               407430               NaN
+22                 3° trim 2000                17354          49896  67250         289276                   50232    17937  68169            -583               406758               NaN
+23                 4° trim 2000                16963          51251  68214         290438                   48895    17000  65895             -37               407547               NaN
+24                 1° trim 2001                15679          50258  65937         291862                   49400    16435  65835            -756               407199               NaN
+25                 2° trim 2001                15533          46983  62516         291293                   51068    16487  67555            -954               404877               NaN
+26                 3° trim 2001                13210          41726  54936         289111                   55603    18774  74377           -5564               399650               NaN
+27                 4° trim 2001                12877          35664  48541         284828                   57982    21010  78992           -8133               391351               NaN
+28                 1° trim 2002                 9325          30870  40195         282115                   59091    21902  80993          -12577               381401               NaN
+29                 2° trim 2002                 9810          30134  39944         286862                   46064    15776  61840           -5966               372870               NaN
+... últimas filas:
+                              0      1      2      3       4      5      6      7      8       9    10
+121                 2° trim 2025  16767  67387  84154  397380  69554  17964  87518  -1197  551088  NaN
+122                 3° trim 2025  15609  64167  79776  393516  73108  19587  92695  -3978  546400  NaN
+123                 4° trim 2025  14493  60695  75188  392052  73908  20133  94041  -5640  541148  NaN
+124                 1° trim 2026  14405  58982  73387  392314  71652  18692  90344  -4287  537353  NaN
+125  Nota: 1/ Existen ciertas...    NaN    NaN    NaN     NaN    NaN    NaN    NaN    NaN     NaN  NaN
+126  Fuente: STEySS, DNEyEL, ...    NaN    NaN    NaN     NaN    NaN    NaN    NaN    NaN     NaN  NaN
+=== Hoja: T6 (1687 filas x 12 columnas)
+                             0         1                            2              3      4                  5                            6        7      8                        9                    10                11
+0                       Tabla 6       NaN                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN  Volver al índice
+1   Empresas clasificadas se...       NaN                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN               NaN
+2           Empresas con empleo       NaN                          NaN            NaN    NaN                NaN                          NaN      NaN    NaN                      NaN                  NaN               NaN
+3                         Letra  Período   Empresas creadoras de em...            NaN    NaN  Empresas estables  Empresas destructoras de...      NaN    NaN  Cambio neto de empresas  Empresas con empleo               NaN
+4                       Periodo       NaN                    Aperturas  Continuadoras  Total      Continuadoras                Continuadoras  Cierres  Total                      NaN                  NaN               NaN
+5                             A    199602                         3414           7094  10508              37061                         6190     1884   8074                     1530                53759               NaN
+6                             A    199603                         3283           7195  10478              36379                         7070     3115  10185                      168                53927               NaN
+7                             A    199604                         2367           7134   9501              39828                         4981     1984   6965                      383                54310               NaN
+8                             A    199701                         2716           7632  10348              38972                         5775     1931   7706                      785                55095               NaN
+9                             A    199702                         2866           7774  10640              38254                         7048     2019   9067                      847                55942               NaN
+10                            A    199703                         2209           6073   8282              38782                         8034     3053  11087                     -844                55098               NaN
+11                            A    199704                         1962           7316   9278              40447                         5283     2052   7335                      -90                55008               NaN
+12                            A    199801                         2750           7881  10631              39418                         5948     1761   7709                      989                55997               NaN
+13                            A    199802                         2356           6995   9351              39045                         7659     2298   9957                       58                56055               NaN
+14                            A    199803                         2221           6230   8451              40019                         7459     2347   9806                     -126                55929               NaN
+15                            A    199804                         1772           6759   8531              41317                         5740     2113   7853                     -341                55588               NaN
+16                            A    199901                         2268           7011   9279              39881                         6242     2454   8696                     -186                55402               NaN
+17                            A    199902                         2023           5986   8009              39501                         7630     2285   9915                     -262                55140               NaN
+18                            A    199903                         1664           4816   6480              40296                         7518     2510  10028                     -846                54294               NaN
+19                            A    199904                         1462           5519   6981              41701                         5380     1694   7074                     -232                54062               NaN
+20                            A    200001                         1988           6438   8426              39696                         5891     2037   7928                      -49                54013               NaN
+21                            A    200002                         1993           5653   7646              39359                         7097     1904   9001                       89                54102               NaN
+22                            A    200003                         1924           5106   7030              39799                         6969     2228   9197                     -304                53798               NaN
+23                            A    200004                         1384           5980   7364              41212                         4856     1750   6606                     -366                53432               NaN
+24                            A    200101                         1757           6249   8006              40103                         5397     1683   7080                       74                53506               NaN
+25                            A    200102                         1721           6064   7785              39144                         6523     1775   8298                      -54                53452               NaN
+26                            A    200103                         1367           4421   5788              38733                         7757     2541  10298                    -1174                52278               NaN
+27                            A    200104                         1165           4820   5985              40101                         5249     2108   7357                     -943                51335               NaN
+28                            A    200201                         1330           4828   6158              38717                         5560     2230   7790                     -900                50435               NaN
+29                            A    200202                         1401           4628   6029              38787                         5367     1653   7020                     -252                50183               NaN
+... últimas filas:
+                               0       1    2     3     4      5     6     7     8     9      10   11
+1681                            O  202502  827  2753  3580  23828  4043  1314  5357  -487  31451  NaN
+1682                            O  202503  780  2654  3434  24499  3222  1076  4298  -296  31155  NaN
+1683                            O  202504  806  2838  3644  24127  3047  1143  4190  -337  30818  NaN
+1684                            O  202601  965  2870  3835  23764  3308   876  4184    89  30907  NaN
+1685                          NaN     NaN  NaN   NaN   NaN    NaN   NaN   NaN   NaN   NaN    NaN  NaN
+1686  Fuente: STEySS, DNEyEL, ...     NaN  NaN   NaN   NaN    NaN   NaN   NaN   NaN   NaN    NaN  NaN
+=== Hoja: Nota Metodológica (33 filas x 5 columnas)
+     0   1                            2                            3                 4
+0  NaN NaN  Flujos de creación y des...                          NaN  Volver al índice
+1  NaN NaN        Fuente de información                          NaN               NaN
+2  NaN NaN                          NaN                          NaN               NaN
+3  NaN NaN  La presenta información ...                          NaN               NaN
+4  NaN NaN                          NaN                          NaN               NaN
+5  NaN NaN                Definiciones                           NaN               NaN
+6  NaN NaN  Para definir los distint...                          NaN               NaN
+7  NaN NaN  Creadoras de empleo: son...                          NaN               NaN
+8  NaN NaN  Destructoras de empleo: ...                          NaN               NaN
+9  NaN NaN  Estables: son aquellas e...                          NaN               NaN
+10 NaN NaN  Codificación de las acti...                          NaN               NaN
+11 NaN NaN                        Letra                  Descripción               NaN
+12 NaN NaN                            A  Agricultura, ganadería, ...               NaN
+13 NaN NaN                            B                        Pesca               NaN
+14 NaN NaN                            C  Explotación de minas y c...               NaN
+15 NaN NaN                            D    Industrias manufactureras               NaN
+16 NaN NaN                            E  Suministro de electricid...               NaN
+17 NaN NaN                            F                 Construcción               NaN
+18 NaN NaN                            G      Comercio y reparaciones               NaN
+19 NaN NaN                            H       Hoteles y restaurantes               NaN
+20 NaN NaN                            I  Transporte, almacenamien...               NaN
+21 NaN NaN                            J    Intermediación financiera               NaN
+22 NaN NaN                            K  Actividades inmobiliaria...               NaN
+23 NaN NaN                            M                    Enseñanza               NaN
+24 NaN NaN                            N  Servicios sociales y de ...               NaN
+25 NaN NaN                            O  Otras actividades de ser...               NaN
+26 NaN NaN                          NaN                          NaN               NaN
+27 NaN NaN  Periodicidad y provisori...                          NaN               NaN
+28 NaN NaN                          NaN                          NaN               NaN
+29 NaN NaN  La información sobre emp...                          NaN               NaN
+... últimas filas:
+     0   1                            2    3    4
+27 NaN NaN  Periodicidad y provisori...  NaN  NaN
+28 NaN NaN                          NaN  NaN  NaN
+29 NaN NaN  La información sobre emp...  NaN  NaN
+30 NaN NaN  Eliminación de la estaci...  NaN  NaN
+31 NaN NaN                          NaN  NaN  NaN
+32 NaN NaN  Las series de empleo sue...  NaN  NaN

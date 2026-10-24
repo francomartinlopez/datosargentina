@@ -1,0 +1,1 @@
+ConnectionError(MaxRetryError('HTTPSConnectionPool(host=\'giacobbeyasociados.com\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host=\'giacobbeyasociados.com\', port=443): Failed to resolve \'giacobbeyasociados.com\' ([Errno -2] Name or service not known)"))'))

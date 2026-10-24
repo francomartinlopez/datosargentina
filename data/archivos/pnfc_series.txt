@@ -1,0 +1,595 @@
+=== Hoja: IPNFC (14 filas x 2 columnas)
+     0                            1
+0  NaN                          NaN
+1  NaN                          NaN
+2  NaN                          NaN
+3  NaN  Non-Financial Credit Pro...
+4  NaN                    June 2026
+5  NaN                          NaN
+6  NaN                          NaN
+7  NaN  The information presente...
+8  NaN                          NaN
+9  NaN  Contents and edition | F...
+10 NaN                          NaN
+11 NaN  For questions or comment...
+12 NaN                          NaN
+13 NaN  The contents of this rep...
+... últimas filas:
+     0                            1
+8  NaN                          NaN
+9  NaN  Contents and edition | F...
+10 NaN                          NaN
+11 NaN  For questions or comment...
+12 NaN                          NaN
+13 NaN  The contents of this rep...
+=== Hoja: Index (23 filas x 4 columnas)
+     0                            1                            2                            3
+0  NaN                          NaN                          NaN                          NaN
+1  NaN  Charts & Tables Index | ...                          NaN                          NaN
+2  NaN                          NaN                          NaN                          NaN
+3  NaN                            #                        Title                      Section
+4  NaN                      Table 1     Number of PNFCs by group   2. Credit metrics of PNFCs
+5  NaN                      Table 2  Evolution in the number ...   2. Credit metrics of PNFCs
+6  NaN                      Chart 1         Reported total stock   2. Credit metrics of PNFCs
+7  NaN                      Table 3          Number of borrowers   2. Credit metrics of PNFCs
+8  NaN                      Chart 2  Stocks and number of bor...   2. Credit metrics of PNFCs
+9  NaN                      Chart 3  Stocks and number of cre...   2. Credit metrics of PNFCs
+10 NaN                      Chart 4  Stocks by type of credit...   2. Credit metrics of PNFCs
+11 NaN                      Chart 5  NAR on personal loans (O...   2. Credit metrics of PNFCs
+12 NaN                      Chart 6  Non-performance ratio of...   2. Credit metrics of PNFCs
+13 NaN                      Chart 7    Credit portfolio category   2. Credit metrics of PNFCs
+14 NaN                      Table 4  Loans from FIs to PNFCs’...  3. Debt of PNFCs’ custom...
+15 NaN                      Chart 8       FI loans to shared NPs  3. Debt of PNFCs’ custom...
+16 NaN                      Chart 9  Non-performance ratio of...  3. Debt of PNFCs’ custom...
+17 NaN                     Chart 10  Stock of PNFCs’ debt wit...  4. PNFC funding from FIs...
+18 NaN                     Chart 11                   FTs issued  4. PNFC funding from FIs...
+19 NaN                      Table 5  Number of ONs issued and...  4. PNFC funding from FIs...
+20 NaN                     Chart 12                  ONs issued   4. PNFC funding from FIs...
+21 NaN                   Chart A1.1  Number of borrowers and ...  Exhibit I Credit within ...
+22 NaN                   Chart A1.2  Borrowers and stock by a...  Exhibit I Credit within ...
+... últimas filas:
+     0           1                            2                            3
+17 NaN    Chart 10  Stock of PNFCs’ debt wit...  4. PNFC funding from FIs...
+18 NaN    Chart 11                   FTs issued  4. PNFC funding from FIs...
+19 NaN     Table 5  Number of ONs issued and...  4. PNFC funding from FIs...
+20 NaN    Chart 12                  ONs issued   4. PNFC funding from FIs...
+21 NaN  Chart A1.1  Number of borrowers and ...  Exhibit I Credit within ...
+22 NaN  Chart A1.2  Borrowers and stock by a...  Exhibit I Credit within ...
+=== Hoja: Table 1 (14 filas x 7 columnas)
+     0                            1              2                    3                4                    5              6
+0  NaN                          NaN            NaN                  NaN              NaN                  NaN            NaN
+1  NaN  Table 1 | Number of PNFC...            NaN                  NaN              NaN                  NaN            NaN
+2  NaN                          NaN            NaN                  NaN              NaN                  NaN            NaN
+3  NaN                       Groups  PNFC (Dec-25)  OPNFC (exclusively)  OPNFC and ETCNB  ETCNB (exclusively)  PNFC (Mar-26)
+4  NaN     Cooperatives and mutuals            136                  102               15                   20            137
+5  NaN                     Fintechs             77                   73                4                  NaN             77
+6  NaN          Leasing & factoring             41                   43                1                  NaN             44
+7  NaN    Other credit card issuers             41                    0               23                   18             41
+8  NaN  Sale of household applia...             25                   24                1                  NaN             25
+9  NaN           Other chain stores              4                    0                2                    2              4
+10 NaN                       Others            242                  228                9                   20            257
+11 NaN                        TOTAL            566                  470               55                   60            585
+12 NaN                          NaN            NaN                  NaN              NaN                  NaN            NaN
+13 NaN               Source | BCRA.            NaN                  NaN              NaN                  NaN            NaN
+... últimas filas:
+     0                            1    2    3    4    5    6
+8  NaN  Sale of household applia...   25   24    1  NaN   25
+9  NaN           Other chain stores    4    0    2    2    4
+10 NaN                       Others  242  228    9   20  257
+11 NaN                        TOTAL  566  470   55   60  585
+12 NaN                          NaN  NaN  NaN  NaN  NaN  NaN
+13 NaN               Source | BCRA.  NaN  NaN  NaN  NaN  NaN
+=== Hoja: Table 2 (9 filas x 12 columnas)
+   0                            1                2                    3                    4                    5                    6       7                    8       9       10      11
+0 NaN                          NaN              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+1 NaN  Chart 2 | Evolution in t...              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+2 NaN                          NaN              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+3 NaN                       Period              NaN  2018-12-01 00:00:00  2019-12-01 00:00:00  2020-12-01 00:00:00  2021-12-01 00:00:00  Dec-22  2023-12-01 00:00:00  Dec-24  Dec-25  Mar-26
+4 NaN                        PNFCs            Total                  326                  353                  409                  441     449                  460     505     566     585
+5 NaN                          NaN              new                    -                   33                   66                   58      27                   37      53      85      29
+6 NaN                          NaN     deregistered                    -                    6                   10                   26      19                   26       8      24      10
+7 NaN                          NaN              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+8 NaN               Source | BCRA.              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+... últimas filas:
+   0               1                2                    3                    4                    5                    6       7                    8       9       10      11
+3 NaN          Period              NaN  2018-12-01 00:00:00  2019-12-01 00:00:00  2020-12-01 00:00:00  2021-12-01 00:00:00  Dec-22  2023-12-01 00:00:00  Dec-24  Dec-25  Mar-26
+4 NaN           PNFCs            Total                  326                  353                  409                  441     449                  460     505     566     585
+5 NaN             NaN              new                    -                   33                   66                   58      27                   37      53      85      29
+6 NaN             NaN     deregistered                    -                    6                   10                   26      19                   26       8      24      10
+7 NaN             NaN              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+8 NaN  Source | BCRA.              NaN                  NaN                  NaN                  NaN                  NaN     NaN                  NaN     NaN     NaN     NaN
+=== Hoja: 1 (13 filas x 100 columnas)
+    0                            1           2           3           4           5           6           7           8           9           10          11          12         13
+0  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+1  NaN  Chart 1 | Reported total...         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+2  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+3  NaN  PNFC credit portfolio an...         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+4  NaN                          NaN      Jan-18      Feb-18      Mar-18      Apr-18      May-18      Jun-18      Jul-18      Aug-18      Sep-18      Oct-18      Nov-18     Dec-18
+5  NaN  Total portfolio (billion...   11189.698   11252.008   11433.438   11221.283   11477.066   11186.575   10854.189   10640.392    10195.31    9810.365    9683.335   9626.282
+6  NaN  EMAE (index series trend...  149.965664  149.302512  148.504781  147.617758  146.692823  145.783142  144.937885  144.201608  143.604955  143.161694  142.872988  142.72746
+7  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+8  NaN          Change in portfolio         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+9  NaN                          NaN      Jan-18      Feb-18      Mar-18      Apr-18      May-18      Jun-18      Jul-18      Aug-18      Sep-18      Oct-18      Nov-18     Dec-18
+10 NaN  Monthly chg. of PNFCs’ s...         NaN    0.005569    0.016124   -0.018556    0.022794   -0.025311   -0.029713   -0.019697   -0.041829   -0.037757   -0.012949  -0.005892
+11 NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+12 NaN     Source | BCRA and INDEC.         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN        NaN
+... últimas filas:
+    0                            1       2         3         4         5         6         7         8         9         10        11        12        13
+7  NaN                          NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+8  NaN          Change in portfolio     NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+9  NaN                          NaN  Jan-18    Feb-18    Mar-18    Apr-18    May-18    Jun-18    Jul-18    Aug-18    Sep-18    Oct-18    Nov-18    Dec-18
+10 NaN  Monthly chg. of PNFCs’ s...     NaN  0.005569  0.016124 -0.018556  0.022794 -0.025311 -0.029713 -0.019697 -0.041829 -0.037757 -0.012949 -0.005892
+11 NaN                          NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+12 NaN     Source | BCRA and INDEC.     NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: Table 3 (21 filas x 9 columnas)
+     0                            1                    2                    3                    4                    5                    6                    7                      8
+0  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                    NaN
+1  NaN  Table 3 | Number of borr...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                    NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                    NaN
+3  NaN  Number of borrowers (tho...  2021-12-30 00:00:00  2022-12-30 00:00:00  2023-12-30 00:00:00  2024-12-30 00:00:00  2025-08-30 00:00:00  2026-02-28 00:00:00  % chg.\nFeb-26/Aug-25
+4  NaN                        Total             8717.203            10176.501            10678.583             9718.617            11502.319            12082.266               5.042001
+5  NaN                  18-29 years             1566.816             2183.978              2373.55             1954.012             2464.655             2421.388              -1.755499
+6  NaN                  30-64 years             5867.021             6655.224             6976.871             6593.591             7736.837             8282.716               7.055584
+7  NaN                    +65 years             1258.228             1310.543             1300.551              1142.91             1269.329             1345.954               6.036654
+8  NaN     Cooperatives and mutuals               412.06              410.331              402.191              364.581              390.914              388.249              -0.681736
+9  NaN                     Fintechs              2830.92             4453.695             5304.674             4650.997             6389.003             7096.774              11.077957
+10 NaN          Leasing & factoring               19.102               18.401               15.126               37.312               28.636               33.271               16.18592
+11 NaN    Sale of household appl...             1478.588             1568.923             1432.621             1028.701             1211.277               1225.8               1.198983
+12 NaN           Other chain stores              844.145              827.803              791.794              707.084              759.942              738.178              -2.863903
+13 NaN    Other credit card issuers              4258.63             4333.053             4296.675             4687.025              5099.58             4982.055              -2.304602
+14 NaN                       Others             1072.248             1313.864             1259.756               938.57             1182.685             1247.013               5.439149
+15 NaN             Shared borrowers             4186.877             4796.662             5245.551             5407.679             6442.138             6878.696               6.776601
+16 NaN          Exclusive borrowers             4530.326             5379.839             5433.032             4310.938             5060.181              5203.57               2.833673
+17 NaN          With personal loans              4642.01             6342.362             6908.435              5693.06             7478.547             7737.486               3.462424
+18 NaN    With credit card lending              4930.922             4990.493              4944.05             5236.571              5649.27             5988.142                5.99851
+19 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                    NaN
+20 NaN               Source | BCRA.                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                    NaN
+... últimas filas:
+     0                            1         2         3         4         5         6         7         8
+15 NaN             Shared borrowers  4186.877  4796.662  5245.551  5407.679  6442.138  6878.696  6.776601
+16 NaN          Exclusive borrowers  4530.326  5379.839  5433.032  4310.938  5060.181   5203.57  2.833673
+17 NaN          With personal loans   4642.01  6342.362  6908.435   5693.06  7478.547  7737.486  3.462424
+18 NaN    With credit card lending   4930.922  4990.493   4944.05  5236.571   5649.27  5988.142   5.99851
+19 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+20 NaN               Source | BCRA.       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: 2 (18 filas x 100 columnas)
+    0                            1            2            3            4            5            6            7            8            9            10           11           12          13
+0  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+1  NaN  Chart 2 | Stocks and num...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+2  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+3  NaN              Total borrowers          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+4  NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18       Jul-18       Aug-18       Sep-18       Oct-18       Nov-18      Dec-18
+5  NaN     NPs’ stocks with PNFC/FS     0.145254     0.146109     0.145997     0.142083     0.141389     0.140633      0.13836     0.135439     0.133869     0.132709     0.132729    0.134428
+6  NaN  Number of NP borrowers w...     0.599923     0.602889     0.604822     0.604433     0.604148     0.606496     0.604189     0.600577     0.595576     0.595402     0.595414    0.600353
+7  NaN  Average stock per NP bor...   1488.38013  1486.637166  1496.893599  1470.046466  1492.242764  1452.021189  1411.446444  1382.372337  1306.274495  1251.278452  1232.608473  1223.27178
+8  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+9  NaN          Exclusive borrowers          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+10 NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18       Jul-18       Aug-18       Sep-18       Oct-18       Nov-18      Dec-18
+11 NaN  Exclusive NPs’ stocks wi...     0.037268     0.037104     0.036605     0.035203     0.034647      0.03485     0.034486     0.033409     0.033017     0.032898      0.03279    0.033779
+12 NaN  Number of exclusive NP b...     0.221741       0.2223     0.222416     0.221596     0.221193     0.223732     0.223716     0.220569     0.217455     0.217779     0.217504    0.219483
+13 NaN  Average stock per exclus...  1033.169268  1023.880002  1020.579838   993.470059   998.765229   975.423611   950.109466   928.479429   882.381406   848.032667   833.581412  840.787791
+14 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+15 NaN  Note: The term “shared” ...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+16 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+17 NaN               Source | BCRA.          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN
+... últimas filas:
+    0                            1            2            3            4           5           6           7           8           9           10          11          12          13
+12 NaN  Number of exclusive NP b...     0.221741       0.2223     0.222416    0.221596    0.221193    0.223732    0.223716    0.220569    0.217455    0.217779    0.217504    0.219483
+13 NaN  Average stock per exclus...  1033.169268  1023.880002  1020.579838  993.470059  998.765229  975.423611  950.109466  928.479429  882.381406  848.032667  833.581412  840.787791
+14 NaN                          NaN          NaN          NaN          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+15 NaN  Note: The term “shared” ...          NaN          NaN          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+16 NaN                          NaN          NaN          NaN          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+17 NaN               Source | BCRA.          NaN          NaN          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+=== Hoja: 3 (26 filas x 12 columnas)
+    0                            1                    2                    3                    4                    5                    6         7                    8                    9                    10                   11
+0  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+1  NaN  Chart 3 | Stocks and num...                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+3  NaN  Stocks (billion ARS Feb-26)                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+4  NaN                          NaN  2018-12-30 00:00:00  2019-12-30 00:00:00  2020-12-30 00:00:00  2021-12-30 00:00:00  2022-12-30 00:00:00    Dec-23  2024-12-01 00:00:00  2025-02-01 00:00:00  2025-08-01 00:00:00  2026-02-01 00:00:00
+5  NaN                        TOTAL             9626.282             7965.929             7764.744             9697.603              9254.31   6409.63            10408.801            11363.801            13557.725            13870.599
+6  NaN     Cooperatives and mutuals              501.136              666.558              618.421              715.079              585.753   314.975              412.108              463.869              553.192              527.207
+7  NaN                     Fintechs              531.577              423.058              396.333              1217.51             1514.524   918.273               2143.4             2513.124             3323.568             3699.559
+8  NaN           Other chain stores             1241.898             1193.146              924.777              813.487              760.227   507.179              644.913              672.489                789.6               779.32
+9  NaN    Other credit card issuers             4562.311             3315.216             3753.325             4577.799              4277.63  3322.736             5230.555             5465.284             6130.676             5763.602
+10 NaN  Sale of household applia...              1543.81             1241.782              999.152             1108.446              939.075   472.376              815.554               930.06             1064.369             1051.477
+11 NaN          Leasing & factoring              116.751              304.368              309.954              376.339              288.799   405.008              401.573              419.205              550.586              608.072
+12 NaN                       Others             1128.799              821.801              762.782              888.943              888.302   469.083              760.698               899.77             1145.734             1441.362
+13 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+14 NaN  Number of credit lines (...                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+15 NaN                          NaN  2018-12-30 00:00:00  2019-12-30 00:00:00  2020-12-30 00:00:00  2021-12-30 00:00:00  2022-12-30 00:00:00    Dec-23  2024-07-01 00:00:00  2025-02-01 00:00:00  2025-08-01 00:00:00  2026-02-01 00:00:00
+16 NaN                        TOTAL            11.152334            10.397726             9.644815            12.359192            14.694381  14.99088            13.463861            14.235728            16.494725            17.268007
+17 NaN     Cooperatives and mutuals             0.399004             0.488238             0.447103             0.495274             0.494675  0.482058             0.427402             0.444797             0.455339             0.436024
+18 NaN                     Fintechs             0.635393              0.69861             0.707852             3.230658             5.074898  5.966589             5.148394             5.640479             7.222882             8.116264
+19 NaN           Other chain stores             1.472946              1.46463             1.234791             0.858584             0.841446  0.804247             0.718337             0.733571             0.774253              0.75231
+20 NaN    Other credit card issuers             5.407027             4.801656             4.649684             4.972377             5.097608  4.795499             4.999996             5.114299               5.3938             5.227054
+21 NaN  Sale of household applia...             2.092683             1.916495             1.560534             1.585024              1.68942  1.521094             1.094743             1.169756             1.299302             1.315106
+22 NaN          Leasing & factoring              0.02891              0.02612             0.020666             0.019395             0.018747  0.015416             0.037685             0.025955             0.028997             0.033587
+23 NaN                       Others             1.116371             1.001977             1.024185              1.19788             1.477587  1.405977             1.037304             1.106871             1.320152             1.387662
+24 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+25 NaN               Source | BCRA.                  NaN                  NaN                  NaN                  NaN                  NaN       NaN                  NaN                  NaN                  NaN                  NaN
+... últimas filas:
+    0                            1         2         3         4         5         6         7         8         9         10        11
+20 NaN    Other credit card issuers  5.407027  4.801656  4.649684  4.972377  5.097608  4.795499  4.999996  5.114299    5.3938  5.227054
+21 NaN  Sale of household applia...  2.092683  1.916495  1.560534  1.585024   1.68942  1.521094  1.094743  1.169756  1.299302  1.315106
+22 NaN          Leasing & factoring   0.02891   0.02612  0.020666  0.019395  0.018747  0.015416  0.037685  0.025955  0.028997  0.033587
+23 NaN                       Others  1.116371  1.001977  1.024185   1.19788  1.477587  1.405977  1.037304  1.106871  1.320152  1.387662
+24 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+25 NaN               Source | BCRA.       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: 4 (19 filas x 100 columnas)
+    0                            1            2            3            4            5            6            7            8            9            10           11           12           13
+0  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+1  NaN  Chart 4 | Stocks by type...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+2  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+3  NaN  PNFC portfolio (billion ...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+4  NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18       Jul-18       Aug-18       Sep-18       Oct-18       Nov-18       Dec-18
+5  NaN                 Credit cards     5945.707     5941.648     6031.115     6386.527      6435.84     6288.883     6077.784     6028.926     5923.442     5754.925     5715.523     5666.647
+6  NaN               Personal loans     4376.272     4448.742     4551.742     3967.015     4164.968     4069.273     3976.019     3817.475     3534.402     3336.386     3243.702      3244.69
+7  NaN         Rest of credit lines      867.719      861.618      850.581       867.74      876.257      828.417      800.387       793.99      737.467      719.055      724.111      714.944
+8  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+9  NaN  Average stock per credit...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+10 NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18       Jul-18       Aug-18       Sep-18       Oct-18       Nov-18       Dec-18
+11 NaN                        Total  1025.933719  1020.071793  1021.861255  1008.103435  1014.648804   988.229749   960.665448   941.059971   914.731911   878.640063   865.578059   863.162904
+12 NaN               Personal loans  1092.822183  1091.620462  1091.994474  1070.228813  1069.256246  1037.565564  1008.972862   981.902524   930.029919   879.465718   857.538053   861.052862
+13 NaN                 Credit cards   963.009136   952.857692   956.753534   953.353996   963.326379   942.314279   915.436176   900.592705   891.663918   863.793781   854.007514   849.006853
+14 NaN         Rest of credit lines   1191.60907  1197.291976   1186.59671  1196.264001  1191.675676  1144.227117  1113.606703  1095.790401  1050.165257  1013.661533  1017.058399  1007.516805
+15 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+16 NaN  Note: “Rest of credit li...          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+17 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+18 NaN               Source | BCRA.          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+... últimas filas:
+    0                            1           2            3           4            5            6            7            8            9            10           11           12           13
+13 NaN                 Credit cards  963.009136   952.857692  956.753534   953.353996   963.326379   942.314279   915.436176   900.592705   891.663918   863.793781   854.007514   849.006853
+14 NaN         Rest of credit lines  1191.60907  1197.291976  1186.59671  1196.264001  1191.675676  1144.227117  1113.606703  1095.790401  1050.165257  1013.661533  1017.058399  1007.516805
+15 NaN                          NaN         NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+16 NaN  Note: “Rest of credit li...         NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+17 NaN                          NaN         NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+18 NaN               Source | BCRA.         NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN          NaN
+=== Hoja: 5 (19 filas x 85 columnas)
+    0                            1                    2                    3                    4                    5                    6                    7                    8                    9                    10                   11                   12                   13
+0  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+1  NaN  Chart 5 | NAR on persona...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+3  NaN                    Total (%)                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+4  NaN                          NaN  2019-04-01 00:00:00  2019-05-01 00:00:00  2019-06-01 00:00:00  2019-07-01 00:00:00  2019-08-01 00:00:00  2019-09-01 00:00:00  2019-10-01 00:00:00  2019-11-01 00:00:00  2019-12-01 00:00:00  2020-01-01 00:00:00  2020-02-01 00:00:00  2020-03-01 00:00:00
+5  NaN          CPI annualized chg.                 40.8                 37.2                 32.4                 26.4                 48.0                 70.8                 39.6                 51.6                 44.4                 27.6                 24.0                 39.6
+6  NaN  OPNFC weighted average N...           108.196394           110.144153           109.816525           110.798324           117.105008           129.999956           125.976508           123.160184           120.055063           119.746104           118.488379           117.530624
+7  NaN  ETCNB weighted average N...            85.872007            81.050244            96.870671           103.553887           114.386711           111.709158           117.334589           120.389075            120.52375           120.248298           117.910339            85.222388
+8  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+9  NaN  By group of OPNFC (perso...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+10 NaN                          NaN  2019-04-01 00:00:00  2019-05-01 00:00:00  2019-06-01 00:00:00  2019-07-01 00:00:00  2019-08-01 00:00:00  2019-09-01 00:00:00  2019-10-01 00:00:00  2019-11-01 00:00:00  2019-12-01 00:00:00  2020-01-01 00:00:00  2020-02-01 00:00:00  2020-03-01 00:00:00
+11 NaN     Cooperatives and mutuals             92.81441             94.14616            96.848639            97.870512           100.177961           106.159456            108.12802           108.133597           102.465619           102.776775            98.948794            91.375319
+12 NaN                     Fintechs           136.182964           137.606352           138.935468           137.481542           145.566499           154.024621           153.601558           128.507584           156.405996           160.806879           149.901032           141.445489
+13 NaN                       Others           114.478725           115.376618            114.76253           115.781929           124.046228           158.202322           139.487091           139.854675           131.695258           126.579337           123.741046           142.195741
+14 NaN  Sale of household applia...            95.261878            98.030936            96.048028            99.148687            105.28949           111.353981           113.508786           114.571455           104.294991            101.16587           105.954232           100.179407
+15 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+16 NaN  Note: The NARs charged b...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+17 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+18 NaN     Source | BCRA and INDEC.                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+... últimas filas:
+    0                            1           2           3          4           5           6           7           8           9           10          11          12          13
+13 NaN                       Others  114.478725  115.376618  114.76253  115.781929  124.046228  158.202322  139.487091  139.854675  131.695258  126.579337  123.741046  142.195741
+14 NaN  Sale of household applia...   95.261878   98.030936  96.048028   99.148687   105.28949  111.353981  113.508786  114.571455  104.294991   101.16587  105.954232  100.179407
+15 NaN                          NaN         NaN         NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+16 NaN  Note: The NARs charged b...         NaN         NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+17 NaN                          NaN         NaN         NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+18 NaN     Source | BCRA and INDEC.         NaN         NaN        NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN
+=== Hoja: 6 (21 filas x 100 columnas)
+    0                            1       2       3       4       5       6       7       8       9       10      11      12      13
+0  NaN                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+1  NaN  Chart 6 | Non-performanc...     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+2  NaN                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+3  NaN   By type of credit line (%)     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+4  NaN                          NaN  Jan-18  Feb-18  Mar-18  Apr-18  May-18  Jun-18  Jul-18  Aug-18  Sep-18  Oct-18  Nov-18  Dec-18
+5  NaN                        Total    16.9    17.2    17.4    17.3      18    18.5    19.2    19.8    19.9    20.7    21.7    21.6
+6  NaN                 Credit cards    12.6    12.9      13    12.4    12.6    12.7    13.4    13.6    13.3    13.6    14.4    13.7
+7  NaN               Personal loans    21.8    21.9    22.1    23.8      25      26    26.9    28.2    29.5    31.4    33.2    33.8
+8  NaN                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+9  NaN        By provider group (%)     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+10 NaN                          NaN  Jan-18  Feb-18  Mar-18  Apr-18  May-18  Jun-18  Jul-18  Aug-18  Sep-18  Oct-18  Nov-18  Dec-18
+11 NaN                        Total    16.9    17.2    17.4    17.3      18    18.5    19.2    19.8    19.9    20.7    21.7    21.6
+12 NaN     Cooperatives and mutuals    10.3    10.5      12      13    13.5    14.0    14.8    15.3    16.4    16.5      17    17.6
+13 NaN                     Fintechs    20.3    20.5    21.4    20.4    26.5    28.0    27.6    29.1    30.5    32.5      35    37.2
+14 NaN           Other chain stores       9       9     9.4    10.4     9.8    11.3    12.1    12.8    13.9    14.7    15.9    17.1
+15 NaN  Sale of household applia...    26.2    26.7    27.2    29.0    29.6    30.8    32.2    33.7    35.8    36.8    38.2    38.1
+16 NaN          Leasing & factoring       9     9.7    10.7    11.4    11.9    13.1      13    10.6    13.2    13.8    15.1    12.5
+17 NaN    Other credit card issuers    11.7      12    12.1    12.2    12.6    12.2    12.9    13.1    12.5    12.8    13.5    12.6
+18 NaN                       Others    32.1    31.7    31.2    27.7    28.6    29.7    30.7    31.6    31.7      34    35.1    35.9
+19 NaN                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+20 NaN               Source | BCRA.     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN
+... últimas filas:
+    0                            1     2     3     4     5     6     7     8     9     10    11    12    13
+15 NaN  Sale of household applia...  26.2  26.7  27.2  29.0  29.6  30.8  32.2  33.7  35.8  36.8  38.2  38.1
+16 NaN          Leasing & factoring     9   9.7  10.7  11.4  11.9  13.1    13  10.6  13.2  13.8  15.1  12.5
+17 NaN    Other credit card issuers  11.7    12  12.1  12.2  12.6  12.2  12.9  13.1  12.5  12.8  13.5  12.6
+18 NaN                       Others  32.1  31.7  31.2  27.7  28.6  29.7  30.7  31.6  31.7    34  35.1  35.9
+19 NaN                          NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+20 NaN               Source | BCRA.   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN
+=== Hoja: 7 (16 filas x 100 columnas)
+    0                            1                    2                    3                    4                    5                    6                    7                    8                    9                    10                   11                   12                   13
+0  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+1  NaN  Chart 7 | Credit portfol...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+3  NaN  Credit portfolio by cate...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+4  NaN                          NaN               Jan-18               Feb-18               Mar-18               Apr-18               May-18               Jun-18               Jul-18               Aug-18               Sep-18               Oct-18               Nov-18               Dec-18
+5  NaN  Non-performing (delinque...            16.910345            17.155909            17.357042             17.26627            17.978566            18.450646            19.246006            19.771813            19.884653            20.714752            21.720901            21.616821
+6  NaN  Special follow-up requir...              4.18603             4.783107             5.186559             5.407573             5.641718             5.575421             5.184168             5.054321             5.501555              5.94675             6.141501             5.441343
+7  NaN  Performing (delinquency ...            78.903625            78.060984              77.4564            77.326157            76.379716            75.973933            75.569826            75.173866            74.613793            73.338498            72.137598            72.941836
+8  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+9  NaN  Absolute monthly change ...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+10 NaN                          NaN  2024-04-30 00:00:00  2024-05-30 00:00:00  2024-06-30 00:00:00  2024-07-30 00:00:00  2024-08-30 00:00:00  2024-09-30 00:00:00  2024-10-30 00:00:00  2024-11-30 00:00:00  2024-12-30 00:00:00  2025-01-30 00:00:00  2025-02-28 00:00:00  2025-03-30 00:00:00
+11 NaN  Non-performing (delinque...                 12.9                 36.6                 26.7                 14.6                 36.2                 26.4                 41.3                   40                 85.9                  148                133.2                117.9
+12 NaN  Special follow-up requir...                 15.2                  1.9                  0.7                -22.5                 -8.1                 29.5                 53.2                 95.7                 57.9                 59.8                 88.1                 63.5
+13 NaN  Performing (delinquency ...                111.7                440.7                254.6                464.7                577.7                478.6                705.8                656.6                423.7                376.7                149.3                 57.5
+14 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+15 NaN               Source | BCRA.                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+... últimas filas:
+    0                            1                    2                    3                    4                    5                    6                    7                    8                    9                    10                   11                   12                   13
+10 NaN                          NaN  2024-04-30 00:00:00  2024-05-30 00:00:00  2024-06-30 00:00:00  2024-07-30 00:00:00  2024-08-30 00:00:00  2024-09-30 00:00:00  2024-10-30 00:00:00  2024-11-30 00:00:00  2024-12-30 00:00:00  2025-01-30 00:00:00  2025-02-28 00:00:00  2025-03-30 00:00:00
+11 NaN  Non-performing (delinque...                 12.9                 36.6                 26.7                 14.6                 36.2                 26.4                 41.3                   40                 85.9                  148                133.2                117.9
+12 NaN  Special follow-up requir...                 15.2                  1.9                  0.7                -22.5                 -8.1                 29.5                 53.2                 95.7                 57.9                 59.8                 88.1                 63.5
+13 NaN  Performing (delinquency ...                111.7                440.7                254.6                464.7                577.7                478.6                705.8                656.6                423.7                376.7                149.3                 57.5
+14 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+15 NaN               Source | BCRA.                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+=== Hoja: Table 4 (14 filas x 9 columnas)
+     0                            1                    2                    3                    4                    5                    6                    7                       8
+0  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                     NaN
+1  NaN  Table 4 | Loans from FIs...                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                     NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                     NaN
+3  NaN           Amounts and number  2021-12-30 00:00:00  2022-12-30 00:00:00  2023-12-30 00:00:00  2024-12-30 00:00:00  2025-08-30 00:00:00  2026-02-28 00:00:00  % chg. \nFeb-26/Aug-25
+4  NaN  Number of borrowers (mil...             4.167355             4.774932             5.222844             5.369529              6.41613             6.851761                6.789622
+5  NaN  Number of credit lines (...             8.176752             9.163886            10.117511            11.232886            14.236108            15.075315                5.894919
+6  NaN               Personal loans              2.49343             2.771547             3.461183              4.44196             5.691469             5.745479                0.948964
+7  NaN                 Credit cards             4.401527             4.862744             4.913074             5.001335             5.863057             6.330219                7.967891
+8  NaN  Amount (billion ARS Feb-26)         17224.889524         15864.265481         11588.865036         21593.581831         33728.772788           36824.9419                9.179608
+9  NaN               Personal loans          6617.621062          5566.913783          3353.709684          8644.141249         14303.195329         14355.181756                 0.36346
+10 NaN                 Credit cards           6572.99976          6431.921661          5109.348101          7961.504168         11093.117522         11704.510082                5.511458
+11 NaN  Average debt per custome...          4133.290666          3322.406577           2218.88018          4021.503903          5256.871788          5374.522243                2.238032
+12 NaN                          NaN                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                     NaN
+13 NaN               Source | BCRA.                  NaN                  NaN                  NaN                  NaN                  NaN                  NaN                     NaN
+... últimas filas:
+     0                            1             2             3             4             5             6             7         8
+8  NaN  Amount (billion ARS Feb-26)  17224.889524  15864.265481  11588.865036  21593.581831  33728.772788    36824.9419  9.179608
+9  NaN               Personal loans   6617.621062   5566.913783   3353.709684   8644.141249  14303.195329  14355.181756   0.36346
+10 NaN                 Credit cards    6572.99976   6431.921661   5109.348101   7961.504168  11093.117522  11704.510082  5.511458
+11 NaN  Average debt per custome...   4133.290666   3322.406577    2218.88018   4021.503903   5256.871788   5374.522243  2.238032
+12 NaN                          NaN           NaN           NaN           NaN           NaN           NaN           NaN       NaN
+13 NaN               Source | BCRA.           NaN           NaN           NaN           NaN           NaN           NaN       NaN
+=== Hoja: 8 (19 filas x 100 columnas)
+    0                            1             2             3             4             5            6             7             8             9             10            11            12            13
+0  NaN                          NaN           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+1  NaN  Chart 8 | FI loans to sh...           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+2  NaN                          NaN           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+3  NaN  Total stock (billion ARS...           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+4  NaN                          NaN        Jan-18        Feb-18        Mar-18        Apr-18       May-18        Jun-18        Jul-18        Aug-18        Sep-18        Oct-18        Nov-18        Dec-18
+5  NaN                Credit cards    9594.872223     9438.7124   9390.823663   9344.452092  9556.374968   9311.985329   9045.844716   9026.470459   8299.875817   8084.466777   7932.271734   7841.341428
+6  NaN              Personal loans   14847.213635  14906.031876  15198.860379  15176.364121  15303.51881  14900.593323  14569.482846  14305.827292  13490.526734  12893.318137  12589.516599  12228.101167
+7  NaN        Rest of credit lines    5228.778047   5402.155631   5660.301437   5923.280399  6075.953905   6040.540653   6013.754766   6008.745536   5773.641177   5591.712505   5639.750676   5590.143283
+8  NaN  Shared NPs: stock with P...     28.036713     28.219949     28.320017      27.72638    28.008352     27.813363     27.502654     27.318994     27.178378       27.0447     27.122154     27.359035
+9  NaN                          NaN           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+10 NaN  Average stock with FIs a...           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+11 NaN                          NaN        Jan-18        Feb-18        Mar-18        Apr-18       May-18        Jun-18        Jul-18        Aug-18        Sep-18        Oct-18        Nov-18        Dec-18
+12 NaN  Average debt with FIs (F...       6.07827      6.078062      6.162357      6.226906     6.395352      6.286686      6.191175      6.194415      5.877415      5.691116      5.613211      5.577712
+13 NaN  Average debt with FIs (s...      6.260667      6.225849      6.263867      6.296895     6.345509       6.22219      6.118355      6.024475      5.703258      5.486601      5.391407      5.276811
+14 NaN  Average debt with FIs+PN...      8.015952       7.98278      8.037795      8.042796     8.122782       7.95279      7.801065      7.670301      7.253311      6.970436      6.853673      6.720496
+15 NaN                          NaN           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+16 NaN  Note: “Rest of credit li...           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+17 NaN                          NaN           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+18 NaN               Source | BCRA.           NaN           NaN           NaN           NaN          NaN           NaN           NaN           NaN           NaN           NaN           NaN           NaN
+... últimas filas:
+    0                            1         2         3         4         5         6        7         8         9         10        11        12        13
+13 NaN  Average debt with FIs (s...  6.260667  6.225849  6.263867  6.296895  6.345509  6.22219  6.118355  6.024475  5.703258  5.486601  5.391407  5.276811
+14 NaN  Average debt with FIs+PN...  8.015952   7.98278  8.037795  8.042796  8.122782  7.95279  7.801065  7.670301  7.253311  6.970436  6.853673  6.720496
+15 NaN                          NaN       NaN       NaN       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN
+16 NaN  Note: “Rest of credit li...       NaN       NaN       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN
+17 NaN                          NaN       NaN       NaN       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN
+18 NaN               Source | BCRA.       NaN       NaN       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: 9 (9 filas x 100 columnas)
+   0                            1         2         3         4         5         6         7         8         9         10        11        12        13
+0 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+1 NaN  Chart 9 | Non-performanc...       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+2 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+3 NaN                            %       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+4 NaN                          NaN    Jan-18    Feb-18    Mar-18    Apr-18    May-18    Jun-18    Jul-18    Aug-18    Sep-18    Oct-18    Nov-18    Dec-18
+5 NaN  PNFCs’ NP customers with FS  4.095623  4.163782  4.274942  4.405311   4.89105  4.862813  5.120614  5.289938  5.476885  5.714046  5.983213  6.172579
+6 NaN  FS - private sector Hous...  2.985778  3.030137  3.065718  3.164773  3.382666  3.360946  3.483801  3.540421  3.656896   3.77514  3.910576   4.03413
+7 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+8 NaN               Source | BCRA.       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+... últimas filas:
+   0                            1         2         3         4         5         6         7         8         9         10        11        12        13
+3 NaN                            %       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+4 NaN                          NaN    Jan-18    Feb-18    Mar-18    Apr-18    May-18    Jun-18    Jul-18    Aug-18    Sep-18    Oct-18    Nov-18    Dec-18
+5 NaN  PNFCs’ NP customers with FS  4.095623  4.163782  4.274942  4.405311   4.89105  4.862813  5.120614  5.289938  5.476885  5.714046  5.983213  6.172579
+6 NaN  FS - private sector Hous...  2.985778  3.030137  3.065718  3.164773  3.382666  3.360946  3.483801  3.540421  3.656896   3.77514  3.910576   4.03413
+7 NaN                          NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+8 NaN               Source | BCRA.       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: 10 (27 filas x 100 columnas)
+    0                            1            2            3            4            5            6            7           8            9            10           11           12           13
+0  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+1  NaN  Chart 10 | Stock of PNFC...          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+2  NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+3  NaN  Debt by PNFC group (bill...          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+4  NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18      Jul-18       Aug-18       Sep-18       Oct-18       Nov-18       Dec-18
+5  NaN                        Total  2593.072374  2700.439013  2672.522077  2735.487997   2643.93845  2492.199488  2535.48081  2573.805633  2390.045531  2057.001493  1900.712771  1813.567192
+6  NaN     Cooperatives and mutuals    60.542255     66.93235    70.027008     71.54898    71.175271    66.046752   68.752252    69.318435    69.939466    89.091877    91.132544    89.310762
+7  NaN                     Fintechs   162.994321   162.374602   150.242757   156.603489   160.053345   143.666926  136.489843   123.313989   121.730871   115.655029   106.195815    95.819533
+8  NaN    Other credit card issuers   194.299874   241.062182   293.477553   289.698711   334.092264   318.346785  373.697943   351.348263   348.579374   340.127436   366.902172   320.963482
+9  NaN  Sale of household applia...  1146.698689  1209.645963  1202.289664  1229.373752  1082.169526   933.316836  812.091075   857.789476   781.350934   652.162634   621.670355   602.969751
+10 NaN          Leasing & factoring    78.285752    79.428038    80.674573      75.8209    73.220853    77.769566   79.180411    80.743846    96.384212   105.465218    98.051378   103.555154
+11 NaN           Other chain stores   733.244132   729.802196   682.258276   690.197294   718.263236   750.261861  873.231159   905.431307   820.272326   621.533568   492.562119   482.264844
+12 NaN                       Others   217.007351   211.193681   193.552247    222.24487   204.963956    202.79076  192.038126   185.860316   151.788347   132.965731   124.198389   118.683666
+13 NaN  Ratio in stock of PNFCs’...    23.173748    23.999619    23.374615    24.377676     23.03671    22.278485   23.359468    24.189011    23.442598    20.967635      19.6287    18.839747
+14 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+15 NaN  Non-performance by group...          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+16 NaN                          NaN       Jan-18       Feb-18       Mar-18       Apr-18       May-18       Jun-18      Jul-18       Aug-18       Sep-18       Oct-18       Nov-18       Dec-18
+17 NaN                        Total     0.539925      0.50965     0.480248     0.459565     1.067282     2.301472     2.52624     2.909645     1.950456     1.974577     2.055542     2.183973
+18 NaN     Cooperatives and mutuals            0            0            0            0            0     0.000783           0     0.000199            0            0            0            0
+19 NaN                     Fintechs            0            0            0            0            0            0           0     0.000056     4.866946     6.143947     6.658063     8.063733
+20 NaN           Other chain stores            0            0            0            0            0            0           0            0            0            0            0            0
+21 NaN                       Others     0.012908     0.012836     0.013691      0.01161     0.013039     0.012709    0.013203     0.012945     0.014883     0.016489     0.017154     0.017447
+22 NaN    Other credit card issuers     0.123729      0.09739     0.078198      0.07279     0.061728     0.062493    0.051636     0.052839     0.050008     1.497001     1.433706     1.685655
+23 NaN  Sale of household applia...     1.197544     1.116103     1.046232      1.00333     2.586038     6.121374    7.860425     8.703914     5.180634      4.35183     4.295183     4.384067
+24 NaN          Leasing & factoring            0            0            0            0            0     0.000285    0.000271     0.021601     0.016991     0.015781     0.016205     0.015011
+25 NaN                          NaN          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+26 NaN               Source | BCRA.          NaN          NaN          NaN          NaN          NaN          NaN         NaN          NaN          NaN          NaN          NaN          NaN
+... últimas filas:
+    0                            1         2         3         4        5         6         7         8         9         10        11        12        13
+21 NaN                       Others  0.012908  0.012836  0.013691  0.01161  0.013039  0.012709  0.013203  0.012945  0.014883  0.016489  0.017154  0.017447
+22 NaN    Other credit card issuers  0.123729   0.09739  0.078198  0.07279  0.061728  0.062493  0.051636  0.052839  0.050008  1.497001  1.433706  1.685655
+23 NaN  Sale of household applia...  1.197544  1.116103  1.046232  1.00333  2.586038  6.121374  7.860425  8.703914  5.180634   4.35183  4.295183  4.384067
+24 NaN          Leasing & factoring         0         0         0        0         0  0.000285  0.000271  0.021601  0.016991  0.015781  0.016205  0.015011
+25 NaN                          NaN       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+26 NaN               Source | BCRA.       NaN       NaN       NaN      NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN
+=== Hoja: 11 (16 filas x 96 columnas)
+    0                            1           2           3           4           5           6           7           8                    9                    10                   11                   12                   13
+0  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+1  NaN        Chart 11 | FTs issued         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+2  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+3  NaN    Number and amounts of FTs         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+4  NaN                          NaN       Q1-20       Q2-20       Q3-20       Q4-20       Q1-21       Q2-21       Q3-21                Q4-21                Q1-22                Q2-22                Q3-22                Q4-22
+5  NaN  Amounts of FTs issued by...  255.254571  142.661529  255.557468   332.44847  354.649445  285.085708   382.13173           394.372054           277.213185           543.762618           417.885057           501.717046
+6  NaN  Number of FTs issued by ...          16          13          19          23          23          20          26                   26                   20                   33                   23                   36
+7  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+8  NaN  Note: The third quarter ...         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+9  NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+10 NaN  Fintechs: Portfolio and ...         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+11 NaN                          NaN      Jun-18      Jul-18      Aug-18      Sep-18      Oct-18      Nov-18      Dec-18  2019-01-01 00:00:00  2019-02-01 00:00:00  2019-03-01 00:00:00  2019-04-01 00:00:00  2019-05-01 00:00:00
+12 NaN  FT Fintechs (6-month mov...    6.097518    9.241118   10.534452   12.531481   13.109584   13.708335   12.787104            10.119579            11.690259            12.223384            12.159961             9.128226
+13 NaN            Fintech portfolio  633.688968  639.762684  627.685564  586.377264  565.785154   566.28044  549.650618           551.453914           539.265122           533.940022           543.826096           543.406292
+14 NaN                          NaN         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+15 NaN       Source | BCRA and CNV.         NaN         NaN         NaN         NaN         NaN         NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+... últimas filas:
+    0                            1           2           3           4           5           6          7           8                    9                    10                   11                   12                   13
+10 NaN  Fintechs: Portfolio and ...         NaN         NaN         NaN         NaN         NaN        NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+11 NaN                          NaN      Jun-18      Jul-18      Aug-18      Sep-18      Oct-18     Nov-18      Dec-18  2019-01-01 00:00:00  2019-02-01 00:00:00  2019-03-01 00:00:00  2019-04-01 00:00:00  2019-05-01 00:00:00
+12 NaN  FT Fintechs (6-month mov...    6.097518    9.241118   10.534452   12.531481   13.109584  13.708335   12.787104            10.119579            11.690259            12.223384            12.159961             9.128226
+13 NaN            Fintech portfolio  633.688968  639.762684  627.685564  586.377264  565.785154  566.28044  549.650618           551.453914           539.265122           533.940022           543.826096           543.406292
+14 NaN                          NaN         NaN         NaN         NaN         NaN         NaN        NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+15 NaN       Source | BCRA and CNV.         NaN         NaN         NaN         NaN         NaN        NaN         NaN                  NaN                  NaN                  NaN                  NaN                  NaN
+=== Hoja: Table 5 (14 filas x 6 columnas)
+     0                            1                  2               3                 4               5
+0  NaN                          NaN                NaN             NaN               NaN             NaN
+1  NaN  Table 5 | Number of ONs ...                NaN             NaN               NaN             NaN
+2  NaN                          NaN                NaN             NaN               NaN             NaN
+3  NaN                        Group  Domestic currency             NaN  Foreign currency             NaN
+4  NaN                          NaN         Number ONs  Number issuers        Number ONs  Number issuers
+5  NaN    Other credit card issuers                  2               1                 2               1
+6  NaN                     Fintechs                  3               2                 3               1
+7  NaN          Leasing & factoring                NaN             NaN                 3               2
+8  NaN     Cooperatives and mutuals                  1               1               NaN             NaN
+9  NaN                       Others                  4               3               NaN             NaN
+10 NaN                        TOTAL                 10               7                 8               4
+11 NaN                          NaN                NaN             NaN               NaN             NaN
+12 NaN  Note: From July 2025 up ...                NaN             NaN               NaN             NaN
+13 NaN                Source | CNV.                NaN             NaN               NaN             NaN
+... últimas filas:
+     0                            1    2    3    4    5
+8  NaN     Cooperatives and mutuals    1    1  NaN  NaN
+9  NaN                       Others    4    3  NaN  NaN
+10 NaN                        TOTAL   10    7    8    4
+11 NaN                          NaN  NaN  NaN  NaN  NaN
+12 NaN  Note: From July 2025 up ...  NaN  NaN  NaN  NaN
+13 NaN                Source | CNV.  NaN  NaN  NaN  NaN
+=== Hoja: 12 (13 filas x 4 columnas)
+     0                            1                            2                            3
+0  NaN                          NaN                          NaN                          NaN
+1  NaN       Chart 12 | ONs issued                           NaN                          NaN
+2  NaN                          NaN                          NaN                          NaN
+3  NaN                        Group  Domestic currency\n(bill...  Foreign currency (millio...
+4  NaN    Other credit card issuers                   164.283884                   185.806161
+5  NaN                     Fintechs                    46.137635                    52.362642
+6  NaN          Leasing & factoring                          NaN                    55.260598
+7  NaN     Cooperatives and mutuals                     6.459565                          NaN
+8  NaN                       Others                    45.770285                          NaN
+9  NaN                        TOTAL                   262.651369                   293.429401
+10 NaN                          NaN                          NaN                          NaN
+11 NaN  Note: From July 2025 up ...                          NaN                          NaN
+12 NaN                Source | CNV.                          NaN                          NaN
+... últimas filas:
+     0                            1           2           3
+7  NaN     Cooperatives and mutuals    6.459565         NaN
+8  NaN                       Others   45.770285         NaN
+9  NaN                        TOTAL  262.651369  293.429401
+10 NaN                          NaN         NaN         NaN
+11 NaN  Note: From July 2025 up ...         NaN         NaN
+12 NaN                Source | CNV.         NaN         NaN
+=== Hoja: A1.1 (31 filas x 5 columnas)
+     0                            1                    2                    3                    4
+0  NaN                          NaN                  NaN                  NaN                  NaN
+1  NaN  Chart A1.1 | Number of b...                  NaN                  NaN                  NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN
+3  NaN     Borrowers by profile (%)                  NaN                  NaN                  NaN
+4  NaN                          NaN  2023-12-01 00:00:00  2024-12-01 00:00:00  2025-12-01 00:00:00
+5  NaN                Gig platforms                  NaN                  NaN                  NaN
+6  NaN         Self-employed worker                   58                   62                   54
+7  NaN         No registered income                   28                   22                   24
+8  NaN                     Employee                   11                   14                   21
+9  NaN                       Others                    3                    2                    1
+10 NaN                     Fintechs                  NaN                  NaN                  NaN
+11 NaN         Self-employed worker                   10                   10                   11
+12 NaN         No registered income                   55                   45                   45
+13 NaN                     Employee                   31                   41                   40
+14 NaN                       Others                    4                    4                    4
+15 NaN                          NaN                  NaN                  NaN                  NaN
+16 NaN         Stock by profile (%)                  NaN                  NaN                  NaN
+17 NaN                          NaN  2023-12-01 00:00:00  2024-12-01 00:00:00  2025-12-01 00:00:00
+18 NaN                Gig platforms                  NaN                  NaN                  NaN
+19 NaN         Self-employed worker                   62                   68                   63
+20 NaN         No registered income                   24                   20                   20
+21 NaN                     Employee                   11                   10                   14
+22 NaN                       Others                    3                    2                    3
+23 NaN                     Fintechs                  NaN                  NaN                  NaN
+24 NaN         Self-employed worker                   15                   16                   16
+25 NaN         No registered income                   39                   27                   29
+26 NaN                     Employee                   41                   53                   51
+27 NaN                       Others                    5                    4                    4
+28 NaN                          NaN                  NaN                  NaN                  NaN
+29 NaN  Note: “Others” include r...                  NaN                  NaN                  NaN
+... últimas filas:
+     0                            1    2    3    4
+25 NaN         No registered income   39   27   29
+26 NaN                     Employee   41   53   51
+27 NaN                       Others    5    4    4
+28 NaN                          NaN  NaN  NaN  NaN
+29 NaN  Note: “Others” include r...  NaN  NaN  NaN
+30 NaN               Source | BCRA.  NaN  NaN  NaN
+=== Hoja: A1.2 (34 filas x 5 columnas)
+     0                            1                    2                    3                    4
+0  NaN                          NaN                  NaN                  NaN                  NaN
+1  NaN  Chart A1.2 | Borrowers a...                  NaN                  NaN                  NaN
+2  NaN                          NaN                  NaN                  NaN                  NaN
+3  NaN   Borrowers by age group (%)                  NaN                  NaN                  NaN
+4  NaN                          NaN  2023-12-01 00:00:00  2024-12-01 00:00:00  2025-12-01 00:00:00
+5  NaN                Gig platforms                  NaN                  NaN                  NaN
+6  NaN                     Up to 29                   21                   29                   33
+7  NaN                        30-39                   37                   36                   37
+8  NaN                        40-49                   25                   22                   20
+9  NaN                        50-59                   12                   10                    8
+10 NaN                          60+                    5                    3                    2
+11 NaN                     Fintechs                  NaN                  NaN                  NaN
+12 NaN                     Up to 29                   35                   26                   24
+13 NaN                        30-39                   31                   32                   30
+14 NaN                        40-49                   19                   23                   24
+15 NaN                        50-59                    9                   12                   14
+16 NaN                          60+                    6                    7                    8
+17 NaN                          NaN                  NaN                  NaN                  NaN
+18 NaN       Stock by age group (%)                  NaN                  NaN                  NaN
+19 NaN                          NaN  2023-12-01 00:00:00  2024-12-01 00:00:00  2025-12-01 00:00:00
+20 NaN                Gig platforms                  NaN                  NaN                  NaN
+21 NaN                     Up to 29                   18                   18                   19
+22 NaN                        30-39                   37                   33                   33
+23 NaN                        40-49                   25                   30                   29
+24 NaN                        50-59                   14                   14                   13
+25 NaN                          60+                    6                    5                    6
+26 NaN                     Fintechs                  NaN                  NaN                  NaN
+27 NaN                     Up to 29                   22                   17                   15
+28 NaN                        30-39                   32                   32                   30
+29 NaN                        40-49                   24                   27                   28
+... últimas filas:
+     0               1    2    3    4
+28 NaN           30-39   32   32   30
+29 NaN           40-49   24   27   28
+30 NaN           50-59   13   15   17
+31 NaN             60+    9    9   10
+32 NaN             NaN  NaN  NaN  NaN
+33 NaN  Source | BCRA.  NaN  NaN  NaN

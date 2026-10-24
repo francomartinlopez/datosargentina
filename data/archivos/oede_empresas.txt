@@ -1,0 +1,520 @@
+=== Hoja: Carátula (0 filas x 0 columnas)
+Empty DataFrame
+Columns: []
+Index: []
+... últimas filas:
+Empty DataFrame
+Columns: []
+Index: []
+=== Hoja: Metodologia (125 filas x 5 columnas)
+                              0                            1    2    3    4
+0                           NaN                          NaN  NaN  NaN  NaN
+1             Nota metodológica                          NaN  NaN  NaN  NaN
+2                           NaN                          NaN  NaN  NaN  NaN
+3                           NaN                          NaN  NaN  NaN  NaN
+4   ESTADÍSTICAS SOBRE EMPRE...                          NaN  NaN  NaN  NaN
+5                           NaN                          NaN  NaN  NaN  NaN
+6   El boletín sectorial rec...                          NaN  NaN  NaN  NaN
+7                           NaN                          NaN  NaN  NaN  NaN
+8   Tiene como fuente los re...                          NaN  NaN  NaN  NaN
+9                           NaN                          NaN  NaN  NaN  NaN
+10  CONSTRUCCIÓN DE LA BASE ...                          NaN  NaN  NaN  NaN
+11                          NaN                          NaN  NaN  NaN  NaN
+12  El grado de desagregació...                          NaN  NaN  NaN  NaN
+13                          NaN                          NaN  NaN  NaN  NaN
+14                    COBERTURA                          NaN  NaN  NaN  NaN
+15                          NaN                          NaN  NaN  NaN  NaN
+16  Cobertura geográfica: to...                          NaN  NaN  NaN  NaN
+17  Cobertura de sector econ...                          NaN  NaN  NaN  NaN
+18  Quedan excluidos del reg...                          NaN  NaN  NaN  NaN
+19                            O          Servicio doméstico.  NaN  NaN  NaN
+20                            O   Asalariados no registra...  NaN  NaN  NaN
+21                            O  Trabajadores por cuenta ...  NaN  NaN  NaN
+22                          NaN                          NaN  NaN  NaN  NaN
+23                          NaN                          NaN  NaN  NaN  NaN
+24                          NaN                          NaN  NaN  NaN  NaN
+25  Criterios para definir e...                          NaN  NaN  NaN  NaN
+26  Para determinar el estad...                          NaN  NaN  NaN  NaN
+27  Alta: si la empresa decl...                          NaN  NaN  NaN  NaN
+28  Luego se define el estad...                          NaN  NaN  NaN  NaN
+29                          NaN                          NaN  NaN  NaN  NaN
+... últimas filas:
+                               0    1    2    3    4
+119                          NaN  NaN  NaN  NaN  NaN
+120  [2] En algunos casos cor...  NaN  NaN  NaN  NaN
+121                          NaN  NaN  NaN  NaN  NaN
+122  [3] La situación más cla...  NaN  NaN  NaN  NaN
+123                          NaN  NaN  NaN  NaN  NaN
+124  [4] Las estadísticas tra...  NaN  NaN  NaN  NaN
+=== Hoja: Indice (22 filas x 2 columnas)
+          0                            1
+0   Índice                           NaN
+1       NaN                          NaN
+2       NaN  Cuadro 1. Empresas priva...
+3       NaN                          NaN
+4       NaN  Cuadro 2. Empresas priva...
+5       NaN                          NaN
+6       NaN                          NaN
+7       NaN  Cuadro 3. Empresas priva...
+8       NaN                          NaN
+9       NaN  Cuadro 4. Empresas priva...
+10      NaN                          NaN
+11      NaN  Cuadro 5. Empresas priva...
+12      NaN                          NaN
+13      NaN  Cuadro 6. Empresas priva...
+14      NaN                          NaN
+15      NaN  Cuadro 7. Empresas priva...
+16      NaN                          NaN
+17      NaN  Cuadro 8. Empresas priva...
+18      NaN                          NaN
+19      NaN  Cuadro 9. Empresas priva...
+20      NaN                          NaN
+21      NaN  Cuadro 10. Empresas priv...
+... últimas filas:
+      0                            1
+16  NaN                          NaN
+17  NaN  Cuadro 8. Empresas priva...
+18  NaN                          NaN
+19  NaN  Cuadro 9. Empresas priva...
+20  NaN                          NaN
+21  NaN  Cuadro 10. Empresas priv...
+=== Hoja: C 1 (44 filas x 7 columnas)
+                              0                            1                        2   3   4   5                 6
+0   Cuadro 1. Cantidad de fi...                          NaN                      NaN NaN NaN NaN  Volver al índice
+1                           NaN                          NaN                      NaN NaN NaN NaN               NaN
+2                           NaN                          NaN                      NaN NaN NaN NaN               NaN
+3                           Año          Sector Privado (1)                       NaN NaN NaN NaN               NaN
+4                           NaN                     Empresas  Var. % periodo anterior NaN NaN NaN               NaN
+5                           NaN  Activas al cierre de cad...                      NaN NaN NaN NaN               NaN
+6                          1996                       409056                      NaN NaN NaN NaN               NaN
+7                          1997                       419024                 0.024368 NaN NaN NaN               NaN
+8                          1998                       427834                 0.021025 NaN NaN NaN               NaN
+9                          1999                       414591                -0.030954 NaN NaN NaN               NaN
+10                         2000                       411745                -0.006865 NaN NaN NaN               NaN
+11                         2001                       396333                -0.037431 NaN NaN NaN               NaN
+12                         2002                       376731                -0.049458 NaN NaN NaN               NaN
+13                         2003                       405714                 0.076933 NaN NaN NaN               NaN
+14                         2004                       465497                 0.147353 NaN NaN NaN               NaN
+15                         2005                       502226                 0.078903 NaN NaN NaN               NaN
+16                         2006                       536373                 0.067991 NaN NaN NaN               NaN
+17                         2007                       563244                 0.050098 NaN NaN NaN               NaN
+18                         2008                       584702                 0.038097 NaN NaN NaN               NaN
+19                         2009                       588741                 0.006908 NaN NaN NaN               NaN
+20                         2010                       596267                 0.012783 NaN NaN NaN               NaN
+21                         2011                       607368                 0.018617 NaN NaN NaN               NaN
+22                         2012                       609039                 0.002751 NaN NaN NaN               NaN
+23                         2013                       609947                 0.001491 NaN NaN NaN               NaN
+24                         2014                       606942                -0.004927 NaN NaN NaN               NaN
+25                         2015                       609164                 0.003661 NaN NaN NaN               NaN
+26                         2016                       608327                -0.001374 NaN NaN NaN               NaN
+27                         2017                       609184                 0.001409 NaN NaN NaN               NaN
+28                         2018                       599169                 -0.01644 NaN NaN NaN               NaN
+29                         2019                       579975                -0.032034 NaN NaN NaN               NaN
+... últimas filas:
+                              0    1    2   3   4   5    6
+38  (1)  Las empresas con pa...  NaN  NaN NaN NaN NaN  NaN
+39                          NaN  NaN  NaN NaN NaN NaN  NaN
+40                 Aclaraciones  NaN  NaN NaN NaN NaN  NaN
+41  s.d. Dato no publicado c...  NaN  NaN NaN NaN NaN  NaN
+42  * Dato estimado, sujeto ...  NaN  NaN NaN NaN NaN  NaN
+43  Fuente: STEySS - Direcci...  NaN  NaN NaN NaN NaN  NaN
+=== Hoja: C 2 (54 filas x 16 columnas)
+                             0      1    2     3      4     5      6       7      8      9     10      11    12     13
+0   Cuadro 2: Empresas del s...    NaN  NaN   NaN    NaN   NaN    NaN     NaN    NaN    NaN   NaN     NaN   NaN    NaN
+1           Activas en cada año    NaN  NaN   NaN    NaN   NaN    NaN     NaN    NaN    NaN   NaN     NaN   NaN    NaN
+2                           NaN    NaN  NaN   NaN    NaN   NaN    NaN     NaN    NaN    NaN   NaN     NaN   NaN    NaN
+3                           NaN    NaN  NaN   NaN    NaN   NaN    NaN     NaN    NaN    NaN   NaN     NaN   NaN    NaN
+4                       Período      A    B     C      D     E      F       G      H      I     J       K     M      N
+5                           NaN    NaN  NaN   NaN    NaN   NaN    NaN     NaN    NaN    NaN   NaN     NaN   NaN    NaN
+6                          1996  56803  224   764  48161  1064  12366   90776  14056  27216  3579   97867  6726  16367
+7                          1997  56977  250   820  48455  1062  13236   91426  14112  30505  3660  100913  7229  16688
+8                          1998  57024  257   817  48511  1086  14287   92445  14153  32452  3764  104183  7450  17229
+9                          1999  55318  269   789  46121  1105  14115   88000  12633  32734  3559  103140  7388  16962
+10                         2000  54407  303   795  44427  1099  13815   87974  12124  32726  3585  103734  7436  17033
+11                         2001  52363  310   760  41523  1107  12094   84103  11340  30935  3477  102576  7334  16993
+12                         2002  51314  312   706  38848  1102  10300   79268  10671  28128  3308   99545  7092  16312
+13                         2003  54152  328   773  42233  1109  12199   87866  11764  30565  3529  104800  7323  16855
+14                         2004  57828  343   867  47134  1109  14889  105768  15451  35552  4181  115581  7915  18527
+15                         2005  61126  367   956  50377  1122  17704  116087  17683  39502  4484  121629  8223  19812
+16                         2006  63587  356  1016  53751  1128  20374  126893  19968  43275  4781  126633  8613  20891
+17                         2007  65302  356  1106  56142  1126  22650  135646  21927  47264  5106  130356  8837  22066
+18                         2008  66599  358  1161  57752  1137  24054  144095  23600  50543  5359  132654  9074  23091
+19                         2009  65238  360  1181  57716  1121  23652  148390  24832  50759  5478  131923  9213  23970
+20                         2010  65225  348  1185  57747  1138  24315  151987  25431  51861  5654  132590  9331  24543
+21                         2011  66775  346  1196  58389  1146  25609  155669  26468  53331  5866  133057  9441  25188
+22                         2012  66072  347  1173  58316  1140  25584  157858  27451  54109  5917  131782  9542  25657
+23                         2013  65131  342  1177  58261  1138  25843  159832  28209  54477  6058  130799  9505  26116
+24                         2014  63696  343  1172  58132  1124  25946  160400  28796  53838  5972  129411  9481  26251
+25                         2015  62007  322  1197  58354  1129  25958  163801  29315  53669  6049  128962  9487  26703
+26                         2016  61324  326  1183  57850  1139  25681  166256  29807  53080  6168  127314  9509  26894
+27                         2017  60700  316  1188  57107  1142  26325  168590  30432  52723  6230  126276  9660  27196
+28                         2018  59984  318  1199  55591  1149  26141  165881  30452  51045  6251  124188  9645  27265
+29                         2019  59564  321  1192  53505  1157  25178  160178  29466  48340  6144  120496  9484  26928
+... últimas filas:
+                             0    1    2    3    4    5    6    7    8    9    10   11   12   13
+48  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+49                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+50                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+51  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+52                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+53  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+=== Hoja: C 3 (69 filas x 31 columnas)
+                             0                            1        2        3        4        5        6        7        8        9        10       11       12       13
+0   Cuadro 3: Empresas del s...                          NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+1           Activas en cada año                          NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+2                           NaN                          NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+3                           NaN                          NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+4                          CIIU            Rama de actividad   1996.0   1997.0   1998.0   1999.0   2000.0   2001.0   2002.0   2003.0   2004.0   2005.0   2006.0   2007.0
+5                             1      Agricultura y ganaderia  55982.0  56161.0  56165.0  54444.0  53480.0  51489.0  50532.0  53341.0  56950.0  60187.0  62602.0  64259.0
+6                             2  Silvicultura, extracción...    821.0    816.0    859.0    874.0    927.0    874.0    782.0    811.0    878.0    939.0    985.0   1043.0
+7                             5  Pesca y actividades rela...    224.0    250.0    257.0    269.0    303.0    310.0    312.0    328.0    343.0    367.0    356.0    356.0
+8                            11  Extraccion de petroleo c...    236.0    260.0    258.0    256.0    275.0    278.0    268.0    290.0    309.0    336.0    350.0    392.0
+9                            13  Extraccion de minerales ...     32.0     34.0     36.0     31.0     26.0     22.0     25.0     30.0     31.0     34.0     38.0     40.0
+10                           14  Explotacion de otras min...    496.0    526.0    523.0    502.0    494.0    460.0    413.0    453.0    527.0    586.0    628.0    674.0
+11                           15                    Alimentos  11276.0  11219.0  10994.0  10206.0   9929.0   9410.0   9063.0   9654.0  10737.0  11215.0  11741.0  12230.0
+12                           16                       Tabaco     23.0     20.0     18.0     21.0     21.0     20.0     23.0     27.0     27.0     30.0     30.0     31.0
+13                           17           Productos textiles   2508.0   2550.0   2538.0   2389.0   2302.0   2132.0   1972.0   2149.0   2421.0   2581.0   2806.0   2927.0
+14                           18                 Confecciones   2877.0   2814.0   2781.0   2621.0   2548.0   2293.0   2072.0   2424.0   2851.0   3086.0   3518.0   3717.0
+15                           19                        Cuero   1511.0   1466.0   1416.0   1297.0   1211.0   1107.0   1024.0   1195.0   1388.0   1506.0   1621.0   1712.0
+16                           20                       Madera   2560.0   2582.0   2566.0   2447.0   2346.0   2135.0   1945.0   2222.0   2555.0   2738.0   2944.0   3059.0
+17                           21                        Papel    774.0    788.0    783.0    752.0    751.0    714.0    702.0    754.0    825.0    860.0    894.0    910.0
+18                           22                      Edición   3352.0   3442.0   3603.0   3503.0   3439.0   3267.0   2988.0   3145.0   3432.0   3695.0   3928.0   4110.0
+19                           23        Productos de petróleo     87.0     88.0     83.0     75.0     75.0     70.0     61.0     65.0     68.0     72.0     71.0     75.0
+20                           24           Productos químicos   2073.0   2094.0   2109.0   2070.0   2038.0   1982.0   1962.0   2086.0   2209.0   2322.0   2384.0   2406.0
+21                           25  Productos de caucho y pl...   2552.0   2582.0   2657.0   2613.0   2545.0   2417.0   2325.0   2478.0   2649.0   2814.0   2949.0   3033.0
+22                           26  Otros minerales no metál...   1759.0   1759.0   1774.0   1690.0   1617.0   1455.0   1344.0   1410.0   1527.0   1664.0   1770.0   1871.0
+23                           27              Metales comunes   1073.0   1090.0   1072.0   1001.0    954.0    880.0    825.0    890.0    979.0   1072.0   1121.0   1146.0
+24                           28     Otros productos de metal   6073.0   6253.0   6335.0   6148.0   5912.0   5506.0   5110.0   5618.0   6360.0   6898.0   7447.0   7890.0
+25                           29          Maquinaria y equipo   2655.0   2714.0   2749.0   2662.0   2507.0   2330.0   2178.0   2418.0   2681.0   2865.0   3041.0   3168.0
+26                           30        Maquinaria de oficina    106.0    101.0    116.0    114.0    105.0     96.0     88.0    106.0    112.0    124.0    141.0    147.0
+27                           31          Aparatos eléctricos    957.0    956.0    941.0    894.0    836.0    805.0    732.0    791.0    883.0    911.0    972.0   1022.0
+28                           32           Radio y televisión    170.0    168.0    158.0    139.0    134.0    123.0    113.0    119.0    136.0    145.0    143.0    147.0
+29                           33         Instrumentos médicos    404.0    414.0    427.0    420.0    412.0    403.0    390.0    419.0    481.0    509.0    527.0    551.0
+... últimas filas:
+                             0    1   2   3   4   5   6   7   8   9   10  11  12  13
+63                        Notas  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+64  (1)  Las empresas con pa...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+65                 Aclaraciones  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+66  s.d. Dato no publicado c...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+67                          NaN  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+68  Fuente: STEySS - Direcci...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+=== Hoja: C 4 (161 filas x 31 columnas)
+                             0                            1      2      3      4      5      6      7      8      9      10     11     12     13
+0   Cuadro 4: Empresas del s...                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+1           Activas en cada año                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+2                           NaN                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+3                           NaN                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+4                           NaN            Rama de actividad   1996   1997   1998   1999   2000   2001   2002   2003   2004   2005   2006   2007
+5                            11           Cultivos agrícolas  29206  29403  29264  28429  28079  26886  26138  27596  29371  30934  32168  33125
+6                            12             Cría de animales  23767  23516  23563  22845  22360  21728  21454  22289  23414  24450  25122  25339
+7                            14  Servicios agrícolas y pe...   3001   3233   3329   3161   3032   2863   2928   3443   4147   4780   5291   5773
+8                            15  Caza  y captura de anima...      8      9      9      9      9     12     12     13     18     23     21     22
+9                            20  Silvicultura, extracción...    821    816    859    874    927    874    782    811    878    939    985   1043
+10                           50    Pesca y servicios conexos    224    250    257    269    303    310    312    328    343    367    356    356
+11                          111  Extracción de petróleo c...     62     63     58     57     60     53     49     48     51     57     59     68
+12                          112  Actividades de servicios...    174    197    200    199    215    225    219    242    258    279    291    324
+13                          131  Extracción de minerales ...   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+14                          132  Extracción de minerales ...   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+15                          141  Extracción de piedra, ar...    314    326    328    319    315    296    269    289    333    360    389    419
+16                          142  Explotación de minas y c...    182    200    195    183    179    164    144    164    194    226    239    255
+17                          151  Producción y procesamien...   1694   1723   1719   1678   1684   1645   1629   1748   1825   1868   1959   2049
+18                          152  Elaboración de productos...    776    822    796    749    760    717    714    800    867    912    928    960
+19                          153  Elaboración de productos...    381    392    407    397    393    380    385    428    473    519    537    556
+20                          154  Elaboración de productos...   6742   6628   6480   5869   5641   5281   5015   5307   6064   6377   6730   7041
+21                          155       Elaboración de bebidas   1683   1654   1592   1513   1451   1387   1320   1371   1508   1539   1587   1624
+22                          160  Elaboración de productos...     23     20     18     21     21     20     23     27     27     30     30     31
+23                          171  Fabricación  de hilados ...   1050   1045    999    913    853    808    747    804    881    925    998   1036
+24                          172  Fabricación de productos...    971   1026   1073   1033   1027    948    882    981   1124   1218   1347   1421
+25                          173  Fabricación de tejidos d...    487    479    466    443    422    376    343    364    416    438    461    470
+26                          181  Confección de prendas de...   2828   2769   2747   2591   2519   2267   2051   2405   2833   3066   3498   3700
+27                          182  Confección de prendas de...     49     45     34     30     29     26     21     19     18     20     20     17
+28                          191  Curtido y terminación de...    448    442    410    364    345    328    297    339    402    418    441    457
+29                          192  Fabricación de calzado y...   1063   1024   1006    933    866    779    727    856    986   1088   1180   1255
+... últimas filas:
+                              0    1    2    3    4    5    6    7    8    9    10   11   12   13
+155  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+156                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+157                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+158  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+159                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+160  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+=== Hoja: C 5 (314 filas x 31 columnas)
+                             0                            1      2      3      4      5      6      7      8      9      10     11     12                13
+0   Cuadro 4: Empresas del s...                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN               NaN
+1           Activas en cada año                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN               NaN
+2                           NaN                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN  Volver al índice
+3                           NaN                          NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN               NaN
+4                           NaN            Rama de actividad   1996   1997   1998   1999   2000   2001   2002   2003   2004   2005   2006              2007
+5                           111  Cultivo de cereales, ole...  13924  14284  14577  14237  14028  13781  13946  15053  16166  17256  17879             18432
+6                           112  Cultivo de hortalizas, l...   2005   2131   2092   1987   1902   1709   1563   1656   1795   1886   2030              2128
+7                           113  Cultivo de frutas  -exce...   2808   2845   2799   2681   2671   2561   2510   2687   2853   2998   3140              3280
+8                           114  Cultivos industriales, d...   9995   9680   9354   9104   9063   8467   7805   7894   8222   8454   8765              8940
+9                           115  Producción de semillas y...    474    463    442    420    415    368    314    306    335    340    354               345
+10                          121  Cría de ganado y producc...  22499  22243  22291  21633  21214  20653  20455  21176  22166  23091  23631             23809
+11                          122  Producción de granja y c...   1268   1273   1272   1212   1146   1075    999   1113   1248   1359   1491              1530
+12                          141          Servicios agrícolas   2491   2729   2855   2744   2658   2527   2600   3120   3753   4328   4800              5260
+13                          142  Servicios pecuarios, exc...    510    504    474    417    374    336    328    323    394    452    491               513
+14                          150  Caza  y captura de anima...      8      9      9      9      9     12     12     13     18     23     21                22
+15                          201                 Silvicultura    252    234    241    220    223    228    209    199    214    216    227               228
+16                          202  Extracción de productos ...    371    372    392    425    479    428    362    384    407    445    448               491
+17                          203         Servicios forestales    198    210    226    229    225    218    211    228    257    278    310               324
+18                          501  Pesca y recolección de p...    184    208    213    221    263    271    266    280    289    301    292               294
+19                          502  Explotación de criaderos...     16     15     16     19     16     14     13     13     17     23     25                25
+20                          503      Servicios para la pesca     24     27     28     29     24     25     33     35     37     43     39                37
+21                         1110  Extracción de petróleo c...     62     63     58     57     60     53     49     48     51     57     59                68
+22                         1120  Actividades  de servicio...    174    197    200    199    215    225    219    242    258    279    291               324
+23                         1310  Extracción de minerales ...   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.              s.d.
+24                         1320  Extracción de minerales ...   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.              s.d.
+25                         1411  Extracción de rocas orna...     45     42     37     27     22     23     21     23     30     29     29                34
+26                         1412  Extracción de piedra cal...     50     54     48     44     45     41     38     41     48     55     58                62
+27                         1413  Extracción de arenas, ca...    193    205    217    225    225    212    191    207    238    258    282               302
+28                         1414  Extracción de arcilla y ...     26     25     26     23     23     20     19     18     17     18     20                21
+29                         1421  Extracción de minerales ...      8      9     10     10     14     13     14     12     15     18     18                21
+... últimas filas:
+                              0    1    2    3    4    5    6    7    8    9    10   11   12   13
+308                        Notas  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+309  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+310                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+311  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+312        (*) Datos provisorios  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+313  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+=== Hoja: C 6 (38 filas x 30 columnas)
+                             0       1       2       3       4       5       6       7         8         9         10        11        12        13
+0   Cuadro 6: Empresas del s...     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+1           Activas en cada año     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+2                           NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+3                           NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+4   Características de la em...    1996    1997    1998    1999    2000    2001    2002    2003.0    2004.0    2005.0    2006.0    2007.0    2008.0
+5                           NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+6                        Tamaño     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+7                       Grandes    6017    6620    7189    7107    6874    6714    5959    6417.0    7255.0    8343.0    9191.0    9957.0   10538.0
+8                      Medianas   19408   21368   23172   22901   22577   22050   19660   21384.0   24310.0   26843.0   29435.0   31711.0   33144.0
+9                      Pequeñas   92158   97843  100414   99008   98178   95570   87676   94613.0  106099.0  116110.0  124713.0  132144.0  140332.0
+10                        Micro  291473  293193  297059  285575  284116  271999  263436  283300.0  327833.0  350930.0  373034.0  389432.0  400688.0
+11                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+12             Tramos de empleo     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+13                   Mas de 200    1852    2018    2175    2146    2102    2017    1776    1907.0    2148.0    2467.0    2732.0    2973.0    3131.0
+14                  de 50 a 200    7781    8637    9600    9490    9258    9055    8204    8921.0   10095.0   11342.0   12373.0   13236.0   13980.0
+15                   de 10 a 49   40526   43737   45857   45372   44644   43283   38937   42229.0   47507.0   52705.0   57601.0   61869.0   65133.0
+16                      hasta 9  358897  364632  370202  357583  355741  341978  327814  352657.0  405747.0  435712.0  463667.0  485166.0  502458.0
+17                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+18                Tipo jurídico     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+19             Personas Físicas  208773  214621  220391  210808  209190  198360  184761  204342.0  252510.0  278744.0  303030.0  321624.0  336157.0
+20          Sociedades Anónimas   51594   52967   54331   54485   54904   53921   52441   55845.0   59648.0   63306.0   66825.0   70253.0   73232.0
+21  Sociedades de Responsabi...   48602   48991   49387   48176   47705   46342   44596   49269.0   54568.0   59729.0   65085.0   69831.0   73919.0
+22  Otras sociedades comerci...   46104   46740   46512   42713   40358   37038   33818   33924.0   35069.0   35320.0   35117.0   34112.0   32876.0
+23   Otras formas de asociación   53983   55705   57213   58409   59588   60672   61115   62334.0   63702.0   65127.0   66316.0   67424.0   68518.0
+24                          NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+25     Antigüedad de la empresa     NaN     NaN     NaN     NaN     NaN     NaN     NaN       NaN       NaN       NaN       NaN       NaN       NaN
+26                   Nacimiento    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.   50666.0   76162.0   68354.0   72353.0   71993.0   70096.0
+27                   1 a 3 años    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.   63499.0   81465.0  118114.0  145364.0  156068.0  151451.0
+28                   4 o 5 años    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.   37682.0   39298.0   37972.0   32720.0   45359.0   73308.0
+29                  6 a 10 años    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.    s.d.  133974.0  130659.0   91760.0   88116.0   80705.0   73314.0
+... últimas filas:
+                             0    1    2    3    4    5    6    7   8   9   10  11  12  13
+32                        Notas  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+33  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+34                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+35  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+36                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+37  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN NaN NaN NaN NaN NaN NaN
+=== Hoja: C 7 (87 filas x 31 columnas)
+                             0         1        2        3        4        5        6        7        8        9        10       11       12       13
+0   Cuadro 7: Empresas priva...       NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+1                           NaN       NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+2                           NaN       NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+3                           NaN       NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN      NaN
+4            Grandes divisiones    Tamaño   1996.0   1997.0   1998.0   1999.0   2000.0   2001.0   2002.0   2003.0   2004.0   2005.0   2006.0   2007.0
+5       Agricultura y Ganadería     Total  56803.0  56977.0  57024.0  55318.0  54407.0  52363.0  51314.0  54152.0  57828.0  61126.0  63587.0  65302.0
+6                           NaN   Grandes    176.0    208.0    216.0    207.0    199.0    187.0    170.0    200.0    229.0    273.0    292.0    310.0
+7                           NaN  Medianas   1266.0   1397.0   1460.0   1436.0   1442.0   1393.0   1284.0   1455.0   1658.0   1804.0   1954.0   2071.0
+8                           NaN  Pequeñas  10938.0  11438.0  11396.0  11189.0  11043.0  10614.0  10080.0  10691.0  11474.0  12221.0  12843.0  13375.0
+9                           NaN     Micro  44423.0  43934.0  43952.0  42486.0  41723.0  40169.0  39780.0  41806.0  44467.0  46828.0  48498.0  49546.0
+10    Pesca y servicios conexos     Total    224.0    250.0    257.0    269.0    303.0    310.0    312.0    328.0    343.0    367.0    356.0    356.0
+11                          NaN   Grandes     29.0     30.0     27.0     22.0     19.0     24.0     31.0     35.0     38.0     36.0     38.0     36.0
+12                          NaN  Medianas     71.0     89.0     87.0     82.0     76.0     73.0     72.0     74.0     73.0     74.0     71.0     66.0
+13                          NaN  Pequeñas     53.0     64.0     90.0     98.0    139.0    146.0    133.0    139.0    156.0    154.0    153.0    169.0
+14                          NaN     Micro     71.0     67.0     53.0     67.0     69.0     67.0     76.0     80.0     76.0    103.0     94.0     85.0
+15  Explotacion de minas y c...     Total    764.0    820.0    817.0    789.0    795.0    760.0    706.0    773.0    867.0    956.0   1016.0   1106.0
+16                          NaN   Grandes     68.0     78.0     77.0     73.0     68.0     74.0     68.0     78.0     83.0     96.0    104.0    115.0
+17                          NaN  Medianas    134.0    145.0    155.0    142.0    139.0    145.0    122.0    139.0    159.0    183.0    199.0    223.0
+18                          NaN  Pequeñas    291.0    302.0    308.0    316.0    304.0    283.0    271.0    271.0    300.0    325.0    345.0    388.0
+19                          NaN     Micro    271.0    295.0    277.0    258.0    284.0    258.0    245.0    285.0    325.0    352.0    368.0    380.0
+20      Industria manufacturera     Total  48161.0  48455.0  48511.0  46121.0  44427.0  41523.0  38848.0  42233.0  47134.0  50377.0  53751.0  56142.0
+21                          NaN   Grandes   1338.0   1404.0   1434.0   1367.0   1293.0   1217.0   1094.0   1213.0   1385.0   1567.0   1692.0   1827.0
+22                          NaN  Medianas   4369.0   4643.0   4800.0   4522.0   4261.0   4059.0   3634.0   3997.0   4643.0   5071.0   5478.0   5832.0
+23                          NaN  Pequeñas  15109.0  15551.0  15708.0  15314.0  14515.0  13741.0  12512.0  13541.0  15007.0  16389.0  17718.0  18667.0
+24                          NaN     Micro  27345.0  26857.0  26569.0  24918.0  24358.0  22506.0  21608.0  23482.0  26099.0  27350.0  28863.0  29816.0
+25     Electricidad, gas y agua     Total   1064.0   1062.0   1086.0   1105.0   1099.0   1107.0   1102.0   1109.0   1109.0   1122.0   1128.0   1126.0
+26                          NaN   Grandes     91.0     96.0     98.0    102.0    100.0    100.0    101.0     97.0    102.0    105.0    108.0    106.0
+27                          NaN  Medianas    129.0    153.0    157.0    157.0    166.0    168.0    164.0    185.0    179.0    178.0    178.0    180.0
+28                          NaN  Pequeñas    444.0    451.0    465.0    470.0    454.0    475.0    480.0    469.0    472.0    479.0    486.0    482.0
+29                          NaN     Micro    400.0    362.0    366.0    376.0    379.0    364.0    357.0    358.0    356.0    360.0    356.0    358.0
+... últimas filas:
+                             0    1   2   3   4   5   6   7   8   9   10  11  12  13
+81                        Notas  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+82  (1)  Las empresas con pa...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+83                 Aclaraciones  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+84  s.d. Dato no publicado c...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+85        (*) Datos provisorios  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+86  Fuente: STEySS - Direcci...  NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN
+=== Hoja: C 8 (100 filas x 32 columnas)
+     0                            1            2      3        4        5        6        7        8        9      10     11       12                13
+0   NaN  Cuadro 8: Empresas priva...          NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN    NaN    NaN      NaN               NaN
+1   NaN                          NaN          NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN    NaN    NaN      NaN  Volver al índice
+2   NaN                          NaN          NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN    NaN    NaN      NaN               NaN
+3   NaN                          NaN          NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN    NaN    NaN      NaN               NaN
+4   NaN           Grandes divisiones       Tamaño   1996   1997.0   1998.0   1999.0   2000.0   2001.0   2002.0   2003   2004   2005.0              2006
+5   NaN      Agricultura y Ganadería        Total  56803  56977.0  57024.0  55318.0  54407.0  52363.0  51314.0  54152  57828  61126.0             63587
+6   a.1                          NaN   Mas de 200     39     46.0     50.0     56.0     58.0     54.0     48.0     46     58     75.0                76
+7   a.2                          NaN  de 50 a 200    320    375.0    386.0    352.0    335.0    310.0    316.0    362    408    456.0               499
+8   a.3                          NaN   de 10 a 49   3586   3853.0   3953.0   3921.0   3938.0   3810.0   3565.0   3841   4236   4608.0              4907
+9   a.4                          NaN      hasta 9  52858  52703.0  52635.0  50989.0  50076.0  48189.0  47385.0  49903  53126  55987.0             58105
+10  NaN    Pesca y servicios conexos        Total    224    250.0    257.0    269.0    303.0    310.0    312.0    328    343    367.0               356
+11  b.1                          NaN   Mas de 200      9      8.0     10.0      9.0      8.0      8.0      8.0     10     11     13.0                13
+12  b.2                          NaN  de 50 a 200     37     49.0     38.0     34.0     34.0     40.0     46.0     47     52     54.0                53
+13  b.3                          NaN   de 10 a 49     84     93.0    121.0    115.0    100.0    111.0    105.0    117    123    119.0               113
+14  b.4                          NaN      hasta 9     94    100.0     88.0    111.0    161.0    151.0    153.0    154    157    181.0               177
+15  NaN  Explotacion  de  minas  ...        Total    764    820.0    817.0    789.0    795.0    760.0    706.0    773    867    956.0              1016
+16  c.1                          NaN   Mas de 200     28     31.0     31.0     24.0     28.0     32.0     32.0     32     38     42.0                44
+17  c.2                          NaN  de 50 a 200     80     83.0     89.0     86.0     80.0     77.0     69.0     85     83     99.0               104
+18  c.3                          NaN   de 10 a 49    224    238.0    242.0    235.0    214.0    211.0    195.0    204    254    266.0               297
+19  c.4                          NaN      hasta 9    432    468.0    455.0    444.0    473.0    440.0    410.0    452    492    549.0               571
+20  NaN      Industria manufacturera        Total  48161  48455.0  48511.0  46121.0  44427.0  41523.0  38848.0  42233  47134  50377.0             53751
+21  d.1                          NaN   Mas de 200    605    624.0    636.0    604.0    577.0    538.0    482.0    531    593    659.0               713
+22  d.2                          NaN  de 50 a 200   2205   2334.0   2394.0   2269.0   2130.0   2052.0   1876.0   2068   2437   2669.0              2849
+23  d.3                          NaN   de 10 a 49  10034  10482.0  10682.0  10315.0   9772.0   9222.0   8256.0   8977  10152  11155.0             12206
+24  d.4                          NaN      hasta 9  35317  35015.0  34799.0  32933.0  31948.0  29711.0  28234.0  30657  33952  35894.0             37983
+25  NaN     Electricidad, gas y agua        Total   1064   1062.0   1086.0   1105.0   1099.0   1107.0   1102.0   1109   1109   1122.0              1128
+26  e.1                          NaN   Mas de 200     37     43.0     49.0     48.0     48.0     50.0     49.0     44     53     55.0                59
+27  e.2                          NaN  de 50 a 200     88     84.0     83.0     94.0     97.0     95.0     96.0    102     97     96.0                99
+28  e.3                          NaN   de 10 a 49    244    266.0    288.0    292.0    284.0    290.0    298.0    299    305    310.0               314
+29  e.4                          NaN      hasta 9    695    669.0    666.0    671.0    670.0    672.0    659.0    664    654    661.0               656
+... últimas filas:
+     0                            1    2    3   4   5   6   7   8   9    10   11  12   13
+94  NaN                        Notas  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+95  NaN  (1)  Las empresas con pa...  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+96  NaN                 Aclaraciones  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+97  NaN  s.d. Dato no publicado c...  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+98  NaN                          NaN  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+99  NaN  Fuente: STEySS - Direcci...  NaN  NaN NaN NaN NaN NaN NaN NaN  NaN  NaN NaN  NaN
+=== Hoja: C 9 (298 filas x 32 columnas)
+                             0                            1         2      3      4      5      6      7      8      9      10     11     12     13
+0   Cuadro 9: Empresas priva...                          NaN       NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+1                           NaN                          NaN       NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+2                           NaN                          NaN       NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+3                           NaN                          NaN       NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+4                CIIU 2 dígitos            Rama de actividad    Tamaño   1996   1997   1998   1999   2000   2001   2002   2003   2004   2005   2006
+5                             1      Agricultura y ganaderia     Total  55982  56161  56165  54444  53480  51489  50532  53341  56950  60187  62602
+6                           NaN                          NaN   Grandes    168    192    195    192    182    177    161    188    216    259    278
+7                           NaN                          NaN  Medianas   1187   1312   1371   1347   1344   1294   1197   1358   1559   1707   1845
+8                           NaN                          NaN  Pequeñas  10643  11162  11102  10875  10695  10307   9811  10416  11163  11876  12468
+9                           NaN                          NaN     Micro  43984  43495  43497  42030  41259  39711  39363  41379  44012  46345  48011
+10                            2  Silvicultura, extracción...     Total    821    816    859    874    927    874    782    811    878    939    985
+11                          NaN                          NaN   Grandes      8     16     21     15     17     10      9     12     13     14     14
+12                          NaN                          NaN  Medianas     79     85     89     89     98     99     87     97     99     97    109
+13                          NaN                          NaN  Pequeñas    295    276    294    314    348    307    269    275    311    345    375
+14                          NaN                          NaN     Micro    439    439    455    456    464    458    417    427    455    483    487
+15                            5  Pesca y actividades rela...     Total    224    250    257    269    303    310    312    328    343    367    356
+16                          NaN                          NaN   Grandes     29     30     27     22     19     24     31     35     38     36     38
+17                          NaN                          NaN  Medianas     71     89     87     82     76     73     72     74     73     74     71
+18                          NaN                          NaN  Pequeñas     53     64     90     98    139    146    133    139    156    154    153
+19                          NaN                          NaN     Micro     71     67     53     67     69     67     76     80     76    103     94
+20                           11  Extraccion de petroleo c...     Total    236    260    258    256    275    278    268    290    309    336    350
+21                          NaN                          NaN   Grandes   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+22                          NaN                          NaN  Medianas   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+23                          NaN                          NaN  Pequeñas   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+24                          NaN                          NaN     Micro   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+25                           13  Extraccion de minerales ...     Total     32     34     36     31     26     22     25     30     31     34     38
+26                          NaN                          NaN   Grandes   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+27                          NaN                          NaN  Medianas   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+28                          NaN                          NaN  Pequeñas   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+29                          NaN                          NaN     Micro   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+... últimas filas:
+                              0    1    2    3    4    5    6    7    8    9    10   11   12   13
+292                        Notas  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+293  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+294                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+295  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+296                          NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+297  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+=== Hoja: C 10 (298 filas x 35 columnas)
+      0    1    2                            3                            4                 5      6      7      8      9      10     11     12     13
+0    NaN  NaN  NaN  Cuadro 10: Empresas priv...                          NaN               NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+1    NaN  NaN  NaN                          NaN                          NaN               NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+2    NaN  NaN  NaN                          NaN                          NaN               NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+3    NaN  NaN  NaN                          NaN                          NaN               NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN    NaN
+4    NaN  NaN  NaN               CIIU 2 dígitos            Rama de actividad  Tramos de empleo   1996   1997   1998   1999   2000   2001   2002   2003
+5    NaN  NaN  NaN                            1      Agricultura y ganaderia             Total  55982  56161  56165  54444  53480  51489  50532  53341
+6    1.0    .  1.0                          NaN                          NaN        Mas de 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+7    1.0    .  2.0                          NaN                          NaN       de 50 a 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+8    1.0    .  3.0                          NaN                          NaN        de 10 a 49   3424   3679   3771   3732   3718   3615   3393   3663
+9    1.0    .  4.0                          NaN                          NaN           Hasta 9  52218  52089  51993  50334  49398  47532  46796  49297
+10   2.0    .  NaN                            2  Silvicultura, extracción...             Total    821    816    859    874    927    874    782    811
+11   2.0    .  1.0                          NaN                          NaN        Mas de 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+12   2.0    .  2.0                          NaN                          NaN       de 50 a 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+13   2.0    .  3.0                          NaN                          NaN        de 10 a 49    162    174    182    189    220    195    172    178
+14   2.0    .  4.0                          NaN                          NaN           Hasta 9    640    614    642    655    678    657    589    606
+15   5.0    .  NaN                            5  Pesca y actividades rela...             Total    224    250    257    269    303    310    312    328
+16   5.0    .  1.0                          NaN                          NaN        Mas de 200      9      8     10      9      8      8      8     10
+17   5.0    .  2.0                          NaN                          NaN       de 50 a 200     37     49     38     34     34     40     46     47
+18   5.0    .  3.0                          NaN                          NaN        de 10 a 49     84     93    121    115    100    111    105    117
+19   5.0    .  4.0                          NaN                          NaN           Hasta 9     94    100     88    111    161    151    153    154
+20  11.0    .  NaN                           11  Extraccion de petroleo c...             Total    236    260    258    256    275    278    268    290
+21  11.0    .  1.0                          NaN                          NaN        Mas de 200     21     23     23     18     22     26     27     28
+22  11.0    .  2.0                          NaN                          NaN       de 50 a 200     56     53     57     55     53     51     48     54
+23  11.0    .  3.0                          NaN                          NaN        de 10 a 49     71     75     75     76     71     75     77     79
+24  11.0    .  4.0                          NaN                          NaN           Hasta 9     88    109    103    107    129    126    116    129
+25  13.0    .  NaN                           13  Extraccion de minerales ...             Total     32     34     36     31     26     22     25     30
+26  13.0    .  1.0                          NaN                          NaN        Mas de 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+27  13.0    .  2.0                          NaN                          NaN       de 50 a 200   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.   s.d.
+28  13.0    .  3.0                          NaN                          NaN        de 10 a 49     13     16     13     10      5      4      5      6
+29  13.0    .  4.0                          NaN                          NaN           Hasta 9     15     14     19     16     16     13     15     18
+... últimas filas:
+     0    1   2                            3    4    5    6    7    8    9    10   11   12   13
+292 NaN  NaN NaN                        Notas  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+293 NaN  NaN NaN  (1)  Las empresas con pa...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+294 NaN  NaN NaN                 Aclaraciones  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+295 NaN  NaN NaN  s.d. Dato no publicado c...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+296 NaN  NaN NaN        (*) Datos provisorios  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+297 NaN  NaN NaN  Fuente: STEySS - Direcci...  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN  NaN
+=== Hoja: Descriptores de actividad (523 filas x 2 columnas)
+                              0                            1
+0   Descriptor completo de a...                          NaN
+1                           NaN                          NaN
+2                           NaN                          NaN
+3                CIIU 2 dígitos            Rama de actividad
+4                             1  Agricultura, ganaderia, ...
+5                             2  Silvicultura, extracción...
+6                             5  Pesca y actividades rela...
+7                            10  Extraccion de carbon y l...
+8                            11  Extraccion de petroleo c...
+9                            12  Extraccion de minerales ...
+10                           13  Extraccion de minerales ...
+11                           14  Explotacion de otras min...
+12                           15  Elaboracion de productos...
+13                           16  Elaboracion de productos...
+14                           17  Fabricacion de productos...
+15                           18  Fabricacion de prendas d...
+16                           19  Curtido y terminacion de...
+17                           20  Produccion de madera y f...
+18                           21  Fabricacion de papel y d...
+19                           22  Actividades de edicion e...
+20                           23  Fabricacion de productos...
+21                           24  Fabricacion de sustancia...
+22                           25  Fabricacion de productos...
+23                           26  Fabricacion de otros pro...
+24                           27  Fabricacion de metales c...
+25                           28  Fabricacion de productos...
+26                           29  Fabricacion de maquinari...
+27                           30  Fabricacion de maquinari...
+28                           31  Fabricacion de maquinari...
+29                           32  Fabricacion de equipo y ...
+... últimas filas:
+        0                            1
+517  9241  Servicios para prácticas...
+518  9249  Servicios de esparcimien...
+519  9301  Lavado y limpieza de art...
+520  9302  Servicios de peluquería ...
+521  9303  Pompas fúnebres y servic...
+522  9309             Servicios n.c.p.
