@@ -147,3 +147,34 @@ def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = No
         a = a.rolling(acumular, min_periods=acumular).sum()
         b = b.rolling(acumular, min_periods=acumular).sum()
     return (a / b * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)
+
+
+def reservas_netas(reservas, encajes_balance, depositos_usd, swap_yuan, cny_por_usd, organismos, pases_balance,
+                   pase_2016, swap_eeuu, desde_pases="2024-08-01") -> dict[str, pd.Series]:
+    """Reservas netas (millones de US$, fin de mes) = brutas − encajes en dólares − swap con China −
+    repos y pases en dólares − obligaciones con organismos internacionales − tramo activado del swap con EE.UU.
+
+    Los rubros del balance del BCRA llegan con rezago: después del último mes publicado, los encajes se
+    estiman con los depósitos privados en dólares y la proporción del último mes, y los repos y organismos
+    se mantienen en su último valor. Devuelve también cada componente."""
+    idx = reservas.dropna().index
+    def mensual(s):
+        return s.reindex(s.index.union(idx)).sort_index().ffill().reindex(idx) if s is not None and not s.empty else pd.Series(0.0, index=idx)
+    ultimo_balance = encajes_balance.dropna().index.max()
+    ratio = (encajes_balance / depositos_usd.reindex(encajes_balance.index)).dropna()
+    encajes = encajes_balance.reindex(idx)
+    if not ratio.empty:
+        est = depositos_usd.reindex(idx) * ratio.iloc[-1]
+        encajes = encajes.where(encajes.index <= ultimo_balance, est)
+    swap = (mensual(swap_yuan) / mensual(cny_por_usd)).fillna(0)
+    swap[idx < swap_yuan.index.min()] = 0
+    pases = mensual(pases_balance)
+    pases[idx < pd.Timestamp(desde_pases)] = 0
+    repos = pases + mensual(pase_2016).fillna(0)
+    org = mensual(organismos)
+    org[idx < pd.Timestamp("2006-01-01")] = 0  # hasta 2005 el rubro es la deuda con el FMI, cancelada en enero de 2006
+    eeuu = mensual(swap_eeuu).fillna(0)
+    eeuu[idx < swap_eeuu.index.min()] = 0
+    netas = reservas.reindex(idx) - encajes - swap - repos - org - eeuu
+    return {"reservas_netas": netas.dropna(), "rn_encajes": encajes.dropna(), "rn_swap_china": swap,
+            "rn_repos": repos, "rn_organismos": org, "rn_swap_eeuu": eeuu}

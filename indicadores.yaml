@@ -278,6 +278,15 @@ series:
   empresas_aperturas:  {fuente: archivo, lector: oede_empresas, campo: aperturas}
   empresas_cierres:    {fuente: archivo, lector: oede_empresas, campo: cierres}
   empresas_neto:       {fuente: archivo, lector: oede_empresas, campo: neto}
+  # --- Reservas netas: balance del BCRA (miles de pesos, mensual) y componentes ---
+  bcra_encajes_usd:    {fuente: datosgobar, id: "300.1_AP_PAS_CUEDAS_0_M_39"}
+  bcra_organismos:     {fuente: datosgobar, id: "300.1_AP_PAS_OBLTER_0_M_36"}
+  bcra_pases:          {fuente: datosgobar, id: "300.1_AP_PAS_OBLASE_0_M_36"}
+  bcra_tc_balance:     {fuente: datosgobar, id: "300.1_TIPO_CAMBIBIO_0_M_11"}
+  bcra_pase_2016:      {fuente: bcra, id: 76, agregacion: cierre}
+  cny_por_usd:         {fuente: fred, id: "DEXCHUS"}
+  swap_china_yuan:     {fuente: manual, id: swap_china_yuan, escalonada: true}
+  swap_eeuu_activado:  {fuente: manual, id: swap_eeuu_activado, escalonada: true}
   # --- Deflactor en dólares ---
   cpi_eeuu:            {fuente: fred, id: "CPIAUCSL"}
 
@@ -331,6 +340,8 @@ calculos:
   pib_intereses: {operacion: porcentaje_pib, a: imig_intereses, b: pib_nominal}
   tasa_real_plazo_fijo: {operacion: tasa_real, a: tasa_plazo_fijo, b: ipc}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
+  reservas_netas:  {operacion: reservas_netas, reservas: reservas, encajes: bcra_encajes_usd, depositos_usd: depositos_privados_usd, swap_yuan: swap_china_yuan,
+                    cny: cny_por_usd, organismos: bcra_organismos, pases: bcra_pases, pase_2016: bcra_pase_2016, swap_eeuu: swap_eeuu_activado, tc_balance: bcra_tc_balance}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
@@ -349,6 +360,8 @@ grupos:
      nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
   - {id: morosidad_pnfc_tipo, nombre: "Morosidad en fintech, billeteras y otros prestamistas no financieros, por tipo de crédito", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
      nota: "Irregularidad de la cartera de los proveedores no financieros de crédito (BCRA, Central de Deudores). Resto incluye préstamos prendarios, hipotecarios y otras financiaciones. Se publica dos veces por año con unos meses de rezago."}
+  - {id: reservas_componentes, nombre: "Qué se resta de las reservas brutas para llegar a las netas", seccion: "Dólar y finanzas", ranking: nivel, unidad_ranking: "millones de US$ de hoy, último mes", sufijo_ranking: " M",
+     nota: "Componentes de la estimación de reservas netas. El swap con EE.UU. activado (2.500 millones entre noviembre de 2025 y enero de 2026) no se muestra aparte."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -596,3 +609,9 @@ indicadores:
      nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras. El saldo puede no coincidir exactamente con la diferencia de aperturas y cierres por reclasificaciones."}
   - {id: empresas_aperturas, nombre: "Aperturas de empresas", seccion: Actividad, serie: empresas_aperturas, tipo_valor: flujo, frecuencia: T, unidad: "empresas por trimestre", nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras."}
   - {id: empresas_cierres, nombre: "Cierres de empresas", seccion: Actividad, serie: empresas_cierres, tipo_valor: flujo, frecuencia: T, unidad: "empresas por trimestre", nota: "Empresas privadas con al menos un asalariado registrado (SIPA), procesadas por el Observatorio de Empleo y Dinámica Empresarial de la Secretaría de Trabajo. Series sin estacionalidad. Una apertura es una empresa que empieza a declarar empleados y un cierre una que deja de hacerlo; no equivale a quiebras."}
+  - {id: reservas_netas, nombre: "Reservas netas del BCRA (estimación)", seccion: "Dólar y finanzas", serie: reservas_netas, tipo_valor: saldo, moneda: USD, vista_inicial: desde_2003, unidad: "millones de US$ de hoy", portada: true,
+     nota: "Estimación propia: no hay cifra oficial. Reservas brutas menos encajes de los depósitos en dólares, swap con China (130.000 millones de yuanes desde 2018; 70.000 millones desde 2014), repos y pases en dólares con bancos, obligaciones con organismos internacionales y el tramo activado del swap con el Tesoro de EE.UU. (nov-2025 a ene-2026). Rubros del balance del BCRA vía datos.gob.ar, que se publica con meses de rezago: después del último mes disponible los encajes se estiman con los depósitos privados en dólares y los repos se mantienen en su último valor. Otras metodologías (consultoras, FMI) restan o no otros rubros y dan cifras distintas."}
+  - {id: rn_encajes, nombre: "Encajes de depósitos en dólares en el BCRA", seccion: "Dólar y finanzas", serie: rn_encajes, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", grupo: reservas_componentes}
+  - {id: rn_swap_china, nombre: "Swap con China (valuado en dólares)", seccion: "Dólar y finanzas", serie: rn_swap_china, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", grupo: reservas_componentes}
+  - {id: rn_repos, nombre: "Repos y pases en dólares con bancos", seccion: "Dólar y finanzas", serie: rn_repos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", grupo: reservas_componentes}
+  - {id: rn_organismos, nombre: "Obligaciones con organismos internacionales", seccion: "Dólar y finanzas", serie: rn_organismos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", grupo: reservas_componentes}

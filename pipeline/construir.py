@@ -95,6 +95,18 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 continue
             mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
             continue
+        if c["operacion"] == "reservas_netas":
+            claves = ["reservas", "encajes", "depositos_usd", "swap_yuan", "cny", "organismos", "pases", "pase_2016", "swap_eeuu"]
+            faltan = [c[k] for k in claves if c[k] not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            m = {k: mensuales[c[k]] for k in claves}
+            usd = lambda s: (s / mensuales[c["tc_balance"]]).dropna() / 1000  # miles de pesos -> millones de US$
+            mensuales.update(transformar.reservas_netas(
+                m["reservas"], usd(m["encajes"]), m["depositos_usd"], m["swap_yuan"], m["cny"],
+                usd(m["organismos"]), usd(m["pases"]), m["pase_2016"], m["swap_eeuu"]))
+            continue
         if c["operacion"] == "porcentaje_de":  # (a × multiplicar) / (b / divisor_b) en %, trimestral
             insumos = [c["a"], c["b"]] + ([c["multiplicar"]] if c.get("multiplicar") else [])
             faltan = [x for x in insumos if x not in mensuales]
