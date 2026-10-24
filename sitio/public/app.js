@@ -871,7 +871,7 @@ function parseCSV(texto) {
 }
 async function csv(nombre) {
   try {
-    const r = await fetch(`${DATOS}politica/${nombre}.csv`);
+    const r = await fetch(`${DATOS}politica/${nombre}.csv`, { cache: "no-cache" });
     if (!r.ok) return null;
     return parseCSV(await r.text());
   } catch { return null; }
@@ -1049,9 +1049,9 @@ async function gobierno() {
 /* ---------- Inicio ---------- */
 
 async function iniciar() {
-  const indice = await (await fetch(`${DATOS}indice.json`)).json();
+  const indice = await (await fetch(`${DATOS}indice.json`, { cache: "no-cache" })).json();
   // un archivo con problemas no tumba la página: ese indicador simplemente no se muestra
-  const leer = async (id) => { try { return await (await fetch(`${DATOS}${id}.json`)).json(); } catch { return null; } };
+  const leer = async (id) => { try { return await (await fetch(`${DATOS}${id}.json`, { cache: "no-cache" })).json(); } catch { return null; } };
   const fichas = (await Promise.all(indice.map(async (i) => {
     if (i.tipo !== "grupo") return leer(i.id);
     const miembros = (await Promise.all(i.miembros.map(leer))).filter(Boolean);
