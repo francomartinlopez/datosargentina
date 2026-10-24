@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 237
+Indicadores publicados: 244
 
 ## Alertas
 
@@ -31,6 +31,7 @@ Indicadores publicados: 237
 - intereses_netos: sin dato nuevo (último 2026-08)
 - recaudacion: sin dato nuevo (último 2026-09)
 - icg: sin dato nuevo (último 2026-09)
+- satisfaccion_rumbo: sin dato nuevo (último 2026-10)
 - aprobacion_promedio: sin dato nuevo (último 2026-10)
 - desaprobacion_promedio: sin dato nuevo (último 2026-10)
 - aprobacion_atlas: sin dato nuevo (último 2026-09)
@@ -203,6 +204,16 @@ Indicadores publicados: 237
 - pnfc_resto: sin dato nuevo (último 2026-02)
 - ucii: sin dato nuevo (último 2026-07)
 - escrituras_caba: sin dato nuevo (último 2026-09)
+- escrituras_monto: sin dato nuevo (último 2026-09)
+- cemento: sin dato nuevo (último 2026-08)
+- subocupacion: sin dato nuevo (último 2026-04)
+- monotributistas: sin dato nuevo (último 2026-06)
+- monotributistas_desest: sin dato nuevo (último 2026-06)
+- autonomos: sin dato nuevo (último 2026-06)
+- soja_precio: sin dato nuevo (último 2026-09)
+- retenciones: sin dato nuevo (último 2026-08)
+- m2: sin dato nuevo (último 2026-10)
+- prestamos_usd: sin dato nuevo (último 2026-10)
 - fbcf_corriente: sin dato nuevo (último 2025-10)
 - ventas_autos: sin dato nuevo (último 2026-09)
 - produccion_autos: sin dato nuevo (último 2026-09)
@@ -216,6 +227,7 @@ Indicadores publicados: 237
 - merval: sin dato nuevo (último 2026-10)
 - adr_ggal: sin dato nuevo (último 2026-10)
 - adr_ypf: sin dato nuevo (último 2026-10)
+- adr_ypf: la fuente revisó 1 datos anteriores
 - adr_pam: sin dato nuevo (último 2026-10)
 - adr_bma: sin dato nuevo (último 2026-10)
 - adr_bbar: sin dato nuevo (último 2026-10)
