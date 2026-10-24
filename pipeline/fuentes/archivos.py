@@ -452,7 +452,10 @@ def eph_promedios(contenido: bytes) -> dict:
     import numpy as np
     import zipfile
     z = zipfile.ZipFile(io.BytesIO(contenido))
-    nombre = next(n for n in z.namelist() if "individual" in n.lower() and n.lower().endswith(".txt"))
+    nombres = [n for n in z.namelist() if "individual" in n.lower() and n.lower().endswith(".txt")]
+    if not nombres:
+        raise ValueError(f"sin archivo de personas en {z.namelist()[:6]}")
+    nombre = nombres[0]
     df = pd.read_csv(z.open(nombre), sep=";", decimal=",", low_memory=False,
                      usecols=lambda c: c in {"ESTADO", "CAT_OCUP", "P21", "PONDIIO", "PP07H"})
     for c in df.columns:
@@ -474,17 +477,24 @@ def eph_tabla() -> pd.DataFrame:
     previo = pd.read_csv(EPH_CACHE, dtype={"trimestre": str}) if EPH_CACHE.exists() else pd.DataFrame(columns=["trimestre"])
     hechos = set(previo["trimestre"])
     hoy = date.today()
-    nuevos = []
+    nuevos, errores = [], []
     anio, trim = EPH_DESDE
     while (anio, trim) <= (hoy.year, (hoy.month - 1) // 3 + 1):
         clave = f"{anio}-T{trim}"
         if clave not in hechos:
             contenido = _eph_zip(anio, trim)
             if contenido is not None:
-                nuevos.append({"trimestre": clave, **eph_promedios(contenido)})
+                try:
+                    nuevos.append({"trimestre": clave, **eph_promedios(contenido)})
+                except Exception as e:  # un trimestre con formato distinto no frena el resto
+                    errores.append(f"{clave}: {type(e).__name__} {e}")
+            else:
+                errores.append(f"{clave}: no se encontró el archivo")
         trim += 1
         if trim == 5:
             anio, trim = anio + 1, 1
+    EPH_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    (EPH_CACHE.parent / "eph_errores.txt").write_text("\n".join(errores), encoding="utf-8")
     tabla = pd.concat([previo, pd.DataFrame(nuevos)], ignore_index=True) if nuevos else previo
     if nuevos:
         EPH_CACHE.parent.mkdir(parents=True, exist_ok=True)
