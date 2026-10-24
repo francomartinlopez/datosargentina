@@ -33,6 +33,7 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "espop_2610": ["https://images.udesa.edu.ar/sites/default/files/2026-10/56. UdeSA ESPOP Octubre 2026_0.pdf"],
     "atlas_2609": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf"],
     "atlas_2608": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_08_2026_aa84843133a7af6c.pdf"],
     "bcra_ib_anexo": ["https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/informe-bancos-anexo.xlsx"],
@@ -132,7 +133,7 @@ def main() -> None:
             except Exception as e:
                 informe[clave].append({"url": u, "error": repr(e)})
     # páginas cuyo HTML se guarda crudo para buscar los datos que cargan por JavaScript
-    for clave, u in {"udesa_espop": "https://udesa.edu.ar/espop", "udesa_espop2": "https://udesa.edu.ar/encuesta-de-satisfaccion-politica-y-opinion-publica",
+    for clave, u in {"zuban_port": "https://zubancordoba.com/portfolio/informe-nacional-milei-vs-bullrich-septiembre-2026/", "zuban_port2": "https://zubancordoba.com/portfolio/informe-nacional-el-camino-al-balotaje-septiembre-2026/", "zuban_lista": "https://zubancordoba.com/portfolio-encuestas/", "udesa_espop": "https://udesa.edu.ar/espop", "udesa_espop2": "https://udesa.edu.ar/encuesta-de-satisfaccion-politica-y-opinion-publica",
                      "atlas_poll": "https://atlasintel.org/poll/latam-pulse-argentina-september-2026-2026-10-14",
                      "zuban": "https://zubancordoba.com/", "opina": "https://opinaargentina.com/", "poliarquia": "https://www.poliarquia.com/",
                      "mfit": "https://www.myfconsultora.com/", "analogias": "https://analogias.com.ar/", "giacobbe": "https://giacobbeyasociados.com/",
