@@ -242,8 +242,7 @@ series:
   ucii:                {fuente: datosgobar, id: "31.3_UNG_2004_M_18"}
   escrituras_caba:     {fuente: archivo, lector: escribanos_compraventas}
   escrituras_monto:    {fuente: archivo, lector: escribanos_compraventas, campo: monto}
-  cemento:             {fuente: datosgobar, id: "33.3_ISAC_CEMENAND_0_0_21_29"}
-  cemento_desest:      {fuente: datosgobar, id: "33.4_ISAC_CEMENAND_0_0_21_24"}
+  cemento:             {fuente: datosgobar, id: "453.2_CEMENTONTO_0_0_7_59"}
   subocupacion:        {fuente: datosgobar, id: "46.2_ECTST_0_T_36"}
   monotributistas:     {fuente: datosgobar, id: "151.1_IPENDIEDAD_2012_M_41"}
   monotributistas_desest: {fuente: datosgobar, id: "151.1_IPENDIETAC_2012_M_36"}
@@ -528,8 +527,8 @@ indicadores:
   # --- Planillas y EMAE por sector ---
   - {id: pib, nombre: "PIB real", seccion: Actividad, serie: pib_real, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
   - {id: consumo_privado, nombre: "Consumo privado real", seccion: Actividad, serie: consumo_privado, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
-  - {id: cemento, nombre: "Despachos de cemento", seccion: Actividad, serie: cemento, desestacionalizada: cemento_desest, tipo_valor: indice, unidad: "índice 2004=100",
-     nota: "Insumos para la construcción del ISAC (INDEC): cemento portland. Suele anticipar la actividad de la construcción."}
+  - {id: cemento, nombre: "Producción de cemento", seccion: Actividad, serie: cemento, tipo_valor: indice, unidad: "índice 2016=100",
+     nota: "Índice de producción industrial manufacturero (INDEC), subclase cemento. Suele anticipar la actividad de la construcción. Serie con estacionalidad."}
   - {id: inversion, nombre: "Inversión (formación bruta de capital fijo)", seccion: "Sector externo e inversión", serie: fbcf_real, tipo_valor: nivel, unidad: "millones de pesos de 2004 por trimestre", frecuencia: T}
   - {id: pobreza, nombre: "Pobreza (personas)", seccion: "Pobreza y programas sociales", serie: pobreza_personas, tipo_valor: tasa, unidad: "% de las personas", frecuencia: S, portada: true,
      nota: "31 aglomerados urbanos, por semestre. INDEC no publicó pobreza entre 2014 y el primer semestre de 2016."}

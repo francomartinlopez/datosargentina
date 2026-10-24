@@ -166,11 +166,16 @@ def stock_sobre_flujo_anual(stock: pd.Series, flujo: pd.Series, factor: float = 
     últimos 4 trimestres = flujo de un año). Trimestral: saldo del último mes de cada trimestre."""
     s = stock.dropna() * factor
     if multiplicar is not None:  # p. ej. deuda en dólares a pesos con el tipo de cambio del mes
-        s, m = s.align(multiplicar.dropna(), join="inner")
+        m = multiplicar.dropna()
+        if len(s) > 2 and s.index.to_series().diff().dt.days.median() > 40:  # stock trimestral: último mes del trimestre
+            m = m.groupby(m.index.to_period("Q")).last()
+            m.index = m.index.to_timestamp()
+        s, m = s.align(m, join="inner")
         s = s * m
     q = s.groupby(s.index.to_period("Q")).last()
     meses = s.groupby(s.index.to_period("Q")).apply(lambda x: x.index.max().month)
-    q = q[(meses % 3) == 0]  # solo trimestres completos
+    if len(s) > 2 and s.index.to_series().diff().dt.days.median() < 40:
+        q = q[(meses % 3) == 0]  # serie mensual: solo trimestres completos
     q.index = q.index.to_timestamp()
     anual = flujo.dropna().rolling(4, min_periods=4).mean()
     q, anual = q.align(anual, join="inner")
