@@ -149,6 +149,18 @@ def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = No
     return (a / b * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)
 
 
+def indice_ponderado(series: list[pd.Series], pesos: list[float], base: str) -> pd.Series:
+    """Índice de pesos fijos (Laspeyres): cada componente se lleva a 100 en el mes base y se
+    promedia con los pesos dados. Solo meses con todos los componentes."""
+    b = pd.Timestamp(base)
+    partes = []
+    for s, w in zip(series, pesos):
+        s = s.dropna()
+        partes.append(s / s.loc[b] * 100 * w)
+    df = pd.concat(partes, axis=1).dropna()
+    return (df.sum(axis=1) / sum(pesos)).astype(float)
+
+
 def stock_sobre_flujo_anual(stock: pd.Series, flujo: pd.Series, factor: float = 1) -> pd.Series:
     """Stock mensual (saldo a fin de mes) como % de un flujo trimestral anualizado (promedio de los
     últimos 4 trimestres = flujo de un año). Trimestral: saldo del último mes de cada trimestre."""

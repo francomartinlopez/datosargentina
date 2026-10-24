@@ -42,8 +42,7 @@ series:
   # --- Empleo e ingresos ---
   salario_privado:     {fuente: datosgobar, id: "149.1_SOR_PRIADO_OCTU_0_25"}
   salario_publico:     {fuente: datosgobar, id: "149.1_SOR_PUBICO_OCTU_0_14"}
-  salario_no_registrado: {fuente: datosgobar, id: "149.1_SOR_PRIADO_OCTU_0_28"}
-  salario_total:       {fuente: datosgobar, id: "149.1_TL_INDIIOS_OCTU_0_21"}
+  salario_no_registrado: {fuente: datosgobar, id: "149.1_SOR_PRIADO_OCTU_0_28", desplazar_meses: -5}
   smvm:                {fuente: datosgobar, id: "57.1_SMVMM_0_M_34"}
   jubilacion_minima:   {fuente: datosgobar, id: "58.1_MP_0_M_13"}
   desocupacion:        {fuente: datosgobar, id: "42.3_EPH_PUNTUATAL_0_M_30"}
@@ -376,6 +375,7 @@ calculos:
   reservas_netas_fmi: {operacion: resta, a: reservas_netas, b: fmi_desembolsos_2025}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
+  salario_total:   {operacion: indice_ponderado, series: [salario_privado, salario_publico, salario_no_registrado], pesos: [50.16, 29.91, 19.93], base: "2016-10-01"}
   deuda_hogares_masa: {operacion: stock_sobre_flujo_anual, a: prestamos_personas, b: remuneracion_asalariados}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
@@ -400,7 +400,7 @@ grupos:
   - {id: reservas_componentes, nombre: "Qué se resta de las reservas brutas para llegar a las netas", seccion: "Dólar y finanzas", ranking: nivel, unidad_ranking: "millones de US$ de hoy, último mes", sufijo_ranking: " M",
      nota: "Componentes de la estimación de reservas netas. El swap con EE.UU. activado (2.500 millones entre noviembre de 2025 y enero de 2026) no se muestra aparte."}
   - {id: salario_real_tipo, nombre: "Salario real: total, registrado privado, público y no registrado", seccion: "Empleo e ingresos",
-     nota: "Índice de salarios de INDEC (base octubre 2016) deflactado por el IPC. El total pondera los tres tipos según su peso en el empleo asalariado. El salario no registrado (asalariados informales del sector privado) se publica con unos 5 meses de rezago respecto de los registrados, porque surge de la Encuesta Permanente de Hogares. No incluye a cuentapropistas ni monotributistas."}
+     nota: "Índice de salarios de INDEC (base octubre 2016) deflactado por el IPC. El total usa las ponderaciones oficiales de INDEC (50,16% privado registrado, 29,91% público, 19,93% no registrado). El salario no registrado (asalariados informales del sector privado) surge de la Encuesta Permanente de Hogares y se publica con 5 meses de rezago: acá cada dato se ubica en el mes al que corresponde, por eso el total y el no registrado terminan 5 meses antes. No incluye a cuentapropistas ni monotributistas."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
      nota: "Serie original (sin desestacionalizar) de INDEC, base 2004. Construcción no tiene serie mensual por sector: se sigue con el ISAC."}
 
@@ -417,9 +417,9 @@ indicadores:
   - {id: salario_privado, nombre: "Salario real privado registrado", seccion: "Empleo e ingresos", serie: salario_privado, tipo_valor: nivel, moneda: ARS, unidad: "índice real", portada: true}
   - {id: salario_publico, nombre: "Salario real público", seccion: "Empleo e ingresos", serie: salario_publico, tipo_valor: nivel, moneda: ARS, unidad: "índice real"}
   - {id: salario_no_registrado, nombre: "Salario real privado no registrado (informal)", seccion: "Empleo e ingresos", serie: salario_no_registrado, tipo_valor: nivel, moneda: ARS, unidad: "índice real",
-     nota: "Índice de salarios de INDEC para asalariados del sector privado no registrados, deflactado por el IPC. Se publica con unos 5 meses de rezago porque surge de la Encuesta Permanente de Hogares; los últimos meses pueden revisarse."}
+     nota: "Índice de salarios de INDEC para asalariados del sector privado no registrados, deflactado por el IPC. INDEC lo publica con 5 meses de rezago porque surge de la Encuesta Permanente de Hogares: el dato que publica para un mes refleja los salarios de 5 meses antes. Acá cada dato se ubica en el mes al que corresponde (y se deflacta con el IPC de ese mes), por eso la serie termina 5 meses antes que la de los registrados. Sin esa corrección el salario informal real aparece con saltos ficticios cuando la inflación cambia de golpe, como en diciembre de 2023."}
   - {id: salario_total, nombre: "Salario real total (registrado y no registrado)", seccion: "Empleo e ingresos", serie: salario_total, tipo_valor: nivel, moneda: ARS, unidad: "índice real",
-     nota: "Índice de salarios de INDEC para el total de los asalariados: privados registrados, públicos y privados no registrados, ponderados por su peso en el empleo. Deflactado por el IPC. Como incluye al no registrado, los últimos 5 meses son provisorios y pueden revisarse. No incluye a cuentapropistas ni monotributistas, de los que no hay un índice oficial de ingresos."}
+     nota: "Promedio de los índices de salarios de INDEC con las ponderaciones oficiales del índice total: privado registrado 50,16%, público 29,91% y privado no registrado 19,93%, deflactado por el IPC. Cálculo propio: a diferencia del índice total que publica INDEC, el componente no registrado se ubica en el mes al que corresponden sus salarios (INDEC lo publica con 5 meses de rezago), por eso la serie llega hasta 5 meses antes que la de los registrados. No incluye a cuentapropistas ni monotributistas, de los que no hay un índice oficial de ingresos."}
   - {id: salario_total_g, nombre: "Total", seccion: "Empleo e ingresos", serie: salario_total, tipo_valor: nivel, moneda: ARS, unidad: "índice real", grupo: salario_real_tipo}
   - {id: salario_privado_g, nombre: "Privado registrado", seccion: "Empleo e ingresos", serie: salario_privado, tipo_valor: nivel, moneda: ARS, unidad: "índice real", grupo: salario_real_tipo}
   - {id: salario_publico_g, nombre: "Público", seccion: "Empleo e ingresos", serie: salario_publico, tipo_valor: nivel, moneda: ARS, unidad: "índice real", grupo: salario_real_tipo}

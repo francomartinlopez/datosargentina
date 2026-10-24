@@ -73,6 +73,9 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     alertas = []
     mensuales = {n: transformar.a_mensual(s, config["series"][n].get("agregacion", "promedio"))
                  for n, s in crudas.items()}
+    for n, s in mensuales.items():  # series publicadas con rezago: se asigna cada dato a su mes de referencia
+        if config["series"][n].get("desplazar_meses"):
+            mensuales[n] = s.set_axis(s.index + pd.DateOffset(months=int(config["series"][n]["desplazar_meses"])))
     for nombre, tramos in config.get("empalmes", {}).items():
         faltan = [t["serie"] for t in tramos if t["serie"] not in mensuales]
         if faltan:
@@ -123,6 +126,13 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
             mensuales.update(transformar.reservas_netas(
                 m["reservas"], usd(m["encajes"]), m["depositos_usd"], m["swap_yuan"], m["cny"],
                 usd(m["organismos"]), usd(m["pases"]), m["pase_2016"], m["swap_eeuu"]))
+            continue
+        if c["operacion"] == "indice_ponderado":  # índice de pesos fijos, cada componente con base 100 en c["base"]
+            faltan = [x for x in c["series"] if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales[nombre] = transformar.indice_ponderado([mensuales[x] for x in c["series"]], c["pesos"], c["base"])
             continue
         if c["operacion"] == "stock_sobre_flujo_anual":  # saldo / flujo anual (4 trimestres anualizados), en %
             faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
