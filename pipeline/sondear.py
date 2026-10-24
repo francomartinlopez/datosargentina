@@ -26,7 +26,7 @@ CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosarg
 
 IDS = []
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ['despacho de cemento', 'ISAC insumos cemento', 'tasa de subocupación', 'subocupación demandante', 'tasa de empleo EPH', 'gasto de capital administración nacional', 'intereses de la deuda gasto', 'índice de cantidades exportaciones', 'exportaciones cantidades índice', 'independientes monotributo', 'trabajadores registrados monotributo', 'satisfacción']
+BUSQUEDAS = ['gastos de capital', 'inversión real directa', 'derechos de exportación', 'recaudación IVA', 'relevamiento de expectativas de mercado', 'expectativas de inflación', 'soja precio', 'turistas no residentes llegadas']
 
 
 def sondear_id(i: str) -> dict:

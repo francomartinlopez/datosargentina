@@ -33,6 +33,7 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "deuda_ult": ["https://www.argentina.gob.ar/sites/default/files/deuda_publica_30-06-2026.xlsx"],
     "eph_2026_1": ["https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1_Trim_2026_txt.zip", "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2026_txt.zip"],
     "eph_2026_2": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2026_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2do_Trim_2026_txt.zip'],
     "eph_2023_4": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4_Trim_2023_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4to_Trim_2023_txt.zip'],
@@ -84,6 +85,8 @@ PAGINAS = {
     "bcra_cambiario": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Evolucion_del_mercado_de_cambios.asp",
     "bcra_series": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp",
     "indec_ucii": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-6-22",
+    "bcra_rem": "https://www.bcra.gob.ar/relevamiento-de-expectativas-de-mercado-rem/",
+    "bcra_rem2": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Relevamiento_Expectativas_de_Mercado.asp",
     "indec_eph_bases": "https://www.indec.gob.ar/indec/web/Institucional-Indec-BasesDeDatos",
     "magyp_bovinos": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
     "escribanos": "https://www.colegio-escribanos.org.ar/2025/11/26/cantidad-de-escrituras-de-compraventa-realizadas-en-octubre-2025/",
