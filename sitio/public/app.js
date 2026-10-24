@@ -518,7 +518,7 @@ function fichaImagen(d) {
       el("span", { class: "imagen-pista", "aria-label": `${pct(f.positiva)} positiva, ${pct(f.negativa)} negativa` },
         el("span", { class: "imagen-barra pos", style: `width:${f.positiva}%`, text: pct(f.positiva) }),
         el("span", { class: "imagen-barra neg", style: `width:${f.negativa}%`, text: pct(f.negativa) })),
-      el("span", { class: "imagen-dif " + (f.diferencial >= 0 ? "pos" : "neg"), text: (f.diferencial > 0 ? "+" : "") + fmt(f.diferencial, 0) }));
+      el("span", { class: "imagen-dif " + (Math.round(f.diferencial) >= 0 ? "pos" : "neg"), text: (Math.round(f.diferencial) > 0 ? "+" : "") + fmt(Math.round(f.diferencial), 0) }));
   };
   const varias = d.figuras.filter((f) => f.n >= 2), una = d.figuras.filter((f) => f.n < 2);
   varias.forEach((f) => lista.append(fila(f)));
