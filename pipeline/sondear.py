@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ['149.1_SOR_PRIADO_OCTU_0_25']
+IDS = []
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ['índice de salarios no registrado', 'salarios sector privado no registrado', 'índice de salarios total', 'salarios registrados no registrados']
+BUSQUEDAS = ['despacho de cemento', 'ISAC insumos cemento', 'tasa de subocupación', 'subocupación demandante', 'tasa de empleo EPH', 'gasto de capital administración nacional', 'intereses de la deuda gasto', 'índice de cantidades exportaciones', 'exportaciones cantidades índice', 'independientes monotributo', 'trabajadores registrados monotributo', 'satisfacción']
 
 
 def sondear_id(i: str) -> dict:
