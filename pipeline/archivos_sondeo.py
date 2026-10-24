@@ -33,6 +33,8 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "zuban_ddd": ["https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf"],
+    "zuban_express": ["https://zubancordoba.com/wp-content/uploads/2026/09/DDD-EXPRESS-SEPTIEMBRE.pdf"],
     "espop_2610": ["https://images.udesa.edu.ar/sites/default/files/2026-10/56. UdeSA ESPOP Octubre 2026_0.pdf"],
     "atlas_2609": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf"],
     "atlas_2608": ["https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_08_2026_aa84843133a7af6c.pdf"],
