@@ -459,7 +459,7 @@ def eph_promedios(contenido: bytes) -> dict:
         raise ValueError(f"sin archivo de personas en {z.namelist()[:6]}")
     nombre = nombres[0]
     df = pd.read_csv(z.open(nombre), sep=";", decimal=",", low_memory=False,
-                     usecols=lambda c: c in {"ESTADO", "CAT_OCUP", "P21", "PONDIIO", "PP07H"})
+                     usecols=lambda c: c in {"ESTADO", "CAT_OCUP", "CAT_INAC", "P21", "PONDIIO", "PP07H", "PONDERA"})
     for c in df.columns:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     o = df[(df["ESTADO"] == 1) & (df["P21"] > 0) & (df["PONDIIO"] > 0)]
@@ -469,6 +469,28 @@ def eph_promedios(contenido: bytes) -> dict:
     for k, g in grupos.items():
         out[k] = float(np.average(g["P21"], weights=g["PONDIIO"])) if len(g) else None
         out["casos_" + k] = int(len(g))
+    # cantidad de personas por condición de actividad (expandidas con PONDERA)
+    w = df["PONDERA"]
+    est, cat, ina, aporta = df["ESTADO"], df["CAT_OCUP"], df["CAT_INAC"], df["PP07H"]
+    ocup = est == 1
+    conteos = {
+        "pob_total": w.sum(),
+        "pob_ocupados_asal_registrados": w[ocup & (cat == 3) & (aporta == 1)].sum(),
+        "pob_ocupados_asal_no_registrados": w[ocup & (cat == 3) & (aporta != 1)].sum(),
+        "pob_ocupados_cuenta_propia": w[ocup & (cat == 2)].sum(),
+        "pob_ocupados_patrones": w[ocup & (cat == 1)].sum(),
+        "pob_ocupados_familiares": w[ocup & ~cat.isin([1, 2, 3])].sum(),
+        "pob_desocupados": w[est == 2].sum(),
+        "pob_menores_10": w[est == 4].sum(),
+        "pob_inactivos_jubilados": w[(est == 3) & (ina == 1)].sum(),
+        "pob_inactivos_rentistas": w[(est == 3) & (ina == 2)].sum(),
+        "pob_inactivos_estudiantes": w[(est == 3) & (ina == 3)].sum(),
+        "pob_inactivos_amas_casa": w[(est == 3) & (ina == 4)].sum(),
+        "pob_inactivos_discapacidad": w[(est == 3) & (ina == 6)].sum(),
+        "pob_inactivos_otros": w[(est == 3) & ~ina.isin([1, 2, 3, 4, 6])].sum(),
+        "pob_sin_dato": w[~est.isin([1, 2, 3, 4])].sum(),
+    }
+    out.update({k: int(v) for k, v in conteos.items()})
     return out
 
 
@@ -477,6 +499,8 @@ def eph_tabla() -> pd.DataFrame:
     """Promedios por trimestre, guardados en data/derivados para no volver a bajar los microdatos.
     En cada corrida se calculan solo los trimestres que faltan."""
     previo = pd.read_csv(EPH_CACHE, dtype={"trimestre": str}) if EPH_CACHE.exists() else pd.DataFrame(columns=["trimestre"])
+    if "pob_total" not in previo.columns:  # caché de una versión anterior sin conteos de población: se recalcula
+        previo = pd.DataFrame(columns=["trimestre"])
     hechos = set(previo["trimestre"])
     hoy = date.today()
     nuevos, errores = [], []

@@ -513,6 +513,69 @@ function fichaRigi(d) {
     el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
 }
 
+/* ---------- Población según condición de actividad (EPH) ---------- */
+
+function fichaPoblacion(d) {
+  const n = d.trimestres.length - 1;
+  const etiquetaT = (t) => `${t.slice(-1)}° trim. ${t.slice(0, 4)}`;
+  const opciones = [];
+  const anioAntes = d.trimestres.indexOf(`${+d.trimestres[n].slice(0, 4) - 1}${d.trimestres[n].slice(4)}`);
+  if (anioAntes >= 0) opciones.push({ texto: `Un año antes (${etiquetaT(d.trimestres[anioAntes])})`, i: anioAntes });
+  const previoGob = d.trimestres.indexOf("2023-T4");
+  if (previoGob >= 0) opciones.push({ texto: "Antes del gobierno actual (4° trim. 2023)", i: previoGob });
+  const previoGob2 = d.trimestres.indexOf("2019-T4");
+  if (previoGob2 >= 0) opciones.push({ texto: "Antes del gobierno anterior (4° trim. 2019)", i: previoGob2 });
+  let comp = opciones[0];
+  const millones = (v) => fmt(v / 1e6, 2) + " M";
+  const miles = (v) => (v > 0 ? "+" : v < 0 ? "−" : "") + fmt(Math.abs(v) / 1e3, 0) + " mil";
+  const cuerpo = el("div");
+  const selector = el("select", { class: "selector", "aria-label": "Comparar contra", onchange: (e) => { comp = opciones[e.target.selectedIndex]; pintar(); } },
+    ...opciones.map((o) => el("option", { text: o.texto })));
+  const pintar = () => {
+    cuerpo.innerHTML = "";
+    const tot = d.total[n];
+    d.grupos.forEach((g, gi) => {
+      const sumaG = g.categorias.reduce((a, c) => a + c.valores[n], 0);
+      const barra = el("div", { class: "pob-barra", role: "img", "aria-label": g.nombre });
+      g.categorias.forEach((c, ci) => { const w = (c.valores[n] / sumaG) * 100; if (w > 0) barra.append(el("span", { class: `pob-seg pob-c${gi}-${ci}`, style: `width:${w}%`, title: `${c.nombre}: ${fmt(w, 1)}%` })); });
+      const tabla = el("table", { class: "tabla pob-tabla" },
+        el("thead", {}, el("tr", {}, ...["", "Personas", "% del grupo", "% de la población", "Cambio en personas"].map((h) => el("th", { scope: "col", text: h })))));
+      const tb = el("tbody");
+      g.categorias.forEach((c, ci) => {
+        const v = c.valores[n], va = comp ? c.valores[comp.i] : null;
+        tb.append(el("tr", {},
+          el("td", {}, el("span", { class: `pob-punto pob-c${gi}-${ci}` }), c.nombre),
+          el("td", { class: "num", text: millones(v) }), el("td", { class: "num", text: fmt((v / sumaG) * 100, 1) + "%" }),
+          el("td", { class: "num", text: fmt((v / tot) * 100, 1) + "%" }), el("td", { class: "num", text: va != null ? miles(v - va) : "s/d" })));
+      });
+      const sa = comp ? g.categorias.reduce((a, c) => a + c.valores[comp.i], 0) : null;
+      tb.append(el("tr", { class: "pob-total" }, el("td", { text: "Total" }), el("td", { class: "num", text: millones(sumaG) }), el("td", { class: "num", text: "100%" }),
+        el("td", { class: "num", text: fmt((sumaG / tot) * 100, 1) + "%" }), el("td", { class: "num", text: sa != null ? miles(sumaG - sa) : "s/d" })));
+      tabla.append(tb);
+      cuerpo.append(el("h4", { class: "subtitulo-ficha", text: `${g.nombre}: ${millones(sumaG)} de personas` }), barra, el("div", { class: "tabla-envoltura" }, tabla));
+    });
+    // tasas clave
+    const pea = d.grupos[0].categorias, val = (k) => pea.find((c) => c.clave === k).valores[n];
+    const activos = pea.reduce((a, c) => a + c.valores[n], 0), ocup = activos - val("pob_desocupados");
+    const informales = val("pob_ocupados_asal_no_registrados");
+    tasas.innerHTML = "";
+    [["Tasa de actividad", (activos / tot) * 100], ["Desocupación", (val("pob_desocupados") / activos) * 100],
+     ["Asalariados sin aportes", (informales / (informales + val("pob_ocupados_asal_registrados"))) * 100],
+     ["Trabajan por cuenta propia", (val("pob_ocupados_cuenta_propia") / ocup) * 100]].forEach(([k, v]) =>
+      tasas.append(el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: k }), el("p", { class: "estrato-valor", text: fmt(v, 1) + "%" }))));
+  };
+  const tasas = el("div", { class: "estratos" });
+  pintar();
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `Millones de personas en los 31 aglomerados urbanos de la EPH · ${etiquetaT(d.trimestres[n])}` }))),
+    tasas,
+    opciones.length ? el("label", { class: "etiqueta-selector" }, "Comparar contra ", selector) : null,
+    cuerpo,
+    el("p", { class: "nota", text: d.nota + " Tasa de actividad: activos sobre población total; desocupación: desocupados sobre activos; asalariados sin aportes: sobre el total de asalariados; cuenta propia: sobre el total de ocupados." }),
+    el("div", { class: "ficha-pie" }, el("span", { text: "Fuente: INDEC, Encuesta Permanente de Hogares (microdatos). Cálculo propio." })));
+}
+
 /* ---------- Imagen de dirigentes (encuestas) ---------- */
 
 function fichaImagen(d) {
@@ -967,6 +1030,7 @@ async function iniciar() {
   const piramide = await leer("distribucion_ingreso");
   const rigi = await leer("rigi");
   const imagen = await leer("encuestas_imagen");
+  const poblacion = await leer("poblacion_actividad");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -985,6 +1049,7 @@ async function iniciar() {
     if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
     if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
     if (imagen && imagen.seccion === s) grilla.append(fichaImagen(imagen));
+    if (poblacion && poblacion.seccion === s) grilla.append(fichaPoblacion(poblacion));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();
