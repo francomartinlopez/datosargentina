@@ -824,7 +824,7 @@ async function gobierno() {
   if (promesas) {
     alguno = true;
     cont.append(bloqueLista("Promesas y hechos",
-      "Promesas de campaña y de asunción con su veredicto al cierre del mandato (o al último balance). Macri, Fernández y Milei: relevamiento de Chequeado. Kirchner y CFK: relevamiento propio con el mismo criterio, a partir del discurso de asunción y anuncios formales.",
+      "Promesas de campaña y de asunción con su veredicto al cierre del mandato (o al último balance). Macri, Fernández y Milei: relevamiento de Chequeado, salvo dos promesas de Milei (dolarizar y cerrar el Banco Central) que el sitio califica como incumplidas a la fecha porque el resultado prometido no existe; cada una lo indica en su metodología. Kirchner y CFK: relevamiento propio con el mismo criterio, a partir del discurso de asunción y anuncios formales.",
       promesas.filter((r) => r.veredicto), (r) => itemDetalle({
         estado: r.veredicto, titulo: r.promesa, meta: cortoGestion(r.gestion),
         resumen: r.dato_clave, campos: [["Veredicto al", fechaCorta(r.fecha_veredicto)], ["Metodología", r.metodologia]], fuentesTexto: r.fuente }),
