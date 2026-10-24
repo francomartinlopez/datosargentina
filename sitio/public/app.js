@@ -1046,6 +1046,23 @@ async function gobierno() {
   }
 }
 
+/* ---------- Diagnóstico ---------- */
+
+async function diagnostico() {
+  let d;
+  try { d = await (await fetch(`${DATOS}politica/diagnostico.json`, { cache: "no-cache" })).json(); } catch { return; }
+  const cont = document.getElementById("diagnostico-cuerpo");
+  cont.append(el("p", { class: "intro", text: `${d.intro} Elaborado el ${fechaCorta(d.elaborado)}.` }));
+  d.bloques.forEach((b) => {
+    const lista = el("ul", { class: "diag-lista" }, ...b.items.map((t) => el("li", { text: t })));
+    cont.append(el("div", { class: "bloque" }, el("h3", { text: b.titulo }), lista));
+  });
+  const fuentes = el("ul", { class: "diag-fuentes" }, ...d.fuentes.map(([t, u]) => el("li", {}, el("a", { href: u, text: t, target: "_blank", rel: "noopener" }))));
+  cont.append(el("div", { class: "bloque" }, el("h3", { text: "Fuentes" }), fuentes));
+  document.getElementById("diagnostico").hidden = false;
+  document.getElementById("nav-secciones").append(el("a", { href: "#diagnostico", text: "Diagnóstico" }));
+}
+
 /* ---------- Inicio ---------- */
 
 async function iniciar() {
@@ -1088,6 +1105,7 @@ async function iniciar() {
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();
+  await diagnostico();
 }
 
 iniciar().catch((e) => {

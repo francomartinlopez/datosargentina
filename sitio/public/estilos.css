@@ -325,3 +325,8 @@ div.rank-fila.nivel:hover { background: none; }
 .pob-selectores .selector { max-width: 100%; }
 .pob-selectores .etiqueta-selector { display: flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; }
 .pob-selectores .selector { min-width: 0; flex: 1 1 auto; }
+
+/* Diagnóstico */
+.diag-lista { margin: 0; padding-left: 20px; max-width: 75ch; display: grid; gap: 8px; line-height: 1.55; }
+.diag-fuentes { margin: 0; padding-left: 20px; font-size: 14px; display: grid; gap: 4px; }
+.diag-fuentes a { color: var(--acento); }

@@ -1,0 +1,77 @@
+{
+  "elaborado": "2026-10-24",
+  "intro": "Resumen breve de lo que muestran los datos de este sitio y lo que publican organizaciones independientes sobre los últimos 23 años y la gestión actual. Cada afirmación indica su fuente. Las cifras corresponden a la fecha de elaboración.",
+  "bloques": [
+    {
+      "titulo": "Los últimos 23 años",
+      "items": [
+        "2003–2015: la desocupación bajó de 14,4% a 5,9% y la informalidad de 49,5% a 33,1%. Los homicidios bajaron de 7,8 a 6,6 cada 100.000 habitantes y la jubilación mínima real casi se duplicó. En 2015 Transparencia Internacional dio la nota más baja de la serie (32 puntos).",
+        "2015–2023: el salario privado registrado real cayó 31% (−20% hasta 2019 y −14% después) y la jubilación mínima real cayó a la mitad. La deuda pública pasó de 43% a 122% del PIB y las empresas activas de 601.000 a 569.000. En 2023 la pobreza llegó a 41,7% y la inflación mensual a 25,5% (diciembre).",
+        "Según la UCA, en todo el período ningún gobierno bajó de un piso estructural de alrededor de 25% de pobreza y 5% de indigencia."
+      ]
+    },
+    {
+      "titulo": "Gestión actual: macroeconomía",
+      "items": [
+        "La inflación mensual bajó de 25,5% (diciembre de 2023) a 1,9% (septiembre de 2026); la interanual es 33,4% (INDEC).",
+        "Superávit primario de 1,2% del PIB, riesgo país de 1.890 a 630 puntos y deuda pública de 122% a 69% del PIB. Parte de esa baja refleja cambios en el tipo de cambio real.",
+        "La Bolsa de Comercio de Rosario proyecta una cosecha récord de unos 160 millones de toneladas y exportaciones agrícolas récord.",
+        "Advertencias: las reservas netas siguen negativas; Empiria señala que el superávit no computa los intereses capitalizados de la deuda en pesos; la Fundación Mediterránea advierte que el presupuesto 2026 sostiene el superávit sin reformas y con menos inversión pública."
+      ]
+    },
+    {
+      "titulo": "Gestión actual: actividad",
+      "items": [
+        "El EMAE está 9% por encima de diciembre de 2023, pero cayó 1,4% interanual en julio de 2026.",
+        "FIEL: la industria acumula −0,6% en 2026, con caídas en bienes durables (−8,5%) y de capital (−7%) y subas en refinación y siderurgia.",
+        "UIA: la industria está unos 10% por debajo de 2022–23 y la construcción entre 24% y 30% por debajo de 2022.",
+        "Crecen el agro, la energía y la minería; retroceden la industria manufacturera, la construcción y el comercio."
+      ]
+    },
+    {
+      "titulo": "Gestión actual: empleo e ingresos",
+      "items": [
+        "La desocupación subió de 5,7% a 7,9% y la informalidad de 35,7% a 37,9%. Hay 283.000 asalariados privados registrados menos (SIPA); IDESA calcula unos 450.000 informales más.",
+        "El salario privado registrado real está 9% por encima de diciembre de 2023, cae 3,1% interanual y sigue 25% por debajo de 2015. El salario informal sube 20% interanual desde un nivel muy bajo.",
+        "La jubilación mínima real está 17% por encima de diciembre de 2023 y 42% por debajo de 2015.",
+        "La morosidad de las familias pasó de 2,8% a 12,8%, la más alta desde 2010 (BCRA)."
+      ]
+    },
+    {
+      "titulo": "Gestión actual: situación social",
+      "items": [
+        "La pobreza bajó de 41,7% a 32,3% según INDEC, aunque subió 0,7 puntos en el último año.",
+        "La UCA mide 36,3% y sostiene que la baja está sobrestimada por una mejor captación de ingresos, sin cambio estructural.",
+        "La UCA registra más privaciones no monetarias: inseguridad alimentaria de 18,7% (12–13% en 2010–2017) y más carencias de empleo con seguridad social y de acceso a la salud."
+      ]
+    },
+    {
+      "titulo": "Gestión actual: instituciones y opinión pública",
+      "items": [
+        "FOPEA contó 278 ataques a la prensa en 2025, la cifra más alta desde 2008, y atribuye la mayoría de los discursos estigmatizantes al Presidente.",
+        "Directorio Legislativo registró 13 leyes en 2025, la menor productividad en una década, y 7 vetos.",
+        "Transparencia Internacional y Poder Ciudadano: 36 puntos en 2025 (37 en 2023).",
+        "El índice de confianza en el gobierno de la UTDT bajó de 2,86 a 1,94 sobre 5. La aprobación promedio de las encuestas es 36% y la satisfacción con el rumbo, 30%."
+      ]
+    },
+    {
+      "titulo": "Síntesis",
+      "items": [
+        "En dos décadas ningún gobierno logró a la vez estabilidad, crecimiento sostenido y una baja permanente de la pobreza. La gestión actual consiguió desinflación y orden fiscal; los análisis citados coinciden en que todavía no se trasladó al empleo formal, a la industria ni a las privaciones no monetarias. Las reservas, la calidad del superávit y el desgaste institucional aparecen como los riesgos principales."
+      ]
+    }
+  ],
+  "fuentes": [
+    ["UCA – Observatorio de la Deuda Social Argentina", "https://uca.edu.ar/es/observatorio-de-la-deuda-social-argentina"],
+    ["FIEL – Índice de producción industrial, julio 2026 (Mercado)", "https://mercado.com.ar/economia-y-politica/indice-ipi-de-fiel-la-industria-cayo-11-interanual-en-julio-de-2026"],
+    ["Empiria y Equilibra (El Economista)", "https://eleconomista.com.ar/economia/la-argentina-milei-estabilizacion-desequilibrios-profundizan-n92489"],
+    ["INDEC – inflación de septiembre 2026 (Diario Panorama)", "https://diariopanorama.com/noticia/569591/indec-confirmo-inflacion-septiembre-fue-19porciento-acumula-334porciento-doce-meses"],
+    ["UIA – Centro de Estudios", "https://www.uia.org.ar/"],
+    ["IDESA", "https://idesa.org/"],
+    ["Fundación Mediterránea – IERAL", "https://www.ieral.org/"],
+    ["Bolsa de Comercio de Rosario", "https://www.bcr.com.ar/"],
+    ["FOPEA – Monitoreo de libertad de expresión", "https://www.fopea.org/"],
+    ["Directorio Legislativo", "https://directoriolegislativo.org/"],
+    ["Poder Ciudadano – Índice de Percepción de la Corrupción", "https://poderciudadano.org/"]
+  ]
+}
