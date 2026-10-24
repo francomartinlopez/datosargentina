@@ -113,13 +113,20 @@ def calcular_vistas(s: pd.Series, tipo_valor: str, params: dict, gestiones: list
         inicio = pd.Timestamp(inicio.year, 1, 1)  # serie anual: se incluye el año de inicio completo
     ia = interanual(s, tipo_valor)
     historica = mensual(s) if vista_historica == "mensual" else s
+    base = pd.Timestamp(params["base_gestion_actual"])
+    gestion = historica[historica.index > base]
+    previo = historica[historica.index <= base]
+    if len(s) > 2 and s.index.to_series().diff().dt.days.median() > 40 and not previo.empty:
+        # series trimestrales y anuales: se parte del último dato anterior al gobierno (p. ej. 2023),
+        # para que el gráfico muestre el cambio desde antes de asumir
+        gestion = pd.concat([previo.iloc[-1:], gestion])
     return {
         "intermensual": _finito(intermensual(s, tipo_valor)),
         "interanual_ultimo": _finito(float(ia.iloc[-1])) if not ia.empty else None,
         "vista_historica": vista_historica,
         "vistas": {
             "interanual": como_lista(ia[ia.index >= inicio]),
-            "gestion_actual": como_lista(historica[historica.index > pd.Timestamp(params["base_gestion_actual"])]),
+            "gestion_actual": como_lista(gestion),
             "desde_2003": como_lista(historica[historica.index >= inicio]),
             "comparativa": comparativa(ia, gestiones),
         },

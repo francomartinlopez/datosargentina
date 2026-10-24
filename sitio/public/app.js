@@ -102,7 +102,11 @@ function cifraPrincipal(f) {
     return { grande: signo(f.interanual_ultimo) + "%", etiqueta: "interanual", chica: `${variacionMensual} ${contra}` };
   }
   const vu = valorConUnidad(f.ultimo.valor, f.unidad);
-  return { grande: vu.num, etiqueta: vu.resto, chica: `${variacionMensual} ${contra}` };
+  // series anuales: además, el cambio desde el último año antes del gobierno actual (2023)
+  const g = (f.vistas && f.vistas.gestion_actual) || [];
+  const extra = f.frecuencia === "A" && !esDiferencia(f) && g.length >= 3 && g[0][1]
+    ? ` · ${signo((g[g.length - 1][1] / g[0][1] - 1) * 100)}% vs. ${g[0][0].slice(0, 4)}` : "";
+  return { grande: vu.num, etiqueta: vu.resto, chica: `${variacionMensual} ${contra}${extra}` };
 }
 function signoMonto(v, unidad) {
   const mg = magnitud(unidad, Math.abs(v));
@@ -125,7 +129,10 @@ function describirVista(f, vista) {
     case "interanual":
       return dif ? "Diferencia contra el mismo período del año anterior." : "Variación % contra el mismo período del año anterior.";
     case "gestion_actual":
-      return f.vista_historica === "mensual" ? "Variación % mensual desde diciembre de 2023." : "Serie en su unidad desde diciembre de 2023.";
+      if (f.vista_historica === "mensual") return "Variación % mensual desde diciembre de 2023.";
+      if (f.frecuencia === "A") return "Serie en su unidad desde 2023, el último año antes de asumir el gobierno actual.";
+      if (f.frecuencia === "T") return "Serie en su unidad desde el cuarto trimestre de 2023, el último antes de asumir el gobierno actual.";
+      return "Serie en su unidad desde diciembre de 2023.";
     case "desde_2003":
       return f.vista_historica === "mensual" ? "Variación % mensual desde 2003." : "Serie en su unidad desde 2003 o desde el primer dato disponible.";
     case "comparativa":
