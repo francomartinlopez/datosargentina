@@ -33,6 +33,9 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "eph_2026_2": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2026_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2do_Trim_2026_txt.zip'],
+    "eph_2023_4": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4_Trim_2023_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4to_Trim_2023_txt.zip'],
+    "eph_2017_1": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1_Trim_2017_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2017_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2017.zip'],
     "zuban_ddd": ["https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf"],
     "zuban_express": ["https://zubancordoba.com/wp-content/uploads/2026/09/DDD-EXPRESS-SEPTIEMBRE.pdf"],
     "espop_2610": ["https://images.udesa.edu.ar/sites/default/files/2026-10/56. UdeSA ESPOP Octubre 2026_0.pdf"],
@@ -80,6 +83,7 @@ PAGINAS = {
     "bcra_cambiario": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Evolucion_del_mercado_de_cambios.asp",
     "bcra_series": "https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp",
     "indec_ucii": "https://www.indec.gob.ar/indec/web/Nivel4-Tema-3-6-22",
+    "indec_eph_bases": "https://www.indec.gob.ar/indec/web/Institucional-Indec-BasesDeDatos",
     "magyp_bovinos": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/",
     "escribanos": "https://www.colegio-escribanos.org.ar/2025/11/26/cantidad-de-escrituras-de-compraventa-realizadas-en-octubre-2025/",
     "escribanos_cat": "https://www.colegio-escribanos.org.ar/category/estadisticas-de-escrituras/",
