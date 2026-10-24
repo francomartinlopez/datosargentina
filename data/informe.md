@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 199
+Indicadores publicados: 200
 
 ## Alertas
 
@@ -165,6 +165,7 @@ Indicadores publicados: 199
 - prov_resultado_primario: sin dato nuevo (último 2025-01)
 - prov_ingresos: sin dato nuevo (último 2025-01)
 - prov_origen_nacional: sin dato nuevo (último 2025-01)
+- prov_tributos_propios: sin dato nuevo (último 2025-01)
 - informalidad: sin dato nuevo (último 2026-04)
 - empleo_publico: sin dato nuevo (último 2026-01)
 - remuneracion_sipa: sin dato nuevo (último 2026-06)
@@ -243,7 +244,7 @@ Indicadores publicados: 199
 - bcra_organismos: sin dato nuevo (último 2025-10)
 - bcra_pases: sin dato nuevo (último 2025-10)
 - bcra_tc_balance: sin dato nuevo (último 2025-10)
-- bcra_pase_2016: sin dato nuevo (último 2026-10)
+- bcra_pase_2016: error al descargar (No se pudo descargar https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/76: 500 Server Error: Internal Server Error for url: https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/76?desde=1996-01-01&hasta=2004-01-01&limit=3000); se conserva el dato anterior
 - cny_por_usd: sin dato nuevo (último 2026-10)
 - swap_china_yuan: sin dato nuevo (último 2026-10)
 - swap_eeuu_activado: sin dato nuevo (último 2026-10)
