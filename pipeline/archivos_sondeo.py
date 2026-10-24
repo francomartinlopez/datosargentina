@@ -75,6 +75,10 @@ PAGINAS = {
     "ocla_consumo": "https://ocla.org.ar/noticias/35452417-poblacion-y-consumo-domestico",
     "magyp_aves_carne": "https://www.magyp.gob.ar/sitio/areas/aves/estadistica/carne/index.php",
     "magyp_porcinos": "https://www.magyp.gob.ar/sitio/areas/porcinos/estadistica/",
+    "oede_nacional": "https://www.argentina.gob.ar/trabajo/estadisticas/oede-estadisticas-nacionales",
+    "oede_dinamica": "https://www.argentina.gob.ar/trabajo/estadisticas/empleo-y-dinamica-empresarial/dinamica-del-empleo-y-rotacion-de-empresas",
+    "srt_cobertura": "https://www.srt.gob.ar/estadisticas/cobertura.php",
+    "srt_estadisticas": "https://www.srt.gob.ar/index.php/estadisticas/",
     "seguridad_snic": "https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos",
 }
 
