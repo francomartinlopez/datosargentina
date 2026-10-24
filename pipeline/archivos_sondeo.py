@@ -33,6 +33,7 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "eph_2026_1": ["https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1_Trim_2026_txt.zip", "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2026_txt.zip"],
     "eph_2026_2": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2026_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2do_Trim_2026_txt.zip'],
     "eph_2023_4": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4_Trim_2023_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_4to_Trim_2023_txt.zip'],
     "eph_2017_1": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1_Trim_2017_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2017_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2017.zip'],
