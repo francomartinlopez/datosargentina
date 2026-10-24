@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 224
+Indicadores publicados: 237
 
 ## Alertas
 
