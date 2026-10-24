@@ -429,6 +429,29 @@ function fichaGrupoNivel(g) {
 
 /* ---------- RIGI: proyectos aprobados ---------- */
 
+function ejecucionRigi(d, mm) {
+  const e = d.ejecucion_estimada, dv = d.divisas_bcra, plan = d.plan_anual || [];
+  if (!e && !dv) return null;
+  const caja = el("div", { class: "rigi-ejecucion" }, el("h4", { class: "subtitulo-ficha", text: "¿Cuánto se invirtió hasta ahora? (estimación)" }));
+  const cifras = el("div", { class: "estratos" });
+  if (e) cifras.append(el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Según el cronograma comprometido" }),
+    el("p", { class: "estrato-valor", text: mm(e.monto) }),
+    el("p", { class: "estrato-detalle", text: `Inversión que los proyectos aprobados planearon hacer hasta ${fechaCorta(e.hasta)}: años 2024 y 2025 completos y la parte proporcional de ${e.hasta.slice(0, 4)}.` })));
+  if (dv) cifras.append(el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Dólares ingresados por el mercado de cambios" }),
+    el("p", { class: "estrato-valor", text: mm(dv.neto) }),
+    el("p", { class: "estrato-detalle", text: `Ingreso neto acumulado de los proyectos aprobados hasta ${fechaCorta(dv.fecha)} según el BCRA (${mm(dv.bruto)} de ingresos y ${mm(dv.egresos)} de egresos). Mide divisas que entraron, no toda la inversión: parte se financia con fondos locales o equipos importados.` })));
+  caja.append(cifras);
+  if (plan.length) {
+    const visibles = plan.filter((f) => f.anio <= new Date().getFullYear() + 6);
+    const max = Math.max(...visibles.map((f) => f.total), 1);
+    const lista = el("div", { class: "ranking", role: "list" });
+    visibles.forEach((f) => lista.append(filaNivel(String(f.anio) + (f.anio < new Date().getFullYear() ? "" : f.anio === new Date().getFullYear() ? " (en curso)" : " (previsto)"), f.total, max, mm(f.total))));
+    caja.append(el("p", { class: "unidad", text: `Cronograma anual de inversión de los proyectos aprobados (total previsto ${mm(e ? e.total_plan : 0)} hasta 2056)` }), lista);
+  }
+  caja.append(el("p", { class: "nota", text: "No hay un dato oficial de inversión ya ejecutada. La primera cifra es lo que los proyectos se comprometieron a invertir hasta hoy según el cronograma publicado por el Ministerio de Economía; la ejecución real puede ser menor o mayor. La segunda es el único dato observado disponible." }));
+  return caja;
+}
+
 function fichaRigi(d) {
   const mm = (v) => "US$ " + fmt(v, 0) + " M";
   const maxS = Math.max(...d.sectores.map((s) => s.inversion), 1e-9);
@@ -449,6 +472,7 @@ function fichaRigi(d) {
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Proyectos aprobados" }), el("p", { class: "estrato-valor", text: String(d.proyectos.length) })),
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Inversión comprometida" }), el("p", { class: "estrato-valor", text: mm(d.total_inversion) })),
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Empleos estimados" }), el("p", { class: "estrato-valor", text: fmt(d.total_empleos, 0) }))),
+    ejecucionRigi(d, mm),
     el("h4", { class: "subtitulo-ficha", text: "Por sector" }), sectores,
     el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }),
     el("div", { class: "tabla-envoltura" }, t),

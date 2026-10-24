@@ -95,6 +95,15 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 continue
             mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
             continue
+        if c["operacion"] == "indice_equiponderado":
+            presentes = [x for x in c["series"] if x in mensuales]
+            if len(presentes) < 3:
+                alertas.append(f"{nombre}: muy pocas series disponibles, no se calcula")
+                continue
+            if len(presentes) < len(c["series"]):
+                alertas.append(f"{nombre}: faltan {', '.join(x for x in c['series'] if x not in mensuales)}")
+            mensuales[nombre] = transformar.indice_equiponderado([mensuales[x] for x in presentes])
+            continue
         if c["operacion"] == "presion_anual":
             faltan = [c[k] for k in ("nacional", "provincial", "pib") if c[k] not in mensuales]
             if faltan:

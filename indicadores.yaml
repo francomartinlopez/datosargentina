@@ -236,6 +236,17 @@ series:
   merval:              {fuente: yahoo, id: "^MERV"}
   adr_ggal:            {fuente: yahoo, id: "GGAL"}
   adr_ypf:             {fuente: yahoo, id: "YPF"}
+  adr_pam:           {fuente: yahoo, id: "PAM"}
+  adr_bma:           {fuente: yahoo, id: "BMA"}
+  adr_bbar:          {fuente: yahoo, id: "BBAR"}
+  adr_supv:          {fuente: yahoo, id: "SUPV"}
+  adr_cepu:          {fuente: yahoo, id: "CEPU"}
+  adr_tgs:           {fuente: yahoo, id: "TGS"}
+  adr_teo:           {fuente: yahoo, id: "TEO"}
+  adr_edn:           {fuente: yahoo, id: "EDN"}
+  adr_cresy:         {fuente: yahoo, id: "CRESY"}
+  adr_irs:           {fuente: yahoo, id: "IRS"}
+  adr_loma:          {fuente: yahoo, id: "LOMA"}
   # IMIG trimestral (la apertura mensual tiene meses vacíos en la API)
   imig_jubilaciones:   {fuente: datosgobar, id: "452.1_JUBILACIONVAS_0_A_36_30"}
   imig_pensiones_nc:   {fuente: datosgobar, id: "452.2_PENSIONES_VAS_0_T_26_93"}
@@ -343,6 +354,7 @@ calculos:
   pib_intereses: {operacion: porcentaje_pib, a: imig_intereses, b: pib_nominal}
   tasa_real_plazo_fijo: {operacion: tasa_real, a: tasa_plazo_fijo, b: ipc}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
+  indice_adr:      {operacion: indice_equiponderado, series: [adr_ggal, adr_ypf, adr_pam, adr_bma, adr_bbar, adr_supv, adr_cepu, adr_tgs, adr_teo, adr_edn, adr_cresy, adr_irs, adr_loma]}
   reservas_netas:  {operacion: reservas_netas, reservas: reservas, encajes: bcra_encajes_usd, depositos_usd: depositos_privados_usd, swap_yuan: swap_china_yuan,
                     cny: cny_por_usd, organismos: bcra_organismos, pases: bcra_pases, pase_2016: bcra_pase_2016, swap_eeuu: swap_eeuu_activado, tc_balance: bcra_tc_balance}
   # Criterio del FMI: además resta los desembolsos acumulados del programa vigente (firmado en abril de 2025)
@@ -628,3 +640,5 @@ indicadores:
      nota: "Impuestos propios de las 24 jurisdicciones (Ingresos Brutos, Sellos, Inmobiliario, Automotor y otros) sobre el PIB nominal. Secretaría de Hacienda, Coordinación Fiscal Provincial."}
   - {id: presion_efectiva_formal, nombre: "Presión tributaria efectiva sobre la economía formal (estimación)", seccion: "Estado y fiscal", serie: presion_efectiva_formal, tipo_valor: tasa, frecuencia: A, vista_inicial: desde_2003, unidad: "% del PIB formal",
      nota: "Estimación propia de cuánto pesan los impuestos sobre quienes los pagan: la presión consolidada dividida por la proporción de asalariados con aportes jubilatorios (EPH, INDEC), usada como aproximación del peso de la economía formal. No hay medición oficial; otros estudios usan otros supuestos y dan cifras distintas."}
+  - {id: indice_adr, nombre: "Índice de acciones argentinas en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: indice_adr, tipo_valor: nivel, moneda: USD, vista_inicial: desde_2003, unidad: "índice dic-2003 = 100, en dólares de hoy", portada: true,
+     nota: "Promedio simple de las variaciones mensuales de 13 empresas argentinas que cotizan en Nueva York: Galicia, YPF, Pampa, Macro, BBVA Argentina, Supervielle, Central Puerto, TGS, Telecom, Edenor, Cresud, IRSA y Loma Negra (cada una entra desde que cotiza). Precios de cierre mensual ajustados por dividendos (Yahoo Finance), expresados en dólares de hoy. Cálculo propio; no es un índice oficial."}

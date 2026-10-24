@@ -205,3 +205,16 @@ def presion_anual(nacional: pd.Series, provincial: pd.Series, pib: pd.Series, in
         salida["presion_efectiva_formal"] = pd.Series([consolidada[pd.Timestamp(a, 1, 1)] / (1 - ia[a]) for a in a2],
                                                       index=pd.to_datetime([f"{a}-01-01" for a in a2]), dtype=float)
     return salida
+
+
+def indice_equiponderado(series: list[pd.Series], base: str = "2003-12-01") -> pd.Series:
+    """Índice de precios equiponderado: cada mes, promedio simple de las variaciones de las acciones que
+    cotizan ese mes y el anterior, encadenado. Base 100 en el mes indicado (o el primero disponible)."""
+    df = pd.concat([s.dropna() for s in series], axis=1).sort_index()
+    var = df.pct_change(fill_method=None)
+    prom = var.mean(axis=1, skipna=True).dropna()
+    nivel = (1 + prom).cumprod()
+    nivel = pd.concat([pd.Series([1.0], index=[df.index[0]]), nivel])
+    b = pd.Timestamp(base)
+    ref = nivel[b] if b in nivel.index else nivel.iloc[0]
+    return (nivel / ref * 100).astype(float)
