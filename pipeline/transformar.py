@@ -178,3 +178,30 @@ def reservas_netas(reservas, encajes_balance, depositos_usd, swap_yuan, cny_por_
     netas = reservas.reindex(idx) - encajes - swap - repos - org - eeuu
     return {"reservas_netas": netas.dropna(), "rn_encajes": encajes.dropna(), "rn_swap_china": swap,
             "rn_repos": repos, "rn_organismos": org, "rn_swap_eeuu": eeuu}
+
+
+def presion_anual(nacional: pd.Series, provincial: pd.Series, pib: pd.Series, informalidad: pd.Series | None = None) -> dict[str, pd.Series]:
+    """Presión tributaria anual en % del PIB: consolidada (recaudación nacional + impuestos propios de las
+    provincias) y efectiva sobre la economía formal (consolidada dividida por la proporción de asalariados
+    registrados, como aproximación del peso de la economía formal). nacional: flujo mensual; provincial: anual;
+    pib: trimestral anualizado; informalidad: fracción trimestral de asalariados sin aportes."""
+    n = nacional.dropna()
+    nac = n.groupby(n.index.year).agg(["sum", "count"])
+    nac = nac.loc[nac["count"] == 12, "sum"]
+    p = pib.dropna()
+    pa = p.groupby(p.index.year).agg(["mean", "count"])
+    pa = pa.loc[pa["count"] == 4, "mean"]
+    prov = provincial.dropna()
+    prov.index = prov.index.year
+    anios = sorted(set(nac.index) & set(pa.index) & set(prov.index))
+    idx = pd.to_datetime([f"{a}-01-01" for a in anios])
+    consolidada = pd.Series([(nac[a] + prov[a]) / pa[a] * 100 for a in anios], index=idx, dtype=float)
+    salida = {"presion_consolidada": consolidada,
+              "presion_provincial": pd.Series([prov[a] / pa[a] * 100 for a in anios], index=idx, dtype=float)}
+    if informalidad is not None and not informalidad.dropna().empty:
+        inf = informalidad.dropna()
+        ia = inf.groupby(inf.index.year).mean()
+        a2 = [a for a in anios if a in ia.index]
+        salida["presion_efectiva_formal"] = pd.Series([consolidada[pd.Timestamp(a, 1, 1)] / (1 - ia[a]) for a in a2],
+                                                      index=pd.to_datetime([f"{a}-01-01" for a in a2]), dtype=float)
+    return salida

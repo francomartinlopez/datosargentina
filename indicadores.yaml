@@ -201,6 +201,7 @@ series:
   prov_resultado_primario: {fuente: archivo, lector: hacienda_provincias, campo: resultado_primario}
   prov_ingresos:       {fuente: archivo, lector: hacienda_provincias, campo: ingresos_totales}
   prov_origen_nacional: {fuente: archivo, lector: hacienda_provincias, campo: tributarios_nacionales}
+  prov_tributos_propios: {fuente: archivo, lector: hacienda_provincias, campo: tributarios_provinciales}
   # --- Fase 1: cierre ---
   informalidad:        {fuente: datosgobar, id: "52.2_ASDJ_0_0_37"}
   empleo_publico:      {fuente: datosgobar, id: "324.1_TOTAL_SECTADO__58"}
@@ -329,6 +330,7 @@ calculos:
   # La serie IMIG de resultado financiero viene vacía en la API: se calcula como primario menos intereses netos
   resultado_financiero: {operacion: resta, a: resultado_primario, b: intereses_netos}
   presion_tributaria: {operacion: porcentaje_pib, a: recaudacion, b: pib_nominal}
+  presion_anual:   {operacion: presion_anual, nacional: recaudacion, provincial: prov_tributos_propios, pib: pib_nominal, informalidad: informalidad}
   pib_jubilaciones: {operacion: porcentaje_pib, a: imig_jubilaciones, b: pib_nominal}
   pib_pensiones_nc: {operacion: porcentaje_pib, a: imig_pensiones_nc, b: pib_nominal}
   pib_asignaciones: {operacion: porcentaje_pib, a: imig_asignaciones, b: pib_nominal}
@@ -620,3 +622,9 @@ indicadores:
   - {id: rn_organismos, nombre: "Obligaciones con organismos internacionales", seccion: "Dólar y finanzas", serie: rn_organismos, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", grupo: reservas_componentes}
   - {id: reservas_netas_fmi, nombre: "Reservas netas del BCRA: criterio del FMI (estimación)", seccion: "Dólar y finanzas", serie: reservas_netas_fmi, tipo_valor: saldo, moneda: USD, vista_inicial: desde_2003, unidad: "millones de US$ de hoy", portada: true,
      nota: "Es la medición que usa el FMI para la meta del acuerdo de 2025 y la que el Gobierno reconoce como negativa: a la estimación de mercado le resta además los desembolsos acumulados del programa vigente con el FMI (12.000 millones en abril de 2025, 2.000 en agosto de 2025 y 1.000 en mayo de 2026), que son deuda del Tesoro. Por eso empieza en abril de 2025. El FMI hace además ajustes de valuación del oro y el yuan que acá no se replican. Referencias: el FMI informó -14.100 millones a fin de 2025 y Econviews estimó unos -7.000 millones en septiembre de 2026."}
+  - {id: presion_consolidada, nombre: "Presión tributaria consolidada (Nación y provincias)", seccion: "Estado y fiscal", serie: presion_consolidada, tipo_valor: tasa, frecuencia: A, vista_inicial: desde_2003, unidad: "% del PIB",
+     nota: "Recaudación nacional (ARCA, incluye seguridad social y los impuestos que se coparticipan) más los impuestos propios de las 24 provincias (Secretaría de Hacienda, Coordinación Fiscal Provincial), sobre el PIB nominal del año (INDEC). No incluye tasas municipales, que no tienen una serie oficial. Si una provincia no informó un año, el consolidado puede subestimarse (en 2025 falta La Pampa)."}
+  - {id: presion_provincial, nombre: "Presión tributaria de las provincias", seccion: "Estado y fiscal", serie: presion_provincial, tipo_valor: tasa, frecuencia: A, vista_inicial: desde_2003, unidad: "% del PIB",
+     nota: "Impuestos propios de las 24 jurisdicciones (Ingresos Brutos, Sellos, Inmobiliario, Automotor y otros) sobre el PIB nominal. Secretaría de Hacienda, Coordinación Fiscal Provincial."}
+  - {id: presion_efectiva_formal, nombre: "Presión tributaria efectiva sobre la economía formal (estimación)", seccion: "Estado y fiscal", serie: presion_efectiva_formal, tipo_valor: tasa, frecuencia: A, vista_inicial: desde_2003, unidad: "% del PIB formal",
+     nota: "Estimación propia de cuánto pesan los impuestos sobre quienes los pagan: la presión consolidada dividida por la proporción de asalariados con aportes jubilatorios (EPH, INDEC), usada como aproximación del peso de la economía formal. No hay medición oficial; otros estudios usan otros supuestos y dan cifras distintas."}

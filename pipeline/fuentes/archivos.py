@@ -311,6 +311,7 @@ RENGLONES_PROVINCIA = {
     "resultado_financiero": "VIII. RESULTADO FINANC",
     "resultado_primario": "IX. RESULTADO PRIMARIO",
     "tributarios_nacionales": "- DE ORÍGEN NACI",
+    "tributarios_provinciales": "- DE ORÍGEN PROV",
     "personal": "- PERSONAL",
 }
 
@@ -338,7 +339,8 @@ def leer_provincias(h: dict) -> dict[str, pd.DataFrame]:
         anios = {j: int(float(v)) for j, v in enumerate(df.iloc[fila]) if re.fullmatch(r"\d{4}(\.0)?", _texto(v))}
         datos = {}
         for clave, prefijo in RENGLONES_PROVINCIA.items():
-            i = next((k for k in range(fila + 1, len(df)) if _texto(df.iat[k, 0]).upper().startswith(prefijo)), None)
+            sin_tilde = lambda s: s.upper().replace("Í", "I").replace("Ó", "O").replace("  ", " ")
+            i = next((k for k in range(fila + 1, len(df)) if sin_tilde(_texto(df.iat[k, 0])).startswith(sin_tilde(prefijo))), None)
             if i is not None:
                 datos[clave] = {pd.Timestamp(a, 1, 1): pd.to_numeric(df.iat[i, j], errors="coerce") for j, a in anios.items()}
         salida[re.sub(r"\s+", " ", hoja).strip()] = pd.DataFrame(datos).sort_index()

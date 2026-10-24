@@ -95,6 +95,14 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 continue
             mensuales[nombre] = pd.concat([mensuales[x] for x in c["series"]], axis=1, join="inner").mean(axis=1)
             continue
+        if c["operacion"] == "presion_anual":
+            faltan = [c[k] for k in ("nacional", "provincial", "pib") if c[k] not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales.update(transformar.presion_anual(mensuales[c["nacional"]], mensuales[c["provincial"]],
+                                                       mensuales[c["pib"]], mensuales.get(c.get("informalidad"))))
+            continue
         if c["operacion"] == "reservas_netas":
             claves = ["reservas", "encajes", "depositos_usd", "swap_yuan", "cny", "organismos", "pases", "pase_2016", "swap_eeuu"]
             faltan = [c[k] for k in claves if c[k] not in mensuales]
