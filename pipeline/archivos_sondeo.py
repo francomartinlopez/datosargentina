@@ -33,6 +33,7 @@ def variantes_indec(patron: str, meses_atras: int = 14) -> list[str]:
 
 
 ARCHIVOS = {
+    "came_pdf": ["https://www.redcame.org.ar/advf/documentos/2026/10/6ac2762cb873b.pdf"],
     "deuda_ult": ["https://www.argentina.gob.ar/sites/default/files/deuda_publica_30-06-2026.xlsx"],
     "eph_2026_1": ["https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1_Trim_2026_txt.zip", "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_1er_Trim_2026_txt.zip"],
     "eph_2026_2": ['https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2_Trim_2026_txt.zip', 'https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/EPH_usu_2do_Trim_2026_txt.zip'],
