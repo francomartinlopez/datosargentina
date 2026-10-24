@@ -15,6 +15,7 @@ import io
 import re
 from datetime import date
 from functools import lru_cache
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -424,6 +425,83 @@ def bcra_ib_lineas(campo: str, h: dict | None = None) -> pd.Series:
     return leer_ib_lineas(h if h is not None else hojas("ib_anexo"), campo)
 
 
+# ---------- INDEC: microdatos de la EPH (ingreso de la ocupación principal por categoría) ----------
+
+EPH = "https://www.indec.gob.ar/ftp/cuadros/menusuperior/eph/"
+EPH_CACHE = Path(__file__).resolve().parents[2] / "data" / "derivados" / "eph_ingresos.csv"
+EPH_DESDE = (2016, 2)  # desde el 2do trimestre de 2016 hay ponderador de ingresos con imputación (PONDIIO)
+EPH_COLUMNAS = ["cuenta_propia", "asalariado_registrado", "asalariado_no_registrado"]
+
+
+def _eph_zip(anio: int, trim: int) -> bytes | None:
+    suf = {1: "er", 2: "do", 3: "er", 4: "to"}[trim]
+    for nombre in (f"EPH_usu_{trim}_Trim_{anio}_txt.zip", f"EPH_usu_{trim}{suf}_Trim_{anio}_txt.zip",
+                   f"EPH_usu_{trim}{suf}_Trim_{anio}.zip", f"EPH_usu_{trim}_Trim_{anio}.zip"):
+        try:
+            r = requests.get(EPH + nombre, headers=CABECERAS, timeout=TIMEOUT)
+        except requests.RequestException:
+            continue
+        if r.status_code == 200 and r.content[:4] == b"PK\x03\x04":
+            return r.content
+    return None
+
+
+def eph_promedios(contenido: bytes) -> dict:
+    """Ingreso medio de la ocupación principal (P21, ponderado por PONDIIO) de los ocupados con
+    ingreso: trabajadores por cuenta propia y asalariados con y sin descuento jubilatorio."""
+    import numpy as np
+    import zipfile
+    z = zipfile.ZipFile(io.BytesIO(contenido))
+    nombre = next(n for n in z.namelist() if "individual" in n.lower() and n.lower().endswith(".txt"))
+    df = pd.read_csv(z.open(nombre), sep=";", decimal=",", low_memory=False,
+                     usecols=lambda c: c in {"ESTADO", "CAT_OCUP", "P21", "PONDIIO", "PP07H"})
+    for c in df.columns:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    o = df[(df["ESTADO"] == 1) & (df["P21"] > 0) & (df["PONDIIO"] > 0)]
+    grupos = {"cuenta_propia": o[o["CAT_OCUP"] == 2], "asalariado_registrado": o[(o["CAT_OCUP"] == 3) & (o["PP07H"] == 1)],
+              "asalariado_no_registrado": o[(o["CAT_OCUP"] == 3) & (o["PP07H"] == 2)]}
+    out = {}
+    for k, g in grupos.items():
+        out[k] = float(np.average(g["P21"], weights=g["PONDIIO"])) if len(g) else None
+        out["casos_" + k] = int(len(g))
+    return out
+
+
+@lru_cache(maxsize=None)
+def eph_tabla() -> pd.DataFrame:
+    """Promedios por trimestre, guardados en data/derivados para no volver a bajar los microdatos.
+    En cada corrida se calculan solo los trimestres que faltan."""
+    previo = pd.read_csv(EPH_CACHE, dtype={"trimestre": str}) if EPH_CACHE.exists() else pd.DataFrame(columns=["trimestre"])
+    hechos = set(previo["trimestre"])
+    hoy = date.today()
+    nuevos = []
+    anio, trim = EPH_DESDE
+    while (anio, trim) <= (hoy.year, (hoy.month - 1) // 3 + 1):
+        clave = f"{anio}-T{trim}"
+        if clave not in hechos:
+            contenido = _eph_zip(anio, trim)
+            if contenido is not None:
+                nuevos.append({"trimestre": clave, **eph_promedios(contenido)})
+        trim += 1
+        if trim == 5:
+            anio, trim = anio + 1, 1
+    tabla = pd.concat([previo, pd.DataFrame(nuevos)], ignore_index=True) if nuevos else previo
+    if nuevos:
+        EPH_CACHE.parent.mkdir(parents=True, exist_ok=True)
+        tabla.sort_values("trimestre").to_csv(EPH_CACHE, index=False)
+    return tabla
+
+
+def indec_eph_ingresos(campo: str) -> pd.Series:
+    """Serie trimestral de ingreso medio; cada trimestre se ubica en su mes central (feb, may, ago, nov),
+    para deflactarlo con el IPC de mitad del trimestre."""
+    t = eph_tabla()
+    if campo not in t.columns or t.empty:
+        raise ValueError(f"EPH: no hay datos de {campo}")
+    fechas = [pd.Timestamp(int(x[:4]), 3 * int(x[-1]) - 1, 1) for x in t["trimestre"]]
+    return pd.Series(pd.to_numeric(t[campo], errors="coerce").values, index=fechas, dtype=float).dropna().sort_index()
+
+
 # ---------- Colegio de Escribanos de la Ciudad de Buenos Aires ----------
 
 ESCRIBANOS = "https://www.colegio-escribanos.org.ar/noticias/{mes}-{anio}-Comparativo-anual-por-mes.xls"
@@ -522,6 +600,7 @@ LECTORES = {
     "escribanos_compraventas": escribanos_compraventas,
     "bcra_pnfc": bcra_pnfc,
     "bcra_ib_lineas": bcra_ib_lineas,
+    "indec_eph_ingresos": indec_eph_ingresos,
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,
     "indec_canastas": indec_canastas,
