@@ -1,6 +1,6 @@
 # Informe de actualización 2026-10-24
 
-Indicadores publicados: 190
+Indicadores publicados: 195
 
 ## Alertas
 
@@ -33,11 +33,8 @@ Indicadores publicados: 190
 - tasa_plazo_fijo: sin dato nuevo (último 2026-10)
 - prestamos_privados: sin dato nuevo (último 2026-10)
 - dolar_ccl: sin dato nuevo (último 2026-10)
-- dolar_ccl: la fuente revisó 1 datos anteriores
 - dolar_mep: sin dato nuevo (último 2026-10)
-- dolar_mep: la fuente revisó 1 datos anteriores
 - riesgo_pais: sin dato nuevo (último 2026-10)
-- riesgo_pais: la fuente revisó 1 datos anteriores
 - ipim: sin dato nuevo (último 2026-08)
 - autoservicios_desest: sin dato nuevo (último 2026-07)
 - shoppings_desest: sin dato nuevo (último 2026-07)
@@ -62,7 +59,6 @@ Indicadores publicados: 190
 - transf_capital_provincias: sin dato nuevo (último 2026-08)
 - icc: sin dato nuevo (último 2026-09)
 - dolar_tarjeta: sin dato nuevo (último 2026-10)
-- dolar_tarjeta: la fuente revisó 1 datos anteriores
 - depositos_privados_ars: sin dato nuevo (último 2026-10)
 - depositos_privados_usd: sin dato nuevo (último 2026-10)
 - compras_divisas_bcra: sin dato nuevo (último 2026-09)
@@ -74,7 +70,6 @@ Indicadores publicados: 190
 - tasa_personales: sin dato nuevo (último 2026-10)
 - tasa_tarjetas: sin dato nuevo (último 2026-09)
 - icl: sin dato nuevo (último 2026-10)
-- icl: la fuente revisó 1 datos anteriores
 - pobreza_personas: sin dato nuevo (último 2026-01)
 - indigencia_personas: sin dato nuevo (último 2026-01)
 - pib_real: sin dato nuevo (último 2026-04)
@@ -240,4 +235,8 @@ Indicadores publicados: 190
 - consumo_porcina_sagyp_2024: sin dato nuevo (último 2024-01)
 - consumo_porcina_sagyp: sin dato nuevo (último 2025-01)
 - consumo_leche_ocla: sin dato nuevo (último 2025-01)
+- empresas_activas: sin dato nuevo (último 2026-01)
+- empresas_aperturas: sin dato nuevo (último 2026-01)
+- empresas_cierres: sin dato nuevo (último 2026-01)
+- empresas_neto: sin dato nuevo (último 2026-01)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
