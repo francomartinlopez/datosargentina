@@ -143,7 +143,9 @@ def main() -> None:
             except Exception as e:
                 informe[clave].append({"url": u, "error": repr(e)})
     # páginas cuyo HTML se guarda crudo para buscar los datos que cargan por JavaScript
-    for clave, u in {"zuban_port": "https://zubancordoba.com/portfolio/informe-nacional-milei-vs-bullrich-septiembre-2026/", "zuban_port2": "https://zubancordoba.com/portfolio/informe-nacional-el-camino-al-balotaje-septiembre-2026/", "zuban_lista": "https://zubancordoba.com/portfolio-encuestas/", "udesa_espop": "https://udesa.edu.ar/espop", "udesa_espop2": "https://udesa.edu.ar/encuesta-de-satisfaccion-politica-y-opinion-publica",
+    for clave, u in {"construya": "https://www.grupoconstruya.com.ar/indice-construya", "construya2": "https://www.grupoconstruya.com.ar/",
+                     "came_ventas": "https://www.redcame.org.ar/estadisticas-pyme", "came_home": "https://www.redcame.org.ar/",
+                     "zuban_port": "https://zubancordoba.com/portfolio/informe-nacional-milei-vs-bullrich-septiembre-2026/", "zuban_port2": "https://zubancordoba.com/portfolio/informe-nacional-el-camino-al-balotaje-septiembre-2026/", "zuban_lista": "https://zubancordoba.com/portfolio-encuestas/", "udesa_espop": "https://udesa.edu.ar/espop", "udesa_espop2": "https://udesa.edu.ar/encuesta-de-satisfaccion-politica-y-opinion-publica",
                      "atlas_poll": "https://atlasintel.org/poll/latam-pulse-argentina-september-2026-2026-10-14",
                      "zuban": "https://zubancordoba.com/", "opina": "https://opinaargentina.com/", "poliarquia": "https://www.poliarquia.com/",
                      "mfit": "https://www.myfconsultora.com/", "analogias": "https://analogias.com.ar/", "giacobbe": "https://giacobbeyasociados.com/",
