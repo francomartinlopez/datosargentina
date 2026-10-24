@@ -19,6 +19,7 @@ const FUENTES = {
   bcra: "BCRA",
   argentinadatos: "ArgentinaDatos",
   fred: "FRED",
+  encuestas: "Encuestadoras (carga manual con fuente)",
   yahoo: "Yahoo Finance",
   "cálculo propio": "Cálculo propio",
 };
@@ -505,6 +506,36 @@ function fichaRigi(d) {
     el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
 }
 
+/* ---------- Imagen de dirigentes (encuestas) ---------- */
+
+function fichaImagen(d) {
+  const pct = (v) => fmt(v, 0) + "%";
+  const lista = el("div", { class: "imagen-lista", role: "list" });
+  const fila = (f) => {
+    const detalle = f.mediciones.map((m) => `${m.encuestadora} (${fechaCorta(m.fecha)}): ${pct(m.positiva)} positiva, ${pct(m.negativa)} negativa`).join("\n");
+    return el("div", { class: "imagen-fila", role: "listitem", title: detalle },
+      el("span", { class: "imagen-nombre" }, f.figura, el("small", { text: f.n === 1 ? ` · 1 encuestadora (${f.mediciones[0].encuestadora})` : ` · ${f.n} encuestadoras` })),
+      el("span", { class: "imagen-pista", "aria-label": `${pct(f.positiva)} positiva, ${pct(f.negativa)} negativa` },
+        el("span", { class: "imagen-barra pos", style: `width:${f.positiva}%`, text: pct(f.positiva) }),
+        el("span", { class: "imagen-barra neg", style: `width:${f.negativa}%`, text: pct(f.negativa) })),
+      el("span", { class: "imagen-dif " + (f.diferencial >= 0 ? "pos" : "neg"), text: (f.diferencial > 0 ? "+" : "") + fmt(f.diferencial, 0) }));
+  };
+  const varias = d.figuras.filter((f) => f.n >= 2), una = d.figuras.filter((f) => f.n < 2);
+  varias.forEach((f) => lista.append(fila(f)));
+  const resto = el("details", { class: "imagen-resto" }, el("summary", { text: `Ver ${una.length} dirigentes medidos por una sola encuestadora` }));
+  const lista2 = el("div", { class: "imagen-lista", role: "list" });
+  una.forEach((f) => lista2.append(fila(f)));
+  resto.append(lista2);
+  const fuentes = [...new Map(d.figuras.flatMap((f) => f.mediciones).map((m) => [m.encuestadora, m.fuente])).entries()];
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `Imagen positiva y negativa, % de los encuestados · promedio de ${d.encuestadoras.join(", ")} · encuestas hasta ${fechaCorta(d.hasta)}` }))),
+    el("div", { class: "imagen-leyenda" }, el("span", { class: "imagen-chip pos", text: "Positiva" }), el("span", { class: "imagen-chip neg", text: "Negativa" }), el("span", { class: "imagen-chip dif", text: "Diferencial (puntos)" })),
+    lista, una.length ? resto : null,
+    el("p", { class: "nota", text: d.nota + " Pasá el cursor sobre un dirigente para ver cada medición." }),
+    el("div", { class: "ficha-pie" }, el("span", {}, "Fuentes: ", ...fuentes.flatMap(([n, u], i) => [i ? ", " : "", el("a", { href: u, target: "_blank", rel: "noopener", text: n })]))));
+}
+
 function fichaGrupo(g) {
   if (g.ranking === "nivel") return fichaGrupoNivel(g);
   const porDiferencia = g.ranking === "diferencia";
@@ -913,6 +944,7 @@ async function iniciar() {
   const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
   const piramide = await leer("distribucion_ingreso");
   const rigi = await leer("rigi");
+  const imagen = await leer("encuestas_imagen");
   const actualizado = fichas.map((f) => f.actualizado).sort().pop();
   document.getElementById("actualizado").textContent = actualizado ? `Actualizado el ${fechaCorta(actualizado)}.` : "";
 
@@ -930,6 +962,7 @@ async function iniciar() {
     if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
     if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
     if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
+    if (imagen && imagen.seccion === s) grilla.append(fichaImagen(imagen));
     secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
   }
   await gobierno();

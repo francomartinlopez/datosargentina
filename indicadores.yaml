@@ -54,6 +54,11 @@ series:
   recaudacion:         {fuente: datosgobar, id: "172.3_TL_RECAION_M_0_0_17"}
   # --- Opinión pública ---
   icg:                 {fuente: datosgobar, id: "370.3_ICG_NIVEL_RAL_0_0_17_94"}
+  aprobacion_promedio: {fuente: encuestas, encuestadora: promedio, medida: aprueba}
+  desaprobacion_promedio: {fuente: encuestas, encuestadora: promedio, medida: desaprueba}
+  aprobacion_atlas:    {fuente: encuestas, encuestadora: AtlasIntel, medida: aprueba}
+  aprobacion_espop:    {fuente: encuestas, encuestadora: "UdeSA (ESPOP)", medida: aprueba}
+  aprobacion_zuban:    {fuente: encuestas, encuestadora: "Zuban Córdoba", medida: aprueba}
   # --- BCRA (API v4) ---
   reservas:            {fuente: bcra, id: 1, agregacion: cierre}
   dolar_mayorista:     {fuente: bcra, id: 5, agregacion: promedio}
@@ -382,6 +387,8 @@ grupos:
      nota: "Gasto base caja del Sector Público Nacional no financiero (Informe Mensual de Ingresos y Gastos, Ministerio de Economía), últimos 4 trimestres en % del PIB nominal. Datos desde 2016. Para la apertura por función (educación, salud, defensa) con serie larga ver el gráfico de gasto por función, que llega hasta 2023."}
   - {id: gasto_funcion, nombre: "Gasto público nacional por función (serie larga, hasta 2023)", seccion: "Estado y fiscal", ranking: nivel, unidad_ranking: "% del PIB", sufijo_ranking: "% del PIB",
      nota: "Gasto de la Administración Pública Nacional por finalidad y función (Ministerio de Economía, serie de gasto público consolidado). La serie se publica con varios años de rezago: el último año disponible es 2023."}
+  - {id: aprobacion_encuestadoras, nombre: "Aprobación del presidente según cada encuestadora", seccion: "Opinión pública", ranking: nivel, unidad_ranking: "% que aprueba, última medición", sufijo_ranking: "%",
+     nota: "Cada encuestadora con su propia pregunta y método: AtlasIntel (¿aprueba o desaprueba el desempeño del presidente?, online por reclutamiento aleatorio), UdeSA–ESPOP (¿aprobás o desaprobás el gobierno del presidente?, online, 1.000 casos) y Zuban Córdoba (nivel de aprobación del gobierno, online, 2.000 casos). Las series históricas se reconstruyeron a partir del gráfico evolutivo del último informe de cada una: los valores leídos del gráfico están redondeados y pueden diferir en ±1 punto del dato original. El detalle de cada encuesta y su fuente está en data/manual/encuestas_aprobacion.csv."}
   - {id: morosidad_entidades, nombre: "Morosidad por tipo de prestamista: bancos, financieras y billeteras", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
      nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
   - {id: morosidad_pnfc_tipo, nombre: "Morosidad en fintech, billeteras y otros prestamistas no financieros, por tipo de crédito", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
@@ -415,6 +422,13 @@ indicadores:
   - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: saldo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: icg, nombre: "Confianza en el gobierno (UTDT)", seccion: "Opinión pública", serie: icg, tipo_valor: tasa, unidad: "índice 0 a 5", portada: true}
+  - {id: aprobacion_promedio, vista_inicial: desde_2003, nombre: "Aprobación del presidente (promedio de encuestas)", seccion: "Opinión pública", serie: aprobacion_promedio, tipo_valor: tasa, unidad: "% que aprueba", portada: true,
+     nota: "Promedio simple, mes a mes, de las encuestadoras que midieron ese mes: AtlasIntel (desde 2024), UdeSA–ESPOP (desde diciembre de 2015) y Zuban Córdoba (desde octubre de 2025). Hasta 2023 la serie es solo de UdeSA–ESPOP, que mide con la misma pregunta a Macri, Alberto Fernández y Milei. Se eligieron encuestadoras que publican con regularidad y documentan su método; la lista se amplía a medida que se cargan nuevas mediciones con fuente. La Confianza en el Gobierno de la UTDT (en esta misma sección) es la serie larga desde 2001."}
+  - {id: desaprobacion_promedio, vista_inicial: desde_2003, nombre: "Desaprobación del presidente (promedio de encuestas)", seccion: "Opinión pública", serie: desaprobacion_promedio, tipo_valor: tasa, unidad: "% que desaprueba",
+     nota: "Promedio simple, mes a mes, de las mismas encuestadoras que la aprobación. Aprobación y desaprobación no suman 100: el resto no sabe o no contesta."}
+  - {id: aprobacion_atlas, nombre: "AtlasIntel", seccion: "Opinión pública", serie: aprobacion_atlas, tipo_valor: tasa, unidad: "% que aprueba", grupo: aprobacion_encuestadoras}
+  - {id: aprobacion_espop, nombre: "UdeSA (ESPOP)", seccion: "Opinión pública", serie: aprobacion_espop, tipo_valor: tasa, unidad: "% que aprueba", grupo: aprobacion_encuestadoras}
+  - {id: aprobacion_zuban, nombre: "Zuban Córdoba", seccion: "Opinión pública", serie: aprobacion_zuban, tipo_valor: tasa, unidad: "% que aprueba", grupo: aprobacion_encuestadoras}
   - {id: reservas, nombre: "Reservas brutas del BCRA", seccion: "Dólar y finanzas", serie: reservas, tipo_valor: nivel, moneda: USD, unidad: "millones de US$ de hoy", portada: true}
   - {id: dolar_mayorista, nombre: "Dólar mayorista (real)", seccion: "Dólar y finanzas", serie: dolar_mayorista, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar"}
   - {id: dolar_ccl, nombre: "Dólar CCL (real)", seccion: "Dólar y finanzas", serie: dolar_ccl, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por dólar", portada: true}
