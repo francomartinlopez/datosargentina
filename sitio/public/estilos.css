@@ -1,4 +1,6 @@
 :root {
+  --rojo: #c0362c; --rojo-bg: #fbe3e0; --naranja: #c2610c; --naranja-bg: #fde9d6; --ambar: #9a6a00; --ambar-bg: #fbf0cc;
+  --violeta: #6b4bc4; --violeta-bg: #ece6fb; --azul: #2563b8; --azul-bg: #dfeafb; --verde: #1e7d45; --verde-bg: #dcf2e4; --gris: #5f5e5a; --gris-bg: #ecebe7;
   color-scheme: light;
   --plano: #f9f9f7;
   --superficie: #fcfcfb;
@@ -268,3 +270,21 @@ div.rank-fila.nivel:hover { background: none; }
 .tabla.rigi td:nth-child(-n+3) { white-space: normal; text-align: left; }
 .tabla.rigi th:nth-child(-n+3) { text-align: left; }
 .tabla.rigi td:first-child { min-width: 190px; }
+
+/* Estados destacados en Gobierno */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --rojo: #ff8a80; --rojo-bg: #4a1f1c; --naranja: #ffb072; --naranja-bg: #4a2c12; --ambar: #f2cf63; --ambar-bg: #433610;
+  --violeta: #c3b1ff; --violeta-bg: #31264f; --azul: #8fb8ff; --azul-bg: #1d2f4d; --verde: #7fd8a1; --verde-bg: #173c26; --gris: #c4c3be; --gris-bg: #34342f; } }
+:root[data-theme="dark"] {
+  --rojo: #ff8a80; --rojo-bg: #4a1f1c; --naranja: #ffb072; --naranja-bg: #4a2c12; --ambar: #f2cf63; --ambar-bg: #433610;
+  --violeta: #c3b1ff; --violeta-bg: #31264f; --azul: #8fb8ff; --azul-bg: #1d2f4d; --verde: #7fd8a1; --verde-bg: #173c26; --gris: #c4c3be; --gris-bg: #34342f; }
+.tono-rojo { --t: var(--rojo); --tb: var(--rojo-bg); } .tono-naranja { --t: var(--naranja); --tb: var(--naranja-bg); }
+.tono-ambar { --t: var(--ambar); --tb: var(--ambar-bg); } .tono-violeta { --t: var(--violeta); --tb: var(--violeta-bg); }
+.tono-azul { --t: var(--azul); --tb: var(--azul-bg); } .tono-verde { --t: var(--verde); --tb: var(--verde-bg); }
+.tono-gris { --t: var(--gris); --tb: var(--gris-bg); }
+.item.con-estado { border-left: 5px solid var(--t); }
+.item .estado { display: inline-block; font-size: 14px; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--tb); color: var(--t); margin-bottom: 6px; letter-spacing: .01em; }
+.item.con-estado .item-titulo { font-size: 16px; }
+.estados-resumen { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.estado-chip { font-size: 13px; padding: 3px 10px; border-radius: 999px; background: var(--tb); color: var(--t); }
+.estado-chip strong { font-size: 15px; }

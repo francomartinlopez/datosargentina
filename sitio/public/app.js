@@ -705,14 +705,34 @@ function fechaCorta(s) {
   return `${m[3] ? Number(m[3]) + " " : ""}${MESES[Number(m[2]) - 1]} ${m[1]}`;
 }
 
-function bloqueLista(titulo, intro, filas, item, { porGestion = true } = {}) {
+/* Estados con color: rojo = condena / incumplida / vetada; naranja = intermedio desfavorable;
+   ámbar = en curso; violeta = procesado; azul = investigación o avance; verde = cumplida / vigente / sobreseído */
+const TONOS = {
+  "Condena firme": "rojo", "Condena en primera instancia": "naranja", "En juicio": "ambar", "Elevada a juicio": "ambar",
+  "Procesado": "violeta", "En investigación": "azul", "Sobreseído": "verde", "Sin causa judicial": "gris",
+  "Sancionada": "verde", "Vigente": "verde", "Veto superado": "azul", "Vetada": "rojo", "Rechazada": "gris", "Pendiente": "ambar",
+  "Cumplida": "verde", "Incumplida": "rojo", "Incumplida con avances": "naranja", "En proceso, adelantada": "azul", "En proceso, demorada": "ambar",
+};
+const tono = (estado) => TONOS[estado] || "gris";
+
+function resumenEstados(filas, campo, orden) {
+  const cuentas = {};
+  filas.forEach((r) => { const e = r[campo]; if (e) cuentas[e] = (cuentas[e] || 0) + 1; });
+  const claves = Object.keys(cuentas).sort((a, b) => (orden.indexOf(a) + 99) % 99 - (orden.indexOf(b) + 99) % 99);
+  return el("div", { class: "estados-resumen" }, ...claves.map((k) =>
+    el("span", { class: "estado-chip tono-" + tono(k) }, el("strong", { text: String(cuentas[k]) }), " " + k)));
+}
+
+function bloqueLista(titulo, intro, filas, item, { porGestion = true, estado = null, orden = [] } = {}) {
   const lista = el("div", { class: "lista" });
   const caja = el("div", { class: "bloque", id: slug(titulo) }, el("h3", { text: titulo }), el("p", { class: "intro", text: intro }));
+  const resumen = el("div");
   let filtro = null, todos = false;
   const MAX = 8;
   const pintar = () => {
     lista.innerHTML = "";
     const sel = filtro ? filas.filter((r) => correspondeGestion(r.gestion, filtro)) : filas;
+    if (estado) { resumen.innerHTML = ""; resumen.append(resumenEstados(sel, estado, orden)); }
     if (!sel.length) lista.append(el("p", { class: "vacio", text: "Sin registros para esta gestión." }));
     (todos ? sel : sel.slice(0, MAX)).forEach((r) => lista.append(item(r)));
     if (sel.length > MAX) lista.append(el("button", { type: "button", class: "ver-mas", text: todos ? "Ver menos" : `Ver los ${sel.length}`,
@@ -724,16 +744,17 @@ function bloqueLista(titulo, intro, filas, item, { porGestion = true } = {}) {
       onclick: () => { filtro = g; todos = false; botones.forEach((b, i) => b.setAttribute("aria-pressed", String(opciones[i] === g))); pintar(); } }));
     caja.append(el("div", { class: "filtro", role: "group", "aria-label": "Filtrar por gestión" }, ...botones));
   }
-  caja.append(lista);
+  caja.append(resumen, lista);
   pintar();
   return caja;
 }
 
-function itemDetalle({ insignia, fuerte, titulo, meta, resumen, cita, campos, fuentesTexto }) {
+function itemDetalle({ insignia, fuerte, estado, titulo, meta, resumen, cita, campos, fuentesTexto }) {
   const dl = el("dl");
   for (const [k, v] of campos) if (v) dl.append(el("dt", { text: k }), el("dd", { text: v }));
-  return el("details", { class: "item" },
+  return el("details", { class: "item" + (estado ? " con-estado tono-" + tono(estado) : "") },
     el("summary", {},
+      estado ? el("span", { class: "estado tono-" + tono(estado), text: estado }) : null,
       el("div", { class: "item-cab" },
         insignia ? el("span", { class: "insignia" + (fuerte ? " fuerte" : ""), text: insignia }) : null,
         el("span", { class: "item-titulo", text: titulo }),
@@ -756,27 +777,30 @@ async function gobierno() {
     cont.append(bloqueLista("Promesas y hechos",
       "Promesas de campaña y de asunción con su veredicto al cierre del mandato (o al último balance). Macri, Fernández y Milei: relevamiento de Chequeado. Kirchner y CFK: relevamiento propio con el mismo criterio, a partir del discurso de asunción y anuncios formales.",
       promesas.filter((r) => r.veredicto), (r) => itemDetalle({
-        insignia: r.veredicto, fuerte: r.veredicto === "Cumplida", titulo: r.promesa, meta: cortoGestion(r.gestion),
-        resumen: r.dato_clave, campos: [["Veredicto al", fechaCorta(r.fecha_veredicto)], ["Metodología", r.metodologia]], fuentesTexto: r.fuente })));
+        estado: r.veredicto, titulo: r.promesa, meta: cortoGestion(r.gestion),
+        resumen: r.dato_clave, campos: [["Veredicto al", fechaCorta(r.fecha_veredicto)], ["Metodología", r.metodologia]], fuentesTexto: r.fuente }),
+      { estado: "veredicto", orden: ["Cumplida", "En proceso, adelantada", "En proceso, demorada", "Incumplida con avances", "Incumplida"] }));
   }
   if (causas) {
     alguno = true;
     cont.append(bloqueLista("Causas judiciales e investigaciones",
       "Casos con causa judicial y cobertura de medios de distintas líneas editoriales, con su estado procesal a la fecha indicada. Aparte, investigaciones administrativas o periodísticas sin causa judicial. Ser investigado no implica culpabilidad.",
       causas, (r) => itemDetalle({
-        insignia: r.tipo && r.tipo.startsWith("Causa") ? (r.materia || "Causa judicial") : "Sin causa judicial", titulo: r.caso, meta: cortoGestion(r.gestion),
+        estado: r.estado_resumen, insignia: r.tipo && r.tipo.startsWith("Causa") ? (r.materia || "Causa judicial") : "Investigación administrativa", titulo: r.caso, meta: cortoGestion(r.gestion),
         resumen: r.estado_judicial,
         campos: [["Qué se investiga", r.que_se_investiga], ["Principales acusados", r.principales_acusados], ["Tribunal u organismo", r.tribunal], ["Estado al", fechaCorta(r.fecha_estado)]],
-        fuentesTexto: r.fuentes })));
+        fuentesTexto: r.fuentes }),
+      { estado: "estado_resumen", orden: ["Condena firme", "Condena en primera instancia", "En juicio", "Elevada a juicio", "Procesado", "En investigación", "Sobreseído", "Sin causa judicial"] }));
   }
   if (leyes) {
     alguno = true;
     cont.append(bloqueLista("Leyes y decretos discutidos",
       "Normas propuestas desde diciembre de 2023 por el Gobierno, sus aliados o la oposición: recorrido, resultado, cambios en el trámite y judicialización.",
       leyes, (r) => itemDetalle({
-        insignia: (r.resultado || "").split(/[(:]/)[0].trim(), titulo: r.norma, meta: r.impulsor, resumen: r.que_proponia,
-        campos: [["Recorrido", r.recorrido], ["Cómo votó el oficialismo", r.voto_oficialismo], ["Cambios en el trámite", r.cambios_en_el_tramite], ["Judicialización o aplicación", r.judicializacion_o_aplicacion], ["Estado al", fechaCorta(r.fecha_estado)]],
-        fuentesTexto: r.fuentes }), { porGestion: false }));
+        estado: r.estado_resumen, titulo: r.norma, meta: r.impulsor, resumen: r.que_proponia,
+        campos: [["Resultado", r.resultado], ["Recorrido", r.recorrido], ["Cómo votó el oficialismo", r.voto_oficialismo], ["Cambios en el trámite", r.cambios_en_el_tramite], ["Judicialización o aplicación", r.judicializacion_o_aplicacion], ["Estado al", fechaCorta(r.fecha_estado)]],
+        fuentesTexto: r.fuentes }),
+      { porGestion: false, estado: "estado_resumen", orden: ["Sancionada", "Vigente", "Veto superado", "Pendiente", "Vetada", "Rechazada"] }));
   }
   if (dichos) {
     alguno = true;

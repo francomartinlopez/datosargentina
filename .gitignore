@@ -5,5 +5,3 @@ __pycache__/
 .DS_Store
 node_modules/
 
-# Secciones políticas: no se publican hasta revisarlas
-sitio/public/datos/politica/
