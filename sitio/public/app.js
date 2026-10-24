@@ -543,8 +543,23 @@ function fichaImagen(d) {
     el("div", { class: "ficha-pie" }, el("span", {}, "Fuentes: ", ...fuentes.flatMap(([n, u], i) => [i ? ", " : "", el("a", { href: u, target: "_blank", rel: "noopener", text: n })]))));
 }
 
+function recortarMiembro(m, hasta) {
+  // copia del miembro con la serie cortada en una fecha, para comparar todos al mismo mes
+  const lista = (m.vistas.desde_2003 || []).filter(([f]) => f <= hasta);
+  if (!lista.length) return null;
+  const [fu, vu] = lista[lista.length - 1];
+  const d = fecha(fu), previo = lista.find(([f]) => f === `${d.getFullYear() - 1}-${String(d.getMonth() + 1).padStart(2, "0")}-01`);
+  return { ...m, ultimo: { fecha: fu, valor: vu }, interanual_ultimo: previo && previo[1] ? (vu / previo[1] - 1) * 100 : null,
+           vistas: { ...m.vistas, desde_2003: lista } };
+}
+
 function fichaGrupo(g) {
   if (g.ranking === "nivel") return fichaGrupoNivel(g);
+  if (g.fecha_comun) {  // todos los miembros comparados al último mes que tienen en común
+    const comun = g.miembros.map((m) => m.ultimo.fecha).sort()[0];
+    const completos = g.miembros;
+    g = { ...g, miembros: g.miembros.map((m) => recortarMiembro(m, comun)).filter(Boolean), completos };
+  }
   const porDiferencia = g.ranking === "diferencia";
   let per = PERIODOS_RANKING[0];
   const esc = g.escala_ranking || 1, suf = g.sufijo_ranking ?? " mil";
@@ -581,7 +596,7 @@ function fichaGrupo(g) {
     if (detalle.dataset.id !== elegido) {
       detalle.innerHTML = "";
       detalle.dataset.id = elegido || "";
-      const m = g.miembros.find((x) => x.id === elegido);
+      const m = (g.completos || g.miembros).find((x) => x.id === elegido);
       if (m) detalle.append(ficha(m, { anidada: true }));
     }
   };

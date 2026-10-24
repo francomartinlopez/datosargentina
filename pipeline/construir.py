@@ -264,7 +264,8 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str], config: di
             indice.append({"id": g, "nombre": grupos[g]["nombre"], "seccion": grupos[g]["seccion"], "tipo": "grupo",
                            "nota": grupos[g].get("nota", ""), "ranking": grupos[g].get("ranking", "variacion"),
                            "unidad_ranking": grupos[g].get("unidad_ranking", ""), "escala_ranking": grupos[g].get("escala_ranking", 1),
-                           "sufijo_ranking": grupos[g].get("sufijo_ranking", " mil"), "miembros": miembros})
+                           "sufijo_ranking": grupos[g].get("sufijo_ranking", " mil"), "fecha_comun": bool(grupos[g].get("fecha_comun")),
+                           "miembros": miembros})
     (SALIDA / "portada.json").write_text(json.dumps(portada, ensure_ascii=False), encoding="utf-8")
     (SALIDA / "indice.json").write_text(json.dumps(indice, ensure_ascii=False), encoding="utf-8")
     largo = pd.concat([pd.DataFrame({"serie": n, "fecha": s.index, "valor": s.values}) for n, s in mensuales.items()])
