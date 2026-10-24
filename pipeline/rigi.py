@@ -19,6 +19,10 @@ from .fuentes import pedir
 
 PAGINA = "https://www.argentina.gob.ar/economia/rigi"
 DIVISAS = Path(__file__).resolve().parents[1] / "data" / "manual" / "rigi_divisas_bcra.csv"
+ANTECEDENTES = Path(__file__).resolve().parents[1] / "data" / "manual" / "rigi_antecedentes.csv"
+CORTE_RIGI = "2024-04"  # el RIGI se presentó en el proyecto de Ley Bases (29-04-2024)
+ETIQUETAS = {"previo": "Ya anunciado antes del RIGI", "activo_previo": "Activo previo, inversión anunciada después",
+             "nuevo": "Anunciado después del RIGI"}
 NOMBRES_SECTOR = {"energia": "Energía eléctrica", "petroleo": "Petróleo y gas", "mineria": "Minería", "siderurgia": "Siderurgia", "infra": "Infraestructura"}
 PLANILLA = "https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"
 
@@ -75,6 +79,30 @@ def divisas_bcra() -> dict | None:
         return None
 
 
+def antecedentes(lista: list[dict]) -> dict | None:
+    """Agrega a cada proyecto si ya había sido anunciado antes de que se presentara el RIGI
+    (clasificación propia con fuente, en data/manual/rigi_antecedentes.csv) y resume montos por grupo."""
+    try:
+        df = pd.read_csv(ANTECEDENTES, dtype=str).fillna("")
+    except Exception:
+        return None
+    filas = {r["nombre"].strip(): r for _, r in df.iterrows()}
+    resumen = {k: {"clave": k, "etiqueta": v, "proyectos": 0, "inversion": 0.0} for k, v in ETIQUETAS.items()}
+    sin = {"clave": "sin_dato", "etiqueta": "Sin clasificar todavía", "proyectos": 0, "inversion": 0.0}
+    for p in lista:
+        r = filas.get(p["nombre"])
+        if r is None or r["clasificacion"] not in ETIQUETAS:
+            sin["proyectos"] += 1; sin["inversion"] += p["inversion"]
+            continue
+        p["antecedente"] = {"clave": r["clasificacion"], "etiqueta": ETIQUETAS[r["clasificacion"]], "primer_anuncio": r["primer_anuncio"],
+                            "detalle": r["detalle"], "fuente": r["fuente_url"]}
+        g = resumen[r["clasificacion"]]; g["proyectos"] += 1; g["inversion"] += p["inversion"]
+    grupos = list(resumen.values()) + ([sin] if sin["proyectos"] else [])
+    for g in grupos:
+        g["inversion"] = round(g["inversion"])
+    return {"corte": CORTE_RIGI, "grupos": grupos}
+
+
 def construir(salida: Path) -> list[str]:
     try:
         lista = proyectos(pedir(PLANILLA).text)
@@ -96,6 +124,7 @@ def construir(salida: Path) -> list[str]:
         d["plan_anual"] = plan
         d["ejecucion_estimada"] = ejecucion_estimada(plan, date.today())
         d["divisas_bcra"] = divisas_bcra()
+        d["antecedentes"] = antecedentes(lista)
         (salida / "rigi.json").write_text(json.dumps(d, ensure_ascii=False, allow_nan=False), encoding="utf-8")
         return []
     except Exception as e:

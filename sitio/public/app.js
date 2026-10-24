@@ -452,18 +452,42 @@ function ejecucionRigi(d, mm) {
   return caja;
 }
 
+const TONO_ANTECEDENTE = { previo: "gris", activo_previo: "violeta", nuevo: "azul" };
+
+function antecedentesRigi(d, mm) {
+  const a = d.antecedentes;
+  if (!a) return null;
+  const max = Math.max(...a.grupos.map((g) => g.inversion), 1);
+  const lista = el("div", { class: "ranking", role: "list" });
+  a.grupos.forEach((g) => lista.append(filaNivel(`${g.etiqueta} (${g.proyectos})`, g.inversion, max,
+    `${mm(g.inversion)} · ${fmt(100 * g.inversion / d.total_inversion, 0)}%`)));
+  return el("div", { class: "rigi-antecedentes" },
+    el("h4", { class: "subtitulo-ficha", text: "¿Proyectos nuevos o ya anunciados antes del RIGI?" }), lista,
+    el("p", { class: "nota", text: "Clasificación propia a partir del primer anuncio público que encontramos de cada proyecto, comparado con abril de 2024, cuando el RIGI se presentó en el proyecto de Ley Bases. “Ya anunciado”: el mismo proyecto (con su inversión o capacidad) se había anunciado antes. “Activo previo”: el área, mina o planta existía antes, pero la inversión aprobada se anunció después. “Anunciado después”: no encontramos anuncios anteriores. Que un proyecto se anunciara antes no significa que se hubiera concretado sin el RIGI, ni lo contrario. Cada fila de la tabla enlaza a la fuente usada." }));
+}
+
+function celdaAntecedente(p) {
+  const a = p.antecedente;
+  if (!a) return el("td", { text: "s/d" });
+  const [y, m] = (a.primer_anuncio || "").split("-");
+  const cuando = (a.clave === "activo_previo" ? "Inversión anunciada: " : "Primer anuncio: ") + (m ? `${m}/${y}` : y);
+  return el("td", {},
+    el("span", { class: `estado-chip tono-${TONO_ANTECEDENTE[a.clave] || "gris"}`, text: a.etiqueta, title: a.detalle }),
+    el("small", { class: "rigi-empresa" }, a.fuente ? el("a", { href: a.fuente, target: "_blank", rel: "noopener", title: a.detalle, text: cuando }) : cuando));
+}
+
 function fichaRigi(d) {
   const mm = (v) => "US$ " + fmt(v, 0) + " M";
   const maxS = Math.max(...d.sectores.map((s) => s.inversion), 1e-9);
   const sectores = el("div", { class: "ranking", role: "list" });
   d.sectores.forEach((s) => sectores.append(filaNivel(`${s.sector} (${s.proyectos})`, s.inversion, maxS, mm(s.inversion))));
   const t = el("table", { class: "tabla rigi" });
-  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos"].map((h) => el("th", { scope: "col", text: h })))));
+  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos", "Antecedente"].map((h) => el("th", { scope: "col", text: h })))));
   const tb = el("tbody");
   d.proyectos.forEach((p) => tb.append(el("tr", {},
     el("td", {}, p.norma ? el("a", { href: p.norma, target: "_blank", rel: "noopener", text: p.nombre, title: p.descripcion }) : p.nombre, el("small", { class: "rigi-empresa", text: p.empresa })),
     el("td", { text: p.sector }), el("td", { text: p.provincias.join(", ") }),
-    el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }))));
+    el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }), celdaAntecedente(p))));
   t.append(tb);
   return el("article", { class: "ficha ancha", id: d.id },
     el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
@@ -474,6 +498,7 @@ function fichaRigi(d) {
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Empleos estimados" }), el("p", { class: "estrato-valor", text: fmt(d.total_empleos, 0) }))),
     ejecucionRigi(d, mm),
     el("h4", { class: "subtitulo-ficha", text: "Por sector" }), sectores,
+    antecedentesRigi(d, mm),
     el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }),
     el("div", { class: "tabla-envoltura" }, t),
     el("p", { class: "nota", text: d.nota }),

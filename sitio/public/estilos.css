@@ -270,6 +270,9 @@ div.rank-fila.nivel:hover { background: none; }
 .tabla.rigi td:nth-child(-n+3) { white-space: normal; text-align: left; }
 .tabla.rigi th:nth-child(-n+3) { text-align: left; }
 .tabla.rigi td:first-child { min-width: 190px; }
+.tabla.rigi td:last-child { white-space: normal; text-align: left; min-width: 170px; }
+.tabla.rigi th:last-child { text-align: left; }
+.tabla.rigi .estado-chip { display: inline-block; font-size: 12px; font-weight: 600; line-height: 1.3; }
 
 /* Estados destacados en Gobierno */
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
