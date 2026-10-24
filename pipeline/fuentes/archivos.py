@@ -471,7 +471,8 @@ def eph_promedios(contenido: bytes) -> dict:
         out["casos_" + k] = int(len(g))
     # cantidad de personas por condición de actividad (expandidas con PONDERA)
     w = df["PONDERA"]
-    est, cat, ina, aporta = df["ESTADO"], df["CAT_OCUP"], df["CAT_INAC"], df["PP07H"]
+    est, cat, aporta = df["ESTADO"], df["CAT_OCUP"], df["PP07H"]
+    ina = df["CAT_INAC"] if "CAT_INAC" in df.columns else None  # desde 2026 INDEC no publica el motivo de inactividad
     ocup = est == 1
     conteos = {
         "pob_total": w.sum(),
@@ -482,15 +483,14 @@ def eph_promedios(contenido: bytes) -> dict:
         "pob_ocupados_familiares": w[ocup & ~cat.isin([1, 2, 3])].sum(),
         "pob_desocupados": w[est == 2].sum(),
         "pob_menores_10": w[est == 4].sum(),
-        "pob_inactivos_jubilados": w[(est == 3) & (ina == 1)].sum(),
-        "pob_inactivos_rentistas": w[(est == 3) & (ina == 2)].sum(),
-        "pob_inactivos_estudiantes": w[(est == 3) & (ina == 3)].sum(),
-        "pob_inactivos_amas_casa": w[(est == 3) & (ina == 4)].sum(),
-        "pob_inactivos_discapacidad": w[(est == 3) & (ina == 6)].sum(),
-        "pob_inactivos_otros": w[(est == 3) & ~ina.isin([1, 2, 3, 4, 6])].sum(),
+        "pob_inactivos_total": w[est == 3].sum(),
         "pob_sin_dato": w[~est.isin([1, 2, 3, 4])].sum(),
     }
-    out.update({k: int(v) for k, v in conteos.items()})
+    motivos = {"jubilados": [1], "rentistas": [2], "estudiantes": [3], "amas_casa": [4], "discapacidad": [6]}
+    for k, codigos in motivos.items():
+        conteos["pob_inactivos_" + k] = w[(est == 3) & ina.isin(codigos)].sum() if ina is not None else None
+    conteos["pob_inactivos_otros"] = w[(est == 3) & ~ina.isin([1, 2, 3, 4, 6])].sum() if ina is not None else None
+    out.update({k: (int(v) if v is not None else None) for k, v in conteos.items()})
     return out
 
 
@@ -499,7 +499,7 @@ def eph_tabla() -> pd.DataFrame:
     """Promedios por trimestre, guardados en data/derivados para no volver a bajar los microdatos.
     En cada corrida se calculan solo los trimestres que faltan."""
     previo = pd.read_csv(EPH_CACHE, dtype={"trimestre": str}) if EPH_CACHE.exists() else pd.DataFrame(columns=["trimestre"])
-    if "pob_total" not in previo.columns:  # caché de una versión anterior sin conteos de población: se recalcula
+    if "pob_inactivos_total" not in previo.columns:  # caché de una versión anterior: se recalcula
         previo = pd.DataFrame(columns=["trimestre"])
     hechos = set(previo["trimestre"])
     hoy = date.today()

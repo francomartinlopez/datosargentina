@@ -534,7 +534,13 @@ function fichaPoblacion(d) {
   const pintar = () => {
     cuerpo.innerHTML = "";
     const tot = d.total[n];
-    d.grupos.forEach((g, gi) => {
+    d.grupos.forEach((g0, gi) => {
+      // trimestres sin motivo de inactividad (desde 2026): los motivos se reemplazan por el total de inactivos
+      let g = g0;
+      if (g0.categorias.some((c) => c.valores[n] == null)) {
+        const sinDetalle = { clave: "inactivos_total", nombre: "Inactivos de 10 años o más (sin detalle de motivo)", valores: d.inactivos_total };
+        g = { ...g0, categorias: [...g0.categorias.filter((c) => c.valores.every((v) => v != null)), sinDetalle] };
+      }
       const sumaG = g.categorias.reduce((a, c) => a + c.valores[n], 0);
       const barra = el("div", { class: "pob-barra", role: "img", "aria-label": g.nombre });
       g.categorias.forEach((c, ci) => { const w = (c.valores[n] / sumaG) * 100; if (w > 0) barra.append(el("span", { class: `pob-seg pob-c${gi}-${ci}`, style: `width:${w}%`, title: `${c.nombre}: ${fmt(w, 1)}%` })); });
@@ -542,7 +548,7 @@ function fichaPoblacion(d) {
         el("thead", {}, el("tr", {}, ...["", "Personas", "% del grupo", "% de la población", "Cambio en personas"].map((h) => el("th", { scope: "col", text: h })))));
       const tb = el("tbody");
       g.categorias.forEach((c, ci) => {
-        const v = c.valores[n], va = comp ? c.valores[comp.i] : null;
+        const v = c.valores[n], va = comp && c.valores[comp.i] != null ? c.valores[comp.i] : null;
         tb.append(el("tr", {},
           el("td", {}, el("span", { class: `pob-punto pob-c${gi}-${ci}` }), c.nombre),
           el("td", { class: "num", text: millones(v) }), el("td", { class: "num", text: fmt((v / sumaG) * 100, 1) + "%" }),
