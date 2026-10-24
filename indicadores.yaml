@@ -216,6 +216,14 @@ series:
   morosidad_pnfc:      {fuente: archivo, lector: bcra_pnfc, campo: "1. Total|Total"}
   morosidad_fintech:   {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Fintech"}
   morosidad_tarjetas_nb: {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Otras emisoras de tarjetas de crédito"}
+  mora_familias:       {fuente: archivo, lector: bcra_ib_lineas, campo: "Familias - Total|Cartera irregular total"}
+  mora_fam_personales: {fuente: archivo, lector: bcra_ib_lineas, campo: "Familias - Total|Personales"}
+  mora_fam_tarjetas:   {fuente: archivo, lector: bcra_ib_lineas, campo: "Familias - Total|Tarjetas de crédito"}
+  mora_fam_prendarios: {fuente: archivo, lector: bcra_ib_lineas, campo: "Familias - Total|Con garantía prendaria"}
+  mora_fam_hipotecarios: {fuente: archivo, lector: bcra_ib_lineas, campo: "Familias - Total|Con garantía hipotecaria"}
+  mora_empresas:       {fuente: archivo, lector: bcra_ib_lineas, campo: "Empresas - Total|Cartera irregular total"}
+  prestamos_personas:  {fuente: bcra, id: 883, agregacion: cierre}
+  remuneracion_asalariados: {fuente: datosgobar, id: "323.1_TOTAL_GENEADO__45"}
   morosidad_electro:   {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Venta de electrodomésticos"}
   morosidad_coop:      {fuente: archivo, lector: bcra_pnfc, campo: "2. Grupo de proveedor|Cooperativas y mutuales"}
   pnfc_tarjetas:       {fuente: archivo, lector: bcra_pnfc, campo: "7. Tipo de asistencia|Tarjetas de crédito"}
@@ -361,6 +369,7 @@ calculos:
   reservas_netas_fmi: {operacion: resta, a: reservas_netas, b: fmi_desembolsos_2025}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
+  deuda_hogares_masa: {operacion: stock_sobre_flujo_anual, a: prestamos_personas, b: remuneracion_asalariados, factor: 0.001}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
@@ -377,6 +386,8 @@ grupos:
      nota: "Irregularidad de la cartera de préstamos al sector privado (BCRA, Informe sobre bancos). Las entidades financieras no bancarias son compañías financieras y cajas de crédito autorizadas por el BCRA. Las billeteras virtuales y fintech (Mercado Pago, Ualá, Naranja X y otras) no son entidades financieras: sus datos vienen del Informe de Proveedores No Financieros de Crédito del BCRA (Central de Deudores), que se publica dos veces por año con unos meses de rezago. En bancos la cartera incluye empresas; en los proveedores no financieros es casi toda de personas. Bancos privados extranjeros no tiene serie mensual en la fuente."}
   - {id: morosidad_pnfc_tipo, nombre: "Morosidad en fintech, billeteras y otros prestamistas no financieros, por tipo de crédito", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
      nota: "Irregularidad de la cartera de los proveedores no financieros de crédito (BCRA, Central de Deudores). Resto incluye préstamos prendarios, hipotecarios y otras financiaciones. Se publica dos veces por año con unos meses de rezago."}
+  - {id: morosidad_familias_tipo, nombre: "Morosidad de las familias por tipo de crédito (y de las empresas)", seccion: "Crédito y alquileres", ranking: diferencia, unidad_ranking: "puntos porcentuales", escala_ranking: 1, sufijo_ranking: " pp",
+     nota: "Irregularidad de las financiaciones del sistema financiero (bancos y entidades financieras) según el anexo del Informe sobre Bancos del BCRA. Familias: préstamos a personas humanas sin destino comercial; empresas: personas jurídicas y crédito comercial a personas humanas. No incluye fintech ni billeteras virtuales (ver el gráfico por tipo de prestamista). Datos desde 2010."}
   - {id: reservas_componentes, nombre: "Qué se resta de las reservas brutas para llegar a las netas", seccion: "Dólar y finanzas", ranking: nivel, unidad_ranking: "millones de US$ de hoy, último mes", sufijo_ranking: " M",
      nota: "Componentes de la estimación de reservas netas. El swap con EE.UU. activado (2.500 millones entre noviembre de 2025 y enero de 2026) no se muestra aparte."}
   - {id: emae_sectores, nombre: "Actividad por sector (EMAE)", seccion: Actividad,
@@ -577,6 +588,18 @@ indicadores:
   - {id: adr_ypf, nombre: "Acción de YPF en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: adr_ypf, tipo_valor: nivel, moneda: USD, unidad: "US$ de hoy por ADR", nota: "Cierre mensual ajustado por dividendos y divisiones."}
   - {id: morosidad, vista_inicial: desde_2003, nombre: "Morosidad de los préstamos al sector privado", seccion: "Crédito y alquileres", serie: morosidad, tipo_valor: tasa, unidad: "% de la cartera en situación irregular",
      nota: "Irregularidad de la cartera de financiaciones al sector privado del sistema financiero (BCRA, Informe sobre bancos)."}
+  - {id: mora_familias, nombre: "Morosidad de los créditos a familias", seccion: "Crédito y alquileres", serie: mora_familias, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", portada: true,
+     nota: "Irregularidad de los préstamos de bancos y entidades financieras a personas humanas sin destino comercial (personales, tarjetas, prendarios, hipotecarios y otros), según el anexo del Informe sobre Bancos del BCRA. Situación irregular: deudas con más de 90 días de atraso o en gestión judicial. No incluye fintech ni billeteras virtuales. Datos desde 2010."}
+  - {id: mora_fam_total_g, nombre: "Familias: total", seccion: "Crédito y alquileres", serie: mora_familias, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: mora_fam_personales, nombre: "Familias: préstamos personales", seccion: "Crédito y alquileres", serie: mora_fam_personales, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: mora_fam_tarjetas, nombre: "Familias: tarjetas de crédito", seccion: "Crédito y alquileres", serie: mora_fam_tarjetas, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: mora_fam_prendarios, nombre: "Familias: prendarios (autos)", seccion: "Crédito y alquileres", serie: mora_fam_prendarios, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: mora_fam_hipotecarios, nombre: "Familias: hipotecarios", seccion: "Crédito y alquileres", serie: mora_fam_hipotecarios, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: mora_empresas, nombre: "Empresas: total", seccion: "Crédito y alquileres", serie: mora_empresas, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
+  - {id: deuda_hogares_masa, vista_inicial: desde_2003, nombre: "Deuda bancaria de las familias como % de la masa salarial", seccion: "Crédito y alquileres", serie: deuda_hogares_masa, tipo_valor: tasa, unidad: "% de la masa salarial de un año", frecuencia: T,
+     nota: "Saldo de préstamos de bancos y entidades financieras a personas humanas (BCRA, fin de cada trimestre, en pesos y dólares) dividido por la remuneración total al trabajo asalariado de los últimos 4 trimestres, registrado y no registrado (INDEC, cuenta de generación del ingreso). No incluye deudas con fintech, billeteras, casas de electrodomésticos ni cooperativas, ni deudas impagas de servicios o impuestos. La masa salarial se publica con un trimestre de rezago."}
+  - {id: prestamos_personas, nombre: "Deuda bancaria de las familias (real)", seccion: "Crédito y alquileres", serie: prestamos_personas, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy", escala: 0.001,
+     nota: "Saldo total de préstamos de bancos y entidades financieras a personas humanas, en pesos y en dólares convertidos a pesos (BCRA)."}
   - {id: homicidios, vista_inicial: desde_2003, nombre: "Homicidios dolosos", seccion: "Seguridad", serie: homicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
      nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad)."}
   - {id: suicidios, vista_inicial: desde_2003, nombre: "Suicidios", seccion: "Seguridad", serie: suicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,

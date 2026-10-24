@@ -28,6 +28,7 @@ ARCHIVOS = {
     "canastas": INDEC + "sociedad/serie_cba_cbt.xls",
     "supermercados": INDEC + "economia/serie_supermercados.xlsx",
     "itcrm": "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/ITCRMSerie.xlsx",
+    "ib_anexo": "https://www.bcra.gob.ar/archivos/Pdfs/PublicacionesEstadisticas/informes/informe-bancos-anexo.xlsx",
     "ingresos": INDEC + "sociedad/cuadros_informe_ingresos_{MM}_{AA}.xls",
     "cin": INDEC + "economia/cin_{T}_{AAAA}.xls",
 }
@@ -396,6 +397,33 @@ def bcra_pnfc(campo: str, h: dict | None = None) -> pd.Series:
     return leer_pnfc(h if h is not None else pnfc_hojas(), campo)
 
 
+# ---------- BCRA: anexo del Informe sobre Bancos (calidad de cartera por línea, familias y empresas) ----------
+
+def leer_ib_lineas(h: dict, campo: str) -> pd.Series:
+    """campo = "bloque|fila" de la hoja "Calidad de Cartera (por líneas)", sección "Ratio de irregularidad" (en %).
+    bloque es el título sin numeración, p. ej. "Familias - Total"; fila, p. ej. "Cartera irregular total"."""
+    bloque, fila = (x.strip().lower() for x in campo.split("|"))
+    df = next(v for k, v in h.items() if k.strip().lower().startswith("calidad de cartera (por l"))
+    titulo = lambda i: re.sub(r"^[\d.]+\s*", "", _texto(df.iat[i, 0])).lower()
+    inicio = next(i for i in range(len(df)) if titulo(i) == bloque)
+    ratio = next(i for i in range(inicio, len(df)) if "ratio de irregularidad" in _texto(df.iat[i, 0]).lower())
+    fechas = pd.to_datetime(df.iloc[ratio + 1, 1:], errors="coerce")
+    for i in range(ratio + 2, len(df)):
+        t = _texto(df.iat[i, 0]).lower()
+        if t.startswith("fuente") or not t:
+            break
+        if t == fila:
+            s = pd.Series(pd.to_numeric(df.iloc[i, 1:], errors="coerce").values, index=fechas, dtype=float).dropna()
+            s = s[s.index.notna()]
+            s.index = s.index.to_period("M").to_timestamp()
+            return s.sort_index()
+    raise ValueError(f"Informe sobre Bancos: no se encontró {campo}")
+
+
+def bcra_ib_lineas(campo: str, h: dict | None = None) -> pd.Series:
+    return leer_ib_lineas(h if h is not None else hojas("ib_anexo"), campo)
+
+
 # ---------- Colegio de Escribanos de la Ciudad de Buenos Aires ----------
 
 ESCRIBANOS = "https://www.colegio-escribanos.org.ar/noticias/{mes}-{anio}-Comparativo-anual-por-mes.xls"
@@ -493,6 +521,7 @@ LECTORES = {
     "oede_empresas": oede_empresas,
     "escribanos_compraventas": escribanos_compraventas,
     "bcra_pnfc": bcra_pnfc,
+    "bcra_ib_lineas": bcra_ib_lineas,
     "indec_pobreza": indec_pobreza,
     "indec_oferta_demanda": indec_oferta_demanda,
     "indec_canastas": indec_canastas,

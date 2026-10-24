@@ -149,6 +149,19 @@ def porcentaje_de(a: pd.Series, b: pd.Series, multiplicar: pd.Series | None = No
     return (a / b * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)
 
 
+def stock_sobre_flujo_anual(stock: pd.Series, flujo: pd.Series, factor: float = 1) -> pd.Series:
+    """Stock mensual (saldo a fin de mes) como % de un flujo trimestral anualizado (promedio de los
+    últimos 4 trimestres = flujo de un año). Trimestral: saldo del último mes de cada trimestre."""
+    s = stock.dropna() * factor
+    q = s.groupby(s.index.to_period("Q")).last()
+    meses = s.groupby(s.index.to_period("Q")).apply(lambda x: x.index.max().month)
+    q = q[(meses % 3) == 0]  # solo trimestres completos
+    q.index = q.index.to_timestamp()
+    anual = flujo.dropna().rolling(4, min_periods=4).mean()
+    q, anual = q.align(anual, join="inner")
+    return (q / anual * 100).replace([float("inf"), -float("inf")], pd.NA).dropna().astype(float)
+
+
 def reservas_netas(reservas, encajes_balance, depositos_usd, swap_yuan, cny_por_usd, organismos, pases_balance,
                    pase_2016, swap_eeuu, desde_pases="2024-08-01") -> dict[str, pd.Series]:
     """Reservas netas (millones de US$, fin de mes) = brutas − encajes en dólares − swap con China −

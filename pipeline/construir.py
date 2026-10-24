@@ -124,6 +124,13 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
                 m["reservas"], usd(m["encajes"]), m["depositos_usd"], m["swap_yuan"], m["cny"],
                 usd(m["organismos"]), usd(m["pases"]), m["pase_2016"], m["swap_eeuu"]))
             continue
+        if c["operacion"] == "stock_sobre_flujo_anual":  # saldo / flujo anual (4 trimestres anualizados), en %
+            faltan = [x for x in (c["a"], c["b"]) if x not in mensuales]
+            if faltan:
+                alertas.append(f"{nombre}: falta {', '.join(faltan)}, no se calcula")
+                continue
+            mensuales[nombre] = transformar.stock_sobre_flujo_anual(mensuales[c["a"]], mensuales[c["b"]], c.get("factor", 1))
+            continue
         if c["operacion"] == "porcentaje_de":  # (a × multiplicar) / (b / divisor_b) en %, trimestral
             insumos = [c["a"], c["b"]] + ([c["multiplicar"]] if c.get("multiplicar") else [])
             faltan = [x for x in insumos if x not in mensuales]
