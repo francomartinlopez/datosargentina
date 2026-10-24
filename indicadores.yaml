@@ -369,7 +369,7 @@ calculos:
   reservas_netas_fmi: {operacion: resta, a: reservas_netas, b: fmi_desembolsos_2025}
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
-  deuda_hogares_masa: {operacion: stock_sobre_flujo_anual, a: prestamos_personas, b: remuneracion_asalariados, factor: 0.001}
+  deuda_hogares_masa: {operacion: stock_sobre_flujo_anual, a: prestamos_personas, b: remuneracion_asalariados}
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
@@ -598,7 +598,7 @@ indicadores:
   - {id: mora_empresas, nombre: "Empresas: total", seccion: "Crédito y alquileres", serie: mora_empresas, tipo_valor: tasa, unidad: "% de la cartera en situación irregular", grupo: morosidad_familias_tipo}
   - {id: deuda_hogares_masa, vista_inicial: desde_2003, nombre: "Deuda bancaria de las familias como % de la masa salarial", seccion: "Crédito y alquileres", serie: deuda_hogares_masa, tipo_valor: tasa, unidad: "% de la masa salarial de un año", frecuencia: T,
      nota: "Saldo de préstamos de bancos y entidades financieras a personas humanas (BCRA, fin de cada trimestre, en pesos y dólares) dividido por la remuneración total al trabajo asalariado de los últimos 4 trimestres, registrado y no registrado (INDEC, cuenta de generación del ingreso). No incluye deudas con fintech, billeteras, casas de electrodomésticos ni cooperativas, ni deudas impagas de servicios o impuestos. La masa salarial se publica con un trimestre de rezago."}
-  - {id: prestamos_personas, nombre: "Deuda bancaria de las familias (real)", seccion: "Crédito y alquileres", serie: prestamos_personas, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy", escala: 0.001,
+  - {id: prestamos_personas, nombre: "Deuda bancaria de las familias (real)", seccion: "Crédito y alquileres", serie: prestamos_personas, tipo_valor: nivel, moneda: ARS, unidad: "millones de pesos de hoy",
      nota: "Saldo total de préstamos de bancos y entidades financieras a personas humanas, en pesos y en dólares convertidos a pesos (BCRA)."}
   - {id: homicidios, vista_inicial: desde_2003, nombre: "Homicidios dolosos", seccion: "Seguridad", serie: homicidios, tipo_valor: tasa, unidad: "víctimas cada 100.000 habitantes por año", frecuencia: A,
      nota: "Sistema Nacional de Información Criminal (Ministerio de Seguridad)."}
