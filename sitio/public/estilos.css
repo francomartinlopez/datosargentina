@@ -323,3 +323,5 @@ div.rank-fila.nivel:hover { background: none; }
 .pob-c1-3 { background: var(--violeta); } .pob-c1-4 { background: var(--naranja); } .pob-c1-5 { background: var(--ambar); } .pob-c1-6 { background: var(--rojo); }
 .pob-selectores { display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .pob-selectores .selector { max-width: 100%; }
+.pob-selectores .etiqueta-selector { display: flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; }
+.pob-selectores .selector { min-width: 0; flex: 1 1 auto; }
