@@ -24,9 +24,9 @@ SERIES = "https://apis.datos.gob.ar/series/api/series/"
 BUSCAR = "https://apis.datos.gob.ar/series/api/search/"
 CAB = {"User-Agent": "datos-argentina/1.0 (github.com/francomartinlopez/datosargentina)"}
 
-IDS = ['332.2_SISTEMA_FIADA__53']
+IDS = ['149.1_SOR_PRIADO_OCTU_0_25']
 ARGENTINADATOS = ["finanzas/fci/mercadoDinero/penultimo", "finanzas/fci/mercadoDinero/2026/09/30", "finanzas/fci/rentaFija/ultimo"]
-BUSQUEDAS = ['irregularidad financiaciones familias', 'cartera irregular familias', 'morosidad hogares', 'financiaciones a familias', 'masa salarial', 'remuneración al trabajo asalariado', 'cuenta generación del ingreso remuneración', 'masa salarial sipa', 'remuneración total asalariados registrados', 'trabajadores registrados total sipa']
+BUSQUEDAS = ['índice de salarios no registrado', 'salarios sector privado no registrado', 'índice de salarios total', 'salarios registrados no registrados']
 
 
 def sondear_id(i: str) -> dict:
