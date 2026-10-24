@@ -321,3 +321,5 @@ div.rank-fila.nivel:hover { background: none; }
 .pob-c0-3 { background: var(--verde); } .pob-c0-4 { background: var(--ambar); } .pob-c0-5 { background: var(--rojo); }
 .pob-c1-0 { background: var(--gris); } .pob-c1-1 { background: var(--azul); } .pob-c1-2 { background: var(--verde); }
 .pob-c1-3 { background: var(--violeta); } .pob-c1-4 { background: var(--naranja); } .pob-c1-5 { background: var(--ambar); } .pob-c1-6 { background: var(--rojo); }
+.pob-selectores { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.pob-selectores .selector { max-width: 100%; }

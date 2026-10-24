@@ -516,21 +516,29 @@ function fichaRigi(d) {
 /* ---------- Población según condición de actividad (EPH) ---------- */
 
 function fichaPoblacion(d) {
-  const n = d.trimestres.length - 1;
+  let n = d.trimestres.length - 1;
   const etiquetaT = (t) => `${t.slice(-1)}° trim. ${t.slice(0, 4)}`;
-  const opciones = [];
-  const anioAntes = d.trimestres.indexOf(`${+d.trimestres[n].slice(0, 4) - 1}${d.trimestres[n].slice(4)}`);
-  if (anioAntes >= 0) opciones.push({ texto: `Un año antes (${etiquetaT(d.trimestres[anioAntes])})`, i: anioAntes });
-  const previoGob = d.trimestres.indexOf("2023-T4");
-  if (previoGob >= 0) opciones.push({ texto: "Antes del gobierno actual (4° trim. 2023)", i: previoGob });
-  const previoGob2 = d.trimestres.indexOf("2019-T4");
-  if (previoGob2 >= 0) opciones.push({ texto: "Antes del gobierno anterior (4° trim. 2019)", i: previoGob2 });
-  let comp = opciones[0];
+  const opcionesPara = (k) => {
+    const o = [];
+    const anioAntes = d.trimestres.indexOf(`${+d.trimestres[k].slice(0, 4) - 1}${d.trimestres[k].slice(4)}`);
+    if (anioAntes >= 0) o.push({ texto: `Un año antes (${etiquetaT(d.trimestres[anioAntes])})`, i: anioAntes });
+    [["2023-T4", "Antes del gobierno actual (4° trim. 2023)"], ["2019-T4", "Antes del gobierno anterior (4° trim. 2019)"]].forEach(([t, txt]) => {
+      const i = d.trimestres.indexOf(t); if (i >= 0 && i < k) o.push({ texto: txt, i });
+    });
+    return o;
+  };
+  let opciones = opcionesPara(n), comp = opciones[0];
   const millones = (v) => fmt(v / 1e6, 2) + " M";
   const miles = (v) => (v > 0 ? "+" : v < 0 ? "−" : "") + fmt(Math.abs(v) / 1e3, 0) + " mil";
   const cuerpo = el("div");
-  const selector = el("select", { class: "selector", "aria-label": "Comparar contra", onchange: (e) => { comp = opciones[e.target.selectedIndex]; pintar(); } },
-    ...opciones.map((o) => el("option", { text: o.texto })));
+  const selector = el("select", { class: "selector", "aria-label": "Comparar contra", onchange: (e) => { comp = opciones[e.target.selectedIndex]; pintar(); } });
+  const llenarSelector = () => { selector.innerHTML = ""; opciones.forEach((o) => selector.append(el("option", { text: o.texto }))); };
+  llenarSelector();
+  const selTrim = el("select", { class: "selector", "aria-label": "Trimestre", onchange: (e) => {
+    n = d.trimestres.length - 1 - e.target.selectedIndex; opciones = opcionesPara(n); comp = opciones[0]; llenarSelector(); pintar(); subt.textContent = textoSub(); } },
+    ...[...d.trimestres].reverse().map((t) => el("option", { text: etiquetaT(t) })));
+  const textoSub = () => `Millones de personas en los 31 aglomerados urbanos de la EPH · ${etiquetaT(d.trimestres[n])}`;
+  const subt = el("p", { class: "unidad", text: textoSub() });
   const pintar = () => {
     cuerpo.innerHTML = "";
     const tot = d.total[n];
@@ -574,9 +582,9 @@ function fichaPoblacion(d) {
   pintar();
   return el("article", { class: "ficha ancha", id: d.id },
     el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
-      el("p", { class: "unidad", text: `Millones de personas en los 31 aglomerados urbanos de la EPH · ${etiquetaT(d.trimestres[n])}` }))),
+      subt)),
     tasas,
-    opciones.length ? el("label", { class: "etiqueta-selector" }, "Comparar contra ", selector) : null,
+    el("div", { class: "pob-selectores" }, el("label", { class: "etiqueta-selector" }, "Trimestre ", selTrim), el("label", { class: "etiqueta-selector" }, "Comparar contra ", selector)),
     cuerpo,
     el("p", { class: "nota", text: d.nota + " Tasa de actividad: activos sobre población total; desocupación: desocupados sobre activos; asalariados sin aportes: sobre el total de asalariados; cuenta propia: sobre el total de ocupados." }),
     el("div", { class: "ficha-pie" }, el("span", { text: "Fuente: INDEC, Encuesta Permanente de Hogares (microdatos). Cálculo propio." })));
