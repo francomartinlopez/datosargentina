@@ -132,7 +132,11 @@ def main() -> None:
             except Exception as e:
                 informe[clave].append({"url": u, "error": repr(e)})
     # páginas cuyo HTML se guarda crudo para buscar los datos que cargan por JavaScript
-    for clave, u in {"rigi": "https://www.argentina.gob.ar/economia/rigi", "ocla_port": "https://www.ocla.org.ar/portafolio/11/",
+    for clave, u in {"udesa_espop": "https://udesa.edu.ar/espop", "udesa_espop2": "https://udesa.edu.ar/encuesta-de-satisfaccion-politica-y-opinion-publica",
+                     "atlas_poll": "https://atlasintel.org/poll/latam-pulse-argentina-september-2026-2026-10-14",
+                     "zuban": "https://zubancordoba.com/", "opina": "https://opinaargentina.com/", "poliarquia": "https://www.poliarquia.com/",
+                     "mfit": "https://www.myfconsultora.com/", "analogias": "https://analogias.com.ar/", "giacobbe": "https://giacobbeyasociados.com/",
+                     "dalessio": "https://www.dalessio.com.ar/", "rigi": "https://www.argentina.gob.ar/economia/rigi", "ocla_port": "https://www.ocla.org.ar/portafolio/11/",
                      "magyp_aves": "https://www.magyp.gob.ar/sitio/areas/aves/estadistica/carne/index.php",
                      "magyp_porc": "https://www.magyp.gob.ar/sitio/areas/porcinos/estadistica/",
                      "magyp_bov": "https://www.magyp.gob.ar/sitio/areas/bovinos/informacion_sectorial/indicadores/",
