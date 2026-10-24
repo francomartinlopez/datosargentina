@@ -436,7 +436,9 @@ EPH_COLUMNAS = ["cuenta_propia", "asalariado_registrado", "asalariado_no_registr
 def _eph_zip(anio: int, trim: int) -> bytes | None:
     suf = {1: "er", 2: "do", 3: "er", 4: "to"}[trim]
     for nombre in (f"EPH_usu_{trim}_Trim_{anio}_txt.zip", f"EPH_usu_{trim}{suf}_Trim_{anio}_txt.zip",
-                   f"EPH_usu_{trim}{suf}_Trim_{anio}.zip", f"EPH_usu_{trim}_Trim_{anio}.zip"):
+                   f"EPH_usu_{trim}{suf}_Trim_{anio}.zip", f"EPH_usu_{trim}_Trim_{anio}.zip",
+                   f"EPH_usu_{trim}{suf}Trim_{anio}_txt.zip", f"EPH_usu_{trim}_trim_{anio}_txt.zip", f"EPH_usu_{trim}{suf}_trim_{anio}_txt.zip",
+                   f"EPH_usu_{trim}{suf}Trim{anio}_txt.zip", f"EPH_usu_{trim}Trim_{anio}_txt.zip"):
         try:
             r = requests.get(EPH + nombre, headers=CABECERAS, timeout=TIMEOUT)
         except requests.RequestException:
@@ -452,7 +454,7 @@ def eph_promedios(contenido: bytes) -> dict:
     import numpy as np
     import zipfile
     z = zipfile.ZipFile(io.BytesIO(contenido))
-    nombres = [n for n in z.namelist() if "individual" in n.lower() and n.lower().endswith(".txt")]
+    nombres = [n for n in z.namelist() if ("individual" in n.lower() or "personas" in n.lower()) and n.lower().endswith(".txt")]
     if not nombres:
         raise ValueError(f"sin archivo de personas en {z.namelist()[:6]}")
     nombre = nombres[0]
