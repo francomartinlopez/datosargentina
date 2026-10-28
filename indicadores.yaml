@@ -87,8 +87,8 @@ series:
   auh_prestaciones:    {fuente: datosgobar, id: "189.1_TOTAL_AUHAUH_0_0_9"}
   auh_monto:           {fuente: datosgobar, id: "165.1_AAUH_0_0_3"}
   pnc_gasto:           {fuente: datosgobar, id: "186.3_PENSIONES_VAS_0_0_26"}
-  jub_sipa_gasto:      {fuente: datosgobar, id: "186.3_JUBILACIONINO_0_0_53"}
-  jub_otros_gasto:     {fuente: datosgobar, id: "186.3_JUBILACIONLES_0_0_49"}
+  jub_sipa_gasto:      {fuente: archivo, lector: economia_politica_ingresos, campo: jubilaciones_pensiones_sist_int_previsional_argentino}
+  jub_otros_gasto:     {fuente: archivo, lector: economia_politica_ingresos, campo: jubilaciones_pensiones_otros_regimenes_nacionales}
   expo_primarios:      {fuente: datosgobar, id: "75.3_IETPP_0_M_43"}
   expo_moa:            {fuente: datosgobar, id: "74.3_IEMOA_0_M_48"}
   expo_moi:            {fuente: datosgobar, id: "75.3_ITM_0_M_13"}
