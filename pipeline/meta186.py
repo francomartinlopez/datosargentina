@@ -1,5 +1,10 @@
-import requests, pathlib, csv, io
-t = requests.get("https://infra.datos.gob.ar/catalog/sspm/dataset/186/distribution/186.3/download/gasto-publico-programas-segurida-mensual.csv", timeout=60).text
-rows = list(csv.reader(io.StringIO(t)))
-out = [f"{h} = {v}" for h, v in zip(rows[0], rows[-1])]
-pathlib.Path("data/meta186.txt").write_text("\n".join(out)); print("\n".join(out))
+import requests, pathlib
+out = []
+for q in ["jubilaciones pensiones sistema integrado previsional", "jubilaciones otros regimenes nacionales", "politica de ingresos"]:
+    r = requests.get("https://apis.datos.gob.ar/series/api/search/", params={"q": q, "limit": 50}, timeout=60)
+    for d in r.json().get("data", []):
+        f = d.get("field", {})
+        if str(f.get("id", "")).startswith("186.3"):
+            out.append(f"{f.get('id')} | {f.get('title')} | {f.get('description')}")
+out = sorted(set(out))
+pathlib.Path("data/meta186.txt").write_text("\n".join(out) or "nada"); print("\n".join(out))
