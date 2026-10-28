@@ -147,3 +147,11 @@ def test_sin_fichas_solas_en_la_grilla():
     from pipeline import diseno
     config = yaml.safe_load(open(Path(__file__).resolve().parents[1] / "indicadores.yaml", encoding="utf-8"))
     assert diseno.huecos(config) == []
+
+
+def test_leer_politica_ingresos():
+    from pipeline.fuentes import archivos
+    csv = b"indice_tiempo,jubilaciones_pensiones_otros_regimenes_nacionales,total_politica_ingresos\n2026-08-01,300072.5,6907491.9\n2026-09-01,700462.3,8239244.9\n"
+    df = archivos.leer_politica_ingresos(csv)
+    assert df.loc["2026-09-01", "jubilaciones_pensiones_otros_regimenes_nacionales"] == 700462.3
+    assert list(df.index.strftime("%Y-%m")) == ["2026-08", "2026-09"]

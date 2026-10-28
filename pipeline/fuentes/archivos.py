@@ -697,7 +697,34 @@ def oede_empresas(campo: str) -> pd.Series:
     return leer_oede(oede_flujos_hoja(), campo)
 
 
+
+# ---------- Ministerio de Economía: gasto en política de ingresos por programa ----------
+# La API de series devuelve vacía alguna columna de este CSV (p. ej. jubilaciones de otros
+# regímenes), así que se lee el archivo completo de la distribución 186.3.
+
+POLITICA_INGRESOS = "https://infra.datos.gob.ar/catalog/sspm/dataset/186/distribution/186.3/download/gasto-publico-programas-segurida-mensual.csv"
+
+
+@lru_cache(maxsize=None)
+def _politica_ingresos_csv() -> pd.DataFrame:
+    r = requests.get(POLITICA_INGRESOS, headers=CABECERAS, timeout=TIMEOUT)
+    r.raise_for_status()
+    return leer_politica_ingresos(r.content)
+
+
+def leer_politica_ingresos(contenido: bytes) -> pd.DataFrame:
+    df = pd.read_csv(io.BytesIO(contenido))
+    df["indice_tiempo"] = pd.to_datetime(df["indice_tiempo"])
+    return df.set_index("indice_tiempo").sort_index()
+
+
+def economia_politica_ingresos(campo: str) -> pd.Series:
+    """Columna del CSV (millones de pesos corrientes, devengado mensual)."""
+    return pd.to_numeric(_politica_ingresos_csv()[campo], errors="coerce").dropna()
+
+
 LECTORES = {
+    "economia_politica_ingresos": economia_politica_ingresos,
     "oede_empresas": oede_empresas,
     "escribanos_compraventas": escribanos_compraventas,
     "bcra_pnfc": bcra_pnfc,
