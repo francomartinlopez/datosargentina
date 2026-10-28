@@ -87,6 +87,8 @@ series:
   auh_prestaciones:    {fuente: datosgobar, id: "189.1_TOTAL_AUHAUH_0_0_9"}
   auh_monto:           {fuente: datosgobar, id: "165.1_AAUH_0_0_3"}
   pnc_gasto:           {fuente: datosgobar, id: "186.3_PENSIONES_VAS_0_0_26"}
+  jub_sipa_gasto:      {fuente: datosgobar, id: "186.3_JUBILACIONINO_0_0_53"}
+  jub_otros_gasto:     {fuente: datosgobar, id: "186.3_JUBILACIONLES_0_0_49"}
   expo_primarios:      {fuente: datosgobar, id: "75.3_IETPP_0_M_43"}
   expo_moa:            {fuente: datosgobar, id: "74.3_IEMOA_0_M_48"}
   expo_moi:            {fuente: datosgobar, id: "75.3_ITM_0_M_13"}
@@ -400,6 +402,8 @@ calculos:
   # PIB y FBCF trimestrales en pesos corrientes vienen anualizados: se dividen por 4
   ied_inversion:   {operacion: porcentaje_de, a: bdp_ied, b: fbcf_corriente, multiplicar: dolar_mayorista, divisor_b: 4, acumular: 4}
   salario_total:   {operacion: indice_ponderado, series: [salario_privado, salario_publico, salario_no_registrado], pesos: [50.16, 29.91, 19.93], base: "2016-10-01"}
+  gasto_jub_contributivas: {operacion: combinacion, terminos: {jub_sipa_gasto: 1, jub_otros_gasto: 1}}
+  gasto_social_sin_jub: {operacion: combinacion, terminos: {gasto_politica_ingresos: 1, jub_sipa_gasto: -1, jub_otros_gasto: -1}}
   granos_total:     {operacion: combinacion, terminos: {prod_soja: 1, prod_maiz: 1, prod_trigo: 1, prod_girasol: 1}}
   sueldo_en_canastas: {operacion: cociente, a: remuneracion_sipa, b: cbt}
   escritura_pesos:  {operacion: cociente, a: escrituras_monto, b: escrituras_caba}
@@ -507,7 +511,12 @@ indicadores:
   - {id: asalariados_privados, nombre: "Asalariados privados registrados", seccion: "Empleo e ingresos", serie: asalariados_privados, desestacionalizada: asalariados_privados_desest, tipo_valor: nivel, unidad: "miles de personas"}
   - {id: monotributistas, nombre: "Monotributistas registrados", seccion: "Empleo e ingresos", serie: monotributistas, desestacionalizada: monotributistas_desest, tipo_valor: nivel, unidad: "miles de personas",
      nota: "Trabajadores independientes inscriptos en el monotributo (SIPA, Secretaría de Trabajo). No incluye monotributo social ni autónomos. Es la cantidad de inscriptos, no de quienes trabajan efectivamente."}
-  - {id: gasto_politica_ingresos, nombre: "Gasto en programas sociales (política de ingresos)", seccion: "Pobreza y programas sociales", serie: gasto_politica_ingresos, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: gasto_politica_ingresos, nombre: "Gasto total en política de ingresos (jubilaciones y programas sociales)", seccion: "Pobreza y programas sociales", serie: gasto_politica_ingresos, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Gasto devengado de la Administración Nacional en programas de seguridad social y transferencias de ingresos (Ministerio de Economía). Incluye jubilaciones y pensiones contributivas (alrededor de tres cuartos del total), pensiones no contributivas, AUH, asignaciones familiares, PUAM, becas, seguro de desempleo y planes de empleo."}
+  - {id: gasto_jub_contributivas, nombre: "Gasto en jubilaciones y pensiones contributivas (ANSES y otros regímenes)", seccion: "Pobreza y programas sociales", serie: gasto_jub_contributivas, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Jubilaciones y pensiones del SIPA (ANSES) más las de otros regímenes nacionales (Fuerzas Armadas, de seguridad y otros). Gasto devengado de la Administración Nacional, misma fuente que el total de política de ingresos."}
+  - {id: gasto_social_sin_jub, nombre: "Gasto en programas sociales (sin jubilaciones contributivas)", seccion: "Pobreza y programas sociales", serie: gasto_social_sin_jub, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Gasto total en política de ingresos menos jubilaciones y pensiones contributivas. Incluye pensiones no contributivas, AUH y Protección Social, asignaciones familiares, Pensión Universal para el Adulto Mayor, becas (Progresar), seguro de desempleo y planes de empleo (Argentina Trabaja, Jefes y Jefas, Familias y otros según el período). Cálculo propio con datos del Ministerio de Economía."}
   - {id: auh_prestaciones, nombre: "AUH: prestaciones liquidadas", seccion: "Pobreza y programas sociales", serie: auh_prestaciones, tipo_valor: nivel, unidad: "prestaciones (hijos)"}
   - {id: auh_monto, nombre: "AUH: monto por hijo (real)", seccion: "Pobreza y programas sociales", serie: auh_monto, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy"}
   - {id: auh_gasto, nombre: "AUH: gasto total", seccion: "Pobreza y programas sociales", serie: auh_gasto, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
