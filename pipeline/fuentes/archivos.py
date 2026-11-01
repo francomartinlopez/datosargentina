@@ -728,6 +728,13 @@ def economia_politica_ingresos(campo: str) -> pd.Series:
 
 ARCA_SERIE = "https://contenidos.afip.gob.ar/institucional/estudios/archivos/serie{anio}.xls"
 MESES_MAYUS = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"]
+_PREFIJOS_MES = {"ENE": 0, "FEB": 1, "MAR": 2, "ABR": 3, "MAY": 4, "JUN": 5, "JUL": 6, "AGO": 7, "SEP": 8, "SET": 8, "OCT": 9, "NOV": 10, "DIC": 11}
+
+
+def numero_mes(v) -> int | None:
+    """'Setiembre', 'SEPTIEMBRE ', 'Sep.' -> 8 (0 = enero)."""
+    t = re.sub(r"[^A-Z]", "", _sin_tildes(_texto(v)).upper())
+    return _PREFIJOS_MES.get(t[:3]) if 3 <= len(t) <= 10 else None
 
 
 def _sin_tildes(t: str) -> str:
@@ -758,8 +765,7 @@ def leer_arca_anio(df: pd.DataFrame, anio: int) -> dict[str, pd.Series]:
     """Una planilla anual: fila 'CONCEPTO' con los meses; montos en miles (hasta ~2019) o millones de pesos."""
     fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
                      if _texto(df.iat[i, j]).upper() == "CONCEPTO")
-    meses = {j: MESES_MAYUS.index(_sin_tildes(_texto(df.iat[fila, j]).upper()))
-             for j in range(col + 1, df.shape[1]) if _sin_tildes(_texto(df.iat[fila, j]).upper()) in MESES_MAYUS}
+    meses = {j: numero_mes(df.iat[fila, j]) for j in range(col + 1, df.shape[1]) if numero_mes(df.iat[fila, j]) is not None}
     cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
     factor = 0.001 if "miles de pesos" in cabecera else 1.0
     etiquetas = [_etiqueta(df.iat[i, col]) for i in range(len(df))]
@@ -814,7 +820,8 @@ JURISDICCIONES = {
 
 
 def slug_jurisdiccion(nombre: str) -> str | None:
-    t = _sin_tildes(_texto(nombre)).lower().replace("(*)", "").replace(".", "").strip()
+    t = re.sub(r"\(.*?\)|[*.\d]", "", _sin_tildes(_texto(nombre)).lower())
+    t = re.sub(r"\s+", " ", t).strip()
     if t in ("caba", "ciudad autonoma de buenos aires", "ciudad de buenos aires"):
         return "caba"
     if t.startswith("tierra del fuego"):
@@ -827,8 +834,7 @@ def leer_iibb_anio(df: pd.DataFrame, anio: int) -> pd.DataFrame:
     """Hoja IIBB de un año: filas = jurisdicciones, columnas = meses (millones de pesos). 0 = sin dato."""
     fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
                      if _sin_tildes(_texto(df.iat[i, j])).lower() == "jurisdiccion")
-    meses = {j: MESES_MAYUS.index(_sin_tildes(_texto(df.iat[fila, j]).upper()))
-             for j in range(col + 1, df.shape[1]) if _sin_tildes(_texto(df.iat[fila, j]).upper()) in MESES_MAYUS}
+    meses = {j: numero_mes(df.iat[fila, j]) for j in range(col + 1, df.shape[1]) if numero_mes(df.iat[fila, j]) is not None}
     cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
     factor = 0.001 if "miles de pesos" in cabecera else 1.0
     datos = {}
@@ -862,11 +868,25 @@ def _iibb_provincias() -> pd.DataFrame:
 def provincias_iibb(campo: str) -> pd.Series:
     """Recaudación de Ingresos Brutos, millones de pesos corrientes. campo: slug de jurisdicción o 'total'
     (suma de las 24, solo en los meses en que todas informaron)."""
-    df = _iibb_provincias()
+    df = completar_huecos(_iibb_provincias())
     if campo == "total":
         completos = df[list(JURISDICCIONES)].notna().all(axis=1)
         return df.loc[completos, list(JURISDICCIONES)].sum(axis=1)
     return df[campo].dropna()
+
+
+def completar_huecos(df: pd.DataFrame, maximo: int = 3) -> pd.DataFrame:
+    """Meses sueltos sin dato en medio de la serie de una provincia (hasta `maximo` seguidos): se
+    interpolan para que la suma de 12 meses no se corte. Los huecos más largos y los bordes quedan vacíos."""
+    df = df.reindex(pd.date_range(df.index.min(), df.index.max(), freq="MS"))
+    salida = {}
+    for c in df.columns:
+        s = df[c]
+        relleno = s.interpolate(limit_area="inside")
+        grupos = s.isna().ne(s.isna().shift()).cumsum()
+        largo = s.isna().groupby(grupos).transform("sum")
+        salida[c] = s.where(s.notna(), relleno.where(largo <= maximo))
+    return pd.DataFrame(salida)
 
 
 LECTORES = {
