@@ -895,7 +895,10 @@ def total_empalmado(df: pd.DataFrame) -> pd.Series:
     if total.empty:
         return total
     inicio = total.index[0]
-    siempre = [c for c in todas if df.loc[df.index >= df.index[0], c].notna().all()]
+    previo = df.index < inicio
+    siempre = [c for c in todas if df.loc[previo, c].notna().all()]
+    if not siempre or not previo.any():
+        return total
     parcial = df[siempre].sum(axis=1, min_count=len(siempre)).dropna()
     solape = total.index[:12]
     factor = (total.loc[solape] / parcial.reindex(solape)).mean()
