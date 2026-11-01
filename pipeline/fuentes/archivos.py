@@ -723,7 +723,155 @@ def economia_politica_ingresos(campo: str) -> pd.Series:
     return pd.to_numeric(_politica_ingresos_csv()[campo], errors="coerce").dropna()
 
 
+
+# ---------- ARCA: recaudación mensual por impuesto (un archivo por año desde 2003) ----------
+
+ARCA_SERIE = "https://contenidos.afip.gob.ar/institucional/estudios/archivos/serie{anio}.xls"
+MESES_MAYUS = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"]
+
+
+def _sin_tildes(t: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", t) if unicodedata.category(c) != "Mn")
+
+
+def _etiqueta(v) -> str:
+    """'      IVA Neto de Devoluciones 2/' -> 'iva neto de devoluciones'."""
+    t = re.sub(r"\s+\d+/|/\d+", "", _texto(v))
+    return re.sub(r"\s+", " ", _sin_tildes(t)).strip().lower()
+
+
+CONCEPTOS_ARCA = {
+    # campo: (función que reconoce la fila, alternativa si no aparece)
+    "iva": (lambda e: e.startswith("iva neto"), lambda e: e == "iva"),
+    "ganancias": (lambda e: e == "ganancias", None),
+    "cheque": (lambda e: e.startswith("cuentas corrientes") or e.startswith("creditos y debitos"), None),
+    "combustibles": (lambda e: e.startswith("combustibles"), None),
+    "seguridad_social": (lambda e: e == "seguridad social", None),
+    "derechos_exportacion": (lambda e: e.startswith("derechos") and "export" in e, None),
+    "derechos_importacion": (lambda e: e.startswith("derechos") and "import" in e, None),
+    "bienes_personales": (lambda e: e == "bienes personales", None),
+}
+
+
+def leer_arca_anio(df: pd.DataFrame, anio: int) -> dict[str, pd.Series]:
+    """Una planilla anual: fila 'CONCEPTO' con los meses; montos en miles (hasta ~2019) o millones de pesos."""
+    fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
+                     if _texto(df.iat[i, j]).upper() == "CONCEPTO")
+    meses = {j: MESES_MAYUS.index(_sin_tildes(_texto(df.iat[fila, j]).upper()))
+             for j in range(col + 1, df.shape[1]) if _sin_tildes(_texto(df.iat[fila, j]).upper()) in MESES_MAYUS}
+    cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
+    factor = 0.001 if "miles de pesos" in cabecera else 1.0
+    etiquetas = [_etiqueta(df.iat[i, col]) for i in range(len(df))]
+    salida = {}
+    for campo, (es, alternativa) in CONCEPTOS_ARCA.items():
+        i = next((k for k in range(fila + 1, len(df)) if es(etiquetas[k])), None)
+        if i is None and alternativa:
+            i = next((k for k in range(fila + 1, len(df)) if alternativa(etiquetas[k])), None)
+        if i is None:
+            continue
+        valores = {pd.Timestamp(anio, m + 1, 1): pd.to_numeric(df.iat[i, j], errors="coerce") for j, m in meses.items()}
+        s = pd.Series(valores, dtype=float) * factor
+        salida[campo] = s[s.notna() & (s != 0)]
+    return salida
+
+
+@lru_cache(maxsize=None)
+def _arca_series() -> dict[str, pd.Series]:
+    partes: dict[str, list[pd.Series]] = {}
+    for anio in range(2003, date.today().year + 1):
+        try:
+            r = requests.get(ARCA_SERIE.format(anio=anio), headers=CABECERAS, timeout=TIMEOUT)
+        except requests.RequestException:
+            continue
+        if r.status_code != 200 or r.content[:4] not in FIRMAS:
+            continue
+        df = pd.read_excel(io.BytesIO(r.content), header=None, sheet_name=0)
+        for campo, s in leer_arca_anio(df, anio).items():
+            partes.setdefault(campo, []).append(s)
+    return {c: pd.concat(v).sort_index() for c, v in partes.items()}
+
+
+def arca_recaudacion(campo: str) -> pd.Series:
+    """Recaudación mensual por impuesto (ARCA, ex AFIP), millones de pesos corrientes."""
+    s = _arca_series().get(campo)
+    if s is None or s.empty:
+        raise RuntimeError(f"ARCA: no se encontró el concepto {campo}")
+    return s[~s.index.duplicated(keep="last")]
+
+
+# ---------- Ingresos Brutos por provincia (Dirección Nacional de Recursos Provinciales, mensual desde 2017) ----------
+
+PAGINA_TOP = "https://www.argentina.gob.ar/economia/sechacienda/asuntosprovinciales/direccion-de-recursos-provinciales/recursos-tributarios-de-origen-provincial-top"
+JURISDICCIONES = {
+    "caba": "Ciudad de Buenos Aires", "buenos_aires": "Buenos Aires", "catamarca": "Catamarca", "chaco": "Chaco",
+    "chubut": "Chubut", "cordoba": "Córdoba", "corrientes": "Corrientes", "entre_rios": "Entre Ríos", "formosa": "Formosa",
+    "jujuy": "Jujuy", "la_pampa": "La Pampa", "la_rioja": "La Rioja", "mendoza": "Mendoza", "misiones": "Misiones",
+    "neuquen": "Neuquén", "rio_negro": "Río Negro", "salta": "Salta", "san_juan": "San Juan", "san_luis": "San Luis",
+    "santa_cruz": "Santa Cruz", "santa_fe": "Santa Fe", "santiago_del_estero": "Santiago del Estero",
+    "tierra_del_fuego": "Tierra del Fuego", "tucuman": "Tucumán",
+}
+
+
+def slug_jurisdiccion(nombre: str) -> str | None:
+    t = _sin_tildes(_texto(nombre)).lower().replace("(*)", "").replace(".", "").strip()
+    if t in ("caba", "ciudad autonoma de buenos aires", "ciudad de buenos aires"):
+        return "caba"
+    if t.startswith("tierra del fuego"):
+        return "tierra_del_fuego"
+    t = re.sub(r"\s+", "_", t)
+    return t if t in JURISDICCIONES else None
+
+
+def leer_iibb_anio(df: pd.DataFrame, anio: int) -> pd.DataFrame:
+    """Hoja IIBB de un año: filas = jurisdicciones, columnas = meses (millones de pesos). 0 = sin dato."""
+    fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
+                     if _sin_tildes(_texto(df.iat[i, j])).lower() == "jurisdiccion")
+    meses = {j: MESES_MAYUS.index(_sin_tildes(_texto(df.iat[fila, j]).upper()))
+             for j in range(col + 1, df.shape[1]) if _sin_tildes(_texto(df.iat[fila, j]).upper()) in MESES_MAYUS}
+    cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
+    factor = 0.001 if "miles de pesos" in cabecera else 1.0
+    datos = {}
+    for i in range(fila + 1, len(df)):
+        sl = slug_jurisdiccion(df.iat[i, col])
+        if sl:
+            datos[sl] = {pd.Timestamp(anio, m + 1, 1): pd.to_numeric(df.iat[i, j], errors="coerce") for j, m in meses.items()}
+    out = pd.DataFrame(datos) * factor
+    return out.where(out > 0)
+
+
+@lru_cache(maxsize=None)
+def _iibb_provincias() -> pd.DataFrame:
+    pagina = requests.get(PAGINA_TOP, headers=CABECERAS, timeout=TIMEOUT).text
+    archivos = sorted(set(re.findall(r'/sites/default/files/((?:top_mensual|informacion_mensual)_(\d{4})[^"]*\.xlsx)', pagina)))
+    if not archivos:
+        raise RuntimeError("No se encontraron las planillas mensuales de recursos tributarios provinciales")
+    partes = []
+    for nombre, anio in archivos:
+        r = requests.get("https://www.argentina.gob.ar/sites/default/files/" + nombre, headers=CABECERAS, timeout=TIMEOUT)
+        if r.status_code != 200 or r.content[:4] not in FIRMAS:
+            continue
+        hojas_ = pd.read_excel(io.BytesIO(r.content), sheet_name=None, header=None)
+        hoja = next((h for h in hojas_ if "IIBB" in h.upper() or "BRUTOS" in h.upper()), None)
+        if hoja:
+            partes.append(leer_iibb_anio(hojas_[hoja], int(anio)))
+    df = pd.concat(partes).sort_index()
+    return df[~df.index.duplicated(keep="last")]
+
+
+def provincias_iibb(campo: str) -> pd.Series:
+    """Recaudación de Ingresos Brutos, millones de pesos corrientes. campo: slug de jurisdicción o 'total'
+    (suma de las 24, solo en los meses en que todas informaron)."""
+    df = _iibb_provincias()
+    if campo == "total":
+        completos = df[list(JURISDICCIONES)].notna().all(axis=1)
+        return df.loc[completos, list(JURISDICCIONES)].sum(axis=1)
+    return df[campo].dropna()
+
+
 LECTORES = {
+    "arca_recaudacion": arca_recaudacion,
+    "provincias_iibb": provincias_iibb,
     "economia_politica_ingresos": economia_politica_ingresos,
     "oede_empresas": oede_empresas,
     "escribanos_compraventas": escribanos_compraventas,

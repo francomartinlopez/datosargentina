@@ -329,13 +329,14 @@ function ficha(f, { anidada = false } = {}) {
     if (cfg.series.length > 1) cfg.series.forEach((s) => leyenda.append(el("li", {}, el("i", { style: `background:${s.color}` }), s.nombre)));
     dibujar(grafico, cfg);
   }
-  const art = el("article", { class: anidada ? "ficha anidada" : "ficha", id: anidada ? null : f.id },
+  const art = el("article", { class: anidada ? "ficha anidada" : "ficha", id: anidada ? null : (f.variante_de || f.id) },
     el("div", { class: "ficha-cab" },
       el("div", {}, el("h3", { text: f.nombre }), el("p", { class: "unidad", text: `Último dato: ${periodo(f.ultimo.fecha, f.frecuencia)}` })),
       el("div", { class: "cifra" },
         el("span", { class: "grande" }, c.grande, ["mensual", "interanual"].includes(c.etiqueta) ? el("small", { text: " " + c.etiqueta }) : null),
         ["mensual", "interanual"].includes(c.etiqueta) ? null : el("span", { class: "chica", text: c.etiqueta }),
         el("span", { class: "chica", text: c.chica }))),
+    f.variantes ? selectorVariante(f, () => art) : null,
     el("div", { class: "vistas", role: "group", "aria-label": "Vista del gráfico" }, ...botones),
     leyendaVista, grafico, leyenda,
     f.nota ? el("p", { class: "nota", text: f.nota }) : null,
@@ -344,6 +345,24 @@ function ficha(f, { anidada = false } = {}) {
       el("a", { href: `${DATOS}${f.id}.csv`, download: `${f.id}.csv`, text: "Descargar CSV" })));
   new ResizeObserver(() => render()).observe(grafico);
   return art;
+}
+
+// Menú para cambiar la serie de la ficha (p. ej. una provincia): baja el JSON de la variante
+// y redibuja la ficha en el mismo lugar, con las mismas vistas.
+function selectorVariante(f, ficha_) {
+  const id = `sel-${f.variante_de || f.id}`;
+  const sel = el("select", { id, onchange: async () => {
+    sel.disabled = true;
+    try {
+      const nueva = await (await fetch(`${DATOS}${sel.value}.json`, { cache: "no-cache" })).json();
+      const art = ficha(nueva);
+      ficha_().replaceWith(art);
+      art.querySelector("select")?.focus();
+    } catch {
+      sel.disabled = false;
+    }
+  } }, ...f.variantes.map((v) => el("option", { value: v.id, text: v.nombre, selected: v.id === f.id })));
+  return el("div", { class: "selector-variante" }, el("label", { for: id, text: "Ver:" }), sel);
 }
 
 function tarjeta(f) {

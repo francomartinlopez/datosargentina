@@ -330,3 +330,10 @@ div.rank-fila.nivel:hover { background: none; }
 .diag-lista { margin: 0; padding-left: 20px; max-width: 75ch; display: grid; gap: 8px; line-height: 1.55; }
 .diag-fuentes { margin: 0; padding-left: 20px; font-size: 14px; display: grid; gap: 4px; }
 .diag-fuentes a { color: var(--acento); }
+
+/* Menú de variantes (provincia) dentro de una ficha */
+.selector-variante { display: flex; align-items: center; gap: 8px; margin: 2px 0 10px; font-size: 14px; color: var(--tinta-2); }
+.selector-variante select {
+  font: inherit; font-size: 14px; color: var(--tinta); background: var(--superficie);
+  border: 1px solid var(--borde); border-radius: 8px; padding: 4px 8px; max-width: 100%;
+}

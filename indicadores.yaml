@@ -56,6 +56,39 @@ series:
   resultado_primario:  {fuente: datosgobar, id: "452.3_RESULTADO_RIO_0_M_18_54"}
   intereses_netos:     {fuente: datosgobar, id: "452.3_INTERESES_TOS_0_M_15_62"}
   recaudacion:         {fuente: datosgobar, id: "172.3_TL_RECAION_M_0_0_17"}
+  # Recaudación por impuesto: ARCA (planillas anuales desde 2003) y Recursos Tributarios de Origen Provincial (mensual desde 2017)
+  rec_iva: {fuente: archivo, lector: arca_recaudacion, campo: iva}
+  rec_ganancias: {fuente: archivo, lector: arca_recaudacion, campo: ganancias}
+  rec_cheque: {fuente: archivo, lector: arca_recaudacion, campo: cheque}
+  rec_combustibles: {fuente: archivo, lector: arca_recaudacion, campo: combustibles}
+  rec_seguridad_social: {fuente: archivo, lector: arca_recaudacion, campo: seguridad_social}
+  rec_derechos_exportacion: {fuente: archivo, lector: arca_recaudacion, campo: derechos_exportacion}
+  rec_derechos_importacion: {fuente: archivo, lector: arca_recaudacion, campo: derechos_importacion}
+  iibb_total: {fuente: archivo, lector: provincias_iibb, campo: total}
+  iibb_buenos_aires: {fuente: archivo, lector: provincias_iibb, campo: buenos_aires}
+  iibb_catamarca: {fuente: archivo, lector: provincias_iibb, campo: catamarca}
+  iibb_chaco: {fuente: archivo, lector: provincias_iibb, campo: chaco}
+  iibb_chubut: {fuente: archivo, lector: provincias_iibb, campo: chubut}
+  iibb_caba: {fuente: archivo, lector: provincias_iibb, campo: caba}
+  iibb_cordoba: {fuente: archivo, lector: provincias_iibb, campo: cordoba}
+  iibb_corrientes: {fuente: archivo, lector: provincias_iibb, campo: corrientes}
+  iibb_entre_rios: {fuente: archivo, lector: provincias_iibb, campo: entre_rios}
+  iibb_formosa: {fuente: archivo, lector: provincias_iibb, campo: formosa}
+  iibb_jujuy: {fuente: archivo, lector: provincias_iibb, campo: jujuy}
+  iibb_la_pampa: {fuente: archivo, lector: provincias_iibb, campo: la_pampa}
+  iibb_la_rioja: {fuente: archivo, lector: provincias_iibb, campo: la_rioja}
+  iibb_mendoza: {fuente: archivo, lector: provincias_iibb, campo: mendoza}
+  iibb_misiones: {fuente: archivo, lector: provincias_iibb, campo: misiones}
+  iibb_neuquen: {fuente: archivo, lector: provincias_iibb, campo: neuquen}
+  iibb_rio_negro: {fuente: archivo, lector: provincias_iibb, campo: rio_negro}
+  iibb_salta: {fuente: archivo, lector: provincias_iibb, campo: salta}
+  iibb_san_juan: {fuente: archivo, lector: provincias_iibb, campo: san_juan}
+  iibb_san_luis: {fuente: archivo, lector: provincias_iibb, campo: san_luis}
+  iibb_santa_cruz: {fuente: archivo, lector: provincias_iibb, campo: santa_cruz}
+  iibb_santa_fe: {fuente: archivo, lector: provincias_iibb, campo: santa_fe}
+  iibb_santiago_del_estero: {fuente: archivo, lector: provincias_iibb, campo: santiago_del_estero}
+  iibb_tierra_del_fuego: {fuente: archivo, lector: provincias_iibb, campo: tierra_del_fuego}
+  iibb_tucuman: {fuente: archivo, lector: provincias_iibb, campo: tucuman}
   # --- Opinión pública ---
   icg:                 {fuente: datosgobar, id: "370.3_ICG_NIVEL_RAL_0_0_17_94"}
   satisfaccion_rumbo:  {fuente: manual, id: espop_satisfaccion}
@@ -477,6 +510,24 @@ indicadores:
   - {id: resultado_primario, nombre: "Resultado primario", seccion: "Estado y fiscal", serie: resultado_primario, tipo_valor: saldo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses", portada: true}
   - {id: resultado_financiero, nombre: "Resultado financiero", seccion: "Estado y fiscal", serie: resultado_financiero, tipo_valor: saldo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
   - {id: recaudacion, nombre: "Recaudación tributaria", seccion: "Estado y fiscal", serie: recaudacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses"}
+  - {id: rec_iva, nombre: "IVA (recaudación neta)", seccion: "Estado y fiscal", serie: rec_iva, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. IVA neto de devoluciones y reintegros, impositivo y aduanero. En 2003 y 2004 la planilla trae el IVA bruto."}
+  - {id: rec_ganancias, nombre: "Impuesto a las Ganancias", seccion: "Estado y fiscal", serie: rec_ganancias, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Incluye pagos directos, anticipos y retenciones (también las de la Aduana)."}
+  - {id: rec_seguridad_social, nombre: "Aportes y contribuciones a la seguridad social", seccion: "Estado y fiscal", serie: rec_seguridad_social, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Aportes personales, contribuciones patronales, obras sociales, riesgos del trabajo y la parte previsional del monotributo."}
+  - {id: rec_cheque, nombre: "Impuesto a los débitos y créditos bancarios (al cheque)", seccion: "Estado y fiscal", serie: rec_cheque, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Ley 25.413, vigente desde 2001."}
+  - {id: rec_derechos_exportacion, nombre: "Derechos de exportación (retenciones)", seccion: "Estado y fiscal", serie: rec_derechos_exportacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Su peso depende de las alícuotas, los precios internacionales y la cosecha de cada año."}
+  - {id: rec_derechos_importacion, nombre: "Derechos de importación (aranceles)", seccion: "Estado y fiscal", serie: rec_derechos_importacion, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Aranceles de importación; no incluye la tasa de estadística, el IVA ni Ganancias cobrados en la Aduana."}
+  - {id: rec_combustibles, nombre: "Impuestos a los combustibles", seccion: "Estado y fiscal", serie: rec_combustibles, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     nota: "Recaudación mensual de ARCA (ex AFIP), sumada en 12 meses y llevada a pesos de hoy con el IPC. Impuesto a los combustibles líquidos y al dióxido de carbono (antes, combustibles líquidos y GNC). Su recaudación depende también de las postergaciones de aumentos que dispone el Gobierno."}
+  - {id: iibb_total, nombre: "Ingresos Brutos (provincias)", seccion: "Estado y fiscal", serie: iibb_total, tipo_valor: flujo, moneda: ARS, acumulado_12m: true, unidad: "millones de pesos de hoy, últimos 12 meses",
+     variante_principal: "Todas las provincias", nombre_variante: "Ingresos Brutos: {}",
+     variantes: {iibb_buenos_aires: "Buenos Aires", iibb_catamarca: "Catamarca", iibb_chaco: "Chaco", iibb_chubut: "Chubut", iibb_caba: "Ciudad de Buenos Aires", iibb_cordoba: "Córdoba", iibb_corrientes: "Corrientes", iibb_entre_rios: "Entre Ríos", iibb_formosa: "Formosa", iibb_jujuy: "Jujuy", iibb_la_pampa: "La Pampa", iibb_la_rioja: "La Rioja", iibb_mendoza: "Mendoza", iibb_misiones: "Misiones", iibb_neuquen: "Neuquén", iibb_rio_negro: "Río Negro", iibb_salta: "Salta", iibb_san_juan: "San Juan", iibb_san_luis: "San Luis", iibb_santa_cruz: "Santa Cruz", iibb_santa_fe: "Santa Fe", iibb_santiago_del_estero: "Santiago del Estero", iibb_tierra_del_fuego: "Tierra del Fuego", iibb_tucuman: "Tucumán"},
+     nota: "Recaudación del impuesto sobre los Ingresos Brutos que informan las direcciones de rentas de cada provincia (compilación de la Dirección Nacional de Recursos Provinciales), sumada en 12 meses y llevada a pesos de hoy con el IPC nacional. Serie mensual desde 2017. El total suma las 24 jurisdicciones y se muestra hasta el último mes en que todas informaron. En Chubut solo incluye lo que cobra la provincia (el resto está delegado en los municipios)."}
   - {id: icg, nombre: "Confianza en el gobierno (UTDT)", seccion: "Opinión pública", serie: icg, tipo_valor: tasa, unidad: "índice 0 a 5", portada: true}
   - {id: aprobacion_promedio, vista_inicial: desde_2003, nombre: "Aprobación del presidente (promedio de encuestas)", seccion: "Opinión pública", serie: aprobacion_promedio, tipo_valor: tasa, unidad: "% que aprueba", portada: true,
      nota: "Promedio simple, mes a mes, de las encuestadoras que midieron ese mes: AtlasIntel (desde 2024), UdeSA–ESPOP (desde diciembre de 2015) y Zuban Córdoba (desde octubre de 2025). Hasta 2023 la serie es solo de UdeSA–ESPOP, que mide con la misma pregunta a Macri, Alberto Fernández y Milei. Se eligieron encuestadoras que publican con regularidad y documentan su método; la lista se amplía a medida que se cargan nuevas mediciones con fuente. La Confianza en el Gobierno de la UTDT (en esta misma sección) es la serie larga desde 2001."}

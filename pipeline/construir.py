@@ -166,7 +166,7 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     return mensuales, alertas
 
 
-FUENTES_ARCHIVO = {"oede": "Secretaría de Trabajo (OEDE)", "escribanos": "Colegio de Escribanos de la Ciudad de Buenos Aires", "indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda", "economia": "Ministerio de Economía"}
+FUENTES_ARCHIVO = {"oede": "Secretaría de Trabajo (OEDE)", "escribanos": "Colegio de Escribanos de la Ciudad de Buenos Aires", "indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda", "economia": "Ministerio de Economía", "arca": "ARCA (ex AFIP)", "provincias": "Dirección Nacional de Recursos Provinciales (direcciones de rentas provinciales)"}
 
 
 def nombre_fuente(definicion: dict) -> str:
@@ -203,16 +203,17 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
     inicio = pd.Timestamp(params["inicio_historico"]) - pd.DateOffset(months=1)
     base = pd.Timestamp(params["base_gestion_actual"])
     fichas, alertas = [], []
-    for ind in config["indicadores"]:
+
+    def una(ind):
         s = preparar(ind["serie"], ind, mensuales, deflactores)
         if s is None:
             alertas.append(f"{ind['id']}: sin datos, no se publica")
-            continue
+            return None
         try:
             calc = vistas.calcular_vistas(s, ind["tipo_valor"], params, gestiones, ind.get("vista_historica", "nivel"))
         except Exception as e:  # un indicador con problemas no frena el resto
             alertas.append(f"{ind['id']}: error al calcular las vistas ({e}), no se publica")
-            continue
+            return None
         ficha = {
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
@@ -235,7 +236,27 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
                     "gestion_actual": vistas.como_lista(d[d.index > base]),
                     "desde_2003": vistas.como_lista(d[d.index >= inicio]),
                 }
+        return ficha
+
+    for ind in config["indicadores"]:
+        ficha = una(ind)
+        if ficha is None:
+            continue
         fichas.append(ficha)
+        # Variantes (p. ej. una provincia): mismo indicador con otra serie, elegible desde un menú
+        # de la ficha. Se publican como archivos aparte pero no ocupan lugar en la grilla.
+        if ind.get("variantes"):
+            menu = [{"id": ind["id"], "nombre": ind.get("variante_principal", "Total")}]
+            for serie, etiqueta in ind["variantes"].items():
+                v = una({**ind, "id": serie, "serie": serie, "portada": False, "variantes": None,
+                         "nombre": ind.get("nombre_variante", "{}").format(etiqueta)})
+                if v is not None:
+                    v["variante_de"] = ind["id"]
+                    fichas.append(v)
+                    menu.append({"id": serie, "nombre": etiqueta})
+            for f in fichas:
+                if f["id"] == ind["id"] or f.get("variante_de") == ind["id"]:
+                    f["variantes"] = menu
     return fichas, alertas
 
 
@@ -250,13 +271,15 @@ def escribir(fichas: list[dict], mensuales: dict, alertas: list[str], config: di
         # el CSV de descarga es la serie en nivel (moneda constante cuando corresponde), desde 2003
         pd.DataFrame(serie, columns=["fecha", "valor"]).to_csv(SALIDA / f"{f['id']}.csv", index=False)
     portada = [{k: f[k] for k in ("id", "nombre", "unidad", "ultimo", "intermensual", "interanual_ultimo")}
-               for f in fichas if f["portada"]]
+               for f in fichas if f["portada"] and not f.get("variante_de")]
     # Los indicadores que forman parte de un grupo (p. ej. el EMAE por sector) se muestran
     # dentro de una sola ficha: el índice lleva la entrada del grupo en el lugar del primero.
     grupos = {g["id"]: g for g in (config or {}).get("grupos", [])}
     indice, vistos = [], set()
     for f in fichas:
         g = f.get("grupo")
+        if f.get("variante_de"):
+            continue
         if not g:
             indice.append({k: f[k] for k in ("id", "nombre", "seccion")})
         elif g not in vistos and g in grupos:
