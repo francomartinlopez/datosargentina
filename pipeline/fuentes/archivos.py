@@ -731,6 +731,16 @@ MESES_MAYUS = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "
 _PREFIJOS_MES = {"ENE": 0, "FEB": 1, "MAR": 2, "ABR": 3, "MAY": 4, "JUN": 5, "JUL": 6, "AGO": 7, "SEP": 8, "SET": 8, "OCT": 9, "NOV": 10, "DIC": 11}
 
 
+def columnas_de_meses(df: pd.DataFrame, fila: int, col: int) -> dict[int, int]:
+    """{columna: mes (0-11)}: desde la columna de enero, las doce siguientes en orden
+    (las planillas traen erratas como 'kUNIO' o 'Setiembre')."""
+    enero = next((j for j in range(col + 1, df.shape[1]) if numero_mes(df.iat[fila, j]) == 0), None)
+    if enero is None:
+        return {}
+    return {j: j - enero for j in range(enero, min(enero + 12, df.shape[1]))
+            if not _texto(df.iat[fila, j]).upper().startswith("TOTAL")}
+
+
 def numero_mes(v) -> int | None:
     """'Setiembre', 'SEPTIEMBRE ', 'Sep.' -> 8 (0 = enero)."""
     t = re.sub(r"[^A-Z]", "", _sin_tildes(_texto(v)).upper())
@@ -765,7 +775,7 @@ def leer_arca_anio(df: pd.DataFrame, anio: int) -> dict[str, pd.Series]:
     """Una planilla anual: fila 'CONCEPTO' con los meses; montos en miles (hasta ~2019) o millones de pesos."""
     fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
                      if _texto(df.iat[i, j]).upper() == "CONCEPTO")
-    meses = {j: numero_mes(df.iat[fila, j]) for j in range(col + 1, df.shape[1]) if numero_mes(df.iat[fila, j]) is not None}
+    meses = columnas_de_meses(df, fila, col)
     cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
     factor = 0.001 if "miles de pesos" in cabecera else 1.0
     etiquetas = [_etiqueta(df.iat[i, col]) for i in range(len(df))]
@@ -834,7 +844,7 @@ def leer_iibb_anio(df: pd.DataFrame, anio: int) -> pd.DataFrame:
     """Hoja IIBB de un año: filas = jurisdicciones, columnas = meses (millones de pesos). 0 = sin dato."""
     fila, col = next((i, j) for i in range(min(15, len(df))) for j in range(min(4, df.shape[1]))
                      if _sin_tildes(_texto(df.iat[i, j])).lower() == "jurisdiccion")
-    meses = {j: numero_mes(df.iat[fila, j]) for j in range(col + 1, df.shape[1]) if numero_mes(df.iat[fila, j]) is not None}
+    meses = columnas_de_meses(df, fila, col)
     cabecera = " ".join(_texto(df.iat[i, j]) for i in range(fila) for j in range(min(4, df.shape[1]))).lower()
     factor = 0.001 if "miles de pesos" in cabecera else 1.0
     datos = {}
@@ -870,9 +880,27 @@ def provincias_iibb(campo: str) -> pd.Series:
     (suma de las 24, solo en los meses en que todas informaron)."""
     df = completar_huecos(_iibb_provincias())
     if campo == "total":
-        completos = df[list(JURISDICCIONES)].notna().all(axis=1)
-        return df.loc[completos, list(JURISDICCIONES)].sum(axis=1)
+        return total_empalmado(df)
     return df[campo].dropna()
+
+
+def total_empalmado(df: pd.DataFrame) -> pd.Series:
+    """Suma de las 24 jurisdicciones en los meses en que todas informaron. Antes (Corrientes y
+    Santiago del Estero no informan hasta 2024, La Pampa hasta 2021) se extiende hacia atrás con la
+    variación de la suma de las jurisdicciones que sí tienen dato todo el período, escalada por la
+    relación entre ambas sumas en los primeros 12 meses completos."""
+    todas = list(JURISDICCIONES)
+    completos = df[todas].notna().all(axis=1)
+    total = df.loc[completos, todas].sum(axis=1)
+    if total.empty:
+        return total
+    inicio = total.index[0]
+    siempre = [c for c in todas if df.loc[df.index >= df.index[0], c].notna().all()]
+    parcial = df[siempre].sum(axis=1, min_count=len(siempre)).dropna()
+    solape = total.index[:12]
+    factor = (total.loc[solape] / parcial.reindex(solape)).mean()
+    atras = parcial[parcial.index < inicio] * factor
+    return pd.concat([atras, total]).sort_index()
 
 
 def completar_huecos(df: pd.DataFrame, maximo: int = 3) -> pd.DataFrame:

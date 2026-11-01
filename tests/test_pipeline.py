@@ -172,3 +172,16 @@ def test_completar_huecos_solo_cortos():
     df = pd.DataFrame({"x": [1, np.nan, 3, np.nan, np.nan, np.nan, np.nan, 8, 9]}, index=i)
     r = a.completar_huecos(df)["x"].tolist()
     assert r[1] == 2 and all(pd.isna(r[3:7]))
+
+
+def test_meses_con_erratas_y_total_empalmado():
+    import numpy as np
+    import pandas as pd
+    from pipeline.fuentes import archivos as a
+    fila = pd.DataFrame([[None, "CONCEPTO", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "kUNIO", "kULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE", "TOTAL"]])
+    assert a.columnas_de_meses(fila, 0, 1) == {j: j - 2 for j in range(2, 14)}
+    i = pd.date_range("2020-01-01", periods=36, freq="MS")
+    cols = {k: np.full(36, 10.0) for k in a.JURISDICCIONES}
+    cols["corrientes"][:24] = np.nan  # informa recién el tercer año
+    t = a.total_empalmado(pd.DataFrame(cols, index=i))
+    assert len(t) == 36 and abs(t.iloc[0] - 240) < 1e-9 and abs(t.iloc[-1] - 240) < 1e-9
