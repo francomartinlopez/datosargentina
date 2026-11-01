@@ -185,3 +185,15 @@ def test_meses_con_erratas_y_total_empalmado():
     cols["corrientes"][:24] = np.nan  # informa recién el tercer año
     t = a.total_empalmado(pd.DataFrame(cols, index=i))
     assert len(t) == 36 and abs(t.iloc[0] - 240) < 1e-9 and abs(t.iloc[-1] - 240) < 1e-9
+
+
+def test_total_empalmado_con_meses_finales_incompletos():
+    import numpy as np
+    import pandas as pd
+    from pipeline.fuentes import archivos as a
+    i = pd.date_range("2020-01-01", periods=36, freq="MS")
+    cols = {k: np.full(36, 10.0) for k in a.JURISDICCIONES}
+    cols["corrientes"][:24] = np.nan
+    cols["santa_fe"][-1] = np.nan  # último mes todavía sin informar
+    t = a.total_empalmado(pd.DataFrame(cols, index=i))
+    assert t.index[0] == i[0] and t.index[-1] == i[-2]
