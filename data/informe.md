@@ -1,6 +1,6 @@
-# Informe de actualización 2026-10-28
+# Informe de actualización 2026-11-01
 
-Indicadores publicados: 246
+Indicadores publicados: 280
 
 ## Alertas
 
@@ -46,7 +46,7 @@ Indicadores publicados: 246
 - tasa_plazo_fijo: sin dato nuevo (último 2026-10)
 - tasa_plazo_fijo: la fuente revisó 1 datos anteriores
 - prestamos_privados: sin dato nuevo (último 2026-10)
-- prestamos_privados: la fuente revisó 3 datos anteriores
+- prestamos_privados: la fuente revisó 4 datos anteriores
 - dolar_ccl: sin dato nuevo (último 2026-10)
 - dolar_ccl: la fuente revisó 1 datos anteriores
 - dolar_mep: sin dato nuevo (último 2026-10)
@@ -65,6 +65,8 @@ Indicadores publicados: 246
 - auh_prestaciones: sin dato nuevo (último 2026-04)
 - auh_monto: sin dato nuevo (último 2026-09)
 - pnc_gasto: sin dato nuevo (último 2026-09)
+- jub_sipa_gasto: sin dato nuevo (último 2026-09)
+- jub_otros_gasto: sin dato nuevo (último 2026-09)
 - expo_primarios: sin dato nuevo (último 2026-08)
 - expo_moa: sin dato nuevo (último 2026-08)
 - expo_moi: sin dato nuevo (último 2026-08)
@@ -81,20 +83,20 @@ Indicadores publicados: 246
 - depositos_privados_ars: sin dato nuevo (último 2026-10)
 - depositos_privados_ars: la fuente revisó 3 datos anteriores
 - depositos_privados_usd: sin dato nuevo (último 2026-10)
-- depositos_privados_usd: la fuente revisó 3 datos anteriores
-- compras_divisas_bcra: sin dato nuevo (último 2026-09)
+- depositos_privados_usd: la fuente revisó 2 datos anteriores
+- compras_divisas_bcra: sin dato nuevo (último 2026-10)
+- compras_divisas_bcra: la fuente revisó 1 datos anteriores
 - prestamos_hipotecarios: sin dato nuevo (último 2026-10)
-- prestamos_hipotecarios: la fuente revisó 3 datos anteriores
+- prestamos_hipotecarios: la fuente revisó 2 datos anteriores
 - prestamos_prendarios: sin dato nuevo (último 2026-10)
 - prestamos_prendarios: la fuente revisó 2 datos anteriores
 - prestamos_personales: sin dato nuevo (último 2026-10)
-- prestamos_personales: la fuente revisó 3 datos anteriores
+- prestamos_personales: la fuente revisó 2 datos anteriores
 - prestamos_tarjetas: sin dato nuevo (último 2026-10)
-- prestamos_tarjetas: la fuente revisó 3 datos anteriores
+- prestamos_tarjetas: la fuente revisó 2 datos anteriores
 - tasa_personales: sin dato nuevo (último 2026-10)
-- tasa_personales: la fuente revisó 1 datos anteriores
+- tasa_personales: la fuente revisó 2 datos anteriores
 - tasa_tarjetas: sin dato nuevo (último 2026-09)
-- icl: sin dato nuevo (último 2026-10)
 - icl: la fuente revisó 1 datos anteriores
 - pobreza_personas: sin dato nuevo (último 2026-01)
 - indigencia_personas: sin dato nuevo (último 2026-01)
@@ -239,9 +241,9 @@ Indicadores publicados: 246
 - soja_precio: sin dato nuevo (último 2026-09)
 - retenciones: sin dato nuevo (último 2026-08)
 - m2: sin dato nuevo (último 2026-10)
-- m2: la fuente revisó 5 datos anteriores
+- m2: la fuente revisó 6 datos anteriores
 - prestamos_usd: sin dato nuevo (último 2026-10)
-- prestamos_usd: la fuente revisó 3 datos anteriores
+- prestamos_usd: la fuente revisó 2 datos anteriores
 - fbcf_corriente: sin dato nuevo (último 2025-10)
 - ventas_autos: sin dato nuevo (último 2026-09)
 - produccion_autos: sin dato nuevo (último 2026-09)
@@ -304,7 +306,6 @@ Indicadores publicados: 246
 - gpn_ciencia: sin dato nuevo (último 2023-01)
 - gpn_vivienda: sin dato nuevo (último 2023-01)
 - gpn_empleo: sin dato nuevo (último 2023-01)
-- calificacion_sp: sin dato nuevo (último 2026-10)
 - fao_vacuna: sin dato nuevo (último 2023-01)
 - fao_aviar: sin dato nuevo (último 2023-01)
 - fao_porcina: sin dato nuevo (último 2023-01)
@@ -326,8 +327,4 @@ Indicadores publicados: 246
 - bcra_tc_balance: sin dato nuevo (último 2025-10)
 - bcra_pase_2016: sin dato nuevo (último 2026-10)
 - cny_por_usd: sin dato nuevo (último 2026-10)
-- cny_por_usd: la fuente revisó 1 datos anteriores
-- swap_china_yuan: sin dato nuevo (último 2026-10)
-- swap_eeuu_activado: sin dato nuevo (último 2026-10)
-- fmi_desembolsos_2025: sin dato nuevo (último 2026-10)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
