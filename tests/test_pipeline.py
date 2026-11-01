@@ -155,3 +155,20 @@ def test_leer_politica_ingresos():
     df = archivos.leer_politica_ingresos(csv)
     assert df.loc["2026-09-01", "jubilaciones_pensiones_otros_regimenes_nacionales"] == 700462.3
     assert list(df.index.strftime("%Y-%m")) == ["2026-08", "2026-09"]
+
+
+def test_meses_y_jurisdicciones():
+    from pipeline.fuentes import archivos as a
+    assert a.numero_mes("SETIEMBRE") == 8 and a.numero_mes("Septiembre ") == 8 and a.numero_mes("Total") is None
+    assert a.slug_jurisdiccion("CORRIENTES (1)") == "corrientes"
+    assert a.slug_jurisdiccion("Chubut (*)") == "chubut" and a.slug_jurisdiccion("C.A.B.A.") == "caba"
+
+
+def test_completar_huecos_solo_cortos():
+    import numpy as np
+    import pandas as pd
+    from pipeline.fuentes import archivos as a
+    i = pd.date_range("2020-01-01", periods=9, freq="MS")
+    df = pd.DataFrame({"x": [1, np.nan, 3, np.nan, np.nan, np.nan, np.nan, 8, 9]}, index=i)
+    r = a.completar_huecos(df)["x"].tolist()
+    assert r[1] == 2 and all(pd.isna(r[3:7]))
