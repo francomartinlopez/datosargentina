@@ -1,0 +1,84 @@
+IPI MINERO no-indice 202608:
+  Cuadro 6|Unidades físicas|Gas natural|millones de m³|4819.113754811706
+  Cuadro 6|Unidades físicas|Gas natural convencional|millones de m³|1448.0046287862513
+  Cuadro 6|Unidades físicas|Gas natural no convencional|millones de m³|3371.109126025455
+  Cuadro 7|Unidades físicas|Carbonato de litio|toneladas|8582.6000000002
+  Cuadro 1|Variación intermensual|Nivel General - IPI Minero|%|1.8878899493733226
+  Cuadro 1|Variación intermensual|Nivel General - IPI Minero|%|0.210462080494489
+litio desde [{"periodo":"201701"}, 
+ {"periodo":"201702"}]
+USOS [["X", "DESCONOCIDO"], ["1", "Bienes de Capital"], ["2", "Bienes Intermedios"], ["3", "Combustibles y Lubricantes"], ["4", "Piezas y Accesorios para Bienes de Capital"], ["5", "Bienes de Consumo"], ["6", "Vehiculos Automotores de Pasajeros"], ["9", "Resto"]]
+SUBRUBROS 03", "Productos lácteos"], ["204", "Otros productos de origen animal"], ["205", "Frutas secas o procesadas"], ["206", "Café, té, yerba mate y especias"], ["207", "Productos de molinería y sus preparaciones"], ["208", "Grasas y aceites"], ["209", "Azúcar ,cacao y artículos de confitería"], ["210", "Preparados de hortalizas, legumbres y frutas"], ["211", "Bebidas, líquidos alcohólicos y vinagre"], ["212", "Residuos y desperdicios de la industria alimentaria"], ["213", "Extractos curtientes y tintóreos"], ["214", "Pieles y cueros"], ["215", "Lanas elaboradas"], ["299", "Resto de MOA"], ["302", "Productos químicos y conexos"], ["303", "Materias plásticas y sus manufacturas"], ["304", "Caucho y sus manufacturas"], ["305", "Manufacturas de cuero, marroquinería, etc."], ["306", "Papel, cartón, impresos y publicaciones"], ["307", "Textiles y confecciones"], ["308", "Calzado y sus partes componentes"], ["309", "Manufacturas de piedra, yeso, vidrio, etc."], ["310", "Piedras, metales preciosos y sus manufacturas, monedas"], ["311", "Metales comunes y sus manufacturas"], ["312", "Máquinas y aparatos, material eléctrico"], ["313", "Material de transporte terrestre"], ["314", "Vehículos de navegación aérea, marítima y fluvial"], ["399", "Resto de MOI"], ["401", "Petróleo crudo"], ["402", "Carburantes"], ["403", "Grasas y aceites lubricantes"], ["404", "Gas de petróleo y otros hidrocarburos gaseosos"], ["405", "Energía eléctrica"], ["499", "Resto de combustibles "], ["999", "Confidencial"]]
+POB sexos Counter({('1', 'Mujer'): 21, ('2', 'Varon'): 21}) edades ['0', '10', '100', '15', '20', '25', '30', '35', '40', '45', '5', '50', '55', '60', '65', '70', '75', '80', '85', '90', '95']
+POB agg 206 [{"jurisdiccion_nom":"Misiones","fecha":"2040","total":1483409}, 
+ {"jurisdiccion_nom":"Chubut","fecha":"2040","total":623370}, 
+ {"jurisdiccion_nom":"Tierra del Fuego, Antártida e Islas del Atlántico Sur","fecha":"2026","total":182744}, 
+ {"jurisdiccion_nom":"Chaco","fecha":"2026","total":1214280}, 
+ {"jurisdiccion_nom":"Corrientes","fecha":"2026","total":1208334}, 
+ {"jurisdiccion_nom":"Santa Cruz","fecha":"2026","total":335096}, 
+ {"jurisdiccion_nom":"La Rioja","fecha":"2026","total":405241}, 
+ {"jurisdiccion_nom":"Ciudad Autónoma de Buenos Aires","fecha":"2022","total":3121189}, 
+ {"jurisdiccion_nom":"Jujuy","fecha":"2040","total":832736}, 
+ {"jurisdiccion_nom":"Córdoba","fecha":"2022","total":3923244}, 
+ {"jurisdiccion_nom":"San Luis","fecha":"2040","total":573246}, 
+ {"jurisdiccion_nom":"San Luis","fecha":"2022","total":527530}, 
+ {"jurisdiccion_nom":"Santa Cruz","fecha":"2040","total":336026}, 
+ {"jurisdiccion_nom":"Neuquén","fecha":"2040","total":759196}, 
+ {"jurisdiccion_nom":"Neuquén","fecha":"2022","total":689222}, 
+ {"jurisdiccion_nom":"La Pampa","fecha":"2040","total":386324}, 
+ {"jurisdiccion_nom":"Entre Ríos","fecha":"2040","total":1496562}, 
+ {"jurisdiccion_nom":"Tucumán","fecha":"2040","total":1838056}, 
+ {"jurisdiccion_nom":"Santa Fe","fecha":"2022","total":3670163}, 
+ {"jurisdiccion_nom":"Río Negro","fecha":"2022","total":776389}, 
+ {"jurisdiccion_nom":"Santiago del Estero","fecha":"2026","total":1059927}, 
+ {"jurisdiccion_nom":"Corrientes","fecha":"2040","
+EXPO agg count 0-0/540272[{"Periodo":"200301","pais_cod":"AE","v":12012778.00}]
+EXPO total 2025 por mes (comparar con INDEC) [{"Periodo":"202501","v":5914848042.18}, 
+ {"Periodo":"202502","v":6139704057.10}, 
+ {"Periodo":"202503","v":6642346973.19}, 
+ {"Periodo":"202504","v":6674330684.17}, 
+ {"Periodo":"202505","v":7095182979.27}, 
+ {"Periodo":"202506","v":7275260645.24}, 
+ {"Periodo":"202507","v":7760555667.87}, 
+ {"Periodo":"202508","v":7903012242.52}, 
+ {"Periodo":"202509","v":8128182171.62}, 
+ {"Periodo":"202510","v":7962634646.20}, 
+ {"Periodo":"202511","v":8132731348.48}, 
+ {"Periodo":"202512","v":7482407360.19}]
+IMPO total 2025 por mes [{"Periodo":"202501","v":5752750161.51}, 
+ {"Periodo":"202502","v":5864287560.64}, 
+ {"Periodo":"202503","v":6018847975.59}, 
+ {"Periodo":"202504","v":6459959189.14}, 
+ {"Periodo":"202505","v":6487970008.92}, 
+ {"Periodo":"202506","v":6395910119.81}, 
+ {"Periodo":"202507","v":6853671650.11}, 
+ {"Periodo":"202508","v":6462720701.49}, 
+ {"Periodo":"202509","v":7191133461.86}, 
+ {"Periodo":"202510","v":7149970997.52}, 
+ {"Periodo":"202511","v":5597992481.29}, 
+ {"Periodo":"202512","v":5555904923.46}]
+IPC NG 202609 [{"region":"GBA","periodo":"202609","valor":12523.1733}, 
+ {"region":"Noroeste","periodo":"202609","valor":12631.4816}, 
+ {"region":"Cuyo","periodo":"202609","valor":12591.9359}, 
+ {"region":"Noreste","periodo":"202609","valor":12615.4271}, 
+ {"region":"Patagonia","periodo":"202609","valor":12434.4545}, 
+ {"region":"Nacional","periodo":"202609","valor":12514.1508}, 
+ {"region":"Pampeana","periodo":"202609","valor":12463.7838}]
+IPC Nacional items [{"region":"Nacional","codigo":"01","descripcion":"Alimentos y bebidas no alcohólicas"}, 
+ {"region":"Nacional","codigo":"02","descripcion":"Bebidas alcohólicas y tabaco"}, 
+ {"region":"Nacional","codigo":"06","descripcion":"Salud"}, 
+ {"region":"Nacional","codigo":"08","descripcion":"Comunicación"}, 
+ {"region":"Nacional","codigo":"09","descripcion":"Recreación y cultura"}, 
+ {"region":"Nacional","codigo":"12","descripcion":"Bienes y servicios varios"}, 
+ {"region":"Nacional","codigo":"S","descripcion":"Servicios"}, 
+ {"region":"Nacional","codigo":"0","descripcion":"Nivel general"}, 
+ {"region":"Nacional","codigo":"N","descripcion":"Núcleo"}, 
+ {"region":"Nacional","codigo":"04","descripcion":"Vivienda, agua, electricidad, gas y otros combustibles"}, 
+ {"region":"Nacional","codigo":"B","descripcion":"Bienes"}, 
+ {"region":"Nacional","codigo":"03","descripcion":"Prendas de vestir y calzado"}, 
+ {"region":"Nacional","codigo":"05","descripcion":"Equipamiento y mantenimiento del hogar"}, 
+ {"region":"Nacional","codigo":"07","descripcion":"Transporte"}, 
+ {"region":"Nacional","codigo":"10","descripcion":"Educación"}, 
+ {"region":"Nacional","codigo":"11","descripcion":"Restaurantes y hoteles"}, 
+ {"region":"Nacional","codigo":"E","descripcion":"Estacional"}, 
+ {"region":"Nacional","codigo":"R","descripcion":"Regulados"}]
