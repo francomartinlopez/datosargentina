@@ -87,8 +87,10 @@ def icc(campo: str = "0") -> pd.Series:
 def minero(campo: str) -> pd.Series:
     """campo 'tipo|descripción': p. ej. 'Índice|Nivel General - IPI Minero' o 'Unidades físicas|Carbonato de litio'."""
     tipo, descripcion = campo.split("|", 1)
+    # las unidades físicas viejas no traen la marca de serie original: el filtro va solo en los índices
+    filtro = {"serie": "eq.Serie Original"} if tipo == "Índice" else {}
     return _serie(consultar("ipi_minero", select="periodo,valor", tipo_de_indicador=f"eq.{tipo}",
-                            descripcion=f"eq.{descripcion}", serie="eq.Serie Original", order="periodo.asc"))
+                            descripcion=f"eq.{descripcion}", order="periodo.asc", **filtro))
 
 
 # ---------- Canasta de crianza ----------
@@ -106,7 +108,8 @@ def _comercio(conjunto: str, campo_valor: str, apertura: str | None, desde: int 
     """Suma mensual (US$) por país (apertura=None) o por otra columna (p. ej. uso_economico_cod),
     calculada en el servidor."""
     columna = apertura or "pais_cod"
-    filas = consultar(conjunto, select=f"Periodo,{columna},v:{campo_valor}.sum()", Anio=f"gte.{desde}")
+    # con orden fijo: sin él, las páginas de una suma pueden repetir o saltear filas
+    filas = consultar(conjunto, select=f"Periodo,{columna},v:{campo_valor}.sum()", Anio=f"gte.{desde}", order=f"Periodo.asc,{columna}.asc")
     df = pd.DataFrame(filas)
     df["fecha"] = df["Periodo"].map(fecha_periodo)
     return df.pivot_table(index="fecha", columns=columna, values="v", aggfunc="sum").sort_index()
@@ -147,7 +150,8 @@ def importaciones_uso(campo: str) -> pd.Series:
 @lru_cache(maxsize=None)
 def poblacion_jurisdicciones() -> pd.DataFrame:
     """Población proyectada al 1° de julio de cada año (2022-2040), por jurisdicción (nombres del IGN)."""
-    filas = consultar("proyecciones_poblacion_jurisdiccion_2022_2040", select="jurisdiccion_nom,fecha,total:poblacion.sum()")
+    filas = consultar("proyecciones_poblacion_jurisdiccion_2022_2040", select="jurisdiccion_nom,fecha,total:poblacion.sum()",
+                      order="fecha.asc,jurisdiccion_nom.asc")
     df = pd.DataFrame(filas)
     df["fecha"] = pd.to_datetime(df["fecha"].astype(str) + "-07-01")
     return df.pivot_table(index="fecha", columns="jurisdiccion_nom", values="total", aggfunc="sum").sort_index()
