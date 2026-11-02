@@ -217,3 +217,18 @@ def test_mapa_serie_formato():
     m = mapas.mapa_serie("x", "X", "Sec", {"Córdoba": pd.Series(range(30), index=i, dtype=float), "Vacía": pd.Series(dtype=float)})
     assert m["tipo"] == "serie" and list(m["provincias"]) == ["Córdoba"]
     assert m["provincias"]["Córdoba"][0][0] == "2003-01-01" and m["fecha"] == "2005-04-01"
+
+
+def test_sin_claves_ni_ids_repetidos():
+    """YAML acepta claves repetidas y se queda con la última: un nombre nuevo puede pisar uno viejo."""
+    import collections
+    import re
+    from pathlib import Path
+    texto = Path(__file__).resolve().parents[1].joinpath("indicadores.yaml").read_text(encoding="utf-8")
+    bloques = re.split(r"^(\w+):\s*$", texto, flags=re.M)
+    for i in range(1, len(bloques), 2):
+        claves = re.findall(r"^  ([A-Za-z0-9_]+):", bloques[i + 1], re.M)
+        repetidas = [k for k, v in collections.Counter(claves).items() if v > 1]
+        assert not repetidas, f"claves repetidas en {bloques[i]}: {repetidas}"
+    ids = re.findall(r"^  - \{id: ([A-Za-z0-9_]+)", texto, re.M)
+    assert not [k for k, v in collections.Counter(ids).items() if v > 1]

@@ -73,9 +73,7 @@ series:
   ipc_ropa:            {fuente: indec_api, conjunto: ipc, campo: "GBA|03.1"}
   ipib:                {fuente: indec_api, conjunto: sipm, campo: "IPIB|NG"}
   ipp:                 {fuente: indec_api, conjunto: sipm, campo: "IPP|NG"}
-  icc:                 {fuente: indec_api, conjunto: icc, campo: "0"}
-  icc_materiales:      {fuente: indec_api, conjunto: icc, campo: "01"}
-  icc_mano_obra:       {fuente: indec_api, conjunto: icc, campo: "02"}
+  costo_construccion:  {fuente: indec_api, conjunto: icc, campo: "0"}
   ipi_minero:          {fuente: indec_api, conjunto: minero, campo: "Índice|Nivel General - IPI Minero"}
   minero_petroleo:     {fuente: indec_api, conjunto: minero, campo: "Índice|Petróleo crudo"}
   gas_no_convencional: {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Gas natural no convencional"}
@@ -477,7 +475,7 @@ calculos:
   tasa_real_plazo_fijo: {operacion: tasa_real, a: tasa_plazo_fijo, b: ipc}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
   ipc_usd_oficial: {operacion: cociente, a: ipc, b: dolar_mayorista}
-  icc_usd:         {operacion: cociente, a: icc, b: dolar_mayorista}
+  costo_construccion_usd: {operacion: cociente, a: costo_construccion, b: dolar_mayorista}
   ipc_usd_ccl:     {operacion: cociente, a: ipc, b: dolar_ccl}
   indice_adr:      {operacion: indice_equiponderado, series: [adr_ggal, adr_ypf, adr_pam, adr_bma, adr_bbar, adr_supv, adr_cepu, adr_tgs, adr_teo, adr_edn, adr_cresy, adr_irs, adr_loma]}
   reservas_netas:  {operacion: reservas_netas, reservas: reservas, encajes: bcra_encajes_usd, depositos_usd: depositos_privados_usd, swap_yuan: swap_china_yuan,
@@ -911,8 +909,8 @@ indicadores:
   - {id: ipc_ropa_r, nombre: "Ropa", seccion: Precios, serie: ipc_ropa, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
   - {id: ipib, nombre: "Precios mayoristas básicos (IPIB)", seccion: Precios, serie: ipib, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice de precios internos básicos al por mayor (INDEC): precios sin impuestos, de productos nacionales e importados. Serie desde diciembre de 2015."}
   - {id: ipp, nombre: "Precios al productor (IPP)", seccion: Precios, serie: ipp, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice de precios básicos del productor (INDEC): lo que cobran los productores locales, sin impuestos. Serie desde diciembre de 2015."}
-  - {id: icc, nombre: "Costo de la construcción (ICC)", seccion: Precios, serie: icc, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción del INDEC (Gran Buenos Aires): materiales, mano de obra y gastos generales de un edificio tipo. Serie desde noviembre de 2015."}
-  - {id: icc_usd, nombre: "Costo de la construcción en dólares", seccion: Precios, serie: icc_usd, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción (INDEC, GBA) dividido por el dólar oficial mayorista (promedio del mes). Positivo = construir se encarece en dólares. Cálculo propio."}
+  - {id: costo_construccion, nombre: "Costo de la construcción (ICC)", seccion: Precios, serie: costo_construccion, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción del INDEC (Gran Buenos Aires): materiales, mano de obra y gastos generales de un edificio tipo. Serie desde noviembre de 2015."}
+  - {id: costo_construccion_usd, nombre: "Costo de la construcción en dólares", seccion: Precios, serie: costo_construccion_usd, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción (INDEC, GBA) dividido por el dólar oficial mayorista (promedio del mes). Positivo = construir se encarece en dólares. Cálculo propio."}
   - {id: ipi_minero, nombre: "Producción minera e hidrocarburos (IPI minero)", seccion: Actividad, serie: ipi_minero, tipo_valor: indice, unidad: "índice 2016=100", nota: "Índice de producción industrial minero del INDEC (serie original): petróleo y gas, minerales metalíferos, litio, rocas y otros. Desde 2017."}
   - {id: minero_petroleo, nombre: "Producción de petróleo crudo", seccion: Actividad, serie: minero_petroleo, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC (serie original). Desde 2017."}
   - {id: gas_no_convencional, nombre: "Producción de gas no convencional", seccion: Actividad, serie: gas_no_convencional, tipo_valor: flujo, acumulado_12m: true, unidad: "millones de m³, últimos 12 meses", nota: "Gas natural de reservorios no convencionales (sobre todo Vaca Muerta), en millones de metros cúbicos. INDEC, IPI minero (unidades físicas), desde 2017."}
