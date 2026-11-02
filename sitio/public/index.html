@@ -29,6 +29,12 @@
     <h1>Datos de Argentina</h1>
     <p class="bajada">Economía y gobierno desde 2003, con datos públicos. Pesos y dólares en moneda constante de hoy.</p>
     <p class="meta" id="actualizado"></p>
+    <div class="buscador" role="search">
+      <label for="buscar" class="oculto">Buscar un dato</label>
+      <input id="buscar" type="search" autocomplete="off" spellcheck="false" placeholder="Buscar un dato: inflación, litio, Córdoba, jubilaciones…"
+             aria-controls="buscar-resultados" aria-expanded="false" aria-autocomplete="list">
+      <ul id="buscar-resultados" class="buscar-resultados" role="listbox" hidden></ul>
+    </div>
   </div>
 </header>
 
