@@ -56,6 +56,55 @@ series:
   resultado_primario:  {fuente: datosgobar, id: "452.3_RESULTADO_RIO_0_M_18_54"}
   intereses_netos:     {fuente: datosgobar, id: "452.3_INTERESES_TOS_0_M_15_62"}
   recaudacion:         {fuente: datosgobar, id: "172.3_TL_RECAION_M_0_0_17"}
+  # API de datos del INDEC (requiere el token INDEC_API_TOKEN)
+  ipc_bienes:          {fuente: indec_api, conjunto: ipc, campo: "Nacional|B"}
+  ipc_servicios:       {fuente: indec_api, conjunto: ipc, campo: "Nacional|S"}
+  ipc_alquiler:        {fuente: indec_api, conjunto: ipc, campo: "GBA|04.1.1"}
+  ipc_electricidad_gas: {fuente: indec_api, conjunto: ipc, campo: "GBA|04.5"}
+  ipc_prepagas:        {fuente: indec_api, conjunto: ipc, campo: "GBA|06.4.1"}
+  ipc_transporte_publico: {fuente: indec_api, conjunto: ipc, campo: "GBA|07.3"}
+  ipc_combustibles:    {fuente: indec_api, conjunto: ipc, campo: "GBA|07.2.2"}
+  ipc_telefonia:       {fuente: indec_api, conjunto: ipc, campo: "GBA|08.3"}
+  ipc_restaurantes:    {fuente: indec_api, conjunto: ipc, campo: "GBA|11.1"}
+  ipc_carnes:          {fuente: indec_api, conjunto: ipc, campo: "GBA|01.1.2"}
+  ipc_lacteos:         {fuente: indec_api, conjunto: ipc, campo: "GBA|01.1.4"}
+  ipc_pan:             {fuente: indec_api, conjunto: ipc, campo: "GBA|01.1.1"}
+  ipc_verduras:        {fuente: indec_api, conjunto: ipc, campo: "GBA|01.1.7"}
+  ipc_ropa:            {fuente: indec_api, conjunto: ipc, campo: "GBA|03.1"}
+  ipib:                {fuente: indec_api, conjunto: sipm, campo: "IPIB|NG"}
+  ipp:                 {fuente: indec_api, conjunto: sipm, campo: "IPP|NG"}
+  icc:                 {fuente: indec_api, conjunto: icc, campo: "0"}
+  icc_materiales:      {fuente: indec_api, conjunto: icc, campo: "01"}
+  icc_mano_obra:       {fuente: indec_api, conjunto: icc, campo: "02"}
+  ipi_minero:          {fuente: indec_api, conjunto: minero, campo: "Índice|Nivel General - IPI Minero"}
+  minero_petroleo:     {fuente: indec_api, conjunto: minero, campo: "Índice|Petróleo crudo"}
+  gas_no_convencional: {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Gas natural no convencional"}
+  litio:               {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Carbonato de litio"}
+  crianza_men1:        {fuente: indec_api, conjunto: crianza, campo: tot_men1}
+  crianza_1a3:         {fuente: indec_api, conjunto: crianza, campo: tot_1a3}
+  crianza_4a5:         {fuente: indec_api, conjunto: crianza, campo: tot_4a5}
+  crianza_6a12:        {fuente: indec_api, conjunto: crianza, campo: tot_6a12}
+  expo_china: {fuente: indec_api, conjunto: exportaciones, campo: china}
+  expo_brasil: {fuente: indec_api, conjunto: exportaciones, campo: brasil}
+  expo_estados_unidos: {fuente: indec_api, conjunto: exportaciones, campo: estados_unidos}
+  expo_union_europea: {fuente: indec_api, conjunto: exportaciones, campo: union_europea}
+  expo_chile: {fuente: indec_api, conjunto: exportaciones, campo: chile}
+  expo_india: {fuente: indec_api, conjunto: exportaciones, campo: india}
+  expo_vietnam: {fuente: indec_api, conjunto: exportaciones, campo: vietnam}
+  expo_resto: {fuente: indec_api, conjunto: exportaciones, campo: resto}
+  impo_china: {fuente: indec_api, conjunto: importaciones, campo: china}
+  impo_brasil: {fuente: indec_api, conjunto: importaciones, campo: brasil}
+  impo_estados_unidos: {fuente: indec_api, conjunto: importaciones, campo: estados_unidos}
+  impo_union_europea: {fuente: indec_api, conjunto: importaciones, campo: union_europea}
+  impo_paraguay: {fuente: indec_api, conjunto: importaciones, campo: paraguay}
+  impo_resto: {fuente: indec_api, conjunto: importaciones, campo: resto}
+  impo_uso_capital: {fuente: indec_api, conjunto: importaciones_uso, campo: "1"}
+  impo_uso_intermedios: {fuente: indec_api, conjunto: importaciones_uso, campo: "2"}
+  impo_uso_combustibles: {fuente: indec_api, conjunto: importaciones_uso, campo: "3"}
+  impo_uso_piezas: {fuente: indec_api, conjunto: importaciones_uso, campo: "4"}
+  impo_uso_consumo: {fuente: indec_api, conjunto: importaciones_uso, campo: "5"}
+  impo_uso_vehiculos: {fuente: indec_api, conjunto: importaciones_uso, campo: "6"}
+  impo_uso_resto: {fuente: indec_api, conjunto: importaciones_uso, campo: "9"}
   # Recaudación por impuesto: ARCA (planillas anuales desde 2003) y Recursos Tributarios de Origen Provincial (mensual desde 2017)
   rec_iva: {fuente: archivo, lector: arca_recaudacion, campo: iva}
   rec_ganancias: {fuente: archivo, lector: arca_recaudacion, campo: ganancias}
@@ -428,6 +477,7 @@ calculos:
   tasa_real_plazo_fijo: {operacion: tasa_real, a: tasa_plazo_fijo, b: ipc}
   merval_usd:      {operacion: cociente, a: merval, b: dolar_ccl}
   ipc_usd_oficial: {operacion: cociente, a: ipc, b: dolar_mayorista}
+  icc_usd:         {operacion: cociente, a: icc, b: dolar_mayorista}
   ipc_usd_ccl:     {operacion: cociente, a: ipc, b: dolar_ccl}
   indice_adr:      {operacion: indice_equiponderado, series: [adr_ggal, adr_ypf, adr_pam, adr_bma, adr_bbar, adr_supv, adr_cepu, adr_tgs, adr_teo, adr_edn, adr_cresy, adr_irs, adr_loma]}
   reservas_netas:  {operacion: reservas_netas, reservas: reservas, encajes: bcra_encajes_usd, depositos_usd: depositos_privados_usd, swap_yuan: swap_china_yuan,
@@ -450,6 +500,16 @@ calculos:
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
+  - {id: inflacion_rubros, nombre: "Inflación por rubro (GBA)", seccion: Precios,
+     nota: "Índice de precios al consumidor del INDEC para el Gran Buenos Aires, aperturas por clase o grupo (base diciembre de 2016). Las aperturas tan finas se publican por región; se usa GBA, la de mayor peso en el índice nacional."}
+  - {id: expo_destino, nombre: "Exportaciones por destino", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+     nota: "Exportaciones de bienes (FOB) por país de destino, suma de los últimos 12 meses en dólares de hoy (deflactadas con el IPC de EE.UU.). Unión Europea: los 27 miembros actuales en todo el período. Fuente: INDEC, API de datos (comercio exterior)."}
+  - {id: impo_origen, nombre: "Importaciones por origen", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+     nota: "Importaciones de bienes (CIF) por país de origen, suma de los últimos 12 meses en dólares de hoy. Unión Europea: los 27 miembros actuales. Fuente: INDEC, API de datos (comercio exterior)."}
+  - {id: impo_uso, nombre: "Importaciones por uso económico", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+     nota: "Importaciones de bienes (CIF) según su destino en la economía, suma de los últimos 12 meses en dólares de hoy. Fuente: INDEC, API de datos (comercio exterior)."}
+  - {id: canasta_crianza, nombre: "Canasta de crianza por edad", seccion: "Pobreza y programas sociales", ranking: nivel, sufijo_ranking: "",
+     nota: "Costo mensual de criar a un chico según su edad: bienes y servicios (con la canasta básica total) más el tiempo de cuidado valorizado al salario de una trabajadora de casas particulares. INDEC, desde mayo de 2023; en pesos de hoy."}
   - {id: deuda_composicion, nombre: "Deuda por instrumento y acreedor", seccion: "Deuda pública", ranking: diferencia, unidad_ranking: "miles de millones de US$ de hoy",
      escala_ranking: 0.001, sufijo_ranking: " mil M",
      nota: "Deuda bruta de la Administración Central (Secretaría de Finanzas), saldos a fin de trimestre desde 2019. Bonos y letras incluyen los que están en manos de organismos públicos (BCRA, FGS, Banco Nación): Finanzas no publica la apertura por tenedor en esta serie."}
@@ -835,3 +895,50 @@ indicadores:
      nota: "Resultado primario del Sector Público Nacional no financiero (ingresos menos gastos sin contar intereses), suma de 12 meses sobre el PIB nominal. Cálculo propio."}
   - {id: indice_adr, nombre: "Índice de acciones argentinas en Nueva York (ADR)", seccion: "Dólar y finanzas", serie: indice_adr, tipo_valor: nivel, moneda: USD, vista_inicial: desde_2003, unidad: "índice dic-2003 = 100, en dólares de hoy", portada: true,
      nota: "Promedio simple de las variaciones mensuales de 13 empresas argentinas que cotizan en Nueva York: Galicia, YPF, Pampa, Macro, BBVA Argentina, Supervielle, Central Puerto, TGS, Telecom, Edenor, Cresud, IRSA y Loma Negra (cada una entra desde que cotiza). Precios de cierre mensual ajustados por dividendos (Yahoo Finance), expresados en dólares de hoy. Cálculo propio; no es un índice oficial."}
+  - {id: inflacion_bienes, nombre: "Inflación de bienes", seccion: Precios, serie: ipc_bienes, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "IPC nacional (INDEC), bienes. Serie desde diciembre de 2016."}
+  - {id: inflacion_servicios, nombre: "Inflación de servicios", seccion: Precios, serie: ipc_servicios, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "IPC nacional (INDEC), servicios (incluye tarifas, alquileres, educación, salud, transporte y otros). Serie desde diciembre de 2016."}
+  - {id: ipc_alquiler_r, nombre: "Alquiler de la vivienda", seccion: Precios, serie: ipc_alquiler, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_electricidad_gas_r, nombre: "Electricidad, gas y otros combustibles del hogar", seccion: Precios, serie: ipc_electricidad_gas, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_prepagas_r, nombre: "Prepagas", seccion: Precios, serie: ipc_prepagas, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_transporte_publico_r, nombre: "Transporte público", seccion: Precios, serie: ipc_transporte_publico, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_combustibles_r, nombre: "Combustibles para vehículos", seccion: Precios, serie: ipc_combustibles, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_telefonia_r, nombre: "Telefonía e internet", seccion: Precios, serie: ipc_telefonia, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_restaurantes_r, nombre: "Restaurantes y comidas fuera del hogar", seccion: Precios, serie: ipc_restaurantes, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_carnes_r, nombre: "Carnes y derivados", seccion: Precios, serie: ipc_carnes, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_lacteos_r, nombre: "Leche, lácteos y huevos", seccion: Precios, serie: ipc_lacteos, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_pan_r, nombre: "Pan y cereales", seccion: Precios, serie: ipc_pan, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_verduras_r, nombre: "Verduras, tubérculos y legumbres", seccion: Precios, serie: ipc_verduras, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipc_ropa_r, nombre: "Ropa", seccion: Precios, serie: ipc_ropa, tipo_valor: indice, vista_historica: mensual, unidad: "índice", grupo: inflacion_rubros}
+  - {id: ipib, nombre: "Precios mayoristas básicos (IPIB)", seccion: Precios, serie: ipib, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice de precios internos básicos al por mayor (INDEC): precios sin impuestos, de productos nacionales e importados. Serie desde diciembre de 2015."}
+  - {id: ipp, nombre: "Precios al productor (IPP)", seccion: Precios, serie: ipp, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice de precios básicos del productor (INDEC): lo que cobran los productores locales, sin impuestos. Serie desde diciembre de 2015."}
+  - {id: icc, nombre: "Costo de la construcción (ICC)", seccion: Precios, serie: icc, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción del INDEC (Gran Buenos Aires): materiales, mano de obra y gastos generales de un edificio tipo. Serie desde noviembre de 2015."}
+  - {id: icc_usd, nombre: "Costo de la construcción en dólares", seccion: Precios, serie: icc_usd, tipo_valor: indice, vista_historica: mensual, unidad: "índice", nota: "Índice del costo de la construcción (INDEC, GBA) dividido por el dólar oficial mayorista (promedio del mes). Positivo = construir se encarece en dólares. Cálculo propio."}
+  - {id: ipi_minero, nombre: "Producción minera e hidrocarburos (IPI minero)", seccion: Actividad, serie: ipi_minero, tipo_valor: indice, unidad: "índice 2016=100", nota: "Índice de producción industrial minero del INDEC (serie original): petróleo y gas, minerales metalíferos, litio, rocas y otros. Desde 2017."}
+  - {id: minero_petroleo, nombre: "Producción de petróleo crudo", seccion: Actividad, serie: minero_petroleo, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC (serie original). Desde 2017."}
+  - {id: gas_no_convencional, nombre: "Producción de gas no convencional", seccion: Actividad, serie: gas_no_convencional, tipo_valor: flujo, acumulado_12m: true, unidad: "millones de m³, últimos 12 meses", nota: "Gas natural de reservorios no convencionales (sobre todo Vaca Muerta), en millones de metros cúbicos. INDEC, IPI minero (unidades físicas), desde 2017."}
+  - {id: litio, nombre: "Producción de carbonato de litio", seccion: Actividad, serie: litio, tipo_valor: flujo, acumulado_12m: true, unidad: "toneladas, últimos 12 meses", nota: "Toneladas de carbonato de litio producidas. INDEC, IPI minero (unidades físicas), desde 2017."}
+  - {id: expo_china, nombre: "China", seccion: "Sector externo e inversión", serie: expo_china, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_brasil, nombre: "Brasil", seccion: "Sector externo e inversión", serie: expo_brasil, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_union_europea, nombre: "Unión Europea", seccion: "Sector externo e inversión", serie: expo_union_europea, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_estados_unidos, nombre: "Estados Unidos", seccion: "Sector externo e inversión", serie: expo_estados_unidos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_chile, nombre: "Chile", seccion: "Sector externo e inversión", serie: expo_chile, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_india, nombre: "India", seccion: "Sector externo e inversión", serie: expo_india, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_vietnam, nombre: "Vietnam", seccion: "Sector externo e inversión", serie: expo_vietnam, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: expo_resto, nombre: "Resto del mundo", seccion: "Sector externo e inversión", serie: expo_resto, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
+  - {id: impo_china, nombre: "China", seccion: "Sector externo e inversión", serie: impo_china, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_brasil, nombre: "Brasil", seccion: "Sector externo e inversión", serie: impo_brasil, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_union_europea, nombre: "Unión Europea", seccion: "Sector externo e inversión", serie: impo_union_europea, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_estados_unidos, nombre: "Estados Unidos", seccion: "Sector externo e inversión", serie: impo_estados_unidos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_paraguay, nombre: "Paraguay", seccion: "Sector externo e inversión", serie: impo_paraguay, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_resto, nombre: "Resto del mundo", seccion: "Sector externo e inversión", serie: impo_resto, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_origen}
+  - {id: impo_uso_intermedios, nombre: "Bienes intermedios", seccion: "Sector externo e inversión", serie: impo_uso_intermedios, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_piezas, nombre: "Piezas y accesorios para bienes de capital", seccion: "Sector externo e inversión", serie: impo_uso_piezas, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_capital, nombre: "Bienes de capital", seccion: "Sector externo e inversión", serie: impo_uso_capital, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_consumo, nombre: "Bienes de consumo", seccion: "Sector externo e inversión", serie: impo_uso_consumo, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_combustibles, nombre: "Combustibles y lubricantes", seccion: "Sector externo e inversión", serie: impo_uso_combustibles, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_vehiculos, nombre: "Vehículos de pasajeros", seccion: "Sector externo e inversión", serie: impo_uso_vehiculos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: impo_uso_resto, nombre: "Resto", seccion: "Sector externo e inversión", serie: impo_uso_resto, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: impo_uso}
+  - {id: crianza_men1, nombre: "Menores de 1 año", seccion: "Pobreza y programas sociales", serie: crianza_men1, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
+  - {id: crianza_1a3, nombre: "De 1 a 3 años", seccion: "Pobreza y programas sociales", serie: crianza_1a3, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
+  - {id: crianza_4a5, nombre: "De 4 y 5 años", seccion: "Pobreza y programas sociales", serie: crianza_4a5, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
+  - {id: crianza_6a12, nombre: "De 6 a 12 años", seccion: "Pobreza y programas sociales", serie: crianza_6a12, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}

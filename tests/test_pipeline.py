@@ -197,3 +197,23 @@ def test_total_empalmado_con_meses_finales_incompletos():
     cols["santa_fe"][-1] = np.nan  # último mes todavía sin informar
     t = a.total_empalmado(pd.DataFrame(cols, index=i))
     assert t.index[0] == i[0] and t.index[-1] == i[-2]
+
+
+def test_indec_api_bloques_y_resto():
+    import pandas as pd
+    from pipeline.fuentes import indec_api as a
+    i = pd.date_range("2025-01-01", periods=2, freq="MS")
+    df = pd.DataFrame({"CN": [1e6, 2e6], "ES": [1e6, 1e6], "FR": [2e6, 0.0], "AR": [5e6, 5e6]}, index=i)
+    assert list(a._por_bloque(df, "china")) == [1.0, 2.0]
+    assert list(a._por_bloque(df, "union_europea")) == [3.0, 1.0]
+    assert list(a._por_bloque(df, "resto")) == [5.0, 5.0]
+    assert list(a._por_bloque(df, "total")) == [9.0, 8.0]
+
+
+def test_mapa_serie_formato():
+    import pandas as pd
+    from pipeline import mapas
+    i = pd.date_range("2002-11-01", periods=30, freq="MS")
+    m = mapas.mapa_serie("x", "X", "Sec", {"Córdoba": pd.Series(range(30), index=i, dtype=float), "Vacía": pd.Series(dtype=float)})
+    assert m["tipo"] == "serie" and list(m["provincias"]) == ["Córdoba"]
+    assert m["provincias"]["Córdoba"][0][0] == "2003-01-01" and m["fecha"] == "2005-04-01"
