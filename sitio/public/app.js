@@ -811,8 +811,8 @@ function colorSecuencial(v, max) {
 function fichaMapaSerie(m, geo) {
   const anual = m.frecuencia === "A";
   const esIndiceM = m.tipo_valor === "indice";
-  const nombres = Object.keys(m.provincias);
   const TOTAL = "Total del país";
+  const nombres = Object.keys(m.provincias);
   // provincia -> clave de serie (las regiones del IPC agrupan provincias)
   const claveDe = {};
   if (m.regiones) Object.entries(m.regiones).forEach(([r, ps]) => ps.forEach((p) => (claveDe[p] = r)));
@@ -822,7 +822,8 @@ function fichaMapaSerie(m, geo) {
   const mover = (f, meses) => { const d = fecha(f); d.setMonth(d.getMonth() + meses); return iso(d); };
   const pct = (a, b) => (a == null || b == null || !b ? null : (a / b - 1) * 100);
   // fecha de inicio común (la más tardía entre los primeros datos), para que "desde" compare lo mismo
-  const inicioComun = nombres.map((n) => m.provincias[n][0][0]).sort().pop();
+  // "desde": el primer dato del total del país (las provincias que empiezan después muestran s/d)
+  const inicioComun = (m.provincias[TOTAL] || m.provincias[nombres[0]])[0][0];
   const anioInicio = inicioComun.slice(0, 4);
   const gestionesDisp = GESTIONES.filter((g) => (g.hasta || "9999") > inicioComun);
   let gestion = gestionesDisp[gestionesDisp.length - 1];
@@ -831,7 +832,7 @@ function fichaMapaSerie(m, geo) {
               : { id: "actual", texto: "Valor actual", desc: `${m.unidad_actual} (último dato).`, nivel: true },
     { id: "interanual", texto: "Interanual", desc: anual ? "Variación % contra el año anterior." : "Variación % contra el mismo mes del año anterior." },
     { id: "gestion_actual", texto: "Gestión actual", desc: anual ? `Variación % desde ${m.base.slice(0, 4)}, el último año antes del gobierno actual.` : `Variación % ${esIndiceM ? "acumulada " : ""}desde ${periodo(m.base, "M")}, el mes previo a asumir el gobierno actual.` },
-    { id: "desde", texto: `Desde ${anioInicio}`, desc: `Variación % ${esIndiceM ? "acumulada " : ""}desde ${anual ? anioInicio : periodo(inicioComun, "M")}, el primer dato común a todas las provincias.` },
+    { id: "desde", texto: `Desde ${anioInicio}`, desc: `Variación % ${esIndiceM ? "acumulada " : ""}desde ${anual ? anioInicio : periodo(inicioComun, "M")}, el primer dato de la serie (s/d: la provincia no tiene dato de ese momento).` },
     { id: "gestion", texto: "Por gestión", desc: "" },
   ];
   let vista = "interanual";
@@ -865,7 +866,7 @@ function fichaMapaSerie(m, geo) {
   const leyendaGraf = el("ul", { class: "leyenda" });
   const selGestion = el("select", { class: "selector", "aria-label": "Gestión", onchange: (e) => { gestion = gestionesDisp[e.target.selectedIndex]; render(); } },
     ...gestionesDisp.map((g) => el("option", { text: g.nombre, selected: g === gestion })));
-  const cajaGestion = el("label", { class: "etiqueta-selector", hidden: true }, "Gestión: ", selGestion);
+  const cajaGestion = el("label", { class: "etiqueta-selector", style: "display:none" }, "Gestión: ", selGestion);
   const botones = VISTAS_S.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === vista), text: v.texto, onclick: () => { vista = v.id; render(); } }));
   const tip = document.getElementById("tooltip");
   const corto = (n) => n.replace(", Antártida e Islas del Atlántico Sur", "");
@@ -873,7 +874,7 @@ function fichaMapaSerie(m, geo) {
   function render() {
     botones.forEach((b, i) => b.setAttribute("aria-pressed", String(VISTAS_S[i].id === vista)));
     const vv = VISTAS_S.find((v) => v.id === vista);
-    cajaGestion.hidden = vista !== "gestion";
+    cajaGestion.style.display = vista === "gestion" ? "" : "none";
     desc.textContent = vista === "gestion"
       ? `Variación % ${esIndiceM ? "acumulada " : ""}durante la gestión de ${gestion.nombre}${gestion.hasta ? "" : " (hasta el último dato)"}.`
       : vv.desc;
@@ -883,7 +884,9 @@ function fichaMapaSerie(m, geo) {
     const conDato = vals.map(([, v]) => v).filter((v) => v != null);
     const secuencial = vv.nivel || (conDato.length && Math.min(...conDato) >= 0);
     const max = Math.max(...conDato.map(Math.abs), 1e-9);
-    const colorDe = (v) => (secuencial ? colorSecuencial(v, max) : colorDivergente(v, max));
+    // en variaciones todas positivas (p. ej. inflación), la escala va del mínimo al máximo para que se vean las diferencias
+    const piso = secuencial && !vv.nivel && conDato.length > 1 ? Math.min(...conDato) : 0;
+    const colorDe = (v) => (secuencial ? colorSecuencial(v == null ? null : v - piso, max - piso || 1e-9) : colorDivergente(v, max));
     const W = Math.min(cont.clientWidth || 300, 340);
     const path = proyectar(geo, W, H);
     cont.innerHTML = "";
@@ -906,8 +909,8 @@ function fichaMapaSerie(m, geo) {
     });
     cont.append(svg);
     leyenda.innerHTML = "";
-    const escala = secuencial ? [0, max / 3, (2 * max) / 3, max] : [-max, -max / 2, 0, max / 2, max];
-    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDe(v === 0 ? 0 : v * 0.999)}` }), vv.nivel ? fmtActual(v) : signo(v, max < 10 ? 1 : 0) + "%")));
+    const escala = secuencial ? [piso, piso + (max - piso) / 3, piso + (2 * (max - piso)) / 3, max] : [-max, -max / 2, 0, max / 2, max];
+    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDe(v === 0 ? 0 : v - (v - piso) * 0.001)}` }), vv.nivel ? fmtActual(v) : signo(v, max < 10 ? 1 : 0) + "%")));
     tabla.innerHTML = "";
     const total = valor(TOTAL, vista);
     [...vals].sort((a, b) => (b[1] ?? -1e18) - (a[1] ?? -1e18)).forEach(([n, v]) => {
@@ -940,7 +943,7 @@ function fichaMapaSerie(m, geo) {
     if (!usadas.length) { grafico.innerHTML = ""; tituloGraf.textContent = ""; return; }
     tituloGraf.textContent = enVariacion
       ? `Evolución: variación % ${anual ? "anual" : "interanual"} de ${nombreSel}${elegida !== TOTAL ? " y del total del país" : ""}. Tocá una provincia en el mapa o en la lista para cambiarla.`
-      : `Evolución de ${nombreSel}, en ${m.unidad}. Tocá una provincia en el mapa o en la lista para cambiarla.`;
+      : `Evolución de ${nombreSel}. Tocá una provincia en el mapa o en la lista para cambiarla.`;
     const maxAbs = Math.max(...usadas.flatMap((l) => l.puntos.map((p) => Math.abs(p[1]))), 0);
     const cfg = enVariacion
       ? { eje: (y) => fmt(y, maxAbs < 10 ? 1 : 0) + "%", tip: (y) => fmt(y, 1) + "%", unidadEje: "", referencia: 0 }
