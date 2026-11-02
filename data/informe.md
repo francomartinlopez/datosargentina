@@ -1,6 +1,6 @@
-# Informe de actualización 2026-11-01
+# Informe de actualización 2026-11-02
 
-Indicadores publicados: 280
+Indicadores publicados: 327
 
 ## Alertas
 
@@ -30,6 +30,38 @@ Indicadores publicados: 280
 - resultado_primario: sin dato nuevo (último 2026-08)
 - intereses_netos: sin dato nuevo (último 2026-08)
 - recaudacion: sin dato nuevo (último 2026-09)
+- rec_iva: sin dato nuevo (último 2026-09)
+- rec_ganancias: sin dato nuevo (último 2026-09)
+- rec_cheque: sin dato nuevo (último 2026-09)
+- rec_combustibles: sin dato nuevo (último 2026-09)
+- rec_seguridad_social: sin dato nuevo (último 2026-09)
+- rec_derechos_exportacion: sin dato nuevo (último 2026-09)
+- rec_derechos_importacion: sin dato nuevo (último 2026-09)
+- iibb_total: sin dato nuevo (último 2026-08)
+- iibb_buenos_aires: sin dato nuevo (último 2026-08)
+- iibb_catamarca: sin dato nuevo (último 2026-09)
+- iibb_chaco: sin dato nuevo (último 2026-09)
+- iibb_chubut: sin dato nuevo (último 2026-09)
+- iibb_caba: sin dato nuevo (último 2026-09)
+- iibb_cordoba: sin dato nuevo (último 2026-09)
+- iibb_corrientes: sin dato nuevo (último 2026-09)
+- iibb_entre_rios: sin dato nuevo (último 2026-09)
+- iibb_formosa: sin dato nuevo (último 2026-09)
+- iibb_jujuy: sin dato nuevo (último 2026-09)
+- iibb_la_pampa: sin dato nuevo (último 2026-08)
+- iibb_la_rioja: sin dato nuevo (último 2026-09)
+- iibb_mendoza: sin dato nuevo (último 2026-09)
+- iibb_misiones: sin dato nuevo (último 2026-09)
+- iibb_neuquen: sin dato nuevo (último 2026-09)
+- iibb_rio_negro: sin dato nuevo (último 2026-09)
+- iibb_salta: sin dato nuevo (último 2026-09)
+- iibb_san_juan: sin dato nuevo (último 2026-09)
+- iibb_san_luis: sin dato nuevo (último 2026-09)
+- iibb_santa_cruz: sin dato nuevo (último 2026-08)
+- iibb_santa_fe: sin dato nuevo (último 2026-08)
+- iibb_santiago_del_estero: sin dato nuevo (último 2026-09)
+- iibb_tierra_del_fuego: sin dato nuevo (último 2026-08)
+- iibb_tucuman: sin dato nuevo (último 2026-09)
 - icg: sin dato nuevo (último 2026-09)
 - satisfaccion_rumbo: sin dato nuevo (último 2026-10)
 - aprobacion_promedio: sin dato nuevo (último 2026-10)
@@ -39,20 +71,13 @@ Indicadores publicados: 280
 - aprobacion_zuban: sin dato nuevo (último 2026-09)
 - reservas: sin dato nuevo (último 2026-10)
 - reservas: la fuente revisó 1 datos anteriores
-- dolar_mayorista: sin dato nuevo (último 2026-10)
-- dolar_mayorista: la fuente revisó 1 datos anteriores
 - base_monetaria: sin dato nuevo (último 2026-10)
 - base_monetaria: la fuente revisó 1 datos anteriores
 - tasa_plazo_fijo: sin dato nuevo (último 2026-10)
 - tasa_plazo_fijo: la fuente revisó 1 datos anteriores
 - prestamos_privados: sin dato nuevo (último 2026-10)
-- prestamos_privados: la fuente revisó 4 datos anteriores
-- dolar_ccl: sin dato nuevo (último 2026-10)
-- dolar_ccl: la fuente revisó 1 datos anteriores
-- dolar_mep: sin dato nuevo (último 2026-10)
-- dolar_mep: la fuente revisó 1 datos anteriores
+- prestamos_privados: la fuente revisó 2 datos anteriores
 - riesgo_pais: sin dato nuevo (último 2026-10)
-- riesgo_pais: la fuente revisó 1 datos anteriores
 - ipim: sin dato nuevo (último 2026-08)
 - autoservicios_desest: sin dato nuevo (último 2026-07)
 - shoppings_desest: sin dato nuevo (último 2026-07)
@@ -78,16 +103,13 @@ Indicadores publicados: 280
 - subsidios_energia: sin dato nuevo (último 2026-04)
 - transf_capital_provincias: sin dato nuevo (último 2026-08)
 - icc: sin dato nuevo (último 2026-09)
-- dolar_tarjeta: sin dato nuevo (último 2026-10)
-- dolar_tarjeta: la fuente revisó 1 datos anteriores
 - depositos_privados_ars: sin dato nuevo (último 2026-10)
-- depositos_privados_ars: la fuente revisó 3 datos anteriores
+- depositos_privados_ars: la fuente revisó 2 datos anteriores
 - depositos_privados_usd: sin dato nuevo (último 2026-10)
-- depositos_privados_usd: la fuente revisó 2 datos anteriores
+- depositos_privados_usd: la fuente revisó 1 datos anteriores
 - compras_divisas_bcra: sin dato nuevo (último 2026-10)
-- compras_divisas_bcra: la fuente revisó 1 datos anteriores
 - prestamos_hipotecarios: sin dato nuevo (último 2026-10)
-- prestamos_hipotecarios: la fuente revisó 2 datos anteriores
+- prestamos_hipotecarios: la fuente revisó 1 datos anteriores
 - prestamos_prendarios: sin dato nuevo (último 2026-10)
 - prestamos_prendarios: la fuente revisó 2 datos anteriores
 - prestamos_personales: sin dato nuevo (último 2026-10)
@@ -97,6 +119,7 @@ Indicadores publicados: 280
 - tasa_personales: sin dato nuevo (último 2026-10)
 - tasa_personales: la fuente revisó 2 datos anteriores
 - tasa_tarjetas: sin dato nuevo (último 2026-09)
+- icl: sin dato nuevo (último 2026-11)
 - icl: la fuente revisó 1 datos anteriores
 - pobreza_personas: sin dato nuevo (último 2026-01)
 - indigencia_personas: sin dato nuevo (último 2026-01)
@@ -241,9 +264,9 @@ Indicadores publicados: 280
 - soja_precio: sin dato nuevo (último 2026-09)
 - retenciones: sin dato nuevo (último 2026-08)
 - m2: sin dato nuevo (último 2026-10)
-- m2: la fuente revisó 6 datos anteriores
+- m2: la fuente revisó 1 datos anteriores
 - prestamos_usd: sin dato nuevo (último 2026-10)
-- prestamos_usd: la fuente revisó 2 datos anteriores
+- prestamos_usd: la fuente revisó 1 datos anteriores
 - fbcf_corriente: sin dato nuevo (último 2025-10)
 - ventas_autos: sin dato nuevo (último 2026-09)
 - produccion_autos: sin dato nuevo (último 2026-09)
@@ -255,32 +278,6 @@ Indicadores publicados: 280
 - ipc_transporte: sin dato nuevo (último 2026-08)
 - ipc_educacion: sin dato nuevo (último 2026-08)
 - merval: sin dato nuevo (último 2026-10)
-- adr_ggal: sin dato nuevo (último 2026-10)
-- adr_ggal: la fuente revisó 1 datos anteriores
-- adr_ypf: sin dato nuevo (último 2026-10)
-- adr_ypf: la fuente revisó 1 datos anteriores
-- adr_pam: sin dato nuevo (último 2026-10)
-- adr_pam: la fuente revisó 1 datos anteriores
-- adr_bma: sin dato nuevo (último 2026-10)
-- adr_bma: la fuente revisó 1 datos anteriores
-- adr_bbar: sin dato nuevo (último 2026-10)
-- adr_bbar: la fuente revisó 1 datos anteriores
-- adr_supv: sin dato nuevo (último 2026-10)
-- adr_supv: la fuente revisó 1 datos anteriores
-- adr_cepu: sin dato nuevo (último 2026-10)
-- adr_cepu: la fuente revisó 1 datos anteriores
-- adr_tgs: sin dato nuevo (último 2026-10)
-- adr_tgs: la fuente revisó 1 datos anteriores
-- adr_teo: sin dato nuevo (último 2026-10)
-- adr_teo: la fuente revisó 1 datos anteriores
-- adr_edn: sin dato nuevo (último 2026-10)
-- adr_edn: la fuente revisó 1 datos anteriores
-- adr_cresy: sin dato nuevo (último 2026-10)
-- adr_cresy: la fuente revisó 1 datos anteriores
-- adr_irs: sin dato nuevo (último 2026-10)
-- adr_irs: la fuente revisó 1 datos anteriores
-- adr_loma: sin dato nuevo (último 2026-10)
-- adr_loma: la fuente revisó 1 datos anteriores
 - imig_jubilaciones: sin dato nuevo (último 2026-04)
 - imig_pensiones_nc: sin dato nuevo (último 2026-04)
 - imig_asignaciones: sin dato nuevo (último 2026-04)
@@ -306,6 +303,7 @@ Indicadores publicados: 280
 - gpn_ciencia: sin dato nuevo (último 2023-01)
 - gpn_vivienda: sin dato nuevo (último 2023-01)
 - gpn_empleo: sin dato nuevo (último 2023-01)
+- calificacion_sp: sin dato nuevo (último 2026-11)
 - fao_vacuna: sin dato nuevo (último 2023-01)
 - fao_aviar: sin dato nuevo (último 2023-01)
 - fao_porcina: sin dato nuevo (último 2023-01)
@@ -327,4 +325,7 @@ Indicadores publicados: 280
 - bcra_tc_balance: sin dato nuevo (último 2025-10)
 - bcra_pase_2016: sin dato nuevo (último 2026-10)
 - cny_por_usd: sin dato nuevo (último 2026-10)
+- swap_china_yuan: sin dato nuevo (último 2026-11)
+- swap_eeuu_activado: sin dato nuevo (último 2026-11)
+- fmi_desembolsos_2025: sin dato nuevo (último 2026-11)
 - cpi_eeuu: sin dato nuevo (último 2026-09)
