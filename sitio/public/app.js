@@ -1245,6 +1245,113 @@ async function diagnostico() {
   document.getElementById("nav-secciones").append(el("a", { href: "#diagnostico", text: "Diagnóstico" }));
 }
 
+
+/* ---------- Buscador ---------- */
+
+const normalizar = (t) => (t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+// Arma el índice a partir de lo que quedó dibujado en la página: fichas, mapas, grupos (con sus
+// miembros), variantes de un menú (p. ej. provincias) y los bloques de Gobierno y Diagnóstico.
+function indiceBusqueda(extras) {
+  const items = [];
+  document.querySelectorAll("#secciones .seccion").forEach((sec) => {
+    const seccion = sec.querySelector("h2")?.textContent || "";
+    sec.querySelectorAll(":scope .grilla > article").forEach((art) => {
+      const titulo = art.querySelector("h3")?.textContent || "";
+      const nota = art.querySelector(":scope > .nota")?.textContent || "";
+      items.push({ titulo, seccion, destino: art.id, texto: nota });
+      // miembros de un ranking: cada fila es buscable y al elegirla se abre su serie
+      art.querySelectorAll(":scope > .ranking .rank-nombre").forEach((n) =>
+        items.push({ titulo: `${n.textContent} · ${titulo}`, seccion, destino: art.id, fila: n.textContent, texto: "" }));
+      // provincias de los mapas
+      art.querySelectorAll(":scope .mapa-lista .mapa-fila span:first-child").forEach((n) => {
+        if (n.textContent !== "Total del país") items.push({ titulo: `${n.textContent} · ${titulo}`, seccion, destino: art.id, provincia: n.textContent, texto: "", menor: true });
+      });
+      // opciones de un menú (variantes, p. ej. Ingresos Brutos por provincia)
+      art.querySelectorAll(":scope > .selector-variante option").forEach((o, i) => {
+        if (i) items.push({ titulo: `${titulo.split(":")[0]}: ${o.textContent}`, seccion, destino: art.id, variante: o.value, texto: "" });
+      });
+    });
+  });
+  document.querySelectorAll("#gobierno .bloque, #diagnostico .bloque").forEach((b) => {
+    const sec = b.closest("section");
+    if (!sec || sec.hidden) return;
+    if (!b.id) b.id = "b-" + slug(b.querySelector("h3")?.textContent || Math.random().toString(36).slice(2));
+    items.push({ titulo: b.querySelector("h3")?.textContent || "", seccion: sec.querySelector("h2")?.textContent || "", destino: b.id,
+      texto: (b.querySelector(".intro")?.textContent || "") + " " + (sec.id === "diagnostico" ? b.textContent.slice(0, 400) : "") });
+  });
+  (extras || []).forEach((x) => items.push(x));
+  items.forEach((it) => { it._t = normalizar(it.titulo); it._s = normalizar(it.seccion); it._x = normalizar(it.texto); });
+  return items;
+}
+
+function buscar(items, consulta) {
+  const palabras = normalizar(consulta).split(/\s+/).filter((p) => p.length >= 2);
+  if (!palabras.length) return [];
+  const res = [];
+  for (const it of items) {
+    let puntos = 0, ok = true;
+    for (const p of palabras) {
+      if (it._t.includes(p)) puntos += it._t.startsWith(p) || it._t.includes(" " + p) ? 6 : 4;
+      else if (it._s.includes(p)) puntos += 2;
+      else if (it._x.includes(p)) puntos += 1;
+      else { ok = false; break; }
+    }
+    if (ok) res.push([puntos - (it.menor ? 1 : 0) - it.titulo.length / 400, it]);
+  }
+  return res.sort((a, b) => b[0] - a[0]).map(([, it]) => it).slice(0, 12);
+}
+
+async function irA(it) {
+  let destino = document.getElementById(it.destino);
+  if (!destino) return;
+  if (it.variante) {
+    const sel = destino.querySelector(":scope > .selector-variante select");
+    if (sel && sel.value !== it.variante) {
+      sel.value = it.variante;
+      sel.dispatchEvent(new Event("change"));
+      for (let k = 0; k < 20 && document.getElementById(it.destino)?.querySelector("select")?.value !== it.variante; k++) await new Promise((r) => setTimeout(r, 100));
+      destino = document.getElementById(it.destino);
+    }
+  }
+  if (it.fila) [...destino.querySelectorAll(":scope > .ranking .rank-fila")].find((b) => b.querySelector(".rank-nombre")?.textContent === it.fila)?.click();
+  if (it.provincia) [...destino.querySelectorAll(".mapa-fila")].find((b) => b.firstChild?.textContent === it.provincia)?.click();
+  destino.scrollIntoView({ behavior: "smooth", block: "start" });
+  destino.classList.remove("resaltada"); void destino.offsetWidth; destino.classList.add("resaltada");
+  history.replaceState(null, "", "#" + it.destino);
+}
+
+function iniciarBuscador() {
+  const input = document.getElementById("buscar"), lista = document.getElementById("buscar-resultados");
+  if (!input) return;
+  let items = null, resultados = [], activo = -1;
+  const cerrar = () => { lista.hidden = true; input.setAttribute("aria-expanded", "false"); activo = -1; };
+  const pintar = () => {
+    lista.innerHTML = "";
+    if (!input.value.trim()) return cerrar();
+    if (!resultados.length) lista.append(el("li", { class: "sin-resultados", text: "No hay datos con esas palabras." }));
+    resultados.forEach((it, i) => lista.append(el("li", { role: "option", id: `res-${i}`, "aria-selected": String(i === activo),
+      onmousedown: (e) => { e.preventDefault(); elegir(i); } }, el("span", { class: "res-titulo", text: it.titulo }), el("span", { class: "res-seccion", text: it.seccion }))));
+    lista.hidden = false;
+    input.setAttribute("aria-expanded", "true");
+    if (activo >= 0) input.setAttribute("aria-activedescendant", `res-${activo}`); else input.removeAttribute("aria-activedescendant");
+  };
+  const elegir = (i) => { const it = resultados[i]; if (!it) return; cerrar(); input.blur(); irA(it); };
+  input.addEventListener("input", () => { items = items || indiceBusqueda(); resultados = buscar(items, input.value); activo = resultados.length ? 0 : -1; pintar(); });
+  input.addEventListener("focus", () => { items = null; if (input.value.trim()) input.dispatchEvent(new Event("input")); });
+  input.addEventListener("blur", () => setTimeout(cerrar, 150));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); activo = Math.min(resultados.length - 1, activo + 1); pintar(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); activo = Math.max(0, activo - 1); pintar(); }
+    else if (e.key === "Enter") { e.preventDefault(); elegir(Math.max(0, activo)); }
+    else if (e.key === "Escape") { input.value = ""; cerrar(); }
+  });
+  // "/" enfoca el buscador desde cualquier parte de la página
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "/" && !/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName || "")) { e.preventDefault(); input.focus(); }
+  });
+}
+
 /* ---------- Inicio ---------- */
 
 async function iniciar() {
@@ -1288,6 +1395,7 @@ async function iniciar() {
   }
   await gobierno();
   await diagnostico();
+  iniciarBuscador();
 }
 
 iniciar().catch((e) => {
