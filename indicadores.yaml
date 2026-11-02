@@ -500,13 +500,13 @@ calculos:
 grupos:
   - {id: inflacion_rubros, nombre: "Inflación por rubro (GBA)", seccion: Precios,
      nota: "Índice de precios al consumidor del INDEC para el Gran Buenos Aires, aperturas por clase o grupo (base diciembre de 2016). Las aperturas tan finas se publican por región; se usa GBA, la de mayor peso en el índice nacional."}
-  - {id: expo_destino, nombre: "Exportaciones por destino", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+  - {id: expo_destino, unidad_ranking: "millones de US$ de hoy, últimos 12 meses", nombre: "Exportaciones por destino", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
      nota: "Exportaciones de bienes (FOB) por país de destino, suma de los últimos 12 meses en dólares de hoy (deflactadas con el IPC de EE.UU.). Unión Europea: los 27 miembros actuales en todo el período. Fuente: INDEC, API de datos (comercio exterior)."}
-  - {id: impo_origen, nombre: "Importaciones por origen", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+  - {id: impo_origen, unidad_ranking: "millones de US$ de hoy, últimos 12 meses", nombre: "Importaciones por origen", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
      nota: "Importaciones de bienes (CIF) por país de origen, suma de los últimos 12 meses en dólares de hoy. Unión Europea: los 27 miembros actuales. Fuente: INDEC, API de datos (comercio exterior)."}
-  - {id: impo_uso, nombre: "Importaciones por uso económico", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
+  - {id: impo_uso, unidad_ranking: "millones de US$ de hoy, últimos 12 meses", nombre: "Importaciones por uso económico", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
      nota: "Importaciones de bienes (CIF) según su destino en la economía, suma de los últimos 12 meses en dólares de hoy. Fuente: INDEC, API de datos (comercio exterior)."}
-  - {id: canasta_crianza, nombre: "Canasta de crianza por edad", seccion: "Pobreza y programas sociales", ranking: nivel, sufijo_ranking: "",
+  - {id: canasta_crianza, unidad_ranking: "pesos de hoy por mes", nombre: "Canasta de crianza por edad", seccion: "Pobreza y programas sociales", ranking: nivel, sufijo_ranking: "",
      nota: "Costo mensual de criar a un chico según su edad: bienes y servicios (con la canasta básica total) más el tiempo de cuidado valorizado al salario de una trabajadora de casas particulares. INDEC, desde mayo de 2023; en pesos de hoy."}
   - {id: deuda_composicion, nombre: "Deuda por instrumento y acreedor", seccion: "Deuda pública", ranking: diferencia, unidad_ranking: "miles de millones de US$ de hoy",
      escala_ranking: 0.001, sufijo_ranking: " mil M",
@@ -914,7 +914,7 @@ indicadores:
   - {id: ipi_minero, nombre: "Producción minera e hidrocarburos (IPI minero)", seccion: Actividad, serie: ipi_minero, tipo_valor: indice, unidad: "índice 2016=100", nota: "Índice de producción industrial minero del INDEC (serie original): petróleo y gas, minerales metalíferos, litio, rocas y otros. Desde 2017."}
   - {id: minero_petroleo, nombre: "Producción de petróleo crudo", seccion: Actividad, serie: minero_petroleo, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC (serie original). Desde 2017."}
   - {id: gas_no_convencional, nombre: "Producción de gas no convencional", seccion: Actividad, serie: gas_no_convencional, tipo_valor: flujo, acumulado_12m: true, unidad: "millones de m³, últimos 12 meses", nota: "Gas natural de reservorios no convencionales (sobre todo Vaca Muerta), en millones de metros cúbicos. INDEC, IPI minero (unidades físicas), desde 2017."}
-  - {id: litio, nombre: "Producción de litio", seccion: Actividad, serie: litio, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC: carbonato de litio y otros minerales de litio (serie original, desde 2017). Las toneladas producidas se publican recién desde junio de 2023 (en agosto de 2026: 8.583 toneladas en el mes)."}
+  - {id: litio, nombre: "Producción de litio", seccion: Actividad, serie: litio, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC: carbonato de litio y otros minerales de litio (serie original; el INDEC la publica desde octubre de 2020, antes era confidencial). Las toneladas producidas se publican recién desde junio de 2023 (en agosto de 2026: 8.583 toneladas en el mes)."}
   - {id: expo_china, nombre: "China", seccion: "Sector externo e inversión", serie: expo_china, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
   - {id: expo_brasil, nombre: "Brasil", seccion: "Sector externo e inversión", serie: expo_brasil, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
   - {id: expo_union_europea, nombre: "Unión Europea", seccion: "Sector externo e inversión", serie: expo_union_europea, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
