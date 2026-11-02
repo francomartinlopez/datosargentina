@@ -337,3 +337,11 @@ div.rank-fila.nivel:hover { background: none; }
   font: inherit; font-size: 14px; color: var(--tinta); background: var(--superficie);
   border: 1px solid var(--borde); border-radius: 8px; padding: 4px 8px; max-width: 100%;
 }
+
+/* Mapas con series: lista clicable y gráfico de la provincia elegida */
+.mapa-lista li { padding: 0; }
+.mapa-lista .mapa-fila { display: flex; justify-content: space-between; gap: 8px; width: 100%; background: none; border: 0; padding: 2px 4px;
+  font: inherit; color: inherit; text-align: left; cursor: pointer; border-radius: 6px; }
+.mapa-lista .mapa-fila:hover { background: var(--banda); }
+.mapa-lista li.elegida .mapa-fila { background: var(--insignia); font-weight: 600; }
+.mapa-lista li.total { border-top: 1px solid var(--borde); margin-top: 4px; padding-top: 4px; }

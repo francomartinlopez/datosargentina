@@ -12,7 +12,7 @@ const GESTIONES = [
   { nombre: "Javier Milei", corto: "Milei", desde: "2023-12-10", hasta: null },
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
-const ORDEN_SECCIONES = ["Precios", "Actividad", "Consumo", "Empleo e ingresos", "Pobreza y programas sociales",
+const ORDEN_SECCIONES = ["Precios", "Actividad", "Consumo", "Empleo e ingresos", "Pobreza y programas sociales", "Población",
   "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Seguridad", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
@@ -22,6 +22,7 @@ const FUENTES = {
   encuestas: "Encuestadoras (carga manual con fuente)",
   yahoo: "Yahoo Finance",
   "cálculo propio": "Cálculo propio",
+  indec_api: "INDEC (API de datos)",
 };
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 const MESES_LARGO = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
@@ -806,7 +807,166 @@ function colorSecuencial(v, max) {
   return azules[Math.min(5, Math.floor((v / (max || 1)) * 6))];
 }
 
+// Mapa con series por provincia: las vistas se calculan acá, con el mismo criterio que los gráficos.
+function fichaMapaSerie(m, geo) {
+  const anual = m.frecuencia === "A";
+  const esIndiceM = m.tipo_valor === "indice";
+  const nombres = Object.keys(m.provincias);
+  const TOTAL = "Total del país";
+  // provincia -> clave de serie (las regiones del IPC agrupan provincias)
+  const claveDe = {};
+  if (m.regiones) Object.entries(m.regiones).forEach(([r, ps]) => ps.forEach((p) => (claveDe[p] = r)));
+  const serieDe = (n) => m.provincias[claveDe[n] || n];
+  const idx = (lista, f) => { const k = lista.findIndex(([x]) => (anual ? x.slice(0, 4) === f.slice(0, 4) : x === f)); return k; };
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-01`;
+  const mover = (f, meses) => { const d = fecha(f); d.setMonth(d.getMonth() + meses); return iso(d); };
+  const pct = (a, b) => (a == null || b == null || !b ? null : (a / b - 1) * 100);
+  // fecha de inicio común (la más tardía entre los primeros datos), para que "desde" compare lo mismo
+  const inicioComun = nombres.map((n) => m.provincias[n][0][0]).sort().pop();
+  const anioInicio = inicioComun.slice(0, 4);
+  const gestionesDisp = GESTIONES.filter((g) => (g.hasta || "9999") > inicioComun);
+  let gestion = gestionesDisp[gestionesDisp.length - 1];
+  const VISTAS_S = [
+    esIndiceM ? { id: "mensual", texto: "Mensual", desc: "Variación % del último mes contra el anterior." }
+              : { id: "actual", texto: "Valor actual", desc: `${m.unidad_actual} (último dato).`, nivel: true },
+    { id: "interanual", texto: "Interanual", desc: anual ? "Variación % contra el año anterior." : "Variación % contra el mismo mes del año anterior." },
+    { id: "gestion_actual", texto: "Gestión actual", desc: anual ? `Variación % desde ${m.base.slice(0, 4)}, el último año antes del gobierno actual.` : `Variación % ${esIndiceM ? "acumulada " : ""}desde ${periodo(m.base, "M")}, el mes previo a asumir el gobierno actual.` },
+    { id: "desde", texto: `Desde ${anioInicio}`, desc: `Variación % ${esIndiceM ? "acumulada " : ""}desde ${anual ? anioInicio : periodo(inicioComun, "M")}, el primer dato común a todas las provincias.` },
+    { id: "gestion", texto: "Por gestión", desc: "" },
+  ];
+  let vista = "interanual";
+  function valor(n, v) {
+    const s = serieDe(n);
+    if (!s || !s.length) return null;
+    const k = s.length - 1, [fu, vu] = s[k];
+    if (v === "actual") return m.actual ? m.actual[n] ?? null : vu;
+    if (v === "mensual") return k ? pct(vu, s[k - 1][1]) : null;
+    if (v === "interanual") { const j = idx(s, anual ? `${+fu.slice(0, 4) - 1}-01-01` : mover(fu, -12)); return j < 0 ? null : pct(vu, s[j][1]); }
+    if (v === "gestion_actual") { const j = idx(s, m.base); return j < 0 ? null : pct(vu, s[j][1]); }
+    if (v === "desde") { const j = idx(s, inicioComun); return j < 0 ? null : pct(vu, s[j][1]); }
+    if (v === "gestion") {
+      const ini = anual ? `${fecha(gestion.desde).getFullYear() - (fecha(gestion.desde).getMonth() >= 6 ? 0 : 1)}-01-01` : basePrevia(gestion.desde);
+      const j = idx(s, ini);
+      if (j < 0) return null;
+      let fin = k;
+      if (gestion.hasta) { const h = idx(s, anual ? `${fecha(gestion.hasta).getFullYear() - 1}-01-01` : basePrevia(gestion.hasta)); if (h >= 0) fin = h; else if (s[k][0] > gestion.hasta) return null; }
+      return pct(s[fin][1], s[j][1]);
+    }
+    return null;
+  }
+  let elegida = TOTAL in m.provincias ? TOTAL : nombres[0];
+  const H = 420;
+  const cont = el("div", { class: "mapa" });
+  const leyenda = el("div", { class: "mapa-leyenda" });
+  const tabla = el("ol", { class: "mapa-lista" });
+  const desc = el("p", { class: "leyenda-vista" });
+  const grafico = el("div", { class: "grafico" });
+  const tituloGraf = el("p", { class: "leyenda-vista" });
+  const leyendaGraf = el("ul", { class: "leyenda" });
+  const selGestion = el("select", { class: "selector", "aria-label": "Gestión", onchange: (e) => { gestion = gestionesDisp[e.target.selectedIndex]; render(); } },
+    ...gestionesDisp.map((g) => el("option", { text: g.nombre, selected: g === gestion })));
+  const cajaGestion = el("label", { class: "etiqueta-selector", hidden: true }, "Gestión: ", selGestion);
+  const botones = VISTAS_S.map((v) => el("button", { type: "button", "aria-pressed": String(v.id === vista), text: v.texto, onclick: () => { vista = v.id; render(); } }));
+  const tip = document.getElementById("tooltip");
+  const corto = (n) => n.replace(", Antártida e Islas del Atlántico Sur", "");
+  const fmtActual = (v) => (v == null ? "s/d" : fmt(v / (m.escala_actual || 1), m.dec_actual ?? 1));
+  function render() {
+    botones.forEach((b, i) => b.setAttribute("aria-pressed", String(VISTAS_S[i].id === vista)));
+    const vv = VISTAS_S.find((v) => v.id === vista);
+    cajaGestion.hidden = vista !== "gestion";
+    desc.textContent = vista === "gestion"
+      ? `Variación % ${esIndiceM ? "acumulada " : ""}durante la gestión de ${gestion.nombre}${gestion.hasta ? "" : " (hasta el último dato)"}.`
+      : vv.desc;
+    const fmtV = (v) => (vv.nivel ? fmtActual(v) : v == null ? "s/d" : signo(v) + "%");
+    const claves = m.regiones ? Object.keys(m.regiones) : nombres.filter((n) => n !== TOTAL);
+    const vals = claves.map((n) => [n, valor(m.regiones ? m.regiones[n][0] : n, vista)]);
+    const conDato = vals.map(([, v]) => v).filter((v) => v != null);
+    const secuencial = vv.nivel || (conDato.length && Math.min(...conDato) >= 0);
+    const max = Math.max(...conDato.map(Math.abs), 1e-9);
+    const colorDe = (v) => (secuencial ? colorSecuencial(v, max) : colorDivergente(v, max));
+    const W = Math.min(cont.clientWidth || 300, 340);
+    const path = proyectar(geo, W, H);
+    cont.innerHTML = "";
+    const svg = svgEl("svg", { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: "img", "aria-label": `${m.nombre}: ${desc.textContent}` });
+    geo.features.forEach((f) => {
+      const n = f.properties.nombre, v = valor(n, vista);
+      const sel = (claveDe[n] || n) === (claveDe[elegida] || elegida);
+      const p = svgEl("path", { d: path(f.geometry), fill: colorDe(v), stroke: sel ? css("--tinta") : css("--superficie"), "stroke-width": sel ? 1.6 : 0.8, style: "cursor:pointer" });
+      const mostrar = (ev) => {
+        tip.innerHTML = "";
+        tip.append(el("div", { class: "t-fecha", text: corto(n) + (claveDe[n] ? ` (región ${claveDe[n]})` : "") }), el("div", { class: "t-fila" }, el("span", { text: vista === "gestion" ? gestion.nombre.split(" ").pop() : vv.texto }), el("span", { text: fmtV(v) })));
+        tip.hidden = false;
+        tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 14) + "px";
+        tip.style.top = Math.max(8, ev.clientY - tip.offsetHeight - 12) + "px";
+      };
+      p.addEventListener("mousemove", mostrar);
+      p.addEventListener("mouseleave", () => { tip.hidden = true; });
+      p.addEventListener("click", () => { elegida = claveDe[n] ? m.regiones[claveDe[n]][0] : n; tip.hidden = true; render(); });
+      svg.append(p);
+    });
+    cont.append(svg);
+    leyenda.innerHTML = "";
+    const escala = secuencial ? [0, max / 3, (2 * max) / 3, max] : [-max, -max / 2, 0, max / 2, max];
+    leyenda.append(...escala.map((v) => el("span", {}, el("i", { style: `background:${colorDe(v === 0 ? 0 : v * 0.999)}` }), vv.nivel ? fmtActual(v) : signo(v, max < 10 ? 1 : 0) + "%")));
+    tabla.innerHTML = "";
+    const total = valor(TOTAL, vista);
+    [...vals].sort((a, b) => (b[1] ?? -1e18) - (a[1] ?? -1e18)).forEach(([n, v]) => {
+      const clave = m.regiones ? m.regiones[n][0] : n;
+      tabla.append(el("li", { class: (claveDe[clave] || clave) === (claveDe[elegida] || elegida) ? "elegida" : "" },
+        el("button", { type: "button", class: "mapa-fila", onclick: () => { elegida = clave; render(); } }, el("span", { text: corto(n) }), el("span", { text: fmtV(v) }))));
+    });
+    if (total != null) tabla.append(el("li", { class: "total" + (elegida === TOTAL ? " elegida" : "") },
+      el("button", { type: "button", class: "mapa-fila", onclick: () => { elegida = TOTAL; render(); } }, el("span", { text: TOTAL }), el("span", { text: fmtV(total) }))));
+    dibujarEvolucion();
+  }
+  function dibujarEvolucion() {
+    const nombreSel = claveDe[elegida] ? `región ${claveDe[elegida]}` : corto(elegida);
+    const enVariacion = esIndiceM || vista === "interanual" || vista === "mensual";
+    const prep = (s) => {
+      const pts = s.map(([f, v]) => [fecha(f), v]);
+      if (!enVariacion) return pts;
+      const salto = anual ? 1 : 12;
+      return pts.slice(salto).map(([f, v], i) => [f, (v / pts[i][1] - 1) * 100]);
+    };
+    const lineas = [];
+    const sel = serieDe(elegida);
+    if (sel) lineas.push({ nombre: claveDe[elegida] ? claveDe[elegida] : corto(elegida), color: css("--s1"), puntos: prep(sel), grueso: true });
+    // en variación se compara contra el total del país; en nivel, el total tiene otra escala y no se muestra
+    if (enVariacion && elegida !== TOTAL && m.provincias[TOTAL]) lineas.push({ nombre: TOTAL, color: css("--tinta-3"), puntos: prep(m.provincias[TOTAL]), grueso: false });
+    if (m.proyeccion && !enVariacion && sel && m.proyeccion[elegida]) {
+      lineas.push({ nombre: "Proyección del INDEC", color: css("--s2"), puntos: prep(m.proyeccion[elegida].filter(([f]) => f >= sel[sel.length - 1][0])), grueso: false });
+    }
+    const usadas = lineas.filter((l) => l.puntos.length > 1);
+    if (!usadas.length) { grafico.innerHTML = ""; tituloGraf.textContent = ""; return; }
+    tituloGraf.textContent = enVariacion
+      ? `Evolución: variación % ${anual ? "anual" : "interanual"} de ${nombreSel}${elegida !== TOTAL ? " y del total del país" : ""}. Tocá una provincia en el mapa o en la lista para cambiarla.`
+      : `Evolución de ${nombreSel}, en ${m.unidad}. Tocá una provincia en el mapa o en la lista para cambiarla.`;
+    const maxAbs = Math.max(...usadas.flatMap((l) => l.puntos.map((p) => Math.abs(p[1]))), 0);
+    const cfg = enVariacion
+      ? { eje: (y) => fmt(y, maxAbs < 10 ? 1 : 0) + "%", tip: (y) => fmt(y, 1) + "%", unidadEje: "", referencia: 0 }
+      : (() => { const mg = magnitud(m.unidad, maxAbs); const dec = decimales(maxAbs / mg.div);
+          return { eje: (y) => fmt(y / mg.div, Math.max(0, dec - 1)), tip: (y) => fmt(y / mg.div, dec), unidadEje: mg.unidad, referencia: null }; })();
+    leyendaGraf.innerHTML = "";
+    leyendaGraf.hidden = usadas.length < 2;
+    usadas.forEach((l) => leyendaGraf.append(el("li", {}, el("i", { style: `background:${l.color}` }), l.nombre)));
+    dibujar(grafico, { ...cfg, series: usadas, tipoX: "fecha", bandas: true, titulo: tituloGraf.textContent, frecuencia: anual ? "A" : "M" });
+  }
+  const t = valor(TOTAL, "interanual");
+  const art = el("article", { class: "ficha ancha", id: m.id },
+    el("div", { class: "ficha-cab" },
+      el("div", {}, el("h3", { text: m.nombre }), el("p", { class: "unidad", text: `Último dato: ${anual ? m.fecha.slice(0, 4) : periodo(m.fecha, "M")}` })),
+      t != null ? el("div", { class: "cifra" }, el("span", { class: "grande" }, signo(t) + "%", el("small", { text: anual ? " anual" : " interanual" })), el("span", { class: "chica", text: "total del país" })) : null),
+    el("div", { class: "vistas", role: "group", "aria-label": "Vista del mapa" }, ...botones), cajaGestion, desc,
+    el("div", { class: "mapa-cuerpo" }, el("div", {}, cont, leyenda), tabla),
+    tituloGraf, grafico, leyendaGraf,
+    m.nota ? el("p", { class: "nota", text: m.nota }) : null,
+    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${m.fuente}` })));
+  new ResizeObserver(() => render()).observe(cont);
+  return art;
+}
+
 function fichaMapa(m, geo) {
+  if (m.tipo === "serie") return fichaMapaSerie(m, geo);
   const VISTAS = m.vistas || VISTAS_MAPA.map((v) => ({ ...v, sufijo: "%" }));
   let vista = VISTAS.find((v) => v.id === "interanual") ? "interanual" : VISTAS[0].id;
   const H = 420;

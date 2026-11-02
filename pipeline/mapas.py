@@ -29,6 +29,34 @@ def variaciones(s: pd.Series, base: str) -> dict:
     return {"intermensual": pct(ultimo, anterior), "interanual": pct(ultimo, hace_un_anio), "desde_gestion": pct(ultimo, en_base)}
 
 
+# ---------- Mapas con series: el sitio calcula cada vista (valor actual, interanual, gestión actual,
+# desde el primer dato y por gestión) y dibuja la evolución de la provincia elegida ----------
+
+def como_lista(s: pd.Series, desde: str = "2003-01-01", dec: int = 4) -> list:
+    s = s.dropna().sort_index()
+    s = s[s.index >= pd.Timestamp(desde)]
+    return [[f.strftime("%Y-%m-%d"), round(float(v), dec)] for f, v in s.items()]
+
+
+def mapa_serie(id_, nombre, seccion, series: dict[str, pd.Series], *, tipo_valor="nivel", frecuencia="M",
+               unidad="", unidad_actual=None, escala_actual=1, dec_actual=1, fuente="", nota="", base="2023-11-01",
+               actual: dict | None = None, regiones: dict | None = None, proyeccion: dict | None = None) -> dict:
+    provincias = {n: como_lista(s) for n, s in series.items() if s is not None and not s.dropna().empty}
+    if not provincias:
+        raise ValueError("sin series")
+    ultima = max(v[-1][0] for v in provincias.values())
+    m = {"id": id_, "nombre": nombre, "seccion": seccion, "tipo": "serie", "tipo_valor": tipo_valor, "frecuencia": frecuencia,
+         "unidad": unidad, "unidad_actual": unidad_actual or unidad, "escala_actual": escala_actual, "dec_actual": dec_actual,
+         "fecha": ultima, "fuente": fuente, "nota": nota, "base": base, "provincias": provincias}
+    if actual:
+        m["actual"] = {k: round(float(v), 4) for k, v in actual.items() if v is not None and pd.notna(v)}
+    if regiones:
+        m["regiones"] = regiones
+    if proyeccion:
+        m["proyeccion"] = {n: como_lista(s) for n, s in proyeccion.items()}
+    return m
+
+
 def supermercados(ipc: pd.Series, base: str) -> dict:
     df = archivos.indec_supermercados_provincias()
     df.index = df.index.to_period("M").to_timestamp()
@@ -40,22 +68,14 @@ def supermercados(ipc: pd.Series, base: str) -> dict:
         deflactor = archivos.indec_supermercados_precios()
     except Exception:
         deflactor = ipc
-    provincias = {}
+    series = {}
     for col in df.columns:
         real = transformar.a_moneda_constante(df[col].dropna(), deflactor)
-        nombre = "Total del país" if col == "Total del país" else NOMBRES_IGN.get(col, col)
-        provincias[nombre] = variaciones(real, base)
-    return {
-        "id": "supermercados_provincias",
-        "nombre": "Ventas en supermercados por provincia",
-        "seccion": "Actividad",
-        "unidad": "variación % de las ventas a precios constantes",
-        "fecha": df.index[-1].strftime("%Y-%m-%d"),
-        "fuente": "INDEC, Encuesta de supermercados",
-        "nota": "Ventas a precios corrientes de cada jurisdicción deflactadas con el índice de precios implícitos nacional de supermercados (INDEC no publica precios por provincia). La variación mensual no está desestacionalizada.",
-        "provincias": provincias,
-    }
-
+        series["Total del país" if col == "Total del país" else NOMBRES_IGN.get(col, col)] = real / 1e6
+    return mapa_serie("supermercados_provincias", "Ventas en supermercados por provincia", "Actividad", series,
+                      unidad="millones de pesos de hoy por mes", unidad_actual="millones de pesos de hoy, último mes", dec_actual=0, base=base,
+                      fuente="INDEC, Encuesta de supermercados",
+                      nota="Ventas a precios corrientes de cada jurisdicción deflactadas con el índice de precios implícitos nacional de supermercados (INDEC no publica precios por provincia). Series con estacionalidad: compará contra el mismo mes de otros años.")
 
 PROVINCIAS = {
     "buenos_aires": "Buenos Aires", "caba": "Ciudad Autónoma de Buenos Aires", "catamarca": "Catamarca", "chaco": "Chaco",
@@ -68,28 +88,77 @@ PROVINCIAS = {
 
 
 def empleo(mensuales: dict, base: str) -> dict:
-    provincias = {}
-    for clave, nombre in PROVINCIAS.items():
-        s = mensuales.get(f"asal_prov_{clave}")
-        if s is not None and not s.empty:
-            provincias[nombre] = variaciones(s, base)
-    total = mensuales.get("asalariados_privados_desest")
-    if total is not None and not total.empty:
-        provincias["Total del país"] = variaciones(total, base)
-    fechas = [mensuales[f"asal_prov_{c}"].index[-1] for c in PROVINCIAS if mensuales.get(f"asal_prov_{c}") is not None]
-    if not provincias or not fechas:
+    series = {nombre: mensuales.get(f"asal_prov_{clave}") for clave, nombre in PROVINCIAS.items()}
+    series["Total del país"] = mensuales.get("asalariados_privados_desest")
+    series = {k: v for k, v in series.items() if v is not None and not v.empty}
+    if len(series) < 2:
         raise ValueError("sin series de asalariados por provincia")
-    return {
-        "id": "empleo_provincias",
-        "nombre": "Empleo privado registrado por provincia",
-        "seccion": "Empleo e ingresos",
-        "unidad": "variación % de los asalariados privados registrados",
-        "fecha": max(fechas).strftime("%Y-%m-%d"),
-        "fuente": "SIPA (Ministerio de Capital Humano) vía datos.gob.ar",
-        "nota": "Series sin estacionalidad, salvo Entre Ríos, Formosa, Jujuy y San Juan (con estacionalidad: su variación mensual no es comparable). Cada trabajador se asigna a la provincia donde lo declara su empleador.",
-        "provincias": provincias,
-    }
+    return mapa_serie("empleo_provincias", "Empleo privado registrado por provincia", "Empleo e ingresos", series,
+                      unidad="miles de asalariados", unidad_actual="miles de asalariados privados registrados", dec_actual=1, base=base,
+                      fuente="SIPA (Ministerio de Capital Humano) vía datos.gob.ar",
+                      nota="Series sin estacionalidad, salvo Entre Ríos, Formosa, Jujuy y San Juan (con estacionalidad: su variación mensual no es comparable). Cada trabajador se asigna a la provincia donde lo declara su empleador.")
 
+
+# Regiones del IPC: la provincia de Buenos Aires se pinta con la región Pampeana (el GBA incluye
+# los partidos del conurbano, que no se pueden separar en el mapa por provincia).
+REGIONES_IPC = {
+    "GBA": ["Ciudad Autónoma de Buenos Aires"],
+    "Pampeana": ["Buenos Aires", "Córdoba", "Santa Fe", "Entre Ríos", "La Pampa"],
+    "Noreste": ["Corrientes", "Chaco", "Formosa", "Misiones"],
+    "Noroeste": ["Jujuy", "Salta", "Tucumán", "Catamarca", "Santiago del Estero", "La Rioja"],
+    "Cuyo": ["Mendoza", "San Juan", "San Luis"],
+    "Patagonia": ["Neuquén", "Río Negro", "Chubut", "Santa Cruz", "Tierra del Fuego, Antártida e Islas del Atlántico Sur"],
+}
+
+
+def inflacion_regiones(base: str) -> dict:
+    from .fuentes import indec_api
+    series = {r: indec_api.ipc(f"{r}|0") for r in REGIONES_IPC}
+    series["Total del país"] = indec_api.ipc("Nacional|0")
+    return mapa_serie("inflacion_regiones", "Inflación por región", "Precios", series, tipo_valor="indice",
+                      unidad="índice dic-16 = 100", base=base, regiones=REGIONES_IPC,
+                      fuente="INDEC, Índice de precios al consumidor (API de datos)",
+                      nota="El IPC se mide en seis regiones. En el mapa, la provincia de Buenos Aires toma el valor de la región Pampeana y la Ciudad el del GBA (que también incluye los 24 partidos del conurbano). Serie desde diciembre de 2016.")
+
+
+def poblacion(base: str) -> dict:
+    from .fuentes import indec_api
+    df = indec_api.poblacion_jurisdicciones()
+    df["Total del país"] = df.sum(axis=1)
+    hoy = pd.Timestamp.today()
+    actual = df[df.index <= hoy]
+    return mapa_serie("poblacion_provincias", "Población por provincia", "Población",
+                      {c: actual[c] / 1000 for c in df.columns}, frecuencia="A",
+                      unidad="miles de habitantes", unidad_actual=f"miles de habitantes, {actual.index[-1].year}", dec_actual=0,
+                      base=f"{pd.Timestamp(base).year}-07-01",
+                      proyeccion={c: df[c] / 1000 for c in df.columns},
+                      fuente="INDEC, estimaciones y proyecciones de población 2022-2040 con base en el Censo 2022 (API de datos)",
+                      nota="Población al 1° de julio de cada año. Hasta el año en curso son estimaciones; el gráfico sigue con la proyección del INDEC hasta 2040 (línea a partir del año próximo).")
+
+
+def iibb_habitante(mensuales: dict, base: str) -> dict:
+    from .fuentes import indec_api
+    from .fuentes.archivos import JURISDICCIONES
+    ipc = mensuales.get("ipc")
+    pob = indec_api.poblacion_jurisdicciones()
+    pob_hoy = pob[pob.index <= pd.Timestamp.today()].iloc[-1]
+    series, actual = {}, {}
+    nombres = {**{k: PROVINCIAS[k] for k in PROVINCIAS}, "total": "Total del país"}
+    for clave in list(JURISDICCIONES) + ["total"]:
+        s = mensuales.get(f"iibb_{clave}")
+        if s is None or s.empty:
+            continue
+        real = transformar.acumulado_12m(transformar.a_moneda_constante(s, ipc))
+        nombre = nombres[clave]
+        series[nombre] = real
+        hab = pob_hoy.sum() if clave == "total" else pob_hoy.get(nombre)
+        if hab:
+            actual[nombre] = real.iloc[-1] * 1e6 / hab
+    return mapa_serie("iibb_provincias", "Ingresos Brutos por provincia", "Estado y fiscal", series,
+                      unidad="millones de pesos de hoy, últimos 12 meses", unidad_actual="pesos de hoy por habitante, últimos 12 meses",
+                      dec_actual=0, actual=actual, base=base,
+                      fuente="Dirección Nacional de Recursos Provinciales (direcciones de rentas) y población del INDEC",
+                      nota="«Valor actual»: recaudación de Ingresos Brutos de los últimos 12 meses dividida por la población estimada del año (INDEC). Las variaciones comparan la recaudación de 12 meses en pesos de hoy. Mensual desde 2017; el total del país se empalma antes de 2024 (ver la ficha de Ingresos Brutos).")
 
 HOJAS_IGN = {"Ciudad": "Ciudad Autónoma de Buenos Aires", "Tierra del Fuego": "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
              "Consolidado": "Total del país"}
@@ -144,7 +213,10 @@ def construir(mensuales: dict, params: dict, salida: Path) -> list[str]:
     ipc = mensuales.get("ipc")
     tareas = {"supermercados": lambda: supermercados(ipc, params["base_gestion_actual"]),
               "empleo": lambda: empleo(mensuales, params["base_gestion_actual"]),
-              "fiscal": fiscal}
+              "fiscal": fiscal,
+              "inflacion_regiones": lambda: inflacion_regiones(params["base_gestion_actual"]),
+              "poblacion": lambda: poblacion(params["base_gestion_actual"]),
+              "iibb": lambda: iibb_habitante(mensuales, params["base_gestion_actual"])}
     for nombre, funcion in tareas.items():
         try:
             mapa = funcion()
