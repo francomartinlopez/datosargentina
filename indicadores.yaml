@@ -77,7 +77,7 @@ series:
   ipi_minero:          {fuente: indec_api, conjunto: minero, campo: "Índice|Nivel General - IPI Minero"}
   minero_petroleo:     {fuente: indec_api, conjunto: minero, campo: "Índice|Petróleo crudo"}
   gas_no_convencional: {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Gas natural no convencional"}
-  litio:               {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Carbonato de litio"}
+  litio:               {fuente: indec_api, conjunto: minero, campo: "Índice|Carbonato de litio y otros minerales de litio"}
   crianza_men1:        {fuente: indec_api, conjunto: crianza, campo: tot_men1}
   crianza_1a3:         {fuente: indec_api, conjunto: crianza, campo: tot_1a3}
   crianza_4a5:         {fuente: indec_api, conjunto: crianza, campo: tot_4a5}
@@ -914,7 +914,7 @@ indicadores:
   - {id: ipi_minero, nombre: "Producción minera e hidrocarburos (IPI minero)", seccion: Actividad, serie: ipi_minero, tipo_valor: indice, unidad: "índice 2016=100", nota: "Índice de producción industrial minero del INDEC (serie original): petróleo y gas, minerales metalíferos, litio, rocas y otros. Desde 2017."}
   - {id: minero_petroleo, nombre: "Producción de petróleo crudo", seccion: Actividad, serie: minero_petroleo, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC (serie original). Desde 2017."}
   - {id: gas_no_convencional, nombre: "Producción de gas no convencional", seccion: Actividad, serie: gas_no_convencional, tipo_valor: flujo, acumulado_12m: true, unidad: "millones de m³, últimos 12 meses", nota: "Gas natural de reservorios no convencionales (sobre todo Vaca Muerta), en millones de metros cúbicos. INDEC, IPI minero (unidades físicas), desde 2017."}
-  - {id: litio, nombre: "Producción de carbonato de litio", seccion: Actividad, serie: litio, tipo_valor: flujo, acumulado_12m: true, unidad: "toneladas, últimos 12 meses", nota: "Toneladas de carbonato de litio producidas. INDEC, IPI minero (unidades físicas), desde 2017."}
+  - {id: litio, nombre: "Producción de litio", seccion: Actividad, serie: litio, tipo_valor: indice, unidad: "índice 2016=100", nota: "Apertura del IPI minero del INDEC: carbonato de litio y otros minerales de litio (serie original, desde 2017). Las toneladas producidas se publican recién desde junio de 2023 (en agosto de 2026: 8.583 toneladas en el mes)."}
   - {id: expo_china, nombre: "China", seccion: "Sector externo e inversión", serie: expo_china, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
   - {id: expo_brasil, nombre: "Brasil", seccion: "Sector externo e inversión", serie: expo_brasil, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
   - {id: expo_union_europea, nombre: "Unión Europea", seccion: "Sector externo e inversión", serie: expo_union_europea, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses", grupo: expo_destino}
