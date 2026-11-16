@@ -920,7 +920,14 @@ def completar_huecos(df: pd.DataFrame, maximo: int = 3) -> pd.DataFrame:
     return pd.DataFrame(salida)
 
 
+def indec_eph_panel(campo: str) -> pd.Series:
+    """Transiciones laborales e ingreso a un año (panel de la EPH, cálculo propio)."""
+    from . import eph_panel
+    return eph_panel.serie(campo)
+
+
 LECTORES = {
+    "indec_eph_panel": indec_eph_panel,
     "arca_recaudacion": arca_recaudacion,
     "provincias_iibb": provincias_iibb,
     "economia_politica_ingresos": economia_politica_ingresos,

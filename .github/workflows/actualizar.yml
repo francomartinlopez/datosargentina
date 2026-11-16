@@ -26,6 +26,8 @@ jobs:
       - name: Pruebas
         run: python -m pytest -q
 
+      - name: Herramientas para abrir bases viejas de la EPH (.rar)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq unar
       - name: Bajar y procesar datos
         run: python -m pipeline.construir
         env:
