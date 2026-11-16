@@ -48,7 +48,9 @@ def _bajar(nombre: str) -> bytes | None:
         r = requests.get(EPH + nombre, headers=CABECERAS, timeout=TIMEOUT)
     except requests.RequestException:
         return None
-    return r.content if r.status_code == 200 and len(r.content) > 1000 else None
+    # el servidor responde 200 con una página de error cuando el archivo no existe: se mira la firma
+    firmas = (b"PK\x03\x04", b"Rar!")
+    return r.content if r.status_code == 200 and r.content[:4] in firmas else None
 
 
 def _extraer(contenido: bytes, ext: str) -> list[str]:
@@ -207,10 +209,11 @@ def _deflactor_trimestral() -> pd.Series:
     return trim.loc[trim["count"] == 3, "mean"]
 
 
-def serie(campo: str, ventana: int = 4) -> pd.Series:
+def serie(campo: str, ventana: int = 4, minimo: int = 2) -> pd.Series:
     """campo: 'F>I' (% de los formales que un año después son informales), 'mediana_FI' o 'media_FI'
     (% de cambio real del ingreso). Fecha: trimestre en que termina el año observado (t+4).
-    Promedio móvil de `ventana` trimestres; un hueco corta el promedio."""
+    Promedio de los trimestres disponibles entre los últimos `ventana` (al menos `minimo`): un trimestre
+    sin base no borra un año entero de la serie."""
     t = tabla()
     inicio = pd.PeriodIndex(t["trimestre"].str.replace("-T", "Q"), freq="Q")
     fin = inicio + 4
@@ -225,6 +228,6 @@ def serie(campo: str, ventana: int = 4) -> pd.Series:
     s = pd.Series(valores, index=fin).sort_index()
     s = s[~s.index.duplicated(keep="last")]
     s = s.reindex(pd.period_range(s.index.min(), s.index.max(), freq="Q"))
-    s = s.rolling(ventana, min_periods=ventana).mean().dropna()
+    s = s.rolling(ventana, min_periods=minimo).mean().dropna()
     s.index = s.index.to_timestamp()
     return s

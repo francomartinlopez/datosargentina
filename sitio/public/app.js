@@ -258,7 +258,10 @@ function dibujar(contenedor, cfg) {
   }
   // Líneas
   for (const s of cfg.series) {
-    const d = s.puntos.map((p, i) => `${i ? "L" : "M"}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("");
+    // donde falta un tramo de datos (más del doble del paso habitual) la línea se corta en vez de unir los puntos
+    const pasos = s.puntos.slice(1).map((p, i) => +p[0] - +s.puntos[i][0]).sort((a, b) => a - b);
+    const paso = pasos.length ? pasos[Math.floor(pasos.length / 2)] : 0;
+    const d = s.puntos.map((p, i) => `${i && +p[0] - +s.puntos[i - 1][0] <= paso * 2.2 ? "L" : "M"}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("");
     svg.append(svgEl("path", { d, fill: "none", stroke: s.color, "stroke-width": s.grueso ? 2 : 1.5, "stroke-linejoin": "round", "stroke-linecap": "round", opacity: s.grueso || cfg.series.length === 1 ? 1 : 0.85 }));
   }
   // Interacción: cruz y tooltip
