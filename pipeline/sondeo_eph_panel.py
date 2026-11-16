@@ -13,7 +13,38 @@ def p(*a):
 
 COLS = ["CODUSU", "NRO_HOGAR", "COMPONENTE", "CH04", "CH06", "ESTADO", "CAT_OCUP", "PP07H", "P21", "PONDERA", "PONDIIO"]
 
+import subprocess, tempfile, os, requests
+from pipeline.fuentes import CABECERAS
+from pipeline.fuentes.archivos import EPH
+subprocess.run("sudo apt-get install -y -qq unar >/dev/null 2>&1", shell=True)
+
+def leer_viejo(anio, trim):
+    """2003-2015: bases en Stata (.dta) dentro de .zip o .rar."""
+    base = f"t{trim}{str(anio)[2:]}_dta"
+    for ext in ("zip", "rar"):
+        r = requests.get(EPH + f"{base}.{ext}", headers=CABECERAS, timeout=180)
+        if r.status_code == 200 and len(r.content) > 1000:
+            break
+    else:
+        return None, "sin archivo dta"
+    d = tempfile.mkdtemp()
+    arch = os.path.join(d, f"a.{ext}")
+    open(arch, "wb").write(r.content)
+    subprocess.run(["unar", "-q", "-o", d, arch], check=False)
+    dtas = [os.path.join(rt, f) for rt, _, fs in os.walk(d) for f in fs if f.lower().endswith(".dta")]
+    ind = [f for f in dtas if "ind" in os.path.basename(f).lower() or "pers" in os.path.basename(f).lower()]
+    if not ind:
+        return None, f"sin dta individual: {[os.path.basename(x) for x in dtas]}"
+    df = pd.read_stata(ind[0], convert_categoricals=False)
+    df.columns = [c.strip().upper() for c in df.columns]
+    return df[[c for c in COLS if c in df.columns]], "dta"
+
 def leer(anio, trim):
+    if (anio, trim) < (2016, 2):
+        df, msg = leer_viejo(anio, trim)
+        if df is None:
+            return None, msg
+        return preparar(df), f"ok {len(df)} filas (dta)"
     c = _eph_zip(anio, trim)
     if c is None:
         return None, "sin zip"
@@ -26,13 +57,17 @@ def leer(anio, trim):
     df = pd.read_csv(io.BytesIO(raw), sep=sep, decimal=",", low_memory=False, encoding="latin-1",
                      usecols=lambda c: c.strip().upper() in COLS)
     df.columns = [c.strip().upper() for c in df.columns]
+    return preparar(df), f"ok {len(df)} filas"
+
+def preparar(df):
     falt = [c for c in COLS if c not in df.columns and c != "PONDIIO"]
     if falt:
-        return None, f"faltan columnas {falt}"
+        raise ValueError(f"faltan columnas {falt}")
     for c in df.columns:
         if c != "CODUSU":
             df[c] = pd.to_numeric(df[c].astype(str).str.replace(",", "."), errors="coerce")
     df["CODUSU"] = df["CODUSU"].astype(str).str.strip()
+    df["P21"] = df["P21"].where(df["P21"] > 0)
     est, cat, ap = df["ESTADO"], df["CAT_OCUP"], df["PP07H"]
     s = pd.Series("X", index=df.index)
     s[(est == 1) & (cat == 3) & (ap == 1)] = "F"
@@ -43,17 +78,21 @@ def leer(anio, trim):
     s[est == 3] = "N"
     df["sit"] = s
     df["w"] = df["PONDIIO"] if "PONDIIO" in df.columns and df["PONDIIO"].gt(0).any() else df["PONDERA"]
-    return df[(df["CH06"] >= 18) & (df["CH06"] <= 64)], f"ok {len(df)} filas"
+    return df[(df["CH06"] >= 18) & (df["CH06"] <= 64)]
 
 # deflactor: IPC empalmado del sitio, promedio trimestral
 cr = lambda n: pd.read_csv(f"data/crudos/{n}.csv", parse_dates=["fecha"]).set_index("fecha")["valor"]
 ipc = transformar.empalmar([(cr("ipc_gba_historico"), "2006-12-01"), (cr("ipc_san_luis"), "2012-07-01"), (cr("ipc_caba_2012"), "2016-12-01"), (cr("ipc_nacional"), None)])
-ipc_t = ipc.groupby([ipc.index.year, (ipc.index.month - 1) // 3 + 1]).mean()
+ipc_r = ipc.shift(1)  # el ingreso relevado es el del mes anterior a la entrevista
+ipc_t = ipc_r.groupby([ipc_r.index.year, (ipc_r.index.month - 1) // 3 + 1]).mean()
 
 trims = [(a, t) for a in range(2003, 2027) for t in range(1, 5) if (a, t) >= (2003, 3)]
 bases, t0 = {}, time.time()
 for a, t in trims:
-    df, msg = leer(a, t)
+    try:
+        df, msg = leer(a, t)
+    except Exception as e:
+        df, msg = None, f"error {e}"
     if df is not None:
         bases[(a, t)] = df
     p(f"base {a}-T{t}: {msg}")
