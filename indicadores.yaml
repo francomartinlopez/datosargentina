@@ -56,6 +56,25 @@ series:
   resultado_primario:  {fuente: datosgobar, id: "452.3_RESULTADO_RIO_0_M_18_54"}
   intereses_netos:     {fuente: datosgobar, id: "452.3_INTERESES_TOS_0_M_15_62"}
   recaudacion:         {fuente: datosgobar, id: "172.3_TL_RECAION_M_0_0_17"}
+  # Panel interanual de la EPH (misma persona un año después; cálculo propio con microdatos del INDEC)
+  eph_tr_FF: {fuente: archivo, lector: indec_eph_panel, campo: "F>F"}
+  eph_tr_FI: {fuente: archivo, lector: indec_eph_panel, campo: "F>I"}
+  eph_tr_FC: {fuente: archivo, lector: indec_eph_panel, campo: "F>C"}
+  eph_tr_FD: {fuente: archivo, lector: indec_eph_panel, campo: "F>D"}
+  eph_tr_FN: {fuente: archivo, lector: indec_eph_panel, campo: "F>N"}
+  eph_tr_IF: {fuente: archivo, lector: indec_eph_panel, campo: "I>F"}
+  eph_tr_II: {fuente: archivo, lector: indec_eph_panel, campo: "I>I"}
+  eph_tr_IC: {fuente: archivo, lector: indec_eph_panel, campo: "I>C"}
+  eph_tr_ID: {fuente: archivo, lector: indec_eph_panel, campo: "I>D"}
+  eph_tr_IN: {fuente: archivo, lector: indec_eph_panel, campo: "I>N"}
+  eph_ing_media_FF: {fuente: archivo, lector: indec_eph_panel, campo: media_FF}
+  eph_ing_mediana_FF: {fuente: archivo, lector: indec_eph_panel, campo: mediana_FF}
+  eph_ing_media_FI: {fuente: archivo, lector: indec_eph_panel, campo: media_FI}
+  eph_ing_mediana_FI: {fuente: archivo, lector: indec_eph_panel, campo: mediana_FI}
+  eph_ing_media_FC: {fuente: archivo, lector: indec_eph_panel, campo: media_FC}
+  eph_ing_mediana_FC: {fuente: archivo, lector: indec_eph_panel, campo: mediana_FC}
+  eph_ing_media_IF: {fuente: archivo, lector: indec_eph_panel, campo: media_IF}
+  eph_ing_mediana_IF: {fuente: archivo, lector: indec_eph_panel, campo: mediana_IF}
   # API de datos del INDEC (requiere el token INDEC_API_TOKEN)
   ipc_bienes:          {fuente: indec_api, conjunto: ipc, campo: "Nacional|B"}
   ipc_servicios:       {fuente: indec_api, conjunto: ipc, campo: "Nacional|S"}
@@ -498,6 +517,10 @@ calculos:
   salario_usd:     {operacion: cociente, a: remuneracion_sipa, b: dolar_ccl}
 
 grupos:
+  - {id: transiciones_formal, nombre: "Un año después de tener empleo formal", seccion: "Empleo e ingresos", ranking: nivel, sufijo_ranking: "%", unidad_ranking: "% de los asalariados formales",
+     nota: "La EPH vuelve a entrevistar a la mitad de las viviendas un año después: se sigue a las mismas personas de 18 a 64 años (31 aglomerados urbanos). Formal = asalariado con descuento jubilatorio; informal = asalariado sin descuento. Promedio de los últimos cuatro trimestres; la fecha es el trimestre en que termina el año observado. Sin datos para los años que incluyen el 3er trimestre de 2007 y el período 3er trim. 2015–1er trim. 2016 (el INDEC no tiene esas bases). Cálculo propio con microdatos del INDEC."}
+  - {id: transiciones_informal, nombre: "Un año después de tener empleo informal", seccion: "Empleo e ingresos", ranking: nivel, sufijo_ranking: "%", unidad_ranking: "% de los asalariados informales",
+     nota: "La EPH vuelve a entrevistar a la mitad de las viviendas un año después: se sigue a las mismas personas de 18 a 64 años (31 aglomerados urbanos). Formal = asalariado con descuento jubilatorio; informal = asalariado sin descuento. Promedio de los últimos cuatro trimestres; la fecha es el trimestre en que termina el año observado. Sin datos para los años que incluyen el 3er trimestre de 2007 y el período 3er trim. 2015–1er trim. 2016 (el INDEC no tiene esas bases). Cálculo propio con microdatos del INDEC."}
   - {id: inflacion_rubros, nombre: "Inflación por rubro (GBA)", seccion: Precios,
      nota: "Índice de precios al consumidor del INDEC para el Gran Buenos Aires, aperturas por clase o grupo (base diciembre de 2016). Las aperturas tan finas se publican por región; se usa GBA, la de mayor peso en el índice nacional."}
   - {id: expo_destino, unidad_ranking: "millones de US$ de hoy, últimos 12 meses", nombre: "Exportaciones por destino", seccion: "Sector externo e inversión", ranking: nivel, sufijo_ranking: " M",
@@ -940,3 +963,25 @@ indicadores:
   - {id: crianza_1a3, nombre: "De 1 a 3 años", seccion: "Pobreza y programas sociales", serie: crianza_1a3, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
   - {id: crianza_4a5, nombre: "De 4 y 5 años", seccion: "Pobreza y programas sociales", serie: crianza_4a5, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
   - {id: crianza_6a12, nombre: "De 6 a 12 años", seccion: "Pobreza y programas sociales", serie: crianza_6a12, tipo_valor: nivel, moneda: ARS, unidad: "pesos de hoy por mes", grupo: canasta_crianza}
+  - {id: eph_tr_FF, nombre: "Sigue con empleo formal", seccion: "Empleo e ingresos", serie: eph_tr_FF, tipo_valor: tasa, unidad: "% de los asalariados formales un año antes", frecuencia: T, grupo: transiciones_formal}
+  - {id: eph_tr_FI, nombre: "Pasa a empleo informal", seccion: "Empleo e ingresos", serie: eph_tr_FI, tipo_valor: tasa, unidad: "% de los asalariados formales un año antes", frecuencia: T, grupo: transiciones_formal}
+  - {id: eph_tr_FC, nombre: "Pasa a cuenta propia", seccion: "Empleo e ingresos", serie: eph_tr_FC, tipo_valor: tasa, unidad: "% de los asalariados formales un año antes", frecuencia: T, grupo: transiciones_formal}
+  - {id: eph_tr_FD, nombre: "Queda desocupado", seccion: "Empleo e ingresos", serie: eph_tr_FD, tipo_valor: tasa, unidad: "% de los asalariados formales un año antes", frecuencia: T, grupo: transiciones_formal}
+  - {id: eph_tr_FN, nombre: "Sale del mercado de trabajo", seccion: "Empleo e ingresos", serie: eph_tr_FN, tipo_valor: tasa, unidad: "% de los asalariados formales un año antes", frecuencia: T, grupo: transiciones_formal}
+  - {id: eph_tr_IF, nombre: "Pasa a empleo formal", seccion: "Empleo e ingresos", serie: eph_tr_IF, tipo_valor: tasa, unidad: "% de los asalariados informales un año antes", frecuencia: T, grupo: transiciones_informal}
+  - {id: eph_tr_II, nombre: "Sigue con empleo informal", seccion: "Empleo e ingresos", serie: eph_tr_II, tipo_valor: tasa, unidad: "% de los asalariados informales un año antes", frecuencia: T, grupo: transiciones_informal}
+  - {id: eph_tr_IC, nombre: "Pasa a cuenta propia", seccion: "Empleo e ingresos", serie: eph_tr_IC, tipo_valor: tasa, unidad: "% de los asalariados informales un año antes", frecuencia: T, grupo: transiciones_informal}
+  - {id: eph_tr_ID, nombre: "Queda desocupado", seccion: "Empleo e ingresos", serie: eph_tr_ID, tipo_valor: tasa, unidad: "% de los asalariados informales un año antes", frecuencia: T, grupo: transiciones_informal}
+  - {id: eph_tr_IN, nombre: "Sale del mercado de trabajo", seccion: "Empleo e ingresos", serie: eph_tr_IN, tipo_valor: tasa, unidad: "% de los asalariados informales un año antes", frecuencia: T, grupo: transiciones_informal}
+  - {id: eph_ing_FF, nombre: "Ingreso de quien sigue con empleo formal (referencia)", seccion: "Empleo e ingresos", serie: eph_ing_mediana_FF, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
+     variante_principal: "Mediana", nombre_variante: "Ingreso de quien sigue con empleo formal (referencia): {}", variantes: {eph_ing_media_FF: "Media"},
+     nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres. Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
+  - {id: eph_ing_FI, nombre: "Ingreso al pasar de empleo formal a informal", seccion: "Empleo e ingresos", serie: eph_ing_mediana_FI, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
+     variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo formal a informal: {}", variantes: {eph_ing_media_FI: "Media"},
+     nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres. Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
+  - {id: eph_ing_FC, nombre: "Ingreso al pasar de empleo formal a cuenta propia", seccion: "Empleo e ingresos", serie: eph_ing_mediana_FC, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
+     variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo formal a cuenta propia: {}", variantes: {eph_ing_media_FC: "Media"},
+     nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres. Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
+  - {id: eph_ing_IF, nombre: "Ingreso al pasar de empleo informal a formal", seccion: "Empleo e ingresos", serie: eph_ing_mediana_IF, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
+     variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo informal a formal: {}", variantes: {eph_ing_media_IF: "Media"},
+     nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres. Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}

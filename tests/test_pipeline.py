@@ -232,3 +232,19 @@ def test_sin_claves_ni_ids_repetidos():
         assert not repetidas, f"claves repetidas en {bloques[i]}: {repetidas}"
     ids = re.findall(r"^  - \{id: ([A-Za-z0-9_]+)", texto, re.M)
     assert not [k for k, v in collections.Counter(ids).items() if v > 1]
+
+
+def test_eph_panel_resumir_par():
+    import pandas as pd
+    from pipeline.fuentes import eph_panel as e
+    def base(filas):
+        df = pd.DataFrame(filas, columns=["CODUSU", "NRO_HOGAR", "COMPONENTE", "CH04", "CH06", "ESTADO", "CAT_OCUP", "PP07H", "P21", "PONDERA"])
+        return e.preparar(df)
+    # 12 formales: 10 siguen formales con +10%, 2 pasan a informales con -20%; uno no matchea por sexo
+    t0 = [[f"H{i}", 1, 1, 1, 30, 1, 3, 1, 1000, 1] for i in range(12)] + [["X", 1, 1, 1, 30, 1, 3, 1, 1000, 1]]
+    t1 = [[f"H{i}", 1, 1, 1, 31, 1, 3, 1, 1100, 1] for i in range(10)] + [[f"H{i}", 1, 1, 1, 31, 1, 3, 2, 800, 1] for i in (10, 11)] + [["X", 1, 1, 2, 31, 1, 3, 1, 1000, 1]]
+    r = e.resumir_par(base(t0), base(t1))
+    assert r["pares"] == 12 and r["n_F"] == 12
+    assert abs(r["F>F"] - 100 * 10 / 12) < 1e-9 and abs(r["F>I"] - 100 * 2 / 12) < 1e-9
+    assert abs(r["media_nom_FF"] - 1.1) < 1e-9 and abs(r["mediana_nom_FF"] - 1.1) < 1e-9
+    assert "media_nom_FI" not in r  # menos de 10 casos: no se calcula
