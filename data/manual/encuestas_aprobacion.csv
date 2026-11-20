@@ -24,6 +24,7 @@ fecha,encuestadora,gestion,aprueba,desaprueba,muestra,lectura,fuente_url
 2026-07-01,AtlasIntel,Javier Milei,37,62,,leído del gráfico de la serie (redondeado),https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
 2026-08-01,AtlasIntel,Javier Milei,38,58,,leído del gráfico de la serie (redondeado),https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
 2026-09-01,AtlasIntel,Javier Milei,38.5,57.2,2067,dato publicado,https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
+2026-10-01,AtlasIntel,Javier Milei,36.2,60.6,2364,dato publicado,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
 2015-12-01,UdeSA (ESPOP),Mauricio Macri,71,22,,leído del gráfico de la serie (redondeado),https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
 2016-02-01,UdeSA (ESPOP),Mauricio Macri,66,27,,leído del gráfico de la serie (redondeado),https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
 2016-03-01,UdeSA (ESPOP),Mauricio Macri,55,38,,leído del gráfico de la serie (redondeado),https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
@@ -102,6 +103,7 @@ fecha,encuestadora,gestion,aprueba,desaprueba,muestra,lectura,fuente_url
 2026-07-01,UdeSA (ESPOP),Javier Milei,34,62,,leído del gráfico de la serie (redondeado),https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
 2026-08-01,UdeSA (ESPOP),Javier Milei,35,61,,leído del gráfico de la serie (redondeado),https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
 2026-10-01,UdeSA (ESPOP),Javier Milei,36,60,1000,dato publicado,https://images.udesa.edu.ar/sites/default/files/2026-10/56.%20UdeSA%20ESPOP%20Octubre%202026_0.pdf
+2026-11-01,UdeSA (ESPOP),Javier Milei,34,62,1003,dato publicado,https://images.udesa.edu.ar/sites/default/files/2026-11/57.%20UdeSA%20ESPOP%20Noviembre%202026.pdf
 2025-10-01,Zuban Córdoba,Javier Milei,37.1,62.8,,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2025-11-01,Zuban Córdoba,Javier Milei,46.9,51.7,,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2025-12-01,Zuban Córdoba,Javier Milei,48.8,49.6,,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
@@ -113,3 +115,5 @@ fecha,encuestadora,gestion,aprueba,desaprueba,muestra,lectura,fuente_url
 2026-07-01,Zuban Córdoba,Javier Milei,33.4,65.3,,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-08-01,Zuban Córdoba,Javier Milei,36.8,62.3,,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-09-01,Zuban Córdoba,Javier Milei,35.3,63.6,2000,dato publicado,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
+2026-10-01,Zuban Córdoba,Javier Milei,34.1,65.2,1600,dato publicado,https://www.cronista.com/economia-politica/nueva-moda-una-encuesta-detecto-un-cambio-en-el-humor-social-que-puede-complicar-a-milei-en-2027/
+2026-10-01,D'Alessio IROL–Berensztein,Javier Milei,36,62,800,dato publicado,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
