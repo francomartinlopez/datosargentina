@@ -1,0 +1,8 @@
+query1 {'range': 'max', 'interval': '1mo'} 200 n_ts=1 n_close=1 meta.range=max validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1792182243]
+query1 {'range': '10y', 'interval': '1mo'} 200 n_ts=4 n_close=3 meta.range=10y validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1785553200]
+query1 {'period1': '946684800', 'period2': '1795000000', 'interval': '1mo'} 200 n_ts=5 n_close=4 meta.range= validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1782874800]
+query1 {'range': 'max', 'interval': '1d'} 200 n_ts=1 n_close=1 meta.range=max validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1792182243]
+query2 {'range': 'max', 'interval': '1mo'} 200 n_ts=1 n_close=1 meta.range=max validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1792182243]
+query2 {'range': '10y', 'interval': '1mo'} 200 n_ts=4 n_close=3 meta.range=10y validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1785553200]
+query2 {'period1': '946684800', 'period2': '1795000000', 'interval': '1mo'} 200 n_ts=5 n_close=4 meta.range= validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1782874800]
+query2 {'range': 'max', 'interval': '1d'} 200 n_ts=1 n_close=1 meta.range=max validRanges=['1d', '5d', '1mo', '3mo', '6mo', 'ytd', 'max'] primero=[1792182243]
