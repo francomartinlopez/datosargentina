@@ -13,9 +13,11 @@ URL = "https://query1.finance.yahoo.com/v8/finance/chart/{simbolo}"
 
 def parsear(j: dict) -> pd.Series:
     r = j["chart"]["result"][0]
-    cierre = r["indicators"].get("adjclose", [{}])[0].get("adjclose") or r["indicators"]["quote"][0]["close"]
     fechas = pd.to_datetime(r["timestamp"], unit="s").to_period("M").to_timestamp()
-    s = pd.Series(pd.to_numeric(cierre, errors="coerce"), index=fechas, dtype=float).dropna()
+    # se usa el cierre ajustado si viene completo; si Yahoo lo manda casi vacío, el cierre común
+    candidatas = [r["indicators"].get("adjclose", [{}])[0].get("adjclose"), r["indicators"]["quote"][0].get("close")]
+    series = [pd.Series(pd.to_numeric(c, errors="coerce"), index=fechas, dtype=float).dropna() for c in candidatas if c]
+    s = max(series, key=len) if series else pd.Series(dtype=float)
     return s[~s.index.duplicated(keep="last")].sort_index()
 
 

@@ -248,3 +248,24 @@ def test_eph_panel_resumir_par():
     assert abs(r["F>F"] - 100 * 10 / 12) < 1e-9 and abs(r["F>I"] - 100 * 2 / 12) < 1e-9
     assert abs(r["media_nom_FF"] - 1.1) < 1e-9 and abs(r["mediana_nom_FF"] - 1.1) < 1e-9
     assert "media_nom_FI" not in r  # menos de 10 casos: no se calcula
+
+
+def test_yahoo_usa_el_cierre_mas_completo():
+    from pipeline.fuentes import yahoo
+    ts = [1704067200, 1706745600, 1709251200]  # ene, feb, mar 2024
+    j = {"chart": {"result": [{"timestamp": ts, "indicators": {"adjclose": [{"adjclose": [None, None, 30.0]}],
+                                                                 "quote": [{"close": [10.0, 20.0, 30.0]}]}}]}}
+    assert list(yahoo.parsear(j)) == [10.0, 20.0, 30.0]
+
+
+def test_no_se_pisa_la_historia_con_una_respuesta_corta():
+    import pandas as pd
+    from pipeline.construir import combinar_con_anterior
+    i = pd.date_range("2015-01-01", periods=120, freq="MS")
+    anterior = pd.Series(range(120), index=i, dtype=float)
+    nueva = pd.Series([999.0], index=[pd.Timestamp("2025-01-01")])
+    s, aviso = combinar_con_anterior("x", nueva, anterior)
+    assert len(s) == 121 and s.iloc[-1] == 999.0 and aviso
+    completa = pd.Series(range(121), index=pd.date_range("2015-01-01", periods=121, freq="MS"), dtype=float)
+    s2, aviso2 = combinar_con_anterior("x", completa, anterior)
+    assert s2 is completa and aviso2 is None
