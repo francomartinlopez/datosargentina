@@ -41,6 +41,22 @@ fecha,encuestadora,figura,positiva,negativa,fuente_url
 2026-09-01,AtlasIntel,Karina Milei,15,72,https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
 2026-09-01,AtlasIntel,Horacio Rodríguez Larreta,13,71,https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
 2026-09-01,AtlasIntel,Alberto Fernández,9,82,https://cdn1.atlasintel.org/ar_latam_pulse_atlas__bloomberg_09_2026_08821217ac86d7aa.pdf
+2026-10-01,AtlasIntel,Cristina Fernández de Kirchner,41,53,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Axel Kicillof,39,54,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Myriam Bregman,39,51,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Patricia Bullrich,37,57,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Javier Milei,36,62,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Sergio Massa,26,63,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Mauricio Macri,24,66,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Jorge Macri,23,63,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Martín Menem,22,66,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Santiago Caputo,21,64,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Victoria Villarruel,18,59,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Juan Schiaretti,15,54,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Karina Milei,14,73,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Martín Lousteau,12,67,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Horacio Rodríguez Larreta,12,71,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
+2026-10-01,AtlasIntel,Alberto Fernández,10,81,https://www.perfil.com/politica/encuesta-javier-milei-cae-en-aprobacion-pero-ningun-dirigente-opositor-logra-una-imagen-mayoritariamente-positiva-aW60R8o7bUON
 2026-09-01,Zuban Córdoba,Axel Kicillof,45.0,51.3,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-09-01,Zuban Córdoba,Cristina Fernández de Kirchner,42.0,56.1,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-09-01,Zuban Córdoba,Myriam Bregman,40.1,41.0,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
@@ -56,3 +72,46 @@ fecha,encuestadora,figura,positiva,negativa,fuente_url
 2026-09-01,Zuban Córdoba,Dante Gebel,18.7,28.6,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-09-01,Zuban Córdoba,Jorge Brito,12.9,34.5,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
 2026-09-01,Zuban Córdoba,Hernán Lacunza,12.1,25.3,https://zubancordoba.com/wp-content/uploads/2026/09/ZC-DDD-Septiembre.pdf
+2026-10-01,Zuban Córdoba,Axel Kicillof,46.0,52.4,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Myriam Bregman,45.3,46.2,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Patricia Bullrich,43.0,55.7,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Cristina Fernández de Kirchner,42.5,55.8,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Sergio Massa,35.5,62.3,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Natalia de la Sota,35.1,24.4,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Javier Milei,34.9,64.1,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Mauricio Macri,31.8,66.2,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Victoria Villarruel,28.6,65.4,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Martín Lousteau,24.5,66.4,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Ricardo Quintela,21.6,43.8,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Hernán Lacunza,18.1,39.0,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Daniel Hadad,17.1,50.9,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Sergio Uñac,16.2,29.4,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Jorge Brito,10.3,34.1,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,Zuban Córdoba,Dante Gebel,9.6,49.1,https://www.infoplatense.com.ar/wp-content/uploads/ZC-Octubre.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Patricia Bullrich,46,50,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Guillermo Francos,44,45,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Myriam Bregman,39,55,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Jorge Macri,37,56,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Diego Santilli,37,56,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Axel Kicillof,37,59,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Mauricio Macri,35,58,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Javier Milei,33,60,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Juan Grabois,33,63,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Cristina Fernández de Kirchner,32,63,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Federico Sturzenegger,31,61,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Luis Caputo,31,62,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Alejandra Monteoliva,30,52,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Cristian Ritondo,27,61,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Martín Menem,26,68,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Pablo Quirno,25,52,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Victoria Villarruel,25,67,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Martín Lousteau,20,70,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,D'Alessio IROL–Berensztein,Carlos Presti,19,43,https://www.dalessio.com.ar/xpublico/La-situacion-economica-condiciona-imagen-del-Gobierno-Humor-Social-y-Politico-Nacional-Octubre-2026-DAlessio-Irol-Berensztein.pdf
+2026-10-01,Giacobbe & Asociados,Patricia Bullrich,35.1,51.1,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Axel Kicillof,35.1,53.5,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Javier Milei,34.9,56.8,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Cristina Fernández de Kirchner,26.6,56.1,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Sergio Massa,21.8,54.0,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Mauricio Macri,18.3,58.9,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Victoria Villarruel,16.3,51.7,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
+2026-10-01,Giacobbe & Asociados,Máximo Kirchner,12.4,60.7,https://perfil.com/reperfilar/una-encuesta-midio-la-imagen-de-milei-y-otros-dirigentes-el-presidente-tiene-un-568-de-opinion-negativa-ah5hI4S6fvMC
