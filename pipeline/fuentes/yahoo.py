@@ -22,5 +22,9 @@ def parsear(j: dict) -> pd.Series:
 
 
 def extraer(definicion: dict) -> pd.Series:
-    j = pedir(URL.format(simbolo=definicion["id"]), {"range": "max", "interval": "1mo"}).json()
+    # Desde noviembre de 2026 Yahoo devuelve un solo dato con range=max para el Merval; con un rango
+    # de fechas explícito trae al menos los últimos meses, que se suman a la historia guardada
+    # (ver construir.combinar_con_anterior).
+    hasta = int(pd.Timestamp.now(tz="UTC").timestamp())
+    j = pedir(URL.format(simbolo=definicion["id"]), {"period1": 946684800, "period2": hasta, "interval": "1mo"}).json()
     return parsear(j)
