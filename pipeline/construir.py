@@ -41,6 +41,19 @@ def guardar_crudo(nombre: str, s: pd.Series) -> None:
     pd.DataFrame({"fecha": s.index.strftime("%Y-%m-%d"), "valor": s.values}).to_csv(CRUDOS / f"{nombre}.csv", index=False)
 
 
+def combinar_con_anterior(nombre: str, nueva: pd.Series, anterior: pd.Series | None) -> tuple[pd.Series, str | None]:
+    """Si la fuente devuelve mucho menos historia que la guardada (p. ej. solo el último dato), no se
+    pisa la serie: se completa con los datos anteriores y se avisa en el informe."""
+    if anterior is None or anterior.empty:
+        return nueva, None
+    corta = len(nueva) < 0.5 * len(anterior) and nueva.index.min() > anterior.index.min() + pd.DateOffset(years=2)
+    if not corta:
+        return nueva, None
+    combinada = nueva.combine_first(anterior).sort_index()
+    return combinada, (f"{nombre}: la fuente devolvió solo {len(nueva)} datos (desde {nueva.index.min():%Y-%m}); "
+                       f"se conservó la historia anterior ({len(anterior)} datos)")
+
+
 def descargar(config: dict, offline: bool) -> tuple[dict, list[str]]:
     crudas, alertas = {}, []
     for nombre, definicion in config["series"].items():
@@ -55,6 +68,9 @@ def descargar(config: dict, offline: bool) -> tuple[dict, list[str]]:
             nueva = extraer(definicion)
             if nueva.empty:
                 raise RuntimeError("respuesta vacía")
+            nueva, aviso = combinar_con_anterior(nombre, nueva, anterior)
+            if aviso:
+                alertas.append(aviso)
         except Exception as e:  # una fuente caída no frena el resto
             alertas.append(f"{nombre}: error al descargar ({e}); se conserva el dato anterior")
             if anterior is not None:

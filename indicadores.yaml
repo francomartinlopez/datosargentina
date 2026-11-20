@@ -175,7 +175,7 @@ series:
   dolar_mep:           {fuente: argentinadatos, id: "cotizaciones/dolares/bolsa", campo: venta, agregacion: promedio}
   riesgo_pais:         {fuente: argentinadatos, id: "finanzas/indices/riesgo-pais", campo: valor, agregacion: promedio}
   # --- Ampliación fase 1 (IDs verificados con pipeline.sondear, oct-2026) ---
-  ipim:                {fuente: datosgobar, id: "448.1_NIVEL_GENERAL_0_0_13_46"}
+  ipim:                {fuente: indec_api, conjunto: sipm, campo: "IPIM|NG"}  # la serie de datos.gob.ar quedó cortada en 2019
   autoservicios_desest: {fuente: datosgobar, id: "456.1_VENTAS_PREADA_0_M_44_40"}
   shoppings_desest:    {fuente: datosgobar, id: "458.1_VENTAS_TOTADA_0_M_52_56"}
   produccion_gas:      {fuente: datosgobar, id: "364.3_PRODUCCIoNRAL__25"}
