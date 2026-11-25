@@ -296,11 +296,12 @@ def test_eph_regional_tasas():
 def test_rubros_unicos_y_publicados(tmp_path):
     import json
     from pipeline import rubros
-    config = {"rubros": [{"id": "a", "nombre": "A", "items": ["x", "y", "rigi:Minería"]}, {"id": "b", "nombre": "B", "items": ["x", "mapa:m"]}]}
-    (tmp_path / "rigi.json").write_text("{}")
+    config = {"rubros": [{"id": "a", "nombre": "A", "items": ["x", "y", "tabla:t"]}, {"id": "b", "nombre": "B", "items": ["x", "mapa:m"]}]}
+    (tmp_path / "tablas").mkdir()
+    (tmp_path / "tablas" / "t.json").write_text("{}")
     alertas = rubros.construir(config, [{"id": "x"}, {"id": "z", "variante_de": "x"}], tmp_path)
     r = json.loads((tmp_path / "rubros.json").read_text())
-    assert [i["id"] for i in r[0]["items"]] == ["x", "rigi_a"]
+    assert [i["id"] for i in r[0]["items"]] == ["x", "t"]
     assert r[1]["items"] == []
     assert any("y" in a for a in alertas) and any("más de un rubro" in a for a in alertas) and any("mapa:m" in a for a in alertas)
 

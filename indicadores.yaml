@@ -1071,7 +1071,8 @@ indicadores:
 
 # ---------- Vista por rubro ----------
 # Agrupa indicadores ya publicados en seis rubros productivos (ver pipeline/rubros.py).
-# "mapa:<id>" = mapa provincial; "rigi:<sector>|<sector>" = proyectos del RIGI de esos sectores.
+# "mapa:<id>" = mapa provincial; "tabla:<id>" = cuadro de valores. Los proyectos del RIGI no van en este sitio
+# (su fuente única es el sitio Empresas e Inversiones).
 rubros:
   - id: industria
     nombre: Industria
@@ -1083,12 +1084,12 @@ rubros:
     items: [emae_agro, emae_pesca, granos_total, prod_soja, soja_precio, faena_vacuna, empleo_agro, empleo_pesca, expo_primarios, expo_moa, consumo_vacuna, consumo_leche]
   - id: mineria
     nombre: Minería
-    intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos de inversión. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
-    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_mineras, empleo_mineria, "tabla:proyectos_mineros_etapa", "rigi:Minería"]
+    intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos por etapa. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
+    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_mineras, empleo_mineria, "tabla:proyectos_mineros_etapa"]
   - id: energia
     nombre: Energía
     intro: "Petróleo y gas (convencional y no convencional), electricidad, comercio exterior de combustibles, subsidios y tarifas."
-    items: [produccion_petroleo, produccion_gas, minero_petroleo, gas_no_convencional, emae_egu, empleo_egu, expo_combustibles, impo_uso_combustibles, balanza_energetica, subsidios_energia, ipc_electricidad_gas_r, ipc_combustibles_r, "rigi:Petróleo y gas|Energía eléctrica"]
+    items: [produccion_petroleo, produccion_gas, minero_petroleo, gas_no_convencional, emae_egu, empleo_egu, expo_combustibles, impo_uso_combustibles, balanza_energetica, subsidios_energia, ipc_electricidad_gas_r, ipc_combustibles_r]
   - id: construccion
     nombre: Construcción
     intro: "Actividad de la construcción, insumos, costos, empleo, inversión y mercado inmobiliario."
