@@ -1428,7 +1428,9 @@ async function iniciar() {
   const rubros = (await leer("rubros")) || [];
   // todas las fichas por id, también las que se ven dentro de un grupo (para la vista por rubro)
   const porId = {};
-  fichas.forEach((f) => { porId[f.id] = f; (f.miembros || []).forEach((m) => { porId[m.id] = m; }); });
+  // en la vista por rubro, una ficha que viene de un grupo lleva el nombre del grupo adelante
+  // ("Minas y canteras" solo no dice si es actividad o empleo)
+  fichas.forEach((f) => { porId[f.id] = f; (f.miembros || []).forEach((m) => { porId[m.id] = { ...m, nombre: `${f.nombre}: ${m.nombre}` }; }); });
   const especiales = (s) => [
     ...(geo ? mapasCargados.filter((m) => m.seccion === s).map((m) => fichaMapa(m, geo)) : []),
     piramide && piramide.seccion === s ? fichaPiramide(piramide) : null,
