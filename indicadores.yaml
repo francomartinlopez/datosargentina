@@ -363,6 +363,7 @@ series:
   construya:           {fuente: archivo, lector: construya_indice, campo: original}
   construya_desest:    {fuente: archivo, lector: construya_indice, campo: desestacionalizado}
   came_ventas:         {fuente: manual, id: came_ventas_minoristas}
+  ipc_santa_fe:        {fuente: manual, id: ipc_santa_fe}   # IPEC Santa Fe; lo actualiza la tarea programada del día 20
   ipc_corrupcion:      {fuente: manual, id: ipc_corrupcion}
   odsa_ia:             {fuente: manual, id: odsa_inseguridad_alimentaria}
   odsa_ia_severa:      {fuente: manual, id: odsa_inseguridad_alimentaria_severa}
@@ -1032,8 +1033,11 @@ indicadores:
      variante_principal: "Santa Fe", nombre_variante: "Asalariados privados registrados: {}",
      variantes: {asal_prov_cordoba: "Córdoba", asal_prov_caba: "Ciudad de Buenos Aires", asal_prov_buenos_aires: "Provincia de Buenos Aires"},
      nota: "Trabajadores en relación de dependencia del sector privado con aportes, según la provincia donde trabajan (SIPA, Secretaría de Trabajo; serie sin estacionalidad). Es la medida mensual de empleo formal por provincia."}
-  - {id: inflacion_caba, nombre: "Inflación en la Ciudad de Buenos Aires (IPCBA)", seccion: "Santa Fe, Córdoba y AMBA", serie: ipc_caba, tipo_valor: indice, vista_historica: mensual, unidad: "índice", fuente: "Instituto de Estadística y Censos de la Ciudad de Buenos Aires (vía datos.gob.ar)",
-     nota: "Índice de precios al consumidor de la Ciudad de Buenos Aires (Instituto de Estadística y Censos de la Ciudad). Se publica unos días antes que el IPC nacional. Empalme de la serie con base julio 2011-junio 2012 (hasta febrero de 2022) y la serie con base 2021. Santa Fe (IPEC) y Córdoba (Dirección General de Estadística y Censos) también miden su inflación; todavía no están en el sitio porque sus series no se pueden descargar en forma automática."}
+  - {id: inflacion_caba, nombre: "Inflación: Ciudad de Buenos Aires (IPCBA)", seccion: "Santa Fe, Córdoba y AMBA", serie: ipc_caba, tipo_valor: indice, vista_historica: mensual, unidad: "índice",
+     fuente: "Instituto de Estadística y Censos de la Ciudad de Buenos Aires (vía datos.gob.ar)",
+     variante_principal: "Ciudad de Buenos Aires", nombre_variante: "Inflación: {}", variantes: {ipc_santa_fe: "Santa Fe (IPEC)"},
+     fuentes_variantes: {ipc_santa_fe: "IPEC, Instituto Provincial de Estadística y Censos de Santa Fe"},
+     nota: "Índices de precios al consumidor que miden los institutos de estadística provinciales, cada uno con su canasta. Ciudad de Buenos Aires (IDECBA): se publica unos días antes que el IPC nacional; empalme de la serie con base julio 2011-junio 2012 (hasta febrero de 2022) y la serie con base 2021. Santa Fe (IPEC): relevamiento en las ciudades de Santa Fe y Rosario, desde diciembre de 2016; se carga cada mes desde la planilla oficial del IPEC. Córdoba todavía no está: su serie no se puede descargar en forma automática."}
 
 # ---------- Vista por rubro ----------
 # Agrupa indicadores ya publicados en seis rubros productivos (ver pipeline/rubros.py).

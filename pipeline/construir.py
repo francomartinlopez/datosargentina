@@ -273,7 +273,9 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
         if ind.get("variantes"):
             menu = [{"id": ind["id"], "nombre": ind.get("variante_principal", "Total")}]
             for serie, etiqueta in ind["variantes"].items():
+                # cada variante puede tener su propia fuente (p. ej. otro instituto de estadística)
                 v = una({**ind, "id": serie, "serie": serie, "portada": False, "variantes": None,
+                         "fuente": (ind.get("fuentes_variantes") or {}).get(serie),
                          "nombre": ind.get("nombre_variante", "{}").format(etiqueta)})
                 if v is not None:
                     v["variante_de"] = ind["id"]

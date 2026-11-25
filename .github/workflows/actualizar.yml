@@ -41,7 +41,7 @@ jobs:
           d = pathlib.Path("sitio/public/datos")
           grupos = {
               "Minería": ["metaliferos", "oro_plata", "litio", "litio_toneladas", "expo_metales_preciosos", "rigi"],
-              "Santa Fe, Córdoba y AMBA": ["desoc_regional", "empleo_regional", "asal_regional", "inflacion_caba"],
+              "Santa Fe, Córdoba y AMBA": ["desoc_regional", "empleo_regional", "asal_regional", "inflacion_caba", "ipc_santa_fe"],
           }
           lineas = ["", "## Indicadores de minería y regionales", ""]
           for g, ids in grupos.items():
