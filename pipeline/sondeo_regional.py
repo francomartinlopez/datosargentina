@@ -37,7 +37,7 @@ EXT = (".xlsx", ".xls", ".csv", ".ods", ".zip")
 
 
 def get(url: str, **kw) -> requests.Response:
-    return requests.get(url, headers=CABECERAS, timeout=90, **kw)
+    return requests.get(url, headers=CABECERAS, timeout=(10, 40), **kw)
 
 
 def mostrar_tabla(p, nombre: str, contenido: bytes) -> None:
@@ -69,6 +69,14 @@ def mostrar_tabla(p, nombre: str, contenido: bytes) -> None:
 def main() -> None:
     lineas: list[str] = []
     p = lineas.append
+    try:
+        from .fuentes.indec_api import consultar
+        for c in ("mercado_trabajo_eph", "pobreza_eph"):
+            filas = consultar(c, select="area_geografica_nom,desde:periodo.min(),hasta:periodo.max()", order="area_geografica_nom.asc")
+            p(f"===== {c}: " + "; ".join(f"{f['area_geografica_nom']} ({f['desde']}-{f['hasta']})" for f in filas))
+    except Exception:
+        p(traceback.format_exc()[-400:])
+    guardar(lineas)
     for ruta in SIACAM:
         p(f"\n===== SIACAM {ruta}")
         try:
@@ -78,6 +86,7 @@ def main() -> None:
                 mostrar_tabla(p, ruta.lower(), r.content)
         except Exception:
             p(traceback.format_exc()[-400:])
+        guardar(lineas)
 
     for clave, base in SITIOS.items():
         p(f"\n===== {clave} {base}")
@@ -105,10 +114,15 @@ def main() -> None:
             p(f"  portada: {str(e)[:120]}")
         for u, f in sorted(vistos.items(), key=lambda x: x[1], reverse=True)[:150]:
             p(f"  {f} {u}")
+        guardar(lineas)
 
+    guardar(lineas)
+    print("\n".join(lineas)[:3000])
+
+
+def guardar(lineas: list[str]) -> None:
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
     SALIDA.write_text("\n".join(lineas), encoding="utf-8")
-    print("\n".join(lineas)[:3000])
 
 
 if __name__ == "__main__":
