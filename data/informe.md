@@ -1,203 +1,291 @@
-# Informe de actualización 2026-11-20
+# Informe de actualización 2026-11-25
 
 Indicadores publicados: 346
 
 ## Alertas
 
-- ipc_gba_historico: sin dato nuevo (último 2008-04)
-- ipc_gba_historico: la fuente revisó 1 datos anteriores
-- ipc_san_luis: sin dato nuevo (último 2026-06)
-- ipc_caba_2012: sin dato nuevo (último 2022-02)
-- ipc_nacional: la fuente revisó 2 datos anteriores
-- ipc_nucleo: la fuente revisó 1 datos anteriores
-- ipc_regulados: la fuente revisó 1 datos anteriores
-- emae_desest: la fuente revisó 264 datos anteriores
-- ipi_desest: la fuente revisó 128 datos anteriores
-- isac_desest: la fuente revisó 176 datos anteriores
-- supermercados_desest: la fuente revisó 115 datos anteriores
-- salario_privado: la fuente revisó 2 datos anteriores
-- salario_publico: la fuente revisó 2 datos anteriores
-- salario_no_registrado: la fuente revisó 2 datos anteriores
+- ipc_caba_2021: sin dato nuevo (último 2026-10)
+- ipc_nacional: sin dato nuevo (último 2026-10)
+- ipc_nucleo: sin dato nuevo (último 2026-10)
+- ipc_regulados: sin dato nuevo (último 2026-10)
+- ipc_alimentos: sin dato nuevo (último 2026-10)
+- emae_desest: sin dato nuevo (último 2026-08)
+- ipi_desest: sin dato nuevo (último 2026-09)
+- isac_desest: sin dato nuevo (último 2026-09)
+- supermercados_desest: sin dato nuevo (último 2026-08)
+- salario_privado: sin dato nuevo (último 2026-08)
+- salario_publico: sin dato nuevo (último 2026-08)
+- salario_no_registrado: sin dato nuevo (último 2026-08)
+- eph_cuenta_propia: sin dato nuevo (último 2026-05)
+- eph_asal_registrado: sin dato nuevo (último 2026-05)
+- eph_asal_no_registrado: sin dato nuevo (último 2026-05)
 - smvm: sin dato nuevo (último 2027-04)
-- desocupacion: sin dato nuevo (último 2026-04)
-- importaciones: la fuente revisó 1 datos anteriores
-- eph_tr_FF: sin dato nuevo (último 2026-04)
-- eph_tr_FI: sin dato nuevo (último 2026-04)
-- eph_tr_FC: sin dato nuevo (último 2026-04)
-- eph_tr_FD: sin dato nuevo (último 2026-04)
-- eph_tr_FN: sin dato nuevo (último 2026-04)
-- eph_tr_IF: sin dato nuevo (último 2026-04)
-- eph_tr_II: sin dato nuevo (último 2026-04)
-- eph_tr_IC: sin dato nuevo (último 2026-04)
-- eph_tr_ID: sin dato nuevo (último 2026-04)
-- eph_tr_IN: sin dato nuevo (último 2026-04)
-- eph_ing_media_FF: sin dato nuevo (último 2026-04)
-- eph_ing_media_FF: la fuente revisó 20 datos anteriores
-- eph_ing_mediana_FF: sin dato nuevo (último 2026-04)
-- eph_ing_mediana_FF: la fuente revisó 20 datos anteriores
-- eph_ing_media_FI: sin dato nuevo (último 2026-04)
-- eph_ing_media_FI: la fuente revisó 17 datos anteriores
-- eph_ing_mediana_FI: sin dato nuevo (último 2026-04)
-- eph_ing_mediana_FI: la fuente revisó 16 datos anteriores
-- eph_ing_media_FC: sin dato nuevo (último 2026-04)
-- eph_ing_media_FC: la fuente revisó 16 datos anteriores
-- eph_ing_mediana_FC: sin dato nuevo (último 2026-04)
-- eph_ing_mediana_FC: la fuente revisó 16 datos anteriores
-- eph_ing_mediana_FC: variación inusual en el último dato (227.5%)
-- eph_ing_media_IF: sin dato nuevo (último 2026-04)
-- eph_ing_media_IF: la fuente revisó 14 datos anteriores
-- eph_ing_mediana_IF: sin dato nuevo (último 2026-04)
-- eph_ing_mediana_IF: la fuente revisó 15 datos anteriores
-- costo_construccion: la fuente revisó 4 datos anteriores
-- ipi_minero: la fuente revisó 8 datos anteriores
-- minero_petroleo: la fuente revisó 1 datos anteriores
-- gas_no_convencional: la fuente revisó 1 datos anteriores
-- crianza_men1: la fuente revisó 8 datos anteriores
-- crianza_1a3: la fuente revisó 10 datos anteriores
-- crianza_4a5: la fuente revisó 6 datos anteriores
-- crianza_6a12: la fuente revisó 7 datos anteriores
-- expo_china: la fuente revisó 1 datos anteriores
-- expo_brasil: la fuente revisó 1 datos anteriores
-- expo_estados_unidos: la fuente revisó 1 datos anteriores
-- expo_union_europea: la fuente revisó 1 datos anteriores
-- expo_chile: la fuente revisó 1 datos anteriores
-- expo_india: la fuente revisó 1 datos anteriores
-- expo_vietnam: la fuente revisó 1 datos anteriores
-- expo_resto: la fuente revisó 1 datos anteriores
-- impo_brasil: la fuente revisó 1 datos anteriores
-- impo_paraguay: la fuente revisó 1 datos anteriores
-- impo_resto: la fuente revisó 1 datos anteriores
-- impo_uso_combustibles: la fuente revisó 1 datos anteriores
-- iibb_total: sin dato nuevo (último 2026-08)
+- jubilacion_minima: sin dato nuevo (último 2026-10)
+- desocupacion: sin dato nuevo (último II trim. 2026)
+- exportaciones: sin dato nuevo (último 2026-09)
+- importaciones: sin dato nuevo (último 2026-09)
+- resultado_primario: sin dato nuevo (último 2026-09)
+- intereses_netos: sin dato nuevo (último 2026-09)
+- recaudacion: sin dato nuevo (último 2026-10)
+- eph_tr_FF: sin dato nuevo (último II trim. 2026)
+- eph_tr_FI: sin dato nuevo (último II trim. 2026)
+- eph_tr_FC: sin dato nuevo (último II trim. 2026)
+- eph_tr_FD: sin dato nuevo (último II trim. 2026)
+- eph_tr_FN: sin dato nuevo (último II trim. 2026)
+- eph_tr_IF: sin dato nuevo (último II trim. 2026)
+- eph_tr_II: sin dato nuevo (último II trim. 2026)
+- eph_tr_IC: sin dato nuevo (último II trim. 2026)
+- eph_tr_ID: sin dato nuevo (último II trim. 2026)
+- eph_tr_IN: sin dato nuevo (último II trim. 2026)
+- eph_ing_media_FF: sin dato nuevo (último II trim. 2026)
+- eph_ing_mediana_FF: sin dato nuevo (último II trim. 2026)
+- eph_ing_media_FI: sin dato nuevo (último II trim. 2026)
+- eph_ing_mediana_FI: sin dato nuevo (último II trim. 2026)
+- eph_ing_media_FC: sin dato nuevo (último II trim. 2026)
+- eph_ing_mediana_FC: sin dato nuevo (último II trim. 2026)
+- eph_ing_mediana_FC: salto inusual en el último dato (de -9,2 a -30,2; 3,1 desvíos de lo habitual)
+- eph_ing_media_IF: sin dato nuevo (último II trim. 2026)
+- eph_ing_mediana_IF: sin dato nuevo (último II trim. 2026)
+- ipc_bienes: sin dato nuevo (último 2026-10)
+- ipc_servicios: sin dato nuevo (último 2026-10)
+- ipc_alquiler: sin dato nuevo (último 2026-10)
+- ipc_electricidad_gas: sin dato nuevo (último 2026-10)
+- ipc_prepagas: sin dato nuevo (último 2026-10)
+- ipc_transporte_publico: sin dato nuevo (último 2026-10)
+- ipc_combustibles: sin dato nuevo (último 2026-10)
+- ipc_telefonia: sin dato nuevo (último 2026-10)
+- ipc_restaurantes: sin dato nuevo (último 2026-10)
+- ipc_carnes: sin dato nuevo (último 2026-10)
+- ipc_lacteos: sin dato nuevo (último 2026-10)
+- ipc_pan: sin dato nuevo (último 2026-10)
+- ipc_verduras: sin dato nuevo (último 2026-10)
+- ipc_ropa: sin dato nuevo (último 2026-10)
+- ipib: sin dato nuevo (último 2026-10)
+- ipp: sin dato nuevo (último 2026-10)
+- costo_construccion: sin dato nuevo (último 2026-10)
+- ipi_minero: sin dato nuevo (último 2026-09)
+- minero_petroleo: sin dato nuevo (último 2026-09)
+- gas_no_convencional: sin dato nuevo (último 2026-09)
+- litio: sin dato nuevo (último 2026-09)
+- crianza_men1: sin dato nuevo (último 2026-10)
+- crianza_1a3: sin dato nuevo (último 2026-10)
+- crianza_4a5: sin dato nuevo (último 2026-10)
+- crianza_6a12: sin dato nuevo (último 2026-10)
+- expo_china: sin dato nuevo (último 2026-10)
+- expo_brasil: sin dato nuevo (último 2026-10)
+- expo_estados_unidos: sin dato nuevo (último 2026-10)
+- expo_union_europea: sin dato nuevo (último 2026-10)
+- expo_chile: sin dato nuevo (último 2026-10)
+- expo_india: sin dato nuevo (último 2026-10)
+- expo_vietnam: sin dato nuevo (último 2026-10)
+- expo_resto: sin dato nuevo (último 2026-10)
+- impo_china: sin dato nuevo (último 2026-10)
+- impo_brasil: sin dato nuevo (último 2026-10)
+- impo_estados_unidos: sin dato nuevo (último 2026-10)
+- impo_union_europea: sin dato nuevo (último 2026-10)
+- impo_paraguay: sin dato nuevo (último 2026-10)
+- impo_resto: sin dato nuevo (último 2026-10)
+- impo_uso_capital: sin dato nuevo (último 2026-10)
+- impo_uso_intermedios: sin dato nuevo (último 2026-10)
+- impo_uso_combustibles: sin dato nuevo (último 2026-10)
+- impo_uso_piezas: sin dato nuevo (último 2026-10)
+- impo_uso_consumo: sin dato nuevo (último 2026-10)
+- impo_uso_vehiculos: sin dato nuevo (último 2026-10)
+- impo_uso_resto: sin dato nuevo (último 2026-10)
+- rec_iva: sin dato nuevo (último 2026-10)
+- rec_ganancias: sin dato nuevo (último 2026-10)
+- rec_cheque: sin dato nuevo (último 2026-10)
+- rec_combustibles: sin dato nuevo (último 2026-10)
+- rec_seguridad_social: sin dato nuevo (último 2026-10)
+- rec_derechos_exportacion: sin dato nuevo (último 2026-10)
+- rec_derechos_importacion: sin dato nuevo (último 2026-10)
+- iibb_buenos_aires: sin dato nuevo (último 2026-09)
+- iibb_catamarca: sin dato nuevo (último 2026-10)
+- iibb_chaco: sin dato nuevo (último 2026-10)
+- iibb_chubut: sin dato nuevo (último 2026-10)
 - iibb_caba: sin dato nuevo (último 2026-09)
-- iibb_entre_rios: la fuente revisó 1 datos anteriores
-- iibb_la_pampa: sin dato nuevo (último 2026-08)
-- iibb_la_rioja: sin dato nuevo (último 2026-09)
+- iibb_cordoba: sin dato nuevo (último 2026-10)
+- iibb_corrientes: sin dato nuevo (último 2026-10)
+- iibb_entre_rios: sin dato nuevo (último 2026-10)
+- iibb_formosa: sin dato nuevo (último 2026-10)
+- iibb_jujuy: sin dato nuevo (último 2026-10)
+- iibb_mendoza: sin dato nuevo (último 2026-10)
+- iibb_misiones: sin dato nuevo (último 2026-10)
+- iibb_neuquen: sin dato nuevo (último 2026-10)
+- iibb_rio_negro: sin dato nuevo (último 2026-10)
 - iibb_salta: sin dato nuevo (último 2026-09)
-- iibb_tucuman: sin dato nuevo (último 2026-09)
-- aprobacion_promedio: la fuente revisó 1 datos anteriores
-- desaprobacion_promedio: la fuente revisó 1 datos anteriores
+- iibb_san_juan: sin dato nuevo (último 2026-10)
+- iibb_san_luis: sin dato nuevo (último 2026-10)
+- iibb_santa_cruz: sin dato nuevo (último 2026-10)
+- iibb_santiago_del_estero: sin dato nuevo (último 2026-10)
+- icg: sin dato nuevo (último 2026-10)
+- satisfaccion_rumbo: sin dato nuevo (último 2026-11)
+- aprobacion_promedio: sin dato nuevo (último 2026-11)
+- desaprobacion_promedio: sin dato nuevo (último 2026-11)
+- aprobacion_atlas: sin dato nuevo (último 2026-10)
+- aprobacion_espop: sin dato nuevo (último 2026-11)
+- aprobacion_zuban: sin dato nuevo (último 2026-10)
+- aprobacion_dalessio: sin dato nuevo (último 2026-10)
+- reservas: sin dato nuevo (último 2026-11)
 - reservas: la fuente revisó 1 datos anteriores
 - dolar_mayorista: sin dato nuevo (último 2026-11)
 - dolar_mayorista: la fuente revisó 1 datos anteriores
+- base_monetaria: sin dato nuevo (último 2026-11)
 - base_monetaria: la fuente revisó 1 datos anteriores
-- prestamos_privados: la fuente revisó 3 datos anteriores
+- tasa_plazo_fijo: sin dato nuevo (último 2026-11)
+- tasa_plazo_fijo: la fuente revisó 1 datos anteriores
+- prestamos_privados: sin dato nuevo (último 2026-11)
+- prestamos_privados: la fuente revisó 2 datos anteriores
 - dolar_ccl: sin dato nuevo (último 2026-11)
 - dolar_ccl: la fuente revisó 1 datos anteriores
 - dolar_mep: sin dato nuevo (último 2026-11)
 - dolar_mep: la fuente revisó 1 datos anteriores
-- autoservicios_desest: la fuente revisó 114 datos anteriores
-- shoppings_desest: la fuente revisó 115 datos anteriores
-- produccion_gas: la fuente revisó 2 datos anteriores
+- riesgo_pais: sin dato nuevo (último 2026-11)
+- riesgo_pais: la fuente revisó 1 datos anteriores
+- ipim: sin dato nuevo (último 2026-10)
+- autoservicios_desest: sin dato nuevo (último 2026-08)
+- shoppings_desest: sin dato nuevo (último 2026-08)
+- produccion_gas: sin dato nuevo (último 2026-09)
 - produccion_petroleo: sin dato nuevo (último 2025-11)
-- asalariados_privados: la fuente revisó 9 datos anteriores
-- expo_moa: la fuente revisó 1 datos anteriores
-- expo_moi: la fuente revisó 1 datos anteriores
-- terminos_intercambio: sin dato nuevo (último 2026-04)
-- terminos_intercambio: la fuente revisó 4 datos anteriores
+- produccion_acero: sin dato nuevo (último 2026-09)
+- asalariados_privados: sin dato nuevo (último 2026-07)
+- gasto_politica_ingresos: sin dato nuevo (último 2026-10)
+- auh_gasto: sin dato nuevo (último 2026-10)
+- auh_prestaciones: sin dato nuevo (último 2026-05)
+- auh_monto: sin dato nuevo (último 2026-10)
+- pnc_gasto: sin dato nuevo (último 2026-10)
+- jub_sipa_gasto: sin dato nuevo (último 2026-10)
+- jub_otros_gasto: sin dato nuevo (último 2026-10)
+- expo_primarios: sin dato nuevo (último 2026-09)
+- expo_moa: sin dato nuevo (último 2026-09)
+- expo_moi: sin dato nuevo (último 2026-09)
+- expo_combustibles: sin dato nuevo (último III trim. 2026)
+- impo_combustibles: sin dato nuevo (último III trim. 2026)
+- terminos_intercambio: sin dato nuevo (último II trim. 2026)
+- gasto_jubilaciones: sin dato nuevo (último 2026-09)
+- subsidios_energia: sin dato nuevo (último III trim. 2026)
+- transf_capital_provincias: sin dato nuevo (último 2026-09)
+- icc: sin dato nuevo (último 2026-10)
 - dolar_tarjeta: sin dato nuevo (último 2026-11)
 - dolar_tarjeta: la fuente revisó 1 datos anteriores
-- depositos_privados_ars: la fuente revisó 3 datos anteriores
-- depositos_privados_usd: la fuente revisó 2 datos anteriores
+- depositos_privados_ars: sin dato nuevo (último 2026-11)
+- depositos_privados_ars: la fuente revisó 2 datos anteriores
+- depositos_privados_usd: sin dato nuevo (último 2026-11)
+- depositos_privados_usd: la fuente revisó 1 datos anteriores
 - compras_divisas_bcra: sin dato nuevo (último 2026-10)
-- compras_divisas_bcra: la fuente revisó 1 datos anteriores
+- prestamos_hipotecarios: sin dato nuevo (último 2026-11)
 - prestamos_hipotecarios: la fuente revisó 2 datos anteriores
+- prestamos_prendarios: sin dato nuevo (último 2026-11)
 - prestamos_prendarios: la fuente revisó 2 datos anteriores
+- prestamos_personales: sin dato nuevo (último 2026-11)
 - prestamos_personales: la fuente revisó 2 datos anteriores
+- prestamos_tarjetas: sin dato nuevo (último 2026-11)
 - prestamos_tarjetas: la fuente revisó 2 datos anteriores
-- prestamos_tarjetas: variación inusual en el último dato (-10.7%)
-- tasa_personales: la fuente revisó 3 datos anteriores
-- tasa_tarjetas: la fuente revisó 2 datos anteriores
+- tasa_personales: sin dato nuevo (último 2026-11)
+- tasa_personales: la fuente revisó 1 datos anteriores
+- tasa_tarjetas: sin dato nuevo (último 2026-10)
 - icl: sin dato nuevo (último 2026-11)
 - icl: la fuente revisó 1 datos anteriores
-- pobreza_personas: sin dato nuevo (último 2026-01)
-- indigencia_personas: sin dato nuevo (último 2026-01)
-- pib_real: sin dato nuevo (último 2026-04)
-- consumo_privado: sin dato nuevo (último 2026-04)
-- fbcf_real: sin dato nuevo (último 2026-04)
+- pobreza_personas: sin dato nuevo (último I trim. 2026)
+- indigencia_personas: sin dato nuevo (último I trim. 2026)
+- pib_real: sin dato nuevo (último II trim. 2026)
+- consumo_privado: sin dato nuevo (último II trim. 2026)
+- fbcf_real: sin dato nuevo (último II trim. 2026)
+- cbt: sin dato nuevo (último 2026-10)
 - itcrm: sin dato nuevo (último 2026-09)
-- emae_agro: la fuente revisó 7 datos anteriores
-- emae_pesca: la fuente revisó 6 datos anteriores
-- emae_mineria: la fuente revisó 7 datos anteriores
-- emae_industria: la fuente revisó 7 datos anteriores
-- emae_egu: la fuente revisó 7 datos anteriores
-- emae_comercio: la fuente revisó 7 datos anteriores
-- emae_hoteles: la fuente revisó 7 datos anteriores
-- emae_transporte: la fuente revisó 7 datos anteriores
-- emae_financiero: la fuente revisó 7 datos anteriores
-- emae_inmobiliario: la fuente revisó 7 datos anteriores
-- emae_adm_publica: la fuente revisó 1 datos anteriores
-- emae_ensenanza: la fuente revisó 7 datos anteriores
-- emae_salud: la fuente revisó 7 datos anteriores
-- emae_original: la fuente revisó 7 datos anteriores
-- ipi_original: la fuente revisó 20 datos anteriores
-- isac_original: la fuente revisó 1 datos anteriores
-- shoppings_original: la fuente revisó 1 datos anteriores
-- asalariados_privados_desest: la fuente revisó 160 datos anteriores
-- asal_agro: la fuente revisó 197 datos anteriores
-- asal_pesca: la fuente revisó 124 datos anteriores
-- asal_mineria: la fuente revisó 8 datos anteriores
-- asal_industria: la fuente revisó 192 datos anteriores
-- asal_egu: la fuente revisó 8 datos anteriores
-- asal_construccion: la fuente revisó 199 datos anteriores
-- asal_comercio: la fuente revisó 200 datos anteriores
-- asal_hoteles: la fuente revisó 108 datos anteriores
-- asal_transporte: la fuente revisó 191 datos anteriores
-- asal_inmobiliarias: la fuente revisó 187 datos anteriores
-- asal_ensenanza: la fuente revisó 86 datos anteriores
-- asal_salud: la fuente revisó 9 datos anteriores
-- asal_servicios: la fuente revisó 9 datos anteriores
-- asal_prov_buenos_aires: la fuente revisó 203 datos anteriores
-- asal_prov_caba: la fuente revisó 206 datos anteriores
-- asal_prov_catamarca: la fuente revisó 176 datos anteriores
-- asal_prov_chaco: la fuente revisó 85 datos anteriores
-- asal_prov_chubut: la fuente revisó 124 datos anteriores
-- asal_prov_cordoba: la fuente revisó 191 datos anteriores
-- asal_prov_corrientes: la fuente revisó 181 datos anteriores
-- asal_prov_entre_rios: la fuente revisó 8 datos anteriores
-- asal_prov_formosa: la fuente revisó 9 datos anteriores
-- asal_prov_jujuy: la fuente revisó 9 datos anteriores
-- asal_prov_la_pampa: la fuente revisó 167 datos anteriores
-- asal_prov_la_rioja: la fuente revisó 136 datos anteriores
-- asal_prov_mendoza: la fuente revisó 200 datos anteriores
-- asal_prov_misiones: la fuente revisó 103 datos anteriores
-- asal_prov_neuquen: la fuente revisó 156 datos anteriores
-- asal_prov_rio_negro: la fuente revisó 190 datos anteriores
-- asal_prov_salta: la fuente revisó 184 datos anteriores
-- asal_prov_san_juan: la fuente revisó 9 datos anteriores
-- asal_prov_san_luis: la fuente revisó 151 datos anteriores
-- asal_prov_santa_cruz: la fuente revisó 199 datos anteriores
-- asal_prov_santa_fe: la fuente revisó 94 datos anteriores
-- asal_prov_santiago_del_estero: la fuente revisó 81 datos anteriores
-- asal_prov_tierra_del_fuego: la fuente revisó 69 datos anteriores
-- asal_prov_tucuman: la fuente revisó 130 datos anteriores
-- bdp_cuenta_corriente: sin dato nuevo (último 2026-04)
-- bdp_bienes: sin dato nuevo (último 2026-04)
-- bdp_servicios: sin dato nuevo (último 2026-04)
-- bdp_viajes: sin dato nuevo (último 2026-04)
-- bdp_ingreso_primario: sin dato nuevo (último 2026-04)
-- bdp_ied: sin dato nuevo (último 2026-04)
-- bdp_reservas: sin dato nuevo (último 2026-04)
-- bdp_reservas: variación inusual en el último dato (34888.1%)
-- deuda_total_res: sin dato nuevo (último 2026-04)
-- deuda_externa: sin dato nuevo (último 2026-04)
-- deuda_interna: sin dato nuevo (último 2026-04)
-- deuda_titulos: sin dato nuevo (último 2026-04)
-- deuda_letras: sin dato nuevo (último 2026-04)
-- deuda_organismos: sin dato nuevo (último 2026-04)
-- deuda_bilaterales: sin dato nuevo (último 2026-04)
-- deuda_adelantos: sin dato nuevo (último 2026-04)
-- deuda_otros: sin dato nuevo (último 2026-04)
-- prov_resultado_financiero: sin dato nuevo (último 2025-01)
-- prov_resultado_primario: sin dato nuevo (último 2025-01)
-- prov_ingresos: sin dato nuevo (último 2025-01)
-- prov_origen_nacional: sin dato nuevo (último 2025-01)
-- prov_tributos_propios: sin dato nuevo (último 2025-01)
-- informalidad: sin dato nuevo (último 2026-04)
-- empleo_publico: la fuente revisó 1 datos anteriores
-- remuneracion_sipa: la fuente revisó 6 datos anteriores
-- homicidios: sin dato nuevo (último 2025-01)
-- suicidios: sin dato nuevo (último 2025-01)
+- emae_agro: sin dato nuevo (último 2026-08)
+- emae_pesca: sin dato nuevo (último 2026-08)
+- emae_mineria: sin dato nuevo (último 2026-08)
+- emae_industria: sin dato nuevo (último 2026-08)
+- emae_egu: sin dato nuevo (último 2026-08)
+- emae_comercio: sin dato nuevo (último 2026-08)
+- emae_hoteles: sin dato nuevo (último 2026-08)
+- emae_transporte: sin dato nuevo (último 2026-08)
+- emae_financiero: sin dato nuevo (último 2026-08)
+- emae_inmobiliario: sin dato nuevo (último 2026-08)
+- emae_adm_publica: sin dato nuevo (último 2026-08)
+- emae_ensenanza: sin dato nuevo (último 2026-08)
+- emae_salud: sin dato nuevo (último 2026-08)
+- emae_original: sin dato nuevo (último 2026-08)
+- ipi_original: sin dato nuevo (último 2026-09)
+- isac_original: sin dato nuevo (último 2026-09)
+- supermercados_original: sin dato nuevo (último 2026-08)
+- autoservicios_original: sin dato nuevo (último 2026-08)
+- shoppings_original: sin dato nuevo (último 2026-08)
+- asalariados_privados_desest: sin dato nuevo (último 2026-07)
+- asal_agro: sin dato nuevo (último 2026-07)
+- asal_pesca: sin dato nuevo (último 2026-07)
+- asal_mineria: sin dato nuevo (último 2026-07)
+- asal_industria: sin dato nuevo (último 2026-07)
+- asal_egu: sin dato nuevo (último 2026-07)
+- asal_construccion: sin dato nuevo (último 2026-07)
+- asal_comercio: sin dato nuevo (último 2026-07)
+- asal_hoteles: sin dato nuevo (último 2026-07)
+- asal_transporte: sin dato nuevo (último 2026-07)
+- asal_inmobiliarias: sin dato nuevo (último 2026-07)
+- asal_ensenanza: sin dato nuevo (último 2026-07)
+- asal_salud: sin dato nuevo (último 2026-07)
+- asal_servicios: sin dato nuevo (último 2026-07)
+- asal_prov_buenos_aires: sin dato nuevo (último 2026-07)
+- asal_prov_caba: sin dato nuevo (último 2026-07)
+- asal_prov_catamarca: sin dato nuevo (último 2026-07)
+- asal_prov_chaco: sin dato nuevo (último 2026-07)
+- asal_prov_chubut: sin dato nuevo (último 2026-07)
+- asal_prov_cordoba: sin dato nuevo (último 2026-07)
+- asal_prov_corrientes: sin dato nuevo (último 2026-07)
+- asal_prov_entre_rios: sin dato nuevo (último 2026-07)
+- asal_prov_formosa: sin dato nuevo (último 2026-07)
+- asal_prov_jujuy: sin dato nuevo (último 2026-07)
+- asal_prov_la_pampa: sin dato nuevo (último 2026-07)
+- asal_prov_la_rioja: sin dato nuevo (último 2026-07)
+- asal_prov_mendoza: sin dato nuevo (último 2026-07)
+- asal_prov_misiones: sin dato nuevo (último 2026-07)
+- asal_prov_neuquen: sin dato nuevo (último 2026-07)
+- asal_prov_rio_negro: sin dato nuevo (último 2026-07)
+- asal_prov_salta: sin dato nuevo (último 2026-07)
+- asal_prov_san_juan: sin dato nuevo (último 2026-07)
+- asal_prov_san_luis: sin dato nuevo (último 2026-07)
+- asal_prov_santa_cruz: sin dato nuevo (último 2026-07)
+- asal_prov_santa_fe: sin dato nuevo (último 2026-07)
+- asal_prov_santiago_del_estero: sin dato nuevo (último 2026-07)
+- asal_prov_tierra_del_fuego: sin dato nuevo (último 2026-07)
+- asal_prov_tucuman: sin dato nuevo (último 2026-07)
+- ipcf_total: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_3: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_4: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_5: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_6: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_7: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_8: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_9: sin dato nuevo (último II trim. 2026)
+- ipcf_decil_10: sin dato nuevo (último II trim. 2026)
+- gini: sin dato nuevo (último II trim. 2026)
+- bdp_cuenta_corriente: sin dato nuevo (último II trim. 2026)
+- bdp_bienes: sin dato nuevo (último II trim. 2026)
+- bdp_servicios: sin dato nuevo (último II trim. 2026)
+- bdp_viajes: sin dato nuevo (último II trim. 2026)
+- bdp_ingreso_primario: sin dato nuevo (último II trim. 2026)
+- bdp_ied: sin dato nuevo (último II trim. 2026)
+- bdp_reservas: sin dato nuevo (último II trim. 2026)
+- deuda_total_res: sin dato nuevo (último II trim. 2026)
+- deuda_externa: sin dato nuevo (último II trim. 2026)
+- deuda_interna: sin dato nuevo (último II trim. 2026)
+- deuda_titulos: sin dato nuevo (último II trim. 2026)
+- deuda_letras: sin dato nuevo (último II trim. 2026)
+- deuda_organismos: sin dato nuevo (último II trim. 2026)
+- deuda_bilaterales: sin dato nuevo (último II trim. 2026)
+- deuda_adelantos: sin dato nuevo (último II trim. 2026)
+- deuda_otros: sin dato nuevo (último II trim. 2026)
+- prov_resultado_financiero: sin dato nuevo (último 2025)
+- prov_resultado_primario: sin dato nuevo (último 2025)
+- prov_ingresos: sin dato nuevo (último 2025)
+- prov_origen_nacional: sin dato nuevo (último 2025)
+- prov_tributos_propios: sin dato nuevo (último 2025)
+- informalidad: sin dato nuevo (último II trim. 2026)
+- empleo_publico: sin dato nuevo (último II trim. 2026)
+- remuneracion_sipa: sin dato nuevo (último 2026-07)
+- homicidios: sin dato nuevo (último 2025)
+- suicidios: sin dato nuevo (último 2025)
 - morosidad: sin dato nuevo (último 2026-04)
 - morosidad_publicos: sin dato nuevo (último 2026-04)
 - morosidad_privados: sin dato nuevo (último 2026-04)
@@ -206,42 +294,54 @@ Indicadores publicados: 346
 - morosidad_pnfc: sin dato nuevo (último 2026-02)
 - morosidad_fintech: sin dato nuevo (último 2026-02)
 - morosidad_tarjetas_nb: sin dato nuevo (último 2026-02)
-- mora_familias: sin dato nuevo (último 2026-08)
-- mora_fam_personales: sin dato nuevo (último 2026-08)
-- mora_fam_tarjetas: sin dato nuevo (último 2026-08)
-- mora_fam_prendarios: sin dato nuevo (último 2026-08)
-- mora_fam_hipotecarios: sin dato nuevo (último 2026-08)
-- mora_empresas: sin dato nuevo (último 2026-08)
-- prestamos_personas: la fuente revisó 2 datos anteriores
-- remuneracion_asalariados: la fuente revisó 1 datos anteriores
+- mora_familias: la fuente revisó 2 datos anteriores
+- mora_fam_personales: la fuente revisó 2 datos anteriores
+- mora_fam_tarjetas: la fuente revisó 2 datos anteriores
+- mora_fam_prendarios: la fuente revisó 2 datos anteriores
+- mora_fam_hipotecarios: la fuente revisó 2 datos anteriores
+- mora_empresas: la fuente revisó 2 datos anteriores
+- prestamos_personas: sin dato nuevo (último 2026-09)
+- remuneracion_asalariados: sin dato nuevo (último II trim. 2026)
 - morosidad_electro: sin dato nuevo (último 2026-02)
 - morosidad_coop: sin dato nuevo (último 2026-02)
 - pnfc_tarjetas: sin dato nuevo (último 2026-02)
 - pnfc_personales: sin dato nuevo (último 2026-02)
 - pnfc_resto: sin dato nuevo (último 2026-02)
+- ucii: sin dato nuevo (último 2026-08)
 - escrituras_caba: sin dato nuevo (último 2026-09)
+- construya: sin dato nuevo (último 2026-10)
+- construya_desest: sin dato nuevo (último 2026-10)
 - came_ventas: sin dato nuevo (último 2026-09)
-- ipc_corrupcion: sin dato nuevo (último 2025-01)
-- odsa_ia: sin dato nuevo (último 2025-01)
-- odsa_ia_severa: sin dato nuevo (último 2025-01)
-- prod_soja: sin dato nuevo (último 2024-01)
-- prod_maiz: sin dato nuevo (último 2024-01)
-- prod_trigo: sin dato nuevo (último 2025-01)
-- prod_girasol: sin dato nuevo (último 2024-01)
+- ipc_corrupcion: sin dato nuevo (último 2025)
+- odsa_ia: sin dato nuevo (último 2025)
+- odsa_ia_severa: sin dato nuevo (último 2025)
+- prod_soja: sin dato nuevo (último 2024)
+- prod_maiz: sin dato nuevo (último 2024)
+- prod_trigo: sin dato nuevo (último 2025)
+- prod_girasol: sin dato nuevo (último 2024)
 - escrituras_monto: sin dato nuevo (último 2026-09)
-- subocupacion: sin dato nuevo (último 2026-04)
-- monotributistas: la fuente revisó 12 datos anteriores
-- monotributistas_desest: la fuente revisó 12 datos anteriores
-- autonomos: la fuente revisó 12 datos anteriores
+- cemento: sin dato nuevo (último 2026-09)
+- subocupacion: sin dato nuevo (último II trim. 2026)
+- monotributistas: sin dato nuevo (último 2026-07)
+- monotributistas_desest: sin dato nuevo (último 2026-07)
+- autonomos: sin dato nuevo (último 2026-07)
 - soja_precio: sin dato nuevo (último 2026-09)
-- m2: la fuente revisó 6 datos anteriores
+- retenciones: sin dato nuevo (último 2026-09)
+- m2: sin dato nuevo (último 2026-11)
+- m2: la fuente revisó 3 datos anteriores
+- prestamos_usd: sin dato nuevo (último 2026-11)
 - prestamos_usd: la fuente revisó 2 datos anteriores
-- fbcf_corriente: sin dato nuevo (último 2025-10)
-- produccion_autos: la fuente revisó 1 datos anteriores
-- faena_vacuna: la fuente revisó 2 datos anteriores
+- fbcf_corriente: sin dato nuevo (último IV trim. 2025)
+- ventas_autos: sin dato nuevo (último 2026-10)
+- produccion_autos: sin dato nuevo (último 2026-10)
+- faena_vacuna: sin dato nuevo (último III trim. 2026)
 - fae_privados: sin dato nuevo (último 2026-08)
-- pib_nominal: sin dato nuevo (último 2026-04)
-- merval: la fuente devolvió solo 1 datos (desde 2026-10); se conservó la historia anterior (360 datos)
+- gasto_auh: sin dato nuevo (último 2026-10)
+- pib_nominal: sin dato nuevo (último II trim. 2026)
+- ipc_vivienda: sin dato nuevo (último 2026-10)
+- ipc_transporte: sin dato nuevo (último 2026-10)
+- ipc_educacion: sin dato nuevo (último 2026-10)
+- merval: la fuente devolvió solo 4 datos (desde 2026-07); se conservó la historia anterior (360 datos)
 - merval: sin dato nuevo (último 2026-10)
 - adr_ggal: sin dato nuevo (último 2026-11)
 - adr_ggal: la fuente revisó 1 datos anteriores
@@ -256,7 +356,7 @@ Indicadores publicados: 346
 - adr_supv: sin dato nuevo (último 2026-11)
 - adr_supv: la fuente revisó 1 datos anteriores
 - adr_cepu: sin dato nuevo (último 2026-11)
-- adr_cepu: la fuente revisó 1 datos anteriores
+- adr_cepu: la fuente revisó 57 datos anteriores
 - adr_tgs: sin dato nuevo (último 2026-11)
 - adr_tgs: la fuente revisó 1 datos anteriores
 - adr_teo: sin dato nuevo (último 2026-11)
@@ -264,47 +364,61 @@ Indicadores publicados: 346
 - adr_edn: sin dato nuevo (último 2026-11)
 - adr_edn: la fuente revisó 1 datos anteriores
 - adr_cresy: sin dato nuevo (último 2026-11)
-- adr_cresy: la fuente revisó 356 datos anteriores
+- adr_cresy: la fuente revisó 1 datos anteriores
 - adr_irs: sin dato nuevo (último 2026-11)
 - adr_irs: la fuente revisó 1 datos anteriores
 - adr_loma: sin dato nuevo (último 2026-11)
-- adr_loma: la fuente revisó 1 datos anteriores
-- gpn_total: sin dato nuevo (último 2023-01)
-- gpn_prevision: sin dato nuevo (último 2023-01)
-- gpn_asistencia: sin dato nuevo (último 2023-01)
-- gpn_economicos: sin dato nuevo (último 2023-01)
-- gpn_deuda: sin dato nuevo (último 2023-01)
-- gpn_defensa: sin dato nuevo (último 2023-01)
-- gpn_funcionamiento: sin dato nuevo (último 2023-01)
-- gpn_educ_basica: sin dato nuevo (último 2023-01)
-- gpn_educ_superior: sin dato nuevo (último 2023-01)
-- gpn_salud_publica: sin dato nuevo (último 2023-01)
-- gpn_pami: sin dato nuevo (último 2023-01)
-- gpn_obras_sociales: sin dato nuevo (último 2023-01)
-- gpn_ciencia: sin dato nuevo (último 2023-01)
-- gpn_vivienda: sin dato nuevo (último 2023-01)
-- gpn_empleo: sin dato nuevo (último 2023-01)
+- adr_loma: la fuente revisó 60 datos anteriores
+- imig_jubilaciones: sin dato nuevo (último III trim. 2026)
+- imig_pensiones_nc: sin dato nuevo (último III trim. 2026)
+- imig_asignaciones: sin dato nuevo (último III trim. 2026)
+- imig_pami: sin dato nuevo (último III trim. 2026)
+- imig_otros_programas: sin dato nuevo (último III trim. 2026)
+- imig_subsidios_energia: sin dato nuevo (último III trim. 2026)
+- imig_subsidios_transporte: sin dato nuevo (último III trim. 2026)
+- imig_salarios: sin dato nuevo (último III trim. 2026)
+- imig_funcionamiento: sin dato nuevo (último III trim. 2026)
+- imig_intereses: sin dato nuevo (último III trim. 2026)
+- gpn_total: sin dato nuevo (último 2023)
+- gpn_prevision: sin dato nuevo (último 2023)
+- gpn_asistencia: sin dato nuevo (último 2023)
+- gpn_economicos: sin dato nuevo (último 2023)
+- gpn_deuda: sin dato nuevo (último 2023)
+- gpn_defensa: sin dato nuevo (último 2023)
+- gpn_funcionamiento: sin dato nuevo (último 2023)
+- gpn_educ_basica: sin dato nuevo (último 2023)
+- gpn_educ_superior: sin dato nuevo (último 2023)
+- gpn_salud_publica: sin dato nuevo (último 2023)
+- gpn_pami: sin dato nuevo (último 2023)
+- gpn_obras_sociales: sin dato nuevo (último 2023)
+- gpn_ciencia: sin dato nuevo (último 2023)
+- gpn_vivienda: sin dato nuevo (último 2023)
+- gpn_empleo: sin dato nuevo (último 2023)
 - calificacion_sp: sin dato nuevo (último 2026-11)
-- fao_vacuna: sin dato nuevo (último 2023-01)
-- fao_aviar: sin dato nuevo (último 2023-01)
-- fao_porcina: sin dato nuevo (último 2023-01)
-- fao_leche: sin dato nuevo (último 2023-01)
-- consumo_vacuna_sagyp_2024: sin dato nuevo (último 2024-01)
-- consumo_vacuna_sagyp: sin dato nuevo (último 2025-01)
-- consumo_aviar_sagyp_2024: sin dato nuevo (último 2024-01)
-- consumo_aviar_sagyp: sin dato nuevo (último 2025-01)
-- consumo_porcina_sagyp_2024: sin dato nuevo (último 2024-01)
-- consumo_porcina_sagyp: sin dato nuevo (último 2025-01)
-- consumo_leche_ocla: sin dato nuevo (último 2025-01)
-- empresas_activas: sin dato nuevo (último 2026-01)
-- empresas_aperturas: sin dato nuevo (último 2026-01)
-- empresas_cierres: sin dato nuevo (último 2026-01)
-- empresas_neto: sin dato nuevo (último 2026-01)
+- fao_vacuna: sin dato nuevo (último 2023)
+- fao_aviar: sin dato nuevo (último 2023)
+- fao_porcina: sin dato nuevo (último 2023)
+- fao_leche: sin dato nuevo (último 2023)
+- consumo_vacuna_sagyp_2024: sin dato nuevo (último 2024)
+- consumo_vacuna_sagyp: sin dato nuevo (último 2025)
+- consumo_aviar_sagyp_2024: sin dato nuevo (último 2024)
+- consumo_aviar_sagyp: sin dato nuevo (último 2025)
+- consumo_porcina_sagyp_2024: sin dato nuevo (último 2024)
+- consumo_porcina_sagyp: sin dato nuevo (último 2025)
+- consumo_leche_ocla: sin dato nuevo (último 2025)
+- empresas_activas: sin dato nuevo (último I trim. 2026)
+- empresas_aperturas: sin dato nuevo (último I trim. 2026)
+- empresas_cierres: sin dato nuevo (último I trim. 2026)
+- empresas_neto: sin dato nuevo (último I trim. 2026)
 - bcra_encajes_usd: sin dato nuevo (último 2025-10)
 - bcra_organismos: sin dato nuevo (último 2025-10)
 - bcra_pases: sin dato nuevo (último 2025-10)
 - bcra_tc_balance: sin dato nuevo (último 2025-10)
+- bcra_pase_2016: sin dato nuevo (último 2026-11)
+- cny_por_usd: sin dato nuevo (último 2026-11)
 - cny_por_usd: la fuente revisó 1 datos anteriores
 - swap_china_yuan: sin dato nuevo (último 2026-11)
 - swap_eeuu_activado: sin dato nuevo (último 2026-11)
 - fmi_desembolsos_2025: sin dato nuevo (último 2026-11)
+- cpi_eeuu: sin dato nuevo (último 2026-10)
+- smvm: 5 datos con fecha futura (hasta 2027-04) quedan guardados y se publican al llegar su mes
