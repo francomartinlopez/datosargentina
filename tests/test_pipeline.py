@@ -269,3 +269,15 @@ def test_no_se_pisa_la_historia_con_una_respuesta_corta():
     completa = pd.Series(range(121), index=pd.date_range("2015-01-01", periods=121, freq="MS"), dtype=float)
     s2, aviso2 = combinar_con_anterior("x", completa, anterior)
     assert s2 is completa and aviso2 is None
+
+
+def test_calidad_saldos_y_trimestres():
+    import pandas as pd
+    from pipeline import calidad
+    i = pd.date_range("2015-01-01", periods=40, freq="QS")
+    saldo = pd.Series([(-1) ** k * 500.0 for k in range(39)] + [10.0], index=i)
+    # pasar de -500 a 10 no es un salto inusual para un saldo que oscila ±500: no se avisa en %
+    assert calidad.salto_inusual("bdp", saldo) is None
+    assert calidad.etiqueta_fecha(saldo.iloc[:-2]) == "II trim. 2024"
+    alertas = calidad.revisar("x", saldo, saldo, solo_historia=True)
+    assert not any("sin dato nuevo" in a for a in alertas)
