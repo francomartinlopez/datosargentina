@@ -378,3 +378,8 @@ div.rank-fila.nivel:hover { background: none; }
 .seccion > .intro + .grilla { margin-top: 8px; }
 .rigi-tabla-cab { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
 .rigi-evaluacion { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-top: 12px; }
+
+/* Cuadros de valores */
+.tabla.cuadro th[scope="row"] { text-align: left; font-weight: 600; white-space: normal; }
+.tabla.cuadro tr.sub th[scope="row"] { font-weight: 400; padding-left: 24px; color: var(--tinta-2); }
+.tabla.cuadro td.negativo { color: var(--rojo); }

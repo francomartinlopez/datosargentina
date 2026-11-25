@@ -24,6 +24,9 @@ def construir(config: dict, fichas: list[dict], salida: Path) -> list[str]:
             if x.startswith("mapa:"):
                 ok = (carpeta_mapas / f"{x[5:]}.json").exists()
                 item = {"tipo": "mapa", "id": x[5:]}
+            elif x.startswith("tabla:"):
+                ok = (salida / "tablas" / f"{x[6:]}.json").exists()
+                item = {"tipo": "tabla", "id": x[6:]}
             elif x.startswith("rigi:"):
                 ok = (salida / "rigi.json").exists()
                 item = {"tipo": "rigi", "id": "rigi_" + r["id"], "sectores": x[5:].split("|")}

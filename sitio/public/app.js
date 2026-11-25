@@ -577,6 +577,30 @@ function fichaRigi(d) {
     el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
 }
 
+/* ---------- Cuadros de valores (datos sin serie completa) ---------- */
+
+function fichaTabla(d) {
+  const celda = (v, c) => {
+    if (v == null || v === "") return el("td", { class: c.tipo === "texto" ? "" : "num", text: v == null ? "—" : "" });
+    if (c.tipo === "texto") return el("td", { text: String(v) });
+    const n = Number(v);
+    const txt = c.tipo === "porcentaje" ? (c.signo ? signo(n, c.decimales ?? 1) : fmt(n, c.decimales ?? 1)) + "%" : fmt(n, c.decimales ?? 0);
+    return el("td", { class: "num" + (c.signo && n < 0 ? " negativo" : ""), text: txt });
+  };
+  const t = el("table", { class: "tabla cuadro" });
+  t.append(el("thead", {}, el("tr", {}, el("th", { scope: "col", text: "" }), ...d.columnas.map((c) => el("th", { scope: "col", text: c.nombre })))));
+  const tb = el("tbody");
+  d.filas.forEach((f) => tb.append(el("tr", { class: f.nivel ? "sub" : "total" },
+    el("th", { scope: "row", text: f.concepto }), ...f.celdas.map((v, i) => celda(v, d.columnas[i])))));
+  t.append(tb);
+  return el("article", { class: "ficha ancha", id: d.id },
+    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
+      el("p", { class: "unidad", text: `${d.unidad} · ${d.periodo} · actualizado el ${fechaCorta(d.fecha)}` }))),
+    el("div", { class: "tabla-envoltura" }, t),
+    d.nota ? el("p", { class: "nota", text: d.nota }) : null,
+    el("div", { class: "ficha-pie" }, el("span", {}, "Fuente: ", d.fuente_url ? el("a", { href: d.fuente_url, target: "_blank", rel: "noopener", text: d.fuente }) : d.fuente)));
+}
+
 /* ---------- Población según condición de actividad (EPH) ---------- */
 
 function fichaPoblacion(d) {
@@ -1426,6 +1450,7 @@ async function iniciar() {
   nav.append(navDinamico);
   const secciones = document.getElementById("secciones");
   const rubros = (await leer("rubros")) || [];
+  const cuadros = (await Promise.all(((await leer("tablas/indice")) || []).map((id) => leer(`tablas/${id}`)))).filter(Boolean);
   // todas las fichas por id, también las que se ven dentro de un grupo (para la vista por rubro)
   const porId = {};
   // en la vista por rubro, una ficha que viene de un grupo lleva el nombre del grupo adelante
@@ -1437,7 +1462,8 @@ async function iniciar() {
     rigi && rigi.seccion === s ? fichaRigi(rigi) : null,
     problemas && problemas.seccion === s ? fichaProblemas(problemas) : null,
     imagen && imagen.seccion === s ? fichaImagen(imagen) : null,
-    poblacion && poblacion.seccion === s ? fichaPoblacion(poblacion) : null].filter(Boolean);
+    poblacion && poblacion.seccion === s ? fichaPoblacion(poblacion) : null,
+    ...cuadros.filter((c) => c.seccion === s).map(fichaTabla)].filter(Boolean);
   const agregarSeccion = (id, titulo, intro, fichasComunes, anchas) => {
     navDinamico.append(el("a", { href: `#${id}`, text: titulo }));
     const grilla = el("div", { class: "grilla" });
@@ -1465,6 +1491,7 @@ async function iniciar() {
         if (it.tipo === "indicador" && porId[it.id]) comunes.push(ficha(porId[it.id]));
         else if (it.tipo === "mapa" && geo) { const m = mapasCargados.find((x) => x.id === it.id); if (m) anchas.push(fichaMapa(m, geo)); }
         else if (it.tipo === "rigi" && rigi) anchas.push(fichaRigi(rigiDeSectores(rigi, it.sectores, it.id)));
+        else if (it.tipo === "tabla") { const c = cuadros.find((x) => x.id === it.id); if (c) anchas.push(fichaTabla(c)); }
       });
       agregarSeccion("rubro-" + r.id, r.nombre, r.intro, comunes, anchas);
     }

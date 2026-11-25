@@ -932,7 +932,14 @@ def indec_eph_regional(campo: str) -> pd.Series:
     return eph_regional.serie(campo)
 
 
+def mineria_exportaciones(campo: str) -> pd.Series:
+    """Exportaciones mineras del informe mensual de la Secretaría de Minería (ver fuentes/siacam.py)."""
+    from . import siacam
+    return siacam.serie(campo)
+
+
 LECTORES = {
+    "mineria_exportaciones": mineria_exportaciones,
     "indec_eph_panel": indec_eph_panel,
     "indec_eph_regional": indec_eph_regional,
     "arca_recaudacion": arca_recaudacion,
