@@ -326,7 +326,7 @@ def test_cuadros_validos():
 
 def test_siacam_mineral():
     from pipeline.fuentes import siacam
-    t = ("Las exportaciones de minerales del mes de octubre de 2026 totalizaron USD 660 millones. Del total, destacándose la "
+    t = ("Las exportaciones de minerales del mes de octubre de 2026 totalizaron USD 660 millones. Del total, USD 461 millones correspondieron a minerales metalíferos, destacándose la "
          "participación del oro con USD 383 millones (58% del total exportado) y la plata con USD 55 millones (8% del total). "
          "En el acumulado de los primeros 10 meses del año, los minerales metalíferos sumaron exportaciones por USD 5.443 millones. "
          "donde el oro aportó USD 4.407 millones (59% del total exportado), la plata USD 869 millones (12% del total exportado) "

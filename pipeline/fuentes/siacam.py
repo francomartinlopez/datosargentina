@@ -216,7 +216,7 @@ def leer_informe_mineral(t: str) -> dict | None:
     if not m or m.group(1).lower() not in MESES:
         return None
     fila = {"fecha": f"{m.group(2)}-{MESES[m.group(1).lower()]:02d}-01"}
-    n = re.search(r"(?:primeros (\w+) meses|(\d+) meses) de (\d{4})", t[t.find("minerales metal"):])
+    n = re.search(r"(?:primeros (\w+) meses|(\d+) meses) (?:de|del) (?:\d{4}|año)", t[t.find("minerales metal"):])
     if n:
         k = n.group(1) or n.group(2)
         k = int(k) if k.isdigit() else NUMEROS.get(k.lower())
