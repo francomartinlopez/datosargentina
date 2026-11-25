@@ -46,5 +46,8 @@ def construir(salida: Path) -> list[str]:
             continue
         (destino / f"{t['id']}.json").write_text(json.dumps(t, ensure_ascii=False), encoding="utf-8")
         ids.append(t["id"])
+    for viejo in destino.glob("*.json"):  # cuadros que ya no están en data/manual/tablas
+        if viejo.stem not in ids and viejo.name != "indice.json":
+            viejo.unlink()
     (destino / "indice.json").write_text(json.dumps(ids), encoding="utf-8")
     return alertas
