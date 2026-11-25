@@ -350,7 +350,8 @@ def test_datos_informe(tmp_path):
               {"id": "ucii", "frecuencia": "M", "tipo_valor": "tasa", "unidad": "% de la capacidad",
                "ultimo": {"fecha": "2026-08-01", "valor": 58.5}, "interanual_ultimo": -1.1, "_serie": serie[:20]},
               {"id": "desoc_regional", "frecuencia": "T", "tipo_valor": "tasa", "unidad": "% de la PEA",
-               "ultimo": {"fecha": "2026-04-01", "valor": 11.5}, "interanual_ultimo": 3.8, "_serie": []}]
+               "ultimo": {"fecha": "2026-04-01", "valor": 11.5}, "interanual_ultimo": 3.8,
+               "_serie": [[f"{a}-{m:02d}-01", 8.0] for a in (2024, 2025) for m in (1, 4, 7, 10)] + [["2026-01-01", 9.0], ["2026-04-01", 11.5]]}]
     cal = pd.DataFrame({"fecha": ["2026-12-15", "2027-03-01"], "titulo": [
         "Índice de precios al consumidor (IPC). Cobertura nacional. Noviembre de 2026",
         "Índice de precios al consumidor (IPC). Cobertura nacional. Enero de 2027"]})
@@ -369,3 +370,12 @@ def test_datos_informe(tmp_path):
     assert [a["fecha"] for a in doc["agenda"]] == ["2026-12-15"]
     assert doc["agenda"][0]["evento"] == "Inflación (IPC): dato de noviembre de 2026 (INDEC)"
     assert doc["web"] == "Datos Argentina" and doc["generado"].endswith("-03:00")
+    # versión 1.3: serie que termina en el valor publicado, tipo de valor, frecuencia y comparaciones
+    assert doc["version"] == "1.3"
+    im = ind["inflacion-mensual"]
+    assert im["tipo_valor"] == "tasa" and im["frecuencia"] == "mensual" and im["comparar"] == ["mensual", "interanual"]
+    assert im["serie"][-1] == {"fecha": "2026-10-31", "valor": im["valor"]} and 13 <= len(im["serie"]) <= 25
+    dr = ind["desocupacion-gran-rosario"]
+    assert dr["frecuencia"] == "trimestral" and dr["comparar"] == ["interanual"]
+    assert [x["fecha"] for x in dr["serie"]][-2:] == ["2026-03-31", "2026-06-30"] and dr["serie"][-1]["valor"] == 11.5
+    assert all("grupo" not in i for i in doc["indicadores"])  # ningún grupo llega a 3 miembros en esta prueba

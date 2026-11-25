@@ -1,6 +1,6 @@
 """Archivo de datos para la web de informes de Plexum: sitio/public/datos-informe.json.
 
-Sigue la especificación «Datos que cada web publica para la web de informes de Plexum» (v1.2):
+Sigue la especificación «Datos que cada web publica para la web de informes de Plexum» (v1.3):
 parte común y apartado 1 (Datos Argentina, Economía nacional). No cambia nada de lo que se ve en
 el sitio: toma el último valor de indicadores que la web ya publica.
 
@@ -125,6 +125,61 @@ NO_PUBLICADOS = [
     ("tarifa-electrica-industrial", "Tarifa eléctrica industrial", "La web no publica la tarifa eléctrica industrial"),
 ]
 
+# Grupos (v1.3): el mismo dato abierto por rubro u otra dimensión. id del indicador → (grupo, nombre, dimensión, clave)
+def _g(gid, nombre, dim, miembros):
+    return {i: (gid, nombre, dim, c) for i, c in miembros.items()}
+
+
+GRUPOS = {
+    **_g("emae-por-rubro", "Actividad económica por rubro (EMAE)", "rubro",
+         {"emae-industria": "Industria", "emae-agro": "Agro", "emae-mineria": "Minería", "emae-energia": "Energía",
+          "emae-comercio": "Comercio y servicios"}),
+    **_g("empleo-registrado-por-rubro", "Asalariados registrados por rubro", "rubro",
+         {"empleo-registrado-industria": "Industria", "empleo-registrado-agro": "Agro", "empleo-registrado-mineria": "Minería",
+          "empleo-registrado-energia": "Energía", "empleo-registrado-construccion": "Construcción",
+          "empleo-registrado-comercio": "Comercio y servicios"}),
+    **_g("desocupacion-por-aglomerado", "Desocupación por aglomerado", "otro",
+         {"desocupacion-gran-rosario": "Gran Rosario", "desocupacion-gran-santa-fe": "Gran Santa Fe",
+          "desocupacion-gran-cordoba": "Gran Córdoba", "desocupacion-caba": "Ciudad de Buenos Aires",
+          "desocupacion-partidos-gba": "Partidos del Gran Buenos Aires"}),
+    **_g("tasa-empleo-por-aglomerado", "Tasa de empleo por aglomerado", "otro",
+         {"tasa-empleo-gran-rosario": "Gran Rosario", "tasa-empleo-gran-santa-fe": "Gran Santa Fe",
+          "tasa-empleo-gran-cordoba": "Gran Córdoba", "tasa-empleo-caba": "Ciudad de Buenos Aires",
+          "tasa-empleo-partidos-gba": "Partidos del Gran Buenos Aires"}),
+    **_g("exportaciones-cordoba-por-rubro", "Exportaciones de Córdoba por gran rubro", "otro",
+         {"exportaciones-cordoba-primarios": "productos primarios", "exportaciones-cordoba-moa": "manufacturas de origen agropecuario",
+          "exportaciones-cordoba-moi": "manufacturas de origen industrial", "exportaciones-cordoba-energia": "combustibles y energía"}),
+    **_g("inflacion-mensual-por-provincia", "Inflación mensual por provincia", "provincia",
+         {"inflacion-mensual-caba": "CABA", "inflacion-mensual-santa-fe": "Santa Fe", "inflacion-mensual-cordoba": "Córdoba"}),
+    **_g("inflacion-interanual-por-provincia", "Inflación interanual por provincia", "provincia",
+         {"inflacion-interanual-caba": "CABA", "inflacion-interanual-santa-fe": "Santa Fe", "inflacion-interanual-cordoba": "Córdoba"}),
+}
+
+
+def armar_grupos(indicadores: list[dict]) -> list[str]:
+    """Asigna los grupos. Un grupo necesita 3 o más miembros con la misma unidad y la misma fecha del dato:
+    los que quedan atrasados salen del grupo (siguen como indicador suelto) y el grupo se arma con el resto."""
+    for r in indicadores:
+        if r["id"] in GRUPOS:
+            gid, nombre, dim, clave = GRUPOS[r["id"]]
+            r["grupo"] = {"id": gid, "nombre": nombre, "dimension": dim, "clave": clave}
+    avisos, por_grupo = [], {}
+    for r in indicadores:
+        if r.get("grupo"):
+            por_grupo.setdefault(r["grupo"]["id"], []).append(r)
+    for gid, miembros in por_grupo.items():
+        comun = max(pd.Series([(m["fecha_dato"], m["unidad"]) for m in miembros]).value_counts().items(), key=lambda x: (x[1], x[0]))[0]
+        dentro = [m for m in miembros if (m["fecha_dato"], m["unidad"]) == comun]
+        for m in miembros:
+            if m not in dentro or len(dentro) < 3:
+                m.pop("grupo")
+        if len(dentro) < 3:
+            avisos.append(f"grupo {gid}: menos de 3 miembros con la misma fecha, no se arma")
+        elif len(dentro) < len(miembros):
+            avisos.append(f"grupo {gid}: {len(miembros) - len(dentro)} miembro(s) con otra fecha quedan fuera")
+    return avisos
+
+
 # Publicaciones del INDEC que van en la agenda: (texto con que empieza el título, nombre corto, rubros)
 AGENDA = [
     ("Índice de precios al consumidor (IPC)", "Inflación (IPC)", []),
@@ -194,8 +249,40 @@ def _var_pct(s: pd.Series, meses: int) -> pd.Series:
     return (a / b - 1) * 100
 
 
-def _dolar(nombre_crudo: str) -> tuple[pd.Timestamp, float, float | None] | None:
-    """Última cotización diaria y su variación contra el promedio del mes anterior."""
+FRECUENCIAS = {"M": "mensual", "T": "trimestral", "A": "anual", "D": "diaria"}
+LARGO = {"M": 25, "T": 9, "A": 10, "D": 25}  # puntos de la serie (v1.3)
+
+
+def _lista(s: pd.Series, frec: str, dec: int) -> list[dict]:
+    """Serie para el informe: del más viejo al más nuevo, con la fecha del dato (fin del período o día real)."""
+    s = s.dropna().iloc[-LARGO[frec]:]
+    fechas = s.index if frec == "D" else [fin_periodo(f.strftime("%Y-%m-%d"), frec) for f in s.index]
+    return [{"fecha": f.strftime("%Y-%m-%d"), "valor": _num(v, dec)} for f, v in zip(fechas, s.values)]
+
+
+def _comparar(frec: str, puntos: int, acumulado: bool) -> list[str]:
+    if frec in ("M", "D"):
+        if puntos >= 13:
+            return ["interanual"] if acumulado else ["mensual", "interanual"]
+        return [] if acumulado or puntos < 2 else ["mensual"]
+    if frec == "T":
+        return ["interanual"] if puntos >= 5 else []
+    return ["interanual"] if puntos >= 2 else []
+
+
+def _v13(r: dict, s: pd.Series, frec: str, dec: int, acumulado: bool = False) -> dict:
+    """Agrega los campos de la versión 1.3 y toma el valor y la fecha del último punto de la serie."""
+    serie = _lista(s, frec, dec)
+    r["valor"], r["fecha_dato"] = serie[-1]["valor"], serie[-1]["fecha"]
+    r["tipo_valor"] = "tasa" if r["unidad"].startswith("%") else "nivel"
+    r["frecuencia"] = FRECUENCIAS[frec]
+    r["comparar"] = _comparar(frec, len(serie), acumulado)
+    r["serie"] = serie
+    return r
+
+
+def _dolar(nombre_crudo: str) -> tuple[pd.Series, float | None] | None:
+    """Cotizaciones diarias (última de cada mes) y variación del último dato contra el promedio del mes anterior."""
     ruta = CRUDOS / f"{nombre_crudo}.csv"
     if not ruta.exists():
         return None
@@ -206,7 +293,8 @@ def _dolar(nombre_crudo: str) -> tuple[pd.Timestamp, float, float | None] | None
     mes_previo = (ultimo["fecha"].to_period("M") - 1)
     previo = df[df["fecha"].dt.to_period("M") == mes_previo]["valor"]
     var = (ultimo["valor"] / previo.mean() - 1) * 100 if len(previo) else None
-    return ultimo["fecha"], float(ultimo["valor"]), var
+    cierres = df.groupby(df["fecha"].dt.to_period("M")).tail(1)
+    return pd.Series(cierres["valor"].values, index=pd.DatetimeIndex(cierres["fecha"]), dtype=float), var
 
 
 def indicador(entrada: tuple, fichas: dict) -> dict | None:
@@ -220,31 +308,40 @@ def indicador(entrada: tuple, fichas: dict) -> dict | None:
         d = _dolar(fid)
         if d is None:
             return None
-        fecha, valor, var = d
-        base.update(valor=_num(valor), unidad="pesos por dólar",
-                    **({"variacion": {"valor": _num(var, 1), "unidad": "%", "contra": "promedio del mes anterior"}} if var is not None else {}),
-                    fecha_dato=fecha.strftime("%Y-%m-%d"), periodo=fecha.strftime("%Y-%m"))
+        cierres, var = d
+        base["unidad"] = "pesos por dólar"
+        if var is not None:
+            base["variacion"] = {"valor": _num(var, 1), "unidad": "%", "contra": "promedio del mes anterior"}
+        _v13(base, cierres, "D", 2)
+        base["periodo"] = base["fecha_dato"][:7]
     else:
         s = _serie(f)
+        if s.empty or s.index[-1] != pd.Timestamp(f["ultimo"]["fecha"]):
+            return None
+        meses = 3 if frec == "T" else 12 if frec == "A" else 1
         if medida == "mensual":
             m = _var_pct(s, 1).dropna()
             if len(m) < 2:
                 return None
-            base.update(valor=_num(m.iloc[-1], 1), unidad="%",
-                        variacion={"valor": _num(m.iloc[-1] - m.iloc[-2], 1), "unidad": "p. p.", "contra": "mes anterior"})
+            base["unidad"] = "%"
+            base["variacion"] = {"valor": _num(m.iloc[-1] - m.iloc[-2], 1), "unidad": "p. p.", "contra": "mes anterior"}
+            _v13(base, m, frec, 1)
         elif medida == "interanual":
-            if f.get("interanual_ultimo") is None:
-                return None
             ia = _var_pct(s, 12).dropna()
-            base.update(valor=_num(f["interanual_ultimo"], 1), unidad="% interanual")
-            if len(ia) >= 2 and ia.index[-1] == pd.Timestamp(f["ultimo"]["fecha"]):
+            if ia.empty or ia.index[-1] != s.index[-1]:
+                return None
+            base["unidad"] = "% interanual"
+            if len(ia) >= 2:
                 base["variacion"] = {"valor": _num(ia.iloc[-1] - ia.iloc[-2], 1), "unidad": "p. p.", "contra": _anterior(frec)}
+            _v13(base, ia, frec, 1)
         else:
             tasa = f["tipo_valor"] in ("tasa", "porcentaje")
-            base.update(valor=_num(f["ultimo"]["valor"], 1 if tasa else 2), unidad=f["unidad"])
+            base["unidad"] = f["unidad"]
             if f.get("interanual_ultimo") is not None:
                 base["variacion"] = {"valor": _num(f["interanual_ultimo"], 1), "unidad": "p. p." if tasa else "%", "contra": _contra(frec)}
-        base["fecha_dato"] = fin_periodo(f["ultimo"]["fecha"], frec).strftime("%Y-%m-%d")
+            if frec == "T":
+                s = s[s.index.month.isin([1, 4, 7, 10])]
+            _v13(base, s, frec, 1 if tasa else 2, acumulado="últimos 12 meses" in f["unidad"])
         p = periodo(f["ultimo"]["fecha"], frec)
         if p:
             base["periodo"] = p
@@ -273,12 +370,13 @@ def por_provincia(carpeta_mapas: Path) -> list[dict]:
             if s.empty:
                 continue
             ia = _var_pct(s, 12).dropna()
-            r = {"id": f"{prefijo}-{_slug(prov)}", "nombre": f"{nombre}: {prov}", "valor": _num(s.iloc[-1]), "unidad": unidad}
+            r = {"id": f"{prefijo}-{_slug(prov)}", "nombre": f"{nombre}: {prov}", "unidad": unidad}
             if len(ia) and ia.index[-1] == s.index[-1]:
                 r["variacion"] = {"valor": _num(ia.iloc[-1], 1), "unidad": "%", "contra": "mismo mes del año anterior"}
-            r.update(fecha_dato=fin_periodo(s.index[-1].strftime("%Y-%m-%d"), "M").strftime("%Y-%m-%d"),
-                     periodo=s.index[-1].strftime("%Y-%m"), fuente_original=fuente, eje=EJE,
-                     alcance=_alcance(("provincia", prov, "")), rubros=rubros, subrubros=[], exposicion=expo, url=SITIO)
+            _v13(r, s, "M", 2)
+            r.update(periodo=s.index[-1].strftime("%Y-%m"), fuente_original=fuente, eje=EJE,
+                     alcance=_alcance(("provincia", prov, "")), rubros=rubros, subrubros=[], exposicion=expo, url=SITIO,
+                     grupo={"id": f"{prefijo}-por-provincia", "nombre": f"{nombre} por provincia", "dimension": "provincia", "clave": prov})
             out.append(r)
     return out
 
@@ -370,6 +468,20 @@ def validar(doc: dict) -> list[str]:
             err.append(f"id con formato inválido: {r['id']}")
         if r["valor"] is None or (isinstance(r["valor"], float) and r["valor"] != r["valor"]):
             err.append(f"valor vacío en {r['id']}")
+        serie = r.get("serie") or []
+        if serie and (serie[-1]["valor"] != r["valor"] or serie[-1]["fecha"] != r["fecha_dato"]):
+            err.append(f"la serie de {r['id']} no termina en el valor publicado")
+        if [x["fecha"] for x in serie] != sorted({x["fecha"] for x in serie}):
+            err.append(f"fechas desordenadas o repetidas en la serie de {r['id']}")
+        if r.get("tipo_valor") not in ("tasa", "nivel", "estado") or r.get("frecuencia") not in FRECUENCIAS.values():
+            err.append(f"tipo_valor o frecuencia inválidos en {r['id']}")
+        if not set(r.get("comparar", [None])) <= {"mensual", "interanual"}:
+            err.append(f"comparar inválido en {r['id']}")
+        g = r.get("grupo")
+        if g and g["dimension"] == "provincia" and g["clave"] not in PROVINCIAS:
+            err.append(f"clave de provincia inválida en {r['id']}")
+        if g and g["dimension"] == "rubro" and g["clave"] not in RUBROS:
+            err.append(f"clave de rubro inválida en {r['id']}")
     return err
 
 
@@ -394,13 +506,14 @@ def construir(fichas: list[dict], carpeta_mapas: Path, offline: bool = False, ah
         else:
             indicadores.append(r)
     indicadores += por_provincia(carpeta_mapas)
+    avisos = armar_grupos(indicadores)
     faltantes += [{"id": i, "nombre": n, "motivo": m, "ultimo_dato": None} for i, n, m in NO_PUBLICADOS]
     if calendario is None:
         calendario = actualizar_calendario(offline)
-    doc = {"web": WEB, "version": "1.0", "generado": ahora.isoformat(timespec="seconds"),
+    doc = {"web": WEB, "version": "1.3", "generado": ahora.isoformat(timespec="seconds"),
            "indicadores": indicadores, "novedades": [],
            "agenda": agenda(calendario, pd.Timestamp(ahora.date())), "faltantes": faltantes}
-    alertas = [f"datos-informe.json: {e}" for e in validar(doc)]
+    alertas = [f"datos-informe.json: {e}" for e in validar(doc) + avisos]
     destino.write_text(json.dumps(doc, ensure_ascii=False, indent=1, allow_nan=False), encoding="utf-8")
     if not doc["agenda"]:
         alertas.append("datos-informe.json: la agenda quedó vacía (no se pudo leer el calendario del INDEC)")
