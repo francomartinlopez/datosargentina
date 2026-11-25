@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rubros, tablas, vistas
+from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rubros, tablas, vistas, datos_informe
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -338,6 +338,10 @@ def main() -> None:
     alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + encuestas.construir(SALIDA) + poblacion.construir(SALIDA) + diseno.huecos(config, {f['id'] for f in fichas})
     alertas_mapas += tablas.construir(SALIDA)
     alertas_mapas += rubros.construir(config, fichas, SALIDA)
+    try:  # archivo para la web de informes de Plexum; si falla no frena la publicación
+        alertas_mapas += datos_informe.construir(fichas, SALIDA / "mapas", offline=args.offline)
+    except Exception as e:
+        alertas_mapas.append(f"datos-informe.json: no se pudo generar ({e})")
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 

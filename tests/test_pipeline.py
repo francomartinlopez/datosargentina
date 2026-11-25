@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 import pandas as pd
 import pytest
@@ -337,3 +338,34 @@ def test_siacam_mineral():
     assert f["fecha"] == "2026-10-01" and f["oro"] == 383 and f["plata"] == 55 and f["litio"] == 184
     assert f["acumulado_meses"] == 10 and f["oro_acumulado"] == 4407 and f["plata_acumulado"] == 869
     assert f["oro_anio_anterior"] == 424
+
+
+def test_datos_informe(tmp_path):
+    """Archivo para la web de informes: listas cerradas, fechas del dato al fin del período y faltantes."""
+    from datetime import datetime
+    from pipeline import datos_informe as di
+    serie = [[f"2025-{m:02d}-01", 100 + m] for m in range(1, 13)] + [[f"2026-{m:02d}-01", 115 + m] for m in range(1, 11)]
+    fichas = [{"id": "inflacion", "frecuencia": "M", "tipo_valor": "indice", "unidad": "índice",
+               "ultimo": {"fecha": "2026-10-01", "valor": 125}, "interanual_ultimo": 13.6, "_serie": serie},
+              {"id": "ucii", "frecuencia": "M", "tipo_valor": "tasa", "unidad": "% de la capacidad",
+               "ultimo": {"fecha": "2026-08-01", "valor": 58.5}, "interanual_ultimo": -1.1, "_serie": serie[:20]},
+              {"id": "desoc_regional", "frecuencia": "T", "tipo_valor": "tasa", "unidad": "% de la PEA",
+               "ultimo": {"fecha": "2026-04-01", "valor": 11.5}, "interanual_ultimo": 3.8, "_serie": []}]
+    cal = pd.DataFrame({"fecha": ["2026-12-15", "2027-03-01"], "titulo": [
+        "Índice de precios al consumidor (IPC). Cobertura nacional. Noviembre de 2026",
+        "Índice de precios al consumidor (IPC). Cobertura nacional. Enero de 2027"]})
+    destino = tmp_path / "datos-informe.json"
+    alertas = di.construir(fichas, tmp_path, ahora=datetime(2026, 11, 25, 10, tzinfo=di.ZONA), calendario=cal, destino=destino)
+    doc = json.loads(destino.read_text(encoding="utf-8"))
+    assert not [a for a in alertas if "inválid" in a or "repetidos" in a]
+    ind = {i["id"]: i for i in doc["indicadores"]}
+    assert ind["inflacion-mensual"]["fecha_dato"] == "2026-10-31" and ind["inflacion-mensual"]["periodo"] == "2026-10"
+    assert ind["inflacion-mensual"]["valor"] == round((125 / 124 - 1) * 100, 1)
+    assert ind["utilizacion-capacidad-industrial"]["variacion"]["unidad"] == "p. p."
+    assert ind["desocupacion-gran-rosario"]["fecha_dato"] == "2026-06-30" and ind["desocupacion-gran-rosario"]["periodo"] == "2026-T2"
+    assert ind["desocupacion-gran-rosario"]["alcance"] == {"nivel": "localidad", "provincia": "Santa Fe", "localidad": "Gran Rosario", "pais": "Argentina"}
+    falt = {f["id"] for f in doc["faltantes"]}
+    assert "emae" in falt and "tarifa-electrica-industrial" in falt and "inflacion-mensual" not in falt
+    assert [a["fecha"] for a in doc["agenda"]] == ["2026-12-15"]
+    assert doc["agenda"][0]["evento"] == "Inflación (IPC): dato de noviembre de 2026 (INDEC)"
+    assert doc["web"] == "Datos Argentina" and doc["generado"].endswith("-03:00")
