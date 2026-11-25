@@ -25,6 +25,10 @@ ETIQUETAS = {"previo": "Ya anunciado antes del RIGI", "activo_previo": "Activo p
              "nuevo": "Anunciado después del RIGI"}
 NOMBRES_SECTOR = {"energia": "Energía eléctrica", "petroleo": "Petróleo y gas", "mineria": "Minería", "siderurgia": "Siderurgia", "infra": "Infraestructura"}
 PLANILLA = "https://docs.google.com/spreadsheets/d/1eytHJrzUjIFOXI-P1Hx_wbmZiSqPxVle059Djdos6u8/gviz/tq?tqx=out:csv&sheet=dataset"
+# misma planilla, hoja con los totales de los proyectos presentados que todavía están en evaluación
+EVALUACION = PLANILLA.replace("sheet=dataset", "sheet=evaluacion")
+SECTORES_EVALUACION = {"energia": "Energía eléctrica", "petroleo": "Petróleo y gas", "mineria": "Minería", "siderurgia": "Siderurgia",
+                       "infraestructura": "Infraestructura", "tecnologia": "Tecnología"}
 
 
 def proyectos(texto: str) -> list[dict]:
@@ -57,6 +61,20 @@ def plan_anual(html_pagina: str) -> list[dict]:
         sectores = {NOMBRES_SECTOR.get(k, k): float(v["total"] if isinstance(v, dict) else v) for k, v in r.items() if k != "year"}
         filas.append({"anio": int(str(r["year"])[:4]), "total": round(sum(sectores.values())), "sectores": sectores})
     return sorted(filas, key=lambda f: f["anio"])
+
+
+def evaluacion(texto: str) -> dict | None:
+    """Proyectos en evaluación: solo totales (cantidad, inversión, empleos y cantidad por sector). Las
+    columnas vienen como 'clave Etiqueta' (p. ej. 'cantidad Cantidad')."""
+    df = pd.read_csv(io.StringIO(texto), dtype=str).fillna("")
+    if df.empty:
+        return None
+    fila = {c.split(" ")[0].strip().lower(): df.iloc[0][c] for c in df.columns if c.strip()}
+    num = lambda k: int(float(fila[k])) if fila.get(k, "").strip() else 0
+    if not num("cantidad"):
+        return None
+    sectores = [{"sector": n, "proyectos": num(k)} for k, n in SECTORES_EVALUACION.items() if num(k)]
+    return {"proyectos": num("cantidad"), "inversion": num("inversion"), "empleos": num("empleos"), "sectores": sectores}
 
 
 def ejecucion_estimada(plan: list[dict], hoy: date) -> dict | None:
@@ -125,6 +143,10 @@ def construir(salida: Path) -> list[str]:
         d["ejecucion_estimada"] = ejecucion_estimada(plan, date.today())
         d["divisas_bcra"] = divisas_bcra()
         d["antecedentes"] = antecedentes(lista)
+        try:
+            d["evaluacion"] = evaluacion(pedir(EVALUACION).text)
+        except Exception:
+            d["evaluacion"] = None
         (salida / "rigi.json").write_text(json.dumps(d, ensure_ascii=False, allow_nan=False), encoding="utf-8")
         return []
     except Exception as e:

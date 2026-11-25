@@ -367,3 +367,14 @@ div.rank-fila.nivel:hover { background: none; }
 .ficha, .bloque { scroll-margin-top: 64px; }
 @keyframes resaltar { from { box-shadow: 0 0 0 3px var(--acento); } to { box-shadow: 0 0 0 3px transparent; } }
 .resaltada { animation: resaltar 2.4s ease-out; }
+
+/* Vista por tema o por rubro */
+.nav-dinamico { display: contents; }
+.vista-switch { flex: none; display: flex; align-items: center; gap: 2px; padding: 2px; margin-right: 8px; border: 1px solid var(--borde); border-radius: 999px; font-size: 13px; }
+.vista-switch > span { padding: 0 6px 0 8px; color: var(--tinta-3); white-space: nowrap; }
+.vista-switch button { font: inherit; border: 0; background: none; color: var(--tinta-2); padding: 4px 10px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.vista-switch button[aria-pressed="true"] { background: var(--tinta); color: var(--plano); }
+.vista-switch button:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
+.seccion > .intro + .grilla { margin-top: 8px; }
+.rigi-tabla-cab { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.rigi-evaluacion { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-top: 12px; }

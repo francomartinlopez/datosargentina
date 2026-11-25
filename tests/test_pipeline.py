@@ -281,3 +281,25 @@ def test_calidad_saldos_y_trimestres():
     assert calidad.etiqueta_fecha(saldo.iloc[:-2]) == "II trim. 2024"
     alertas = calidad.revisar("x", saldo, saldo, solo_historia=True)
     assert not any("sin dato nuevo" in a for a in alertas)
+
+
+def test_eph_regional_tasas():
+    import pandas as pd
+    from pipeline.fuentes import eph_regional
+    df = pd.DataFrame({"aglomerado": [4, 4, 4, 4, 32], "estado": [1, 1, 2, 3, 1], "pondera": [10, 10, 5, 25, 7]})
+    t = eph_regional.tasas(df)
+    assert t["desocupacion_gran_rosario"] == 20.0      # 5 / (20 + 5)
+    assert t["empleo_gran_rosario"] == 40.0            # 20 / 50
+    assert t["casos_caba"] == 1
+
+
+def test_rubros_unicos_y_publicados(tmp_path):
+    import json
+    from pipeline import rubros
+    config = {"rubros": [{"id": "a", "nombre": "A", "items": ["x", "y", "rigi:Minería"]}, {"id": "b", "nombre": "B", "items": ["x", "mapa:m"]}]}
+    (tmp_path / "rigi.json").write_text("{}")
+    alertas = rubros.construir(config, [{"id": "x"}, {"id": "z", "variante_de": "x"}], tmp_path)
+    r = json.loads((tmp_path / "rubros.json").read_text())
+    assert [i["id"] for i in r[0]["items"]] == ["x", "rigi_a"]
+    assert r[1]["items"] == []
+    assert any("y" in a for a in alertas) and any("más de un rubro" in a for a in alertas) and any("mapa:m" in a for a in alertas)

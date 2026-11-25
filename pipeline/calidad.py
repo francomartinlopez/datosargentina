@@ -17,7 +17,8 @@ def revisar(nombre: str, nueva: pd.Series, anterior: pd.Series | None, umbral_de
 
     if anterior is not None and not anterior.empty:
         anterior = anterior.dropna().sort_index()
-        if nueva.index[-1] <= anterior.index[-1] and not solo_historia:
+        # datos ya fijados a futuro (p. ej. aumentos del SMVM por resolución) no cuentan como atraso
+        if nueva.index[-1] <= anterior.index[-1] and not solo_historia and nueva.index[-1] <= pd.Timestamp.today():
             alertas.append(f"{nombre}: sin dato nuevo (último {etiqueta_fecha(nueva)})")
         comunes = nueva.index.intersection(anterior.index)
         if len(comunes):

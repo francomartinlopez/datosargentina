@@ -13,7 +13,7 @@ const GESTIONES = [
 ];
 const COLORES = ["--s1", "--s2", "--s3", "--s4", "--s5", "--s6"];
 const ORDEN_SECCIONES = ["Precios", "Actividad", "Consumo", "Empleo e ingresos", "Pobreza y programas sociales", "Población",
-  "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Seguridad", "Opinión pública"];
+  "Santa Fe, Córdoba y AMBA", "Sector externo e inversión", "Estado y fiscal", "Deuda pública", "Dólar y finanzas", "Crédito y alquileres", "Seguridad", "Opinión pública"];
 const FUENTES = {
   datosgobar: "INDEC y organismos nacionales (datos.gob.ar)",
   bcra: "BCRA",
@@ -507,19 +507,58 @@ function celdaAntecedente(p) {
     el("small", { class: "rigi-empresa" }, a.fuente ? el("a", { href: a.fuente, target: "_blank", rel: "noopener", title: a.detalle, text: cuando }) : cuando));
 }
 
+// Copia del RIGI con los proyectos de algunos sectores (vista por rubro). Los bloques que solo
+// existen para el total (cronograma, divisas, antecedentes) no se muestran.
+function rigiDeSectores(d, sectores, id) {
+  const proyectos = d.proyectos.filter((p) => sectores.includes(p.sector));
+  return { ...d, id, nombre: `Proyectos de ${sectores.join(" y ").toLowerCase()} aprobados en el RIGI`, proyectos,
+    sectores: d.sectores.filter((s) => sectores.includes(s.sector)),
+    total_inversion: proyectos.reduce((a, p) => a + p.inversion, 0), total_empleos: proyectos.reduce((a, p) => a + (p.empleos || 0), 0),
+    ejecucion_estimada: null, divisas_bcra: null, plan_anual: [], antecedentes: null,
+    evaluacion: d.evaluacion ? { ...d.evaluacion, sectores: (d.evaluacion.sectores || []).filter((s) => sectores.includes(s.sector)) } : null };
+}
+
+function evaluacionRigi(d, mm) {
+  const e = d.evaluacion;
+  if (!e) return null;
+  const parcial = d.id !== "rigi";
+  const enSectores = (e.sectores || []).reduce((a, s) => a + s.proyectos, 0);
+  if (parcial && !enSectores) return null;
+  const texto = parcial
+    ? `Además hay ${fmt(enSectores, 0)} proyecto${enSectores === 1 ? "" : "s"} de estos sectores en evaluación (de ${fmt(e.proyectos, 0)} en total, por ${mm(e.inversion)}). El Ministerio de Economía no publica el detalle ni el monto por proyecto hasta su aprobación.`
+    : `Además hay ${fmt(e.proyectos, 0)} proyectos en evaluación por ${mm(e.inversion)} y ${fmt(e.empleos, 0)} empleos estimados (${e.sectores.map((s) => `${s.sector.toLowerCase()}: ${s.proyectos}`).join(", ")}). El Ministerio de Economía no publica el detalle ni la provincia de cada uno hasta su aprobación.`;
+  return el("p", { class: "unidad rigi-evaluacion" }, el("span", { class: "estado-chip tono-gris", text: "En evaluación" }), " ", texto);
+}
+
 function fichaRigi(d) {
   const mm = (v) => "US$ " + fmt(v, 0) + " M";
   const maxS = Math.max(...d.sectores.map((s) => s.inversion), 1e-9);
   const sectores = el("div", { class: "ranking", role: "list" });
   d.sectores.forEach((s) => sectores.append(filaNivel(`${s.sector} (${s.proyectos})`, s.inversion, maxS, mm(s.inversion))));
-  const t = el("table", { class: "tabla rigi" });
-  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos", "Antecedente"].map((h) => el("th", { scope: "col", text: h })))));
+  // por provincia: un proyecto compartido suma su inversión completa en cada provincia
+  const prov = {};
+  d.proyectos.forEach((p) => p.provincias.forEach((n) => { const x = (prov[n] ||= { n, inversion: 0, proyectos: 0 }); x.inversion += p.inversion; x.proyectos += 1; }));
+  const provincias = Object.values(prov).sort((a, b) => b.inversion - a.inversion);
+  const maxP = Math.max(...provincias.map((x) => x.inversion), 1e-9);
+  let elegida = "";
+  const porProvincia = el("div", { class: "ranking", role: "list" });
   const tb = el("tbody");
-  d.proyectos.forEach((p) => tb.append(el("tr", {},
-    el("td", {}, p.norma ? el("a", { href: p.norma, target: "_blank", rel: "noopener", text: p.nombre, title: p.descripcion }) : p.nombre, el("small", { class: "rigi-empresa", text: p.empresa })),
-    el("td", { text: p.sector }), el("td", { text: p.provincias.join(", ") }),
-    el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }), celdaAntecedente(p))));
-  t.append(tb);
+  const selector = el("select", { class: "selector", "aria-label": "Provincia", onchange: (e) => { elegida = e.target.value; pintar(); } },
+    el("option", { value: "", text: "Todas las provincias" }), ...provincias.map((x) => el("option", { value: x.n, text: x.n })));
+  const pintar = () => {
+    porProvincia.innerHTML = "";
+    provincias.forEach((x) => porProvincia.append(filaNivel(`${x.n} (${x.proyectos})`, x.inversion, maxP, mm(x.inversion),
+      { "aria-pressed": String(x.n === elegida), onclick: () => { elegida = elegida === x.n ? "" : x.n; selector.value = elegida; pintar(); } })));
+    tb.innerHTML = "";
+    d.proyectos.filter((p) => !elegida || p.provincias.includes(elegida)).forEach((p) => tb.append(el("tr", {},
+      el("td", {}, p.norma ? el("a", { href: p.norma, target: "_blank", rel: "noopener", text: p.nombre, title: p.descripcion }) : p.nombre, el("small", { class: "rigi-empresa", text: p.empresa })),
+      el("td", { text: p.sector }), el("td", { text: p.provincias.join(", ") }),
+      el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }),
+      el("td", {}, el("span", { class: "estado-chip tono-verde", text: "Aprobado" })), celdaAntecedente(p))));
+  };
+  const t = el("table", { class: "tabla rigi" });
+  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos", "Estado", "Antecedente"].map((h) => el("th", { scope: "col", text: h })))), tb);
+  pintar();
   return el("article", { class: "ficha ancha", id: d.id },
     el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
       el("p", { class: "unidad", text: `Inversión comprometida en millones de dólares · consultado el ${fechaCorta(d.fecha)}` }))),
@@ -527,12 +566,14 @@ function fichaRigi(d) {
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Proyectos aprobados" }), el("p", { class: "estrato-valor", text: String(d.proyectos.length) })),
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Inversión comprometida" }), el("p", { class: "estrato-valor", text: mm(d.total_inversion) })),
       el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Empleos estimados" }), el("p", { class: "estrato-valor", text: fmt(d.total_empleos, 0) }))),
+    evaluacionRigi(d, mm),
     ejecucionRigi(d, mm),
-    el("h4", { class: "subtitulo-ficha", text: "Por sector" }), sectores,
+    d.sectores.length > 1 ? el("h4", { class: "subtitulo-ficha", text: "Por sector" }) : null, d.sectores.length > 1 ? sectores : null,
+    el("h4", { class: "subtitulo-ficha", text: "Por provincia (tocá una para ver sus proyectos)" }), porProvincia,
     antecedentesRigi(d, mm),
-    el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }),
+    el("div", { class: "rigi-tabla-cab" }, el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }), selector),
     el("div", { class: "tabla-envoltura" }, t),
-    el("p", { class: "nota", text: d.nota }),
+    el("p", { class: "nota", text: d.nota + " Un proyecto que abarca varias provincias suma su inversión completa en cada una, así que la suma por provincia supera el total. Estado: “Aprobado” significa que tiene resolución de adhesión publicada en el Boletín Oficial; no indica si la obra ya empezó." }),
     el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
 }
 
@@ -1381,21 +1422,70 @@ async function iniciar() {
   fichas.filter((f) => f.portada).forEach((f) => tarjetas.append(tarjeta(f)));
 
   const nav = document.getElementById("nav-secciones");
+  const navDinamico = el("span", { class: "nav-dinamico" });
+  nav.append(navDinamico);
   const secciones = document.getElementById("secciones");
-  const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion)])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
-  for (const s of nombres) {
-    const id = slug(s);
-    nav.append(el("a", { href: `#${id}`, text: s }));
+  const rubros = (await leer("rubros")) || [];
+  // todas las fichas por id, también las que se ven dentro de un grupo (para la vista por rubro)
+  const porId = {};
+  fichas.forEach((f) => { porId[f.id] = f; (f.miembros || []).forEach((m) => { porId[m.id] = m; }); });
+  const especiales = (s) => [
+    ...(geo ? mapasCargados.filter((m) => m.seccion === s).map((m) => fichaMapa(m, geo)) : []),
+    piramide && piramide.seccion === s ? fichaPiramide(piramide) : null,
+    rigi && rigi.seccion === s ? fichaRigi(rigi) : null,
+    problemas && problemas.seccion === s ? fichaProblemas(problemas) : null,
+    imagen && imagen.seccion === s ? fichaImagen(imagen) : null,
+    poblacion && poblacion.seccion === s ? fichaPoblacion(poblacion) : null].filter(Boolean);
+  const agregarSeccion = (id, titulo, intro, fichasComunes, anchas) => {
+    navDinamico.append(el("a", { href: `#${id}`, text: titulo }));
     const grilla = el("div", { class: "grilla" });
-    fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
-    if (geo) mapasCargados.filter((m) => m.seccion === s).forEach((m) => grilla.append(fichaMapa(m, geo)));
-    if (piramide && piramide.seccion === s) grilla.append(fichaPiramide(piramide));
-    if (rigi && rigi.seccion === s) grilla.append(fichaRigi(rigi));
-    if (problemas && problemas.seccion === s) grilla.append(fichaProblemas(problemas));
-    if (imagen && imagen.seccion === s) grilla.append(fichaImagen(imagen));
-    if (poblacion && poblacion.seccion === s) grilla.append(fichaPoblacion(poblacion));
-    secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
+    // dos fichas por fila: si quedan impares, la última ocupa la fila entera para no dejar un hueco
+    fichasComunes.forEach((a, i) => { if (i === fichasComunes.length - 1 && fichasComunes.length % 2) a.classList.add("ancha"); grilla.append(a); });
+    anchas.forEach((a) => grilla.append(a));
+    secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: titulo }),
+      intro ? el("p", { class: "intro", text: intro }) : null, grilla));
+  };
+  const porTema = () => {
+    const nombres = [...new Set([...fichas.map((f) => f.seccion), ...mapasCargados.map((m) => m.seccion)])].sort((a, b) => (ORDEN_SECCIONES.indexOf(a) + 99) % 99 - (ORDEN_SECCIONES.indexOf(b) + 99) % 99);
+    for (const s of nombres) {
+      const id = slug(s);
+      navDinamico.append(el("a", { href: `#${id}`, text: s }));
+      const grilla = el("div", { class: "grilla" });
+      fichas.filter((f) => f.seccion === s).forEach((f) => grilla.append(f.tipo === "grupo" ? fichaGrupo(f) : ficha(f)));
+      especiales(s).forEach((a) => grilla.append(a));
+      secciones.append(el("section", { class: "seccion", id, "aria-labelledby": `t-${id}` }, el("h2", { id: `t-${id}`, text: s }), grilla));
+    }
+  };
+  const porRubro = () => {
+    for (const r of rubros) {
+      const comunes = [], anchas = [];
+      r.items.forEach((it) => {
+        if (it.tipo === "indicador" && porId[it.id]) comunes.push(ficha(porId[it.id]));
+        else if (it.tipo === "mapa" && geo) { const m = mapasCargados.find((x) => x.id === it.id); if (m) anchas.push(fichaMapa(m, geo)); }
+        else if (it.tipo === "rigi" && rigi) anchas.push(fichaRigi(rigiDeSectores(rigi, it.sectores, it.id)));
+      });
+      agregarSeccion("rubro-" + r.id, r.nombre, r.intro, comunes, anchas);
+    }
+  };
+  let vista = new URLSearchParams(location.search).get("vista") === "rubro" ? "rubro" : "tema";
+  try { if (!location.search.includes("vista=")) vista = localStorage.getItem("vista") === "rubro" ? "rubro" : vista; } catch { /* sin almacenamiento */ }
+  const botones = {};
+  const pintarVista = (v) => {
+    vista = rubros.length ? v : "tema";
+    secciones.innerHTML = ""; navDinamico.innerHTML = "";
+    (vista === "rubro" ? porRubro : porTema)();
+    Object.entries(botones).forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === vista)));
+    try { localStorage.setItem("vista", vista); } catch { /* sin almacenamiento */ }
+  };
+  if (rubros.length) {
+    const sw = el("div", { class: "vista-switch", role: "group", "aria-label": "Organizar los datos" }, el("span", { text: "Ver por" }));
+    [["tema", "Tema"], ["rubro", "Rubro productivo"]].forEach(([k, txt]) => {
+      botones[k] = el("button", { type: "button", text: txt, onclick: () => { if (vista !== k) { pintarVista(k); document.getElementById("secciones").scrollIntoView({ behavior: "smooth" }); } } });
+      sw.append(botones[k]);
+    });
+    nav.prepend(sw);
   }
+  pintarVista(vista);
   await gobierno();
   await diagnostico();
   iniciarBuscador();

@@ -33,6 +33,34 @@ jobs:
         env:
           INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
 
+      - name: Control de minería, datos regionales y vista por rubro
+        # deja constancia en el informe (cuerpo del PR) de qué indicadores nuevos se publicaron
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          d = pathlib.Path("sitio/public/datos")
+          grupos = {
+              "Minería": ["metaliferos", "oro_plata", "bullon_dore", "litio", "litio_toneladas", "expo_metales_preciosos", "expo_minerales_metaliferos", "rigi"],
+              "Santa Fe, Córdoba y AMBA": ["desoc_regional", "empleo_regional", "asal_regional", "inflacion_caba"],
+          }
+          lineas = ["", "## Indicadores de minería y regionales", ""]
+          for g, ids in grupos.items():
+              for i in ids:
+                  f = d / f"{i}.json"
+                  if not f.exists():
+                      lineas.append(f"- {g}: **{i} no se publicó**")
+                      continue
+                  j = json.loads(f.read_text())
+                  ult = (j.get("ultimo") or {}).get("fecha") or j.get("fecha", "")
+                  lineas.append(f"- {g}: {j.get('nombre', i)} (último dato {ult})")
+          rubros = json.loads((d / "rubros.json").read_text()) if (d / "rubros.json").exists() else []
+          lineas.append(f"- Vista por rubro: " + ", ".join(f"{r['nombre']} ({len(r['items'])})" for r in rubros))
+          texto = "\n".join(lineas) + "\n"
+          with open("data/informe.md", "a", encoding="utf-8") as fh:
+              fh.write(texto)
+          print(texto)
+          PY
+
       - name: Proponer cambios para revisión
         uses: peter-evans/create-pull-request@v7
         with:
