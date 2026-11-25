@@ -458,125 +458,6 @@ function fichaGrupoNivel(g) {
     barras, detalle, g.nota ? el("p", { class: "nota", text: g.nota }) : null);
 }
 
-/* ---------- RIGI: proyectos aprobados ---------- */
-
-function ejecucionRigi(d, mm) {
-  const e = d.ejecucion_estimada, dv = d.divisas_bcra, plan = d.plan_anual || [];
-  if (!e && !dv) return null;
-  const caja = el("div", { class: "rigi-ejecucion" }, el("h4", { class: "subtitulo-ficha", text: "¿Cuánto se invirtió hasta ahora? (estimación)" }));
-  const cifras = el("div", { class: "estratos" });
-  if (e) cifras.append(el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Según el cronograma comprometido" }),
-    el("p", { class: "estrato-valor", text: mm(e.monto) }),
-    el("p", { class: "estrato-detalle", text: `Inversión que los proyectos aprobados planearon hacer hasta ${fechaCorta(e.hasta)}: años 2024 y 2025 completos y la parte proporcional de ${e.hasta.slice(0, 4)}.` })));
-  if (dv) cifras.append(el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Dólares ingresados por el mercado de cambios" }),
-    el("p", { class: "estrato-valor", text: mm(dv.neto) }),
-    el("p", { class: "estrato-detalle", text: `Ingreso neto acumulado de los proyectos aprobados hasta ${fechaCorta(dv.fecha)} según el BCRA (${mm(dv.bruto)} de ingresos y ${mm(dv.egresos)} de egresos). Mide divisas que entraron, no toda la inversión: parte se financia con fondos locales o equipos importados.` })));
-  caja.append(cifras);
-  if (plan.length) {
-    const visibles = plan.filter((f) => f.anio <= new Date().getFullYear() + 6);
-    const max = Math.max(...visibles.map((f) => f.total), 1);
-    const lista = el("div", { class: "ranking", role: "list" });
-    visibles.forEach((f) => lista.append(filaNivel(String(f.anio) + (f.anio < new Date().getFullYear() ? "" : f.anio === new Date().getFullYear() ? " (en curso)" : " (previsto)"), f.total, max, mm(f.total))));
-    caja.append(el("p", { class: "unidad", text: `Cronograma anual de inversión de los proyectos aprobados (total previsto ${mm(e ? e.total_plan : 0)} hasta 2056)` }), lista);
-  }
-  caja.append(el("p", { class: "nota", text: "No hay un dato oficial de inversión ya ejecutada. La primera cifra es lo que los proyectos se comprometieron a invertir hasta hoy según el cronograma publicado por el Ministerio de Economía; la ejecución real puede ser menor o mayor. La segunda es el único dato observado disponible." }));
-  return caja;
-}
-
-const TONO_ANTECEDENTE = { previo: "gris", activo_previo: "violeta", nuevo: "azul" };
-
-function antecedentesRigi(d, mm) {
-  const a = d.antecedentes;
-  if (!a) return null;
-  const max = Math.max(...a.grupos.map((g) => g.inversion), 1);
-  const lista = el("div", { class: "ranking", role: "list" });
-  a.grupos.forEach((g) => lista.append(filaNivel(`${g.etiqueta} (${g.proyectos})`, g.inversion, max,
-    `${mm(g.inversion)} · ${fmt(100 * g.inversion / d.total_inversion, 0)}%`)));
-  return el("div", { class: "rigi-antecedentes" },
-    el("h4", { class: "subtitulo-ficha", text: "¿Proyectos nuevos o ya anunciados antes del RIGI?" }), lista,
-    el("p", { class: "nota", text: "Clasificación propia a partir del primer anuncio público que encontramos de cada proyecto, comparado con abril de 2024, cuando el RIGI se presentó en el proyecto de Ley Bases. “Ya anunciado”: el mismo proyecto (con su inversión o capacidad) se había anunciado antes. “Activo previo”: el área, mina o planta existía antes, pero la inversión aprobada se anunció después. “Anunciado después”: no encontramos anuncios anteriores. Que un proyecto se anunciara antes no significa que se hubiera concretado sin el RIGI, ni lo contrario. Cada fila de la tabla enlaza a la fuente usada." }));
-}
-
-function celdaAntecedente(p) {
-  const a = p.antecedente;
-  if (!a) return el("td", { text: "s/d" });
-  const [y, m] = (a.primer_anuncio || "").split("-");
-  const cuando = (a.clave === "activo_previo" ? "Inversión anunciada: " : "Primer anuncio: ") + (m ? `${m}/${y}` : y);
-  return el("td", {},
-    el("span", { class: `estado-chip tono-${TONO_ANTECEDENTE[a.clave] || "gris"}`, text: a.etiqueta, title: a.detalle }),
-    el("small", { class: "rigi-empresa" }, a.fuente ? el("a", { href: a.fuente, target: "_blank", rel: "noopener", title: a.detalle, text: cuando }) : cuando));
-}
-
-// Copia del RIGI con los proyectos de algunos sectores (vista por rubro). Los bloques que solo
-// existen para el total (cronograma, divisas, antecedentes) no se muestran.
-function rigiDeSectores(d, sectores, id) {
-  const proyectos = d.proyectos.filter((p) => sectores.includes(p.sector));
-  return { ...d, id, nombre: `Proyectos de ${sectores.join(" y ").toLowerCase()} aprobados en el RIGI`, proyectos,
-    sectores: d.sectores.filter((s) => sectores.includes(s.sector)),
-    total_inversion: proyectos.reduce((a, p) => a + p.inversion, 0), total_empleos: proyectos.reduce((a, p) => a + (p.empleos || 0), 0),
-    ejecucion_estimada: null, divisas_bcra: null, plan_anual: [], antecedentes: null,
-    evaluacion: d.evaluacion ? { ...d.evaluacion, sectores: (d.evaluacion.sectores || []).filter((s) => sectores.includes(s.sector)) } : null };
-}
-
-function evaluacionRigi(d, mm) {
-  const e = d.evaluacion;
-  if (!e) return null;
-  const parcial = d.id !== "rigi";
-  const enSectores = (e.sectores || []).reduce((a, s) => a + s.proyectos, 0);
-  if (parcial && !enSectores) return null;
-  const texto = parcial
-    ? `Además hay ${fmt(enSectores, 0)} proyecto${enSectores === 1 ? "" : "s"} de estos sectores en evaluación (de ${fmt(e.proyectos, 0)} en total, por ${mm(e.inversion)}). El Ministerio de Economía no publica el detalle ni el monto por proyecto hasta su aprobación.`
-    : `Además hay ${fmt(e.proyectos, 0)} proyectos en evaluación por ${mm(e.inversion)} y ${fmt(e.empleos, 0)} empleos estimados (${e.sectores.map((s) => `${s.sector.toLowerCase()}: ${s.proyectos}`).join(", ")}). El Ministerio de Economía no publica el detalle ni la provincia de cada uno hasta su aprobación.`;
-  return el("p", { class: "unidad rigi-evaluacion" }, el("span", { class: "estado-chip tono-gris", text: "En evaluación" }), " ", texto);
-}
-
-function fichaRigi(d) {
-  const mm = (v) => "US$ " + fmt(v, 0) + " M";
-  const maxS = Math.max(...d.sectores.map((s) => s.inversion), 1e-9);
-  const sectores = el("div", { class: "ranking", role: "list" });
-  d.sectores.forEach((s) => sectores.append(filaNivel(`${s.sector} (${s.proyectos})`, s.inversion, maxS, mm(s.inversion))));
-  // por provincia: un proyecto compartido suma su inversión completa en cada provincia
-  const prov = {};
-  d.proyectos.forEach((p) => p.provincias.forEach((n) => { const x = (prov[n] ||= { n, inversion: 0, proyectos: 0 }); x.inversion += p.inversion; x.proyectos += 1; }));
-  const provincias = Object.values(prov).sort((a, b) => b.inversion - a.inversion);
-  const maxP = Math.max(...provincias.map((x) => x.inversion), 1e-9);
-  let elegida = "";
-  const porProvincia = el("div", { class: "ranking", role: "list" });
-  const tb = el("tbody");
-  const selector = el("select", { class: "selector", "aria-label": "Provincia", onchange: (e) => { elegida = e.target.value; pintar(); } },
-    el("option", { value: "", text: "Todas las provincias" }), ...provincias.map((x) => el("option", { value: x.n, text: x.n })));
-  const pintar = () => {
-    porProvincia.innerHTML = "";
-    provincias.forEach((x) => porProvincia.append(filaNivel(`${x.n} (${x.proyectos})`, x.inversion, maxP, mm(x.inversion),
-      { "aria-pressed": String(x.n === elegida), onclick: () => { elegida = elegida === x.n ? "" : x.n; selector.value = elegida; pintar(); } })));
-    tb.innerHTML = "";
-    d.proyectos.filter((p) => !elegida || p.provincias.includes(elegida)).forEach((p) => tb.append(el("tr", {},
-      el("td", {}, p.norma ? el("a", { href: p.norma, target: "_blank", rel: "noopener", text: p.nombre, title: p.descripcion }) : p.nombre, el("small", { class: "rigi-empresa", text: p.empresa })),
-      el("td", { text: p.sector }), el("td", { text: p.provincias.join(", ") }),
-      el("td", { class: "num", text: mm(p.inversion) }), el("td", { class: "num", text: p.empleos == null ? "s/d" : fmt(p.empleos, 0) }),
-      el("td", {}, el("span", { class: "estado-chip tono-verde", text: "Aprobado" })), celdaAntecedente(p))));
-  };
-  const t = el("table", { class: "tabla rigi" });
-  t.append(el("thead", {}, el("tr", {}, ...["Proyecto", "Sector", "Provincia", "Inversión", "Empleos", "Estado", "Antecedente"].map((h) => el("th", { scope: "col", text: h })))), tb);
-  pintar();
-  return el("article", { class: "ficha ancha", id: d.id },
-    el("div", { class: "ficha-cab" }, el("div", {}, el("h3", { text: d.nombre }),
-      el("p", { class: "unidad", text: `Inversión comprometida en millones de dólares · consultado el ${fechaCorta(d.fecha)}` }))),
-    el("div", { class: "estratos" },
-      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Proyectos aprobados" }), el("p", { class: "estrato-valor", text: String(d.proyectos.length) })),
-      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Inversión comprometida" }), el("p", { class: "estrato-valor", text: mm(d.total_inversion) })),
-      el("div", { class: "estrato" }, el("p", { class: "estrato-nombre", text: "Empleos estimados" }), el("p", { class: "estrato-valor", text: fmt(d.total_empleos, 0) }))),
-    evaluacionRigi(d, mm),
-    ejecucionRigi(d, mm),
-    d.sectores.length > 1 ? el("h4", { class: "subtitulo-ficha", text: "Por sector" }) : null, d.sectores.length > 1 ? sectores : null,
-    el("h4", { class: "subtitulo-ficha", text: "Por provincia (tocá una para ver sus proyectos)" }), porProvincia,
-    antecedentesRigi(d, mm),
-    el("div", { class: "rigi-tabla-cab" }, el("h4", { class: "subtitulo-ficha", text: "Proyectos (el nombre lleva a la resolución de aprobación)" }), selector),
-    el("div", { class: "tabla-envoltura" }, t),
-    el("p", { class: "nota", text: d.nota + " Un proyecto que abarca varias provincias suma su inversión completa en cada una, así que la suma por provincia supera el total. Estado: “Aprobado” significa que tiene resolución de adhesión publicada en el Boletín Oficial; no indica si la obra ya empezó." }),
-    el("div", { class: "ficha-pie" }, el("span", { text: `Fuente: ${d.fuente}` })));
-}
-
 /* ---------- Cuadros de valores (datos sin serie completa) ---------- */
 
 function fichaTabla(d) {
@@ -1435,7 +1316,6 @@ async function iniciar() {
   const mapasCargados = (await Promise.all(listaMapas.map((m) => leer(`mapas/${m}`)))).filter(Boolean);
   const geo = mapasCargados.length ? await leer("mapas/provincias") : null;
   const piramide = await leer("distribucion_ingreso");
-  const rigi = await leer("rigi");
   const imagen = await leer("encuestas_imagen");
   const poblacion = await leer("poblacion_actividad");
   const problemas = await leer("encuestas_problemas");
@@ -1459,7 +1339,6 @@ async function iniciar() {
   const especiales = (s) => [
     ...(geo ? mapasCargados.filter((m) => m.seccion === s).map((m) => fichaMapa(m, geo)) : []),
     piramide && piramide.seccion === s ? fichaPiramide(piramide) : null,
-    rigi && rigi.seccion === s ? fichaRigi(rigi) : null,
     problemas && problemas.seccion === s ? fichaProblemas(problemas) : null,
     imagen && imagen.seccion === s ? fichaImagen(imagen) : null,
     poblacion && poblacion.seccion === s ? fichaPoblacion(poblacion) : null,
@@ -1490,7 +1369,6 @@ async function iniciar() {
       r.items.forEach((it) => {
         if (it.tipo === "indicador" && porId[it.id]) comunes.push(ficha(porId[it.id]));
         else if (it.tipo === "mapa" && geo) { const m = mapasCargados.find((x) => x.id === it.id); if (m) anchas.push(fichaMapa(m, geo)); }
-        else if (it.tipo === "rigi" && rigi) anchas.push(fichaRigi(rigiDeSectores(rigi, it.sectores, it.id)));
         else if (it.tipo === "tabla") { const c = cuadros.find((x) => x.id === it.id); if (c) anchas.push(fichaTabla(c)); }
       });
       agregarSeccion("rubro-" + r.id, r.nombre, r.intro, comunes, anchas);

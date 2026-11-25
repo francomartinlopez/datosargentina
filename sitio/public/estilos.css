@@ -264,15 +264,7 @@ div.rank-fila.nivel:hover { background: none; }
 @media (max-width: 520px) { .pir-fila { grid-template-columns: 110px 1fr 52px; font-size: 12px; } }
 
 .subtitulo-ficha { margin: 18px 0 6px; font-size: 14px; }
-.rigi-empresa { display: block; color: var(--tinta-2); font-size: 11px; }
 .tabla td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.tabla.rigi { max-width: none; }
-.tabla.rigi td:nth-child(-n+3) { white-space: normal; text-align: left; }
-.tabla.rigi th:nth-child(-n+3) { text-align: left; }
-.tabla.rigi td:first-child { min-width: 190px; }
-.tabla.rigi td:last-child { white-space: normal; text-align: left; min-width: 170px; }
-.tabla.rigi th:last-child { text-align: left; }
-.tabla.rigi .estado-chip { display: inline-block; font-size: 12px; font-weight: 600; line-height: 1.3; }
 
 /* Estados destacados en Gobierno */
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
@@ -376,8 +368,6 @@ div.rank-fila.nivel:hover { background: none; }
 .vista-switch button[aria-pressed="true"] { background: var(--tinta); color: var(--plano); }
 .vista-switch button:focus-visible { outline: 2px solid var(--acento); outline-offset: 1px; }
 .seccion > .intro + .grilla { margin-top: 8px; }
-.rigi-tabla-cab { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
-.rigi-evaluacion { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-top: 12px; }
 
 /* Cuadros de valores */
 .tabla.cuadro th[scope="row"] { text-align: left; font-weight: 600; white-space: normal; }

@@ -1,8 +1,7 @@
 """Vista por rubro: agrupa indicadores que ya están en el sitio en seis rubros productivos.
 
 La lista sale de la clave `rubros` de indicadores.yaml. Cada elemento es el id de un indicador,
-"mapa:<id>" para un mapa provincial o "rigi:<sector>|<sector>" para los proyectos del RIGI de esos
-sectores. Un mismo indicador va en un solo rubro (los ids de las fichas son únicos en la página).
+"mapa:<id>" para un mapa provincial o "tabla:<id>" para un cuadro de valores. Un mismo indicador va en un solo rubro (los ids de las fichas son únicos en la página).
 Salida: sitio/public/datos/rubros.json
 """
 from __future__ import annotations
@@ -27,9 +26,6 @@ def construir(config: dict, fichas: list[dict], salida: Path) -> list[str]:
             elif x.startswith("tabla:"):
                 ok = (salida / "tablas" / f"{x[6:]}.json").exists()
                 item = {"tipo": "tabla", "id": x[6:]}
-            elif x.startswith("rigi:"):
-                ok = (salida / "rigi.json").exists()
-                item = {"tipo": "rigi", "id": "rigi_" + r["id"], "sectores": x[5:].split("|")}
             else:
                 ok = x in publicados
                 item = {"tipo": "indicador", "id": x}
