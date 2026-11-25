@@ -26,9 +26,9 @@ gestiones:
 
 series:
   # --- Precios: tramos para el IPC empalmado ---
-  ipc_gba_historico:   {fuente: datosgobar, id: "178.1_NL_GENERAL_0_0_13"}
-  ipc_san_luis:        {fuente: datosgobar, id: "197.1_NIVEL_GENERAL_2014_0_13"}
-  ipc_caba_2012:       {fuente: datosgobar, id: "193.1_NIVEL_GENERAL_JULI_0_13"}
+  ipc_gba_historico:   {fuente: datosgobar, id: "178.1_NL_GENERAL_0_0_13", solo_historia: true}  # tramo hasta 2006 del empalme
+  ipc_san_luis:        {fuente: datosgobar, id: "197.1_NIVEL_GENERAL_2014_0_13", solo_historia: true}  # solo se usa para 2007-2012 en el empalme del IPC
+  ipc_caba_2012:       {fuente: datosgobar, id: "193.1_NIVEL_GENERAL_JULI_0_13", solo_historia: true}  # tramo 2012-2016 del empalme
   ipc_caba_2021:       {fuente: datosgobar, id: "193.2_NIVEL_GENERAL_2021_0_13_2"}
   ipc_nacional:        {fuente: datosgobar, id: "148.3_INIVELNAL_DICI_M_26"}
   ipc_nucleo:          {fuente: datosgobar, id: "148.3_INUCLEONAL_DICI_M_19"}
@@ -983,7 +983,7 @@ indicadores:
      nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres (de los disponibles, al menos dos). Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
   - {id: eph_ing_FC, vista_inicial: desde_2003, nombre: "Ingreso al pasar de empleo formal a cuenta propia", seccion: "Empleo e ingresos", serie: eph_ing_mediana_FC, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
      variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo formal a cuenta propia: {}", variantes: {eph_ing_media_FC: "Media"},
-     nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres (de los disponibles, al menos dos). Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
+     nota: "Muestra chica: unas 40 a 85 personas por trimestre pasan de empleo formal a cuenta propia, así que la serie se mueve mucho de un trimestre a otro. Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres (de los disponibles, al menos dos). Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
   - {id: eph_ing_IF, vista_inicial: desde_2003, nombre: "Ingreso al pasar de empleo informal a formal", seccion: "Empleo e ingresos", serie: eph_ing_mediana_IF, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
      variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo informal a formal: {}", variantes: {eph_ing_media_IF: "Media"},
      nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres (de los disponibles, al menos dos). Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}

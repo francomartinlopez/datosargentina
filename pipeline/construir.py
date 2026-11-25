@@ -77,7 +77,8 @@ def descargar(config: dict, offline: bool) -> tuple[dict, list[str]]:
                 crudas[nombre] = anterior
             continue
         alertas += calidad.revisar(nombre, transformar.a_mensual(nueva, definicion.get("agregacion", "promedio")),
-                                   transformar.a_mensual(anterior, definicion.get("agregacion", "promedio")) if anterior is not None else None)
+                                   transformar.a_mensual(anterior, definicion.get("agregacion", "promedio")) if anterior is not None else None,
+                                   solo_historia=bool(definicion.get("solo_historia")))
         guardar_crudo(nombre, nueva)
         crudas[nombre] = nueva
     return crudas, alertas
@@ -92,6 +93,14 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     for n, s in mensuales.items():  # series publicadas con rezago: se asigna cada dato a su mes de referencia
         if config["series"][n].get("desplazar_meses"):
             mensuales[n] = s.set_axis(s.index + pd.DateOffset(months=int(config["series"][n]["desplazar_meses"])))
+    # Datos con fecha futura (p. ej. aumentos del salario mínimo ya fijados por resolución): se guardan
+    # en crudos pero no se publican hasta que llega su mes (tampoco habría IPC para deflactarlos).
+    mes_actual = pd.Timestamp.today().to_period("M").to_timestamp()
+    for n, s in list(mensuales.items()):
+        futuros = s[s.index > mes_actual]
+        if len(futuros):
+            mensuales[n] = s[s.index <= mes_actual]
+            alertas.append(f"{n}: {len(futuros)} datos con fecha futura (hasta {futuros.index[-1]:%Y-%m}) quedan guardados y se publican al llegar su mes")
     for nombre, tramos in config.get("empalmes", {}).items():
         faltan = [t["serie"] for t in tramos if t["serie"] not in mensuales]
         if faltan:
