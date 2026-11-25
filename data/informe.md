@@ -1,6 +1,6 @@
 # Informe de actualización 2026-11-25
 
-Indicadores publicados: 367
+Indicadores publicados: 377
 
 ## Alertas
 
@@ -70,7 +70,6 @@ Indicadores publicados: 367
 - oro_plata: sin dato nuevo (último 2026-09)
 - bullon_dore: sin dato nuevo (último 2026-09)
 - litio_toneladas: sin dato nuevo (último 2026-09)
-- expo_metales_preciosos: sin dato nuevo (último 2026-10)
 - eph_desoc_gran_rosario: sin dato nuevo (último II trim. 2026)
 - eph_desoc_gran_santa_fe: sin dato nuevo (último II trim. 2026)
 - eph_desoc_gran_cordoba: sin dato nuevo (último II trim. 2026)
@@ -315,6 +314,7 @@ Indicadores publicados: 367
 - construya: sin dato nuevo (último 2026-10)
 - construya_desest: sin dato nuevo (último 2026-10)
 - came_ventas: sin dato nuevo (último 2026-09)
+- ipc_santa_fe: sin dato nuevo (último 2026-10)
 - ipc_corrupcion: sin dato nuevo (último 2025)
 - odsa_ia: sin dato nuevo (último 2025)
 - odsa_ia_severa: sin dato nuevo (último 2025)
@@ -416,11 +416,14 @@ Indicadores publicados: 367
 - Minería: Producción de oro y plata: concentrados (último dato 2026-09-01)
 - Minería: Producción de litio (último dato 2026-09-01)
 - Minería: Producción de carbonato de litio (toneladas) (último dato 2026-09-01)
-- Minería: Exportaciones de oro y plata (último dato 2026-10-01)
+- Minería: Exportaciones mineras: total del país (último dato 2026-10-01)
 - Minería: Proyectos aprobados en el RIGI (último dato 2026-11-25)
 - Santa Fe, Córdoba y AMBA: Desocupación: Gran Rosario (último dato 2026-04-01)
 - Santa Fe, Córdoba y AMBA: Tasa de empleo: Gran Rosario (último dato 2026-04-01)
 - Santa Fe, Córdoba y AMBA: Asalariados privados registrados: Santa Fe (último dato 2026-07-01)
 - Santa Fe, Córdoba y AMBA: Inflación: Ciudad de Buenos Aires (IPCBA) (último dato 2026-10-01)
 - Santa Fe, Córdoba y AMBA: Inflación: Santa Fe (IPEC) (último dato 2026-10-01)
-- Vista por rubro: Industria (10), Agro (12), Minería (9), Energía (13), Construcción (10), Comercio y servicios (19)
+- Santa Fe, Córdoba y AMBA: Inflación: Córdoba (DGEyC) (último dato 2026-07-01)
+- Santa Fe, Córdoba y AMBA: Exportaciones de Córdoba: total (último dato 2026-06-01)
+- Santa Fe, Córdoba y AMBA: Producto bruto de Córdoba (PGB) (último dato 2024-01-01)
+- Vista por rubro: Industria (10), Agro (12), Minería (11), Energía (13), Construcción (10), Comercio y servicios (19)
