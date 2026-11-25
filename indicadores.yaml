@@ -103,7 +103,6 @@ series:
   bullon_dore:         {fuente: indec_api, conjunto: minero, campo: "Índice|Bullón Dorado , Doré "}
   litio_toneladas:     {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Carbonato de litio"}
   expo_metales_preciosos:     {fuente: indec_api, conjunto: exportaciones_subrubro, campo: "310"}
-  expo_minerales_metaliferos: {fuente: indec_api, conjunto: exportaciones_subrubro, campo: "111"}
   # EPH por aglomerado (cálculo con microdatos del INDEC)
   eph_desoc_gran_rosario:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_rosario}
   eph_desoc_gran_santa_fe: {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_santa_fe}
@@ -1013,16 +1012,13 @@ indicadores:
   # ---------- Minería metalífera ----------
   - {id: metaliferos, nombre: "Producción de minerales metalíferos", seccion: Actividad, serie: metaliferos, tipo_valor: indice, unidad: "índice 2016=100",
      nota: "IPI minero del INDEC (serie original), rama extracción de minerales metalíferos: oro, plata, litio, hierro, plomo, cinc y otros. Argentina no produce cobre desde 2018, cuando cerró Bajo la Alumbrera (Catamarca); los proyectos de cobre (Los Azules, Vicuña, PSJ Cobre Mendocino, Agua Rica, entre otros) están en construcción o en estudio. Desde 2017."}
-  - {id: oro_plata, nombre: "Producción de oro y plata (concentrados)", seccion: Actividad, serie: oro_plata, tipo_valor: indice, unidad: "índice 2016=100",
-     nota: "IPI minero del INDEC (serie original): plata y oro y sus concentrados. El oro refinado en mina (bullón dorado o doré) va en su propia serie. El INDEC no publica toneladas ni onzas por mineral. Desde 2017."}
-  - {id: bullon_dore, nombre: "Producción de oro en barra (bullón doré)", seccion: Actividad, serie: bullon_dore, tipo_valor: indice, unidad: "índice 2016=100",
-     nota: "IPI minero del INDEC (serie original): bullón dorado o doré, la aleación de oro y plata que se funde en la mina (Veladero, Cerro Negro, Gualcamayo y otras). Es la forma principal en que se produce y exporta el oro argentino. Desde 2017."}
+  - {id: oro_plata, nombre: "Producción de oro y plata: concentrados", seccion: Actividad, serie: oro_plata, tipo_valor: indice, unidad: "índice 2016=100",
+     variante_principal: "Concentrados", nombre_variante: "Producción de oro y plata: {}", variantes: {bullon_dore: "oro en barra (bullón doré)"},
+     nota: "IPI minero del INDEC (serie original). Concentrados: plata y oro y sus concentrados. Bullón doré: la aleación de oro y plata que se funde en la mina (Veladero, Cerro Negro, Gualcamayo y otras), la forma principal en que se produce y exporta el oro argentino. El INDEC no publica toneladas ni onzas por mineral. Desde 2017."}
   - {id: litio_toneladas, nombre: "Producción de carbonato de litio (toneladas)", seccion: Actividad, serie: litio_toneladas, tipo_valor: flujo, acumulado_12m: true, unidad: "toneladas, últimos 12 meses",
      nota: "Toneladas de carbonato de litio producidas, según el IPI minero del INDEC (unidades físicas). El INDEC las publica desde 2023; antes la producción de litio era confidencial (ver el índice de producción de litio, en esta misma sección)."}
-  - {id: expo_metales_preciosos, nombre: "Exportaciones de oro y plata", seccion: "Sector externo e inversión", serie: expo_metales_preciosos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
-     nota: "Subrubro del INDEC «piedras, metales preciosos y sus manufacturas, monedas» (manufacturas de origen industrial): casi todo es oro y plata en barras de doré que salen de las minas de San Juan, Santa Cruz y Salta. INDEC, comercio exterior (API de datos)."}
-  - {id: expo_minerales_metaliferos, nombre: "Exportaciones de minerales metalíferos (concentrados)", seccion: "Sector externo e inversión", serie: expo_minerales_metaliferos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
-     nota: "Subrubro del INDEC «minerales metalíferos, escorias y cenizas» (productos primarios): concentrados de plata, plomo, cinc y, hasta 2018, de cobre (Bajo la Alumbrera). Hoy Argentina no exporta cobre de mina propia. El litio no tiene subrubro propio: el carbonato de litio va dentro de productos químicos, junto con otros bienes, y no se puede separar con estos datos. INDEC, comercio exterior (API de datos)."}
+  - {id: expo_metales_preciosos, nombre: "Exportaciones de oro y plata", seccion: Actividad, serie: expo_metales_preciosos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
+     nota: "Subrubro del INDEC «piedras, metales preciosos y sus manufacturas, monedas» (manufacturas de origen industrial): casi todo es oro y plata en barras de doré que salen de las minas de San Juan, Santa Cruz y Salta. INDEC, comercio exterior (API de datos). Desde 2019 el INDEC publica parte de las exportaciones como confidenciales (sin producto), así que esta serie queda por debajo del total del capítulo 71 de la nomenclatura (por ejemplo, US$ 2.711 millones contra US$ 3.341 millones en 2024): sirve para ver la tendencia, no el monto exacto. El INDEC no publica por separado las exportaciones de litio ni de cobre, y Argentina no exporta cobre de mina propia desde 2018."}
   # ---------- Santa Fe, Córdoba y AMBA ----------
   - {id: desoc_regional, vista_inicial: desde_2003, nombre: "Desocupación: Gran Rosario", seccion: "Santa Fe, Córdoba y AMBA", serie: eph_desoc_gran_rosario, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T,
      variante_principal: "Gran Rosario", nombre_variante: "Desocupación: {}",
@@ -1054,7 +1050,7 @@ rubros:
   - id: mineria
     nombre: Minería
     intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos de inversión. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
-    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, bullon_dore, litio, litio_toneladas, expo_metales_preciosos, expo_minerales_metaliferos, empleo_mineria, "rigi:Minería"]
+    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_metales_preciosos, empleo_mineria, "rigi:Minería"]
   - id: energia
     nombre: Energía
     intro: "Petróleo y gas (convencional y no convencional), electricidad, comercio exterior de combustibles, subsidios y tarifas."
