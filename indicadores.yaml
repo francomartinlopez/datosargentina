@@ -107,6 +107,12 @@ series:
   expo_mineria_santa_cruz: {fuente: archivo, lector: mineria_exportaciones, campo: santa_cruz}
   expo_mineria_san_juan:   {fuente: archivo, lector: mineria_exportaciones, campo: san_juan}
   expo_mineria_noa:        {fuente: archivo, lector: mineria_exportaciones, campo: noa}
+  # por mineral: informe mensual «Exportaciones mineras de Argentina», desde 2023
+  expo_mineria_oro:        {fuente: archivo, lector: mineria_exportaciones, campo: "mineral:oro"}
+  expo_mineria_plata:      {fuente: archivo, lector: mineria_exportaciones, campo: "mineral:plata"}
+  expo_mineria_litio:      {fuente: archivo, lector: mineria_exportaciones, campo: "mineral:litio"}
+  expo_mineria_otros_metales: {fuente: archivo, lector: mineria_exportaciones, campo: "mineral:otros_metaliferos"}
+  expo_mineria_resto:      {fuente: archivo, lector: mineria_exportaciones, campo: "mineral:resto"}
   # EPH por aglomerado (cálculo con microdatos del INDEC)
   eph_desoc_gran_rosario:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_rosario}
   eph_desoc_gran_santa_fe: {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_santa_fe}
@@ -1032,8 +1038,10 @@ indicadores:
      nota: "Toneladas de carbonato de litio producidas, según el IPI minero del INDEC (unidades físicas). El INDEC las publica desde 2023; antes la producción de litio era confidencial (ver el índice de producción de litio, en esta misma sección)."}
   - {id: expo_mineras, nombre: "Exportaciones mineras: total del país", seccion: Actividad, serie: expo_mineria_total, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
      variante_principal: "Total del país", nombre_variante: "Exportaciones mineras: {}",
-     variantes: {expo_mineria_santa_cruz: "Santa Cruz", expo_mineria_san_juan: "San Juan", expo_mineria_noa: "Catamarca, Jujuy y Salta"},
-     nota: "Exportaciones de la minería (metalífera, litio, rocas y minerales industriales; sin petróleo ni gas), según el informe mensual «Origen provincial de las exportaciones mineras» de la Secretaría de Minería con datos de Aduana. Cada mes es la diferencia entre dos acumulados del año del informe, que incorporan las revisiones de los meses anteriores. Santa Cruz exporta sobre todo oro y plata; San Juan, oro; Catamarca, Jujuy y Salta, litio (dos tercios) y metales. Desde 2022."}
+     variantes: {expo_mineria_santa_cruz: "Santa Cruz", expo_mineria_san_juan: "San Juan", expo_mineria_noa: "Catamarca, Jujuy y Salta",
+                 expo_mineria_oro: "oro", expo_mineria_plata: "plata", expo_mineria_litio: "litio",
+                 expo_mineria_otros_metales: "otros metales (cobre, plomo, cinc)", expo_mineria_resto: "rocas y minerales no metalíferos"},
+     nota: "Exportaciones de la minería (metalífera, litio, rocas y minerales industriales; sin petróleo ni gas), según el informe mensual «Origen provincial de las exportaciones mineras» de la Secretaría de Minería con datos de Aduana. Cada mes es la diferencia entre dos acumulados del año del informe, que incorporan las revisiones de los meses anteriores. Santa Cruz exporta sobre todo oro y plata; San Juan, oro; Catamarca, Jujuy y Salta, litio (dos tercios) y metales. Total y provincias desde 2022. Por mineral (oro, plata, litio, otros metales y no metalíferos), desde 2023, según el informe mensual «Exportaciones mineras de Argentina» de la misma Secretaría; faltan algunos meses sueltos sin informe (noviembre y diciembre de 2023 en los minerales menores), y por eso la suma de 12 meses se corta en esos tramos. Desde 2018 casi no hay exportaciones de cobre de mina propia: lo poco que aparece va en otros metales."}
   # ---------- Santa Fe, Córdoba y AMBA ----------
   - {id: desoc_regional, vista_inicial: desde_2003, nombre: "Desocupación: Gran Rosario", seccion: "Santa Fe, Córdoba y AMBA", serie: eph_desoc_gran_rosario, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T,
      variante_principal: "Gran Rosario", nombre_variante: "Desocupación: {}",
@@ -1076,7 +1084,7 @@ rubros:
   - id: mineria
     nombre: Minería
     intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos de inversión. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
-    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_mineras, empleo_mineria, "tabla:expo_mineras_producto", "tabla:proyectos_mineros_etapa", "rigi:Minería"]
+    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_mineras, empleo_mineria, "tabla:proyectos_mineros_etapa", "rigi:Minería"]
   - id: energia
     nombre: Energía
     intro: "Petróleo y gas (convencional y no convencional), electricidad, comercio exterior de combustibles, subsidios y tarifas."

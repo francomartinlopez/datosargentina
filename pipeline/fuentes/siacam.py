@@ -168,6 +168,9 @@ def total_mensual(t: pd.DataFrame) -> pd.Series:
 def serie(campo: str) -> pd.Series:
     """campo: total, santa_cruz, san_juan, noa, oro (Santa Cruz + San Juan), plata (Santa Cruz) o litio (NOA).
     Millones de US$ FOB por mes."""
+    if campo.startswith("mineral:"):
+        s = serie_mineral(campo.split(":", 1)[1])
+        return s[s.index >= pd.Timestamp(2023, 1, 1)]
     t = tabla()
     if t.empty:
         raise ValueError("SIACAM: no se pudo leer ningún informe")
@@ -190,3 +193,117 @@ def serie(campo: str) -> pd.Series:
     else:
         raise ValueError(f"SIACAM: campo desconocido {campo}")
     return s.dropna()
+
+
+# ---------- Exportaciones por mineral: informe mensual «Exportaciones mineras de Argentina» ----------
+
+URL_MINERAL = "https://www.argentina.gob.ar/sites/default/files/{a}.{m:02d}_exportaciones_mineras_{prep}_argentina.pdf"
+CACHE_MINERAL = Path(__file__).resolve().parents[2] / "data" / "derivados" / "siacam_minerales.csv"
+DESDE_MINERAL = (2023, 1)
+_U = r"(?:USD|US\$) ?([\d\.,]+) millones"
+# (clave, patrón del dato del mes, patrón del acumulado del año)
+PRODUCTOS = [
+    ("oro", r"participaci[oó]n del oro con " + _U, r"el oro aport[oó] " + _U),
+    ("plata", r"la plata con " + _U, r"la plata " + _U + r" \(\d"),
+    ("otros_metaliferos", r"restantes " + _U.replace(" millones", r" millones(?: metal[ií]feros)?"), r"resto de los minerales metal[ií]feros " + _U),
+    ("litio", r"se exportaron un total de " + _U, r"ventas de litio al exterior alcanzaron (?:los )?" + _U),
+    ("resto", r"resto de los productos mineros alcanzaron (?:los )?" + _U, r"resto de las exportaciones alcanzaron (?:los )?" + _U),
+]
+
+
+def leer_informe_mineral(t: str) -> dict | None:
+    m = re.search(r"exportaciones de minerales del mes de (\w+) de (\d{4}),? totalizaron", t)
+    if not m or m.group(1).lower() not in MESES:
+        return None
+    fila = {"fecha": f"{m.group(2)}-{MESES[m.group(1).lower()]:02d}-01"}
+    n = re.search(r"(?:primeros (\w+) meses|(\d+) meses) de (\d{4})", t[t.find("minerales metal"):])
+    if n:
+        k = n.group(1) or n.group(2)
+        k = int(k) if k.isdigit() else NUMEROS.get(k.lower())
+        if k:
+            fila["acumulado_meses"] = k
+    for clave, mes, acum in PRODUCTOS:
+        a = re.search(mes, t)
+        if a:
+            fila[clave] = numero(a.group(1))
+        b = re.search(acum, t)
+        if b and "acumulado_meses" in fila:
+            fila[clave + "_acumulado"] = numero(b.group(1))
+    # mismo mes del año anterior: oro y plata traen la diferencia en millones; el litio, la variación en %
+    for clave, nombre in (("oro", "oro"), ("plata", "plata")):
+        d = re.search(r"exportaciones de " + nombre + r"[^.(]{0,120}?\(([\d\.,]+) millones (más|menos) que en \d{4}\)", t)
+        if d and clave in fila:
+            dif = numero(d.group(1))
+            fila[clave + "_anio_anterior"] = fila[clave] - dif if d.group(2) == "más" else fila[clave] + dif
+    li = re.search(r"(crecimiento|aumento|incremento|ca[ií]da|disminuci[oó]n) interanual en los montos exportados de ([\d,]+)%", t)
+    if li and "litio" in fila:
+        v = numero(li.group(2)) / 100
+        fila["litio_anio_anterior"] = round(fila["litio"] / (1 + v if li.group(1)[0] in "cai" and not li.group(1).startswith("ca") else 1 - v), 1)
+    return fila if any(c in fila for c, _, _ in PRODUCTOS) else None
+
+
+@lru_cache(maxsize=None)
+def tabla_mineral() -> pd.DataFrame:
+    previo = pd.read_csv(CACHE_MINERAL, dtype={"informe": str}) if CACHE_MINERAL.exists() else pd.DataFrame(columns=["informe"])
+    hechos = set(previo["informe"])
+    hoy = pd.Timestamp.today()
+    nuevos, (a, m) = [], DESDE_MINERAL
+    while (a, m) <= (hoy.year, hoy.month):
+        clave = f"{a}.{m:02d}"
+        if clave not in hechos:
+            for prep in ("en", "de"):
+                try:
+                    r = requests.get(URL_MINERAL.format(a=a, m=m, prep=prep), headers=CABECERAS, timeout=TIMEOUT)
+                except requests.RequestException:
+                    continue
+                if r.status_code == 200 and r.content[:4] == b"%PDF":
+                    try:
+                        fila = leer_informe_mineral(texto_pdf(r.content))
+                    except Exception:
+                        fila = None
+                    if fila:
+                        nuevos.append({"informe": clave, **fila})
+                    break
+        a, m = (a + 1, 1) if m == 12 else (a, m + 1)
+    if not nuevos:
+        return previo
+    out = pd.concat([previo, pd.DataFrame(nuevos)], ignore_index=True).sort_values("informe")
+    CACHE_MINERAL.parent.mkdir(parents=True, exist_ok=True)
+    out.to_csv(CACHE_MINERAL, index=False)
+    return out
+
+
+def serie_mineral(producto: str, t: pd.DataFrame | None = None) -> pd.Series:
+    """Millones de US$ por mes de un producto (oro, plata, otros_metaliferos, litio, resto): diferencia
+    entre acumulados del año consecutivos y, si falta, el dato del mes del propio informe."""
+    t = tabla_mineral() if t is None else t
+    if t.empty or producto not in t.columns:
+        raise ValueError(f"SIACAM: no hay datos de {producto}")
+    propio, acum = {}, {}
+    for _, r in t.iterrows():
+        f = pd.Timestamp(r["fecha"])
+        if pd.notna(r.get(producto)):
+            propio[f] = r[producto]
+        col = producto + "_acumulado"
+        if col in r and pd.notna(r.get(col)) and pd.notna(r.get("acumulado_meses")):
+            acum[(f.year, int(r["acumulado_meses"]))] = r[col]
+    s = {}
+    for (anio, n), v in acum.items():
+        if n > 1 and (anio, n - 1) in acum:
+            s[pd.Timestamp(anio, n, 1)] = v - acum[(anio, n - 1)]
+    for f, v in propio.items():
+        s.setdefault(f, v)
+    if producto + "_anio_anterior" in t.columns:
+        for _, r in t.iterrows():
+            if pd.notna(r.get(producto + "_anio_anterior")):
+                s.setdefault(pd.Timestamp(r["fecha"]) - pd.DateOffset(years=1), r[producto + "_anio_anterior"])
+    # un mes sin informe propio: acumulado del mes siguiente − acumulado del anterior − dato del mes siguiente
+    for (anio, n), v in acum.items():
+        f = pd.Timestamp(anio, n - 1, 1) if n > 1 else None
+        siguiente = pd.Timestamp(anio, n, 1)
+        if f is None or f in s or siguiente not in propio:
+            continue
+        previo = 0 if n == 2 else acum.get((anio, n - 2))
+        if previo is not None:
+            s[f] = v - previo - propio[siguiente]
+    return pd.Series(s, dtype=float).sort_index()
