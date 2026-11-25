@@ -97,6 +97,24 @@ series:
   minero_petroleo:     {fuente: indec_api, conjunto: minero, campo: "Índice|Petróleo crudo"}
   gas_no_convencional: {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Gas natural no convencional"}
   litio:               {fuente: indec_api, conjunto: minero, campo: "Índice|Carbonato de litio y otros minerales de litio"}
+  # minería metalífera (IPI minero del INDEC). Cobre: no hay producción desde 2018 (cierre de Bajo la Alumbrera)
+  metaliferos:         {fuente: indec_api, conjunto: minero, campo: "Índice|Extracción de minerales metalíferos"}
+  oro_plata:           {fuente: indec_api, conjunto: minero, campo: "Índice|Plata y oro y sus concentrados"}
+  bullon_dore:         {fuente: indec_api, conjunto: minero, campo: "Índice|Bullón Dorado , Doré "}
+  litio_toneladas:     {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Carbonato de litio"}
+  expo_metales_preciosos:     {fuente: indec_api, conjunto: exportaciones_subrubro, campo: "310"}
+  expo_minerales_metaliferos: {fuente: indec_api, conjunto: exportaciones_subrubro, campo: "111"}
+  # EPH por aglomerado (cálculo con microdatos del INDEC)
+  eph_desoc_gran_rosario:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_rosario}
+  eph_desoc_gran_santa_fe: {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_santa_fe}
+  eph_desoc_gran_cordoba:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_cordoba}
+  eph_desoc_caba:          {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_caba}
+  eph_desoc_partidos_gba:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_partidos_gba}
+  eph_empleo_gran_rosario:  {fuente: archivo, lector: indec_eph_regional, campo: empleo_gran_rosario}
+  eph_empleo_gran_santa_fe: {fuente: archivo, lector: indec_eph_regional, campo: empleo_gran_santa_fe}
+  eph_empleo_gran_cordoba:  {fuente: archivo, lector: indec_eph_regional, campo: empleo_gran_cordoba}
+  eph_empleo_caba:          {fuente: archivo, lector: indec_eph_regional, campo: empleo_caba}
+  eph_empleo_partidos_gba:  {fuente: archivo, lector: indec_eph_regional, campo: empleo_partidos_gba}
   crianza_men1:        {fuente: indec_api, conjunto: crianza, campo: tot_men1}
   crianza_1a3:         {fuente: indec_api, conjunto: crianza, campo: tot_1a3}
   crianza_4a5:         {fuente: indec_api, conjunto: crianza, campo: tot_4a5}
@@ -446,6 +464,10 @@ series:
 # IPC empalmado: se encadenan las variaciones mensuales de cada tramo.
 # 2007-2016 se reemplaza el IPC del INDEC (no confiable) por San Luis y CABA.
 empalmes:
+  # IPC de la Ciudad de Buenos Aires: base julio 2011-junio 2012 hasta febrero de 2022, base 2021 después
+  ipc_caba:
+    - {serie: ipc_caba_2012, hasta: "2022-02-01"}
+    - {serie: ipc_caba_2021}
   ipc:
     - {serie: ipc_gba_historico, hasta: "2006-12-01"}
     - {serie: ipc_san_luis,      hasta: "2012-07-01"}
@@ -987,3 +1009,61 @@ indicadores:
   - {id: eph_ing_IF, vista_inicial: desde_2003, nombre: "Ingreso al pasar de empleo informal a formal", seccion: "Empleo e ingresos", serie: eph_ing_mediana_IF, tipo_valor: tasa, unidad: "% de cambio real en un año", frecuencia: T,
      variante_principal: "Mediana", nombre_variante: "Ingreso al pasar de empleo informal a formal: {}", variantes: {eph_ing_media_IF: "Media"},
      nota: "Cambio % del ingreso real de la ocupación principal de las mismas personas entre un año y el siguiente (EPH, 18 a 64 años, 31 aglomerados). Mediana: el cambio de la persona del medio; media: cambio del ingreso promedio del grupo. Ingreso del mes anterior a la entrevista deflactado con el IPC del sitio (empalmado con provincias entre 2007 y 2016). Promedio de los últimos cuatro trimestres (de los disponibles, al menos dos). Los ingresos informales y por cuenta propia suelen declararse por debajo de lo real. Cálculo propio con microdatos del INDEC."}
+
+  # ---------- Minería metalífera ----------
+  - {id: metaliferos, nombre: "Producción de minerales metalíferos", seccion: Actividad, serie: metaliferos, tipo_valor: indice, unidad: "índice 2016=100",
+     nota: "IPI minero del INDEC (serie original), rama extracción de minerales metalíferos: oro, plata, litio, hierro, plomo, cinc y otros. Argentina no produce cobre desde 2018, cuando cerró Bajo la Alumbrera (Catamarca); los proyectos de cobre (Los Azules, Vicuña, PSJ Cobre Mendocino, Agua Rica, entre otros) están en construcción o en estudio. Desde 2017."}
+  - {id: oro_plata, nombre: "Producción de oro y plata (concentrados)", seccion: Actividad, serie: oro_plata, tipo_valor: indice, unidad: "índice 2016=100",
+     nota: "IPI minero del INDEC (serie original): plata y oro y sus concentrados. El oro refinado en mina (bullón dorado o doré) va en su propia serie. El INDEC no publica toneladas ni onzas por mineral. Desde 2017."}
+  - {id: bullon_dore, nombre: "Producción de oro en barra (bullón doré)", seccion: Actividad, serie: bullon_dore, tipo_valor: indice, unidad: "índice 2016=100",
+     nota: "IPI minero del INDEC (serie original): bullón dorado o doré, la aleación de oro y plata que se funde en la mina (Veladero, Cerro Negro, Gualcamayo y otras). Es la forma principal en que se produce y exporta el oro argentino. Desde 2017."}
+  - {id: litio_toneladas, nombre: "Producción de carbonato de litio (toneladas)", seccion: Actividad, serie: litio_toneladas, tipo_valor: flujo, acumulado_12m: true, unidad: "toneladas, últimos 12 meses",
+     nota: "Toneladas de carbonato de litio producidas, según el IPI minero del INDEC (unidades físicas). El INDEC las publica desde 2023; antes la producción de litio era confidencial (ver el índice de producción de litio, en esta misma sección)."}
+  - {id: expo_metales_preciosos, nombre: "Exportaciones de oro y plata", seccion: "Sector externo e inversión", serie: expo_metales_preciosos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
+     nota: "Subrubro del INDEC «piedras, metales preciosos y sus manufacturas, monedas» (manufacturas de origen industrial): casi todo es oro y plata en barras de doré que salen de las minas de San Juan, Santa Cruz y Salta. INDEC, comercio exterior (API de datos)."}
+  - {id: expo_minerales_metaliferos, nombre: "Exportaciones de minerales metalíferos (concentrados)", seccion: "Sector externo e inversión", serie: expo_minerales_metaliferos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
+     nota: "Subrubro del INDEC «minerales metalíferos, escorias y cenizas» (productos primarios): concentrados de plata, plomo, cinc y, hasta 2018, de cobre (Bajo la Alumbrera). Hoy Argentina no exporta cobre de mina propia. El litio no tiene subrubro propio: el carbonato de litio va dentro de productos químicos, junto con otros bienes, y no se puede separar con estos datos. INDEC, comercio exterior (API de datos)."}
+  # ---------- Santa Fe, Córdoba y AMBA ----------
+  - {id: desoc_regional, vista_inicial: desde_2003, nombre: "Desocupación: Gran Rosario", seccion: "Santa Fe, Córdoba y AMBA", serie: eph_desoc_gran_rosario, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T,
+     variante_principal: "Gran Rosario", nombre_variante: "Desocupación: {}",
+     variantes: {eph_desoc_gran_santa_fe: "Gran Santa Fe", eph_desoc_gran_cordoba: "Gran Córdoba", eph_desoc_caba: "Ciudad de Buenos Aires", eph_desoc_partidos_gba: "Partidos del Gran Buenos Aires"},
+     nota: "Desocupados como % de la población económicamente activa de cada aglomerado urbano, por trimestre (EPH del INDEC). Cálculo propio con los microdatos, con el mismo método que la publicación oficial. En los aglomerados chicos la muestra es menor y la tasa se mueve más de un trimestre a otro. No hay datos de 2015-III a 2016-I (emergencia estadística); la EPH de 2007 a 2015 se publicó mientras el INDEC estaba intervenido."}
+  - {id: empleo_regional, vista_inicial: desde_2003, nombre: "Tasa de empleo: Gran Rosario", seccion: "Santa Fe, Córdoba y AMBA", serie: eph_empleo_gran_rosario, tipo_valor: tasa, unidad: "% de la población", frecuencia: T,
+     variante_principal: "Gran Rosario", nombre_variante: "Tasa de empleo: {}",
+     variantes: {eph_empleo_gran_santa_fe: "Gran Santa Fe", eph_empleo_gran_cordoba: "Gran Córdoba", eph_empleo_caba: "Ciudad de Buenos Aires", eph_empleo_partidos_gba: "Partidos del Gran Buenos Aires"},
+     nota: "Ocupados como % de la población total de cada aglomerado urbano, por trimestre (EPH del INDEC). Cálculo propio con los microdatos, con el mismo método que la publicación oficial. No hay datos de 2015-III a 2016-I (emergencia estadística)."}
+  - {id: asal_regional, nombre: "Asalariados privados registrados: Santa Fe", seccion: "Santa Fe, Córdoba y AMBA", serie: asal_prov_santa_fe, tipo_valor: nivel, unidad: "miles de personas",
+     variante_principal: "Santa Fe", nombre_variante: "Asalariados privados registrados: {}",
+     variantes: {asal_prov_cordoba: "Córdoba", asal_prov_caba: "Ciudad de Buenos Aires", asal_prov_buenos_aires: "Provincia de Buenos Aires"},
+     nota: "Trabajadores en relación de dependencia del sector privado con aportes, según la provincia donde trabajan (SIPA, Secretaría de Trabajo; serie sin estacionalidad). Es la medida mensual de empleo formal por provincia."}
+  - {id: inflacion_caba, nombre: "Inflación en la Ciudad de Buenos Aires (IPCBA)", seccion: "Santa Fe, Córdoba y AMBA", serie: ipc_caba, tipo_valor: indice, vista_historica: mensual, unidad: "índice", fuente: "Instituto de Estadística y Censos de la Ciudad de Buenos Aires (vía datos.gob.ar)",
+     nota: "Índice de precios al consumidor de la Ciudad de Buenos Aires (Instituto de Estadística y Censos de la Ciudad). Se publica unos días antes que el IPC nacional. Empalme de la serie con base julio 2011-junio 2012 (hasta febrero de 2022) y la serie con base 2021. Santa Fe (IPEC) y Córdoba (Dirección General de Estadística y Censos) también miden su inflación; todavía no están en el sitio porque sus series no se pueden descargar en forma automática."}
+
+# ---------- Vista por rubro ----------
+# Agrupa indicadores ya publicados en seis rubros productivos (ver pipeline/rubros.py).
+# "mapa:<id>" = mapa provincial; "rigi:<sector>|<sector>" = proyectos del RIGI de esos sectores.
+rubros:
+  - id: industria
+    nombre: Industria
+    intro: "Producción manufacturera, uso de la capacidad instalada, empleo registrado del sector y comercio exterior de bienes industriales."
+    items: [ipi, emae_industria, ucii, produccion_acero, produccion_autos, empleo_industria, expo_moi, impo_uso_intermedios, impo_uso_piezas, impo_uso_capital]
+  - id: agro
+    nombre: Agro
+    intro: "Cosecha, ganadería, pesca, precios internacionales y exportaciones del complejo agropecuario."
+    items: [emae_agro, emae_pesca, granos_total, prod_soja, soja_precio, faena_vacuna, empleo_agro, empleo_pesca, expo_primarios, expo_moa, consumo_vacuna, consumo_leche]
+  - id: mineria
+    nombre: Minería
+    intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos de inversión. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
+    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, bullon_dore, litio, litio_toneladas, expo_metales_preciosos, expo_minerales_metaliferos, empleo_mineria, "rigi:Minería"]
+  - id: energia
+    nombre: Energía
+    intro: "Petróleo y gas (convencional y no convencional), electricidad, comercio exterior de combustibles, subsidios y tarifas."
+    items: [produccion_petroleo, produccion_gas, minero_petroleo, gas_no_convencional, emae_egu, empleo_egu, expo_combustibles, impo_uso_combustibles, balanza_energetica, subsidios_energia, ipc_electricidad_gas_r, ipc_combustibles_r, "rigi:Petróleo y gas|Energía eléctrica"]
+  - id: construccion
+    nombre: Construcción
+    intro: "Actividad de la construcción, insumos, costos, empleo, inversión y mercado inmobiliario."
+    items: [isac, construya, cemento, costo_construccion, costo_construccion_usd, empleo_construccion, inversion, prestamos_hipotecarios, escrituras_caba, escritura_usd]
+  - id: comercio_servicios
+    nombre: Comercio y servicios
+    intro: "Ventas minoristas y mayoristas, autos, turismo, transporte, servicios financieros e inmobiliarios."
+    items: [supermercados, autoservicios, shoppings, came_ventas, ventas_autos, emae_comercio, emae_hoteles, emae_transporte, emae_financiero, emae_inmobiliario, empleo_comercio, empleo_hoteles, empleo_transporte, empleo_inmobiliarias, empleo_servicios, bdp_servicios, bdp_viajes, inflacion_servicios, "mapa:supermercados_provincias"]

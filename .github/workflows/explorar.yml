@@ -4,12 +4,16 @@ name: Exploración de fuentes
 # resultado en la rama "exploracion" para revisarlo. No toca main ni el sitio.
 
 on:
+  # el día 19, antes de la actualización mensual: revisa si los sitios oficiales de minería (SIACAM)
+  # y de las provincias (IPEC Santa Fe, Córdoba, CABA) responden desde GitHub
+  schedule:
+    - cron: "0 12 19 * *"
   workflow_dispatch:
     inputs:
       modulo:
-        description: "Módulo a correr (por ejemplo pipeline.gabinetes)"
+        description: "Módulo a correr: pipeline.sondeo_alcance (sitios de minería y provincias), pipeline.sondeo_indec (API del INDEC: IPI minero y conjuntos), pipeline.sondeo_subrubros (exportaciones por subrubro), pipeline.sondeo_regional (planillas provinciales y SIACAM), pipeline.gabinetes, etc."
         required: true
-        default: pipeline.gabinetes
+        default: pipeline.sondeo_alcance
 
 permissions:
   contents: write
@@ -24,7 +28,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
-      - run: python -m ${{ inputs.modulo }}
+      - run: python -m ${{ inputs.modulo || 'pipeline.sondeo_alcance' }}
+        timeout-minutes: 25
+        continue-on-error: true
         env:
           INDEC_API_TOKEN: ${{ secrets.INDEC_API_TOKEN }}
       - name: Guardar resultado en la rama exploracion
@@ -33,5 +39,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B exploracion
           git add -f data/
-          git commit -m "Exploración: ${{ inputs.modulo }}" || echo "sin cambios"
+          git commit -m "Exploración: ${{ inputs.modulo || 'pipeline.sondeo_alcance' }}" || echo "sin cambios"
           git push -f origin exploracion

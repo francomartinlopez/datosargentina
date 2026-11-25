@@ -145,6 +145,13 @@ def importaciones_uso(campo: str) -> pd.Series:
     return (df[campo].dropna() / 1e6).sort_index() if campo in df.columns else pd.Series(dtype=float)
 
 
+def exportaciones_subrubro(campo: str) -> pd.Series:
+    """Exportaciones FOB de un subrubro del INDEC (p. ej. 310 piedras y metales preciosos, 111 minerales
+    metalíferos, escorias y cenizas), millones de US$."""
+    df = _comercio("comercio_exterior_exportacion_bienes", "valor_FOB", "subrubro_cod")
+    return (df[campo].dropna() / 1e6).sort_index() if campo in df.columns else pd.Series(dtype=float)
+
+
 # ---------- Población ----------
 
 @lru_cache(maxsize=None)
@@ -158,7 +165,8 @@ def poblacion_jurisdicciones() -> pd.DataFrame:
 
 
 LECTORES = {"ipc": ipc, "sipm": sipm, "icc": icc, "minero": minero, "crianza": crianza,
-            "exportaciones": exportaciones, "importaciones": importaciones, "importaciones_uso": importaciones_uso}
+            "exportaciones": exportaciones, "importaciones": importaciones, "importaciones_uso": importaciones_uso,
+            "exportaciones_subrubro": exportaciones_subrubro}
 
 
 def extraer(definicion: dict) -> pd.Series:

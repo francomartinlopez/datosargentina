@@ -926,8 +926,15 @@ def indec_eph_panel(campo: str) -> pd.Series:
     return eph_panel.serie(campo)
 
 
+def indec_eph_regional(campo: str) -> pd.Series:
+    """Desocupación y tasa de empleo por aglomerado (Santa Fe, Córdoba, AMBA), cálculo con microdatos."""
+    from . import eph_regional
+    return eph_regional.serie(campo)
+
+
 LECTORES = {
     "indec_eph_panel": indec_eph_panel,
+    "indec_eph_regional": indec_eph_regional,
     "arca_recaudacion": arca_recaudacion,
     "provincias_iibb": provincias_iibb,
     "economia_politica_ingresos": economia_politica_ingresos,

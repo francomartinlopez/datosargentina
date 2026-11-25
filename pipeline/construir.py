@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rigi, vistas
+from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rigi, rubros, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -242,7 +242,7 @@ def construir_indicadores(config: dict, mensuales: dict) -> tuple[list[dict], li
         ficha = {
             "id": ind["id"], "nombre": ind["nombre"], "seccion": ind["seccion"], "unidad": ind["unidad"],
             "tipo_valor": ind["tipo_valor"], "frecuencia": ind.get("frecuencia", "M"),
-            "fuente": nombre_fuente(config["series"].get(ind["serie"], {})),
+            "fuente": ind.get("fuente") or nombre_fuente(config["series"].get(ind["serie"], {})),
             "nota": ind.get("nota", ""), "portada": bool(ind.get("portada")), "grupo": ind.get("grupo"),
             **({"vista_inicial": ind["vista_inicial"]} if ind.get("vista_inicial") else {}),
             "ultimo": {"fecha": s.index[-1].strftime("%Y-%m-%d"), "valor": round(float(s.iloc[-1]), 4)},
@@ -334,6 +334,7 @@ def main() -> None:
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
     alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + rigi.construir(SALIDA) + encuestas.construir(SALIDA) + poblacion.construir(SALIDA) + diseno.huecos(config, {f['id'] for f in fichas})
+    alertas_mapas += rubros.construir(config, fichas, SALIDA)
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
 
