@@ -18,9 +18,14 @@ def main() -> None:
     p = out.append
     for c in CONJUNTOS:
         try:
-            res = requests.get(API, params={"id": c}, headers=UA, timeout=60).json()["result"]["resources"]
+            r0 = requests.get(API, params={"id": c}, headers=UA, timeout=60)
+            p(f"== {c}: HTTP {r0.status_code} {r0.headers.get('content-type')} {r0.text[:200]!r}")
+            res = r0.json()["result"]["resources"]
         except Exception:
-            p(f"== {c}: " + traceback.format_exc()[-300:]); continue
+            p(f"== {c}: " + traceback.format_exc()[-300:])
+            Path("data").mkdir(exist_ok=True)
+            Path("data/sondeo_cordoba.txt").write_text("\n".join(out), encoding="utf-8")
+            continue
         for r in res:
             if (r.get("format") or "").upper() not in ("XLSX", "XLS"):
                 continue
