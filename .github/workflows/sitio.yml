@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.despliegue.outputs.page_url }}
+      url: ${{ steps.despliegue.outputs.page_url || steps.reintento.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
@@ -32,5 +32,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: sitio/public
+      # GitHub a veces no encuentra el archivo recién subido ("No artifacts named github-pages"):
+      # se espera un poco y se reintenta una vez antes de dar el error
       - id: despliegue
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - if: steps.despliegue.outcome == 'failure'
+        run: sleep 30
+      - id: reintento
+        if: steps.despliegue.outcome == 'failure'
         uses: actions/deploy-pages@v4
