@@ -40,7 +40,7 @@ jobs:
           import json, pathlib
           d = pathlib.Path("sitio/public/datos")
           grupos = {
-              "Minería": ["metaliferos", "oro_plata", "bullon_dore", "litio", "litio_toneladas", "expo_metales_preciosos", "expo_minerales_metaliferos", "rigi"],
+              "Minería": ["metaliferos", "oro_plata", "litio", "litio_toneladas", "expo_metales_preciosos", "rigi"],
               "Santa Fe, Córdoba y AMBA": ["desoc_regional", "empleo_regional", "asal_regional", "inflacion_caba"],
           }
           lineas = ["", "## Indicadores de minería y regionales", ""]
