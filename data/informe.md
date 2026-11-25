@@ -1,6 +1,6 @@
 # Informe de actualización 2026-11-25
 
-Indicadores publicados: 366
+Indicadores publicados: 367
 
 ## Alertas
 
@@ -66,6 +66,21 @@ Indicadores publicados: 366
 - minero_petroleo: sin dato nuevo (último 2026-09)
 - gas_no_convencional: sin dato nuevo (último 2026-09)
 - litio: sin dato nuevo (último 2026-09)
+- metaliferos: sin dato nuevo (último 2026-09)
+- oro_plata: sin dato nuevo (último 2026-09)
+- bullon_dore: sin dato nuevo (último 2026-09)
+- litio_toneladas: sin dato nuevo (último 2026-09)
+- expo_metales_preciosos: sin dato nuevo (último 2026-10)
+- eph_desoc_gran_rosario: sin dato nuevo (último II trim. 2026)
+- eph_desoc_gran_santa_fe: sin dato nuevo (último II trim. 2026)
+- eph_desoc_gran_cordoba: sin dato nuevo (último II trim. 2026)
+- eph_desoc_caba: sin dato nuevo (último II trim. 2026)
+- eph_desoc_partidos_gba: sin dato nuevo (último II trim. 2026)
+- eph_empleo_gran_rosario: sin dato nuevo (último II trim. 2026)
+- eph_empleo_gran_santa_fe: sin dato nuevo (último II trim. 2026)
+- eph_empleo_gran_cordoba: sin dato nuevo (último II trim. 2026)
+- eph_empleo_caba: sin dato nuevo (último II trim. 2026)
+- eph_empleo_partidos_gba: sin dato nuevo (último II trim. 2026)
 - crianza_men1: sin dato nuevo (último 2026-10)
 - crianza_1a3: sin dato nuevo (último 2026-10)
 - crianza_4a5: sin dato nuevo (último 2026-10)
@@ -406,5 +421,6 @@ Indicadores publicados: 366
 - Santa Fe, Córdoba y AMBA: Desocupación: Gran Rosario (último dato 2026-04-01)
 - Santa Fe, Córdoba y AMBA: Tasa de empleo: Gran Rosario (último dato 2026-04-01)
 - Santa Fe, Córdoba y AMBA: Asalariados privados registrados: Santa Fe (último dato 2026-07-01)
-- Santa Fe, Córdoba y AMBA: Inflación en la Ciudad de Buenos Aires (IPCBA) (último dato 2026-10-01)
+- Santa Fe, Córdoba y AMBA: Inflación: Ciudad de Buenos Aires (IPCBA) (último dato 2026-10-01)
+- Santa Fe, Córdoba y AMBA: Inflación: Santa Fe (IPEC) (último dato 2026-10-01)
 - Vista por rubro: Industria (10), Agro (12), Minería (9), Energía (13), Construcción (10), Comercio y servicios (19)
