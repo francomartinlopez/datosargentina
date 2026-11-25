@@ -1,6 +1,6 @@
 # Informe de actualización 2026-11-25
 
-Indicadores publicados: 377
+Indicadores publicados: 382
 
 ## Alertas
 
@@ -70,6 +70,10 @@ Indicadores publicados: 377
 - oro_plata: sin dato nuevo (último 2026-09)
 - bullon_dore: sin dato nuevo (último 2026-09)
 - litio_toneladas: sin dato nuevo (último 2026-09)
+- expo_mineria_total: sin dato nuevo (último 2026-10)
+- expo_mineria_santa_cruz: sin dato nuevo (último 2026-10)
+- expo_mineria_san_juan: sin dato nuevo (último 2026-10)
+- expo_mineria_noa: sin dato nuevo (último 2026-10)
 - eph_desoc_gran_rosario: sin dato nuevo (último II trim. 2026)
 - eph_desoc_gran_santa_fe: sin dato nuevo (último II trim. 2026)
 - eph_desoc_gran_cordoba: sin dato nuevo (último II trim. 2026)
@@ -315,6 +319,13 @@ Indicadores publicados: 377
 - construya_desest: sin dato nuevo (último 2026-10)
 - came_ventas: sin dato nuevo (último 2026-09)
 - ipc_santa_fe: sin dato nuevo (último 2026-10)
+- ipc_cordoba: sin dato nuevo (último 2026-07)
+- expo_cordoba: sin dato nuevo (último 2026-06)
+- expo_cordoba_pp: sin dato nuevo (último 2026-06)
+- expo_cordoba_moa: sin dato nuevo (último 2026-06)
+- expo_cordoba_moi: sin dato nuevo (último 2026-06)
+- expo_cordoba_cye: sin dato nuevo (último 2026-06)
+- pgb_cordoba: sin dato nuevo (último 2024)
 - ipc_corrupcion: sin dato nuevo (último 2025)
 - odsa_ia: sin dato nuevo (último 2025)
 - odsa_ia_severa: sin dato nuevo (último 2025)
@@ -426,4 +437,4 @@ Indicadores publicados: 377
 - Santa Fe, Córdoba y AMBA: Inflación: Córdoba (DGEyC) (último dato 2026-07-01)
 - Santa Fe, Córdoba y AMBA: Exportaciones de Córdoba: total (último dato 2026-06-01)
 - Santa Fe, Córdoba y AMBA: Producto bruto de Córdoba (PGB) (último dato 2024-01-01)
-- Vista por rubro: Industria (10), Agro (12), Minería (11), Energía (13), Construcción (10), Comercio y servicios (19)
+- Vista por rubro: Industria (10), Agro (12), Minería (10), Energía (13), Construcción (10), Comercio y servicios (19)
