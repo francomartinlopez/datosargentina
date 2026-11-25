@@ -1,0 +1,112 @@
+{
+ "id": "expo_santa_fe",
+ "nombre": "Exportaciones de Santa Fe y por los puertos del Gran Rosario",
+ "seccion": "Santa Fe, Córdoba y AMBA",
+ "unidad": "millones de US$ FOB, acumulado del año",
+ "periodo": "enero a septiembre",
+ "fecha": "2026-11-10",
+ "fuente": "IPEC Santa Fe con datos del INDEC (Exportaciones con origen en la provincia; Exportaciones por aduanas de origen y de salida)",
+ "fuente_url": "https://www.estadisticasantafe.gob.ar/contenido/exportaciones-por-aduanas-de-origen-y-aduanas-de-salida-de-la-provincia/",
+ "nota": "Acumulado de enero a septiembre de cada año. «Con origen en la provincia»: bienes producidos en Santa Fe, salgan por donde salgan. «Por las aduanas de Santa Fe»: todo lo que se despacha en las aduanas de San Lorenzo, Rosario, Villa Constitución y Santa Fe, aunque se haya producido en otras provincias; es la mejor medida oficial de lo que sale por los puertos del Gran Rosario. El IPEC publica solo el acumulado del año y su comparación con el año anterior, por eso este cuadro no tiene gráfico; se actualiza cada mes.",
+ "columnas": [
+  {
+   "nombre": "Ene–sep 2025",
+   "tipo": "numero",
+   "decimales": 0
+  },
+  {
+   "nombre": "Ene–sep 2026",
+   "tipo": "numero",
+   "decimales": 0
+  },
+  {
+   "nombre": "Variación",
+   "tipo": "porcentaje",
+   "decimales": 1,
+   "signo": true
+  }
+ ],
+ "filas": [
+  {
+   "concepto": "Exportaciones con origen en la provincia de Santa Fe",
+   "nivel": 0,
+   "celdas": [
+    11936,
+    15945,
+    33.6
+   ]
+  },
+  {
+   "concepto": "Productos primarios",
+   "nivel": 1,
+   "celdas": [
+    1840,
+    1911,
+    3.9
+   ]
+  },
+  {
+   "concepto": "Manufacturas de origen agropecuario (MOA)",
+   "nivel": 1,
+   "celdas": [
+    8900,
+    12696,
+    42.7
+   ]
+  },
+  {
+   "concepto": "Manufacturas de origen industrial (MOI)",
+   "nivel": 1,
+   "celdas": [
+    1089,
+    1196,
+    9.8
+   ]
+  },
+  {
+   "concepto": "Combustibles y energía",
+   "nivel": 1,
+   "celdas": [
+    107,
+    142,
+    32.6
+   ]
+  },
+  {
+   "concepto": "Exportaciones que salen por las aduanas de Santa Fe (de todo el país)",
+   "nivel": 0,
+   "celdas": [
+    20461,
+    24728,
+    20.9
+   ]
+  },
+  {
+   "concepto": "Aduana de San Lorenzo (terminales del norte del Gran Rosario)",
+   "nivel": 1,
+   "celdas": [
+    15002,
+    18320,
+    22.1
+   ]
+  },
+  {
+   "concepto": "Aduana de Rosario",
+   "nivel": 1,
+   "celdas": [
+    5417,
+    6313,
+    16.5
+   ]
+  },
+  {
+   "concepto": "Aduana de Villa Constitución",
+   "nivel": 1,
+   "celdas": [
+    42,
+    95,
+    126.1
+   ]
+  }
+ ]
+}

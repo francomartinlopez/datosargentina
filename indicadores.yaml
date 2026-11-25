@@ -102,7 +102,11 @@ series:
   oro_plata:           {fuente: indec_api, conjunto: minero, campo: "Índice|Plata y oro y sus concentrados"}
   bullon_dore:         {fuente: indec_api, conjunto: minero, campo: "Índice|Bullón Dorado , Doré "}
   litio_toneladas:     {fuente: indec_api, conjunto: minero, campo: "Unidades físicas|Carbonato de litio"}
-  expo_metales_preciosos:     {fuente: indec_api, conjunto: exportaciones_subrubro, campo: "310"}
+  # exportaciones mineras: informe mensual de la Secretaría de Minería (PDF), desde 2022
+  expo_mineria_total:      {fuente: archivo, lector: mineria_exportaciones, campo: total}
+  expo_mineria_santa_cruz: {fuente: archivo, lector: mineria_exportaciones, campo: santa_cruz}
+  expo_mineria_san_juan:   {fuente: archivo, lector: mineria_exportaciones, campo: san_juan}
+  expo_mineria_noa:        {fuente: archivo, lector: mineria_exportaciones, campo: noa}
   # EPH por aglomerado (cálculo con microdatos del INDEC)
   eph_desoc_gran_rosario:  {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_rosario}
   eph_desoc_gran_santa_fe: {fuente: archivo, lector: indec_eph_regional, campo: desocupacion_gran_santa_fe}
@@ -364,6 +368,14 @@ series:
   construya_desest:    {fuente: archivo, lector: construya_indice, campo: desestacionalizado}
   came_ventas:         {fuente: manual, id: came_ventas_minoristas}
   ipc_santa_fe:        {fuente: manual, id: ipc_santa_fe}   # IPEC Santa Fe; lo actualiza la tarea programada del día 20
+  # Córdoba (Dirección General de Estadística y Censos): los carga pipeline/manual_cordoba.py desde la tarea del día 20
+  ipc_cordoba:         {fuente: manual, id: ipc_cordoba}
+  expo_cordoba:        {fuente: manual, id: expo_cordoba}
+  expo_cordoba_pp:     {fuente: manual, id: expo_cordoba_pp}
+  expo_cordoba_moa:    {fuente: manual, id: expo_cordoba_moa}
+  expo_cordoba_moi:    {fuente: manual, id: expo_cordoba_moi}
+  expo_cordoba_cye:    {fuente: manual, id: expo_cordoba_cye}
+  pgb_cordoba:         {fuente: manual, id: pgb_cordoba}
   ipc_corrupcion:      {fuente: manual, id: ipc_corrupcion}
   odsa_ia:             {fuente: manual, id: odsa_inseguridad_alimentaria}
   odsa_ia_severa:      {fuente: manual, id: odsa_inseguridad_alimentaria_severa}
@@ -1018,8 +1030,10 @@ indicadores:
      nota: "IPI minero del INDEC (serie original). Concentrados: plata y oro y sus concentrados. Bullón doré: la aleación de oro y plata que se funde en la mina (Veladero, Cerro Negro, Gualcamayo y otras), la forma principal en que se produce y exporta el oro argentino. El INDEC no publica toneladas ni onzas por mineral. Desde 2017."}
   - {id: litio_toneladas, nombre: "Producción de carbonato de litio (toneladas)", seccion: Actividad, serie: litio_toneladas, tipo_valor: flujo, acumulado_12m: true, unidad: "toneladas, últimos 12 meses",
      nota: "Toneladas de carbonato de litio producidas, según el IPI minero del INDEC (unidades físicas). El INDEC las publica desde 2023; antes la producción de litio era confidencial (ver el índice de producción de litio, en esta misma sección)."}
-  - {id: expo_metales_preciosos, nombre: "Exportaciones de oro y plata", seccion: Actividad, serie: expo_metales_preciosos, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
-     nota: "Subrubro del INDEC «piedras, metales preciosos y sus manufacturas, monedas» (manufacturas de origen industrial): casi todo es oro y plata en barras de doré que salen de las minas de San Juan, Santa Cruz y Salta. INDEC, comercio exterior (API de datos). Desde 2019 el INDEC publica parte de las exportaciones como confidenciales (sin producto), así que esta serie queda por debajo del total del capítulo 71 de la nomenclatura (por ejemplo, US$ 2.711 millones contra US$ 3.341 millones en 2024): sirve para ver la tendencia, no el monto exacto. El INDEC no publica por separado las exportaciones de litio ni de cobre, y Argentina no exporta cobre de mina propia desde 2018."}
+  - {id: expo_mineras, nombre: "Exportaciones mineras: total del país", seccion: Actividad, serie: expo_mineria_total, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
+     variante_principal: "Total del país", nombre_variante: "Exportaciones mineras: {}",
+     variantes: {expo_mineria_santa_cruz: "Santa Cruz", expo_mineria_san_juan: "San Juan", expo_mineria_noa: "Catamarca, Jujuy y Salta"},
+     nota: "Exportaciones de la minería (metalífera, litio, rocas y minerales industriales; sin petróleo ni gas), según el informe mensual «Origen provincial de las exportaciones mineras» de la Secretaría de Minería con datos de Aduana. Cada mes es la diferencia entre dos acumulados del año del informe, que incorporan las revisiones de los meses anteriores. Santa Cruz exporta sobre todo oro y plata; San Juan, oro; Catamarca, Jujuy y Salta, litio (dos tercios) y metales. Desde 2022."}
   # ---------- Santa Fe, Córdoba y AMBA ----------
   - {id: desoc_regional, vista_inicial: desde_2003, nombre: "Desocupación: Gran Rosario", seccion: "Santa Fe, Córdoba y AMBA", serie: eph_desoc_gran_rosario, tipo_valor: tasa, unidad: "% de la PEA", frecuencia: T,
      variante_principal: "Gran Rosario", nombre_variante: "Desocupación: {}",
@@ -1035,9 +1049,17 @@ indicadores:
      nota: "Trabajadores en relación de dependencia del sector privado con aportes, según la provincia donde trabajan (SIPA, Secretaría de Trabajo; serie sin estacionalidad). Es la medida mensual de empleo formal por provincia."}
   - {id: inflacion_caba, nombre: "Inflación: Ciudad de Buenos Aires (IPCBA)", seccion: "Santa Fe, Córdoba y AMBA", serie: ipc_caba, tipo_valor: indice, vista_historica: mensual, unidad: "índice",
      fuente: "Instituto de Estadística y Censos de la Ciudad de Buenos Aires (vía datos.gob.ar)",
-     variante_principal: "Ciudad de Buenos Aires", nombre_variante: "Inflación: {}", variantes: {ipc_santa_fe: "Santa Fe (IPEC)"},
-     fuentes_variantes: {ipc_santa_fe: "IPEC, Instituto Provincial de Estadística y Censos de Santa Fe"},
-     nota: "Índices de precios al consumidor que miden los institutos de estadística provinciales, cada uno con su canasta. Ciudad de Buenos Aires (IDECBA): se publica unos días antes que el IPC nacional; empalme de la serie con base julio 2011-junio 2012 (hasta febrero de 2022) y la serie con base 2021. Santa Fe (IPEC): relevamiento en las ciudades de Santa Fe y Rosario, desde diciembre de 2016; se carga cada mes desde la planilla oficial del IPEC. Córdoba todavía no está: su serie no se puede descargar en forma automática."}
+     variante_principal: "Ciudad de Buenos Aires", nombre_variante: "Inflación: {}", variantes: {ipc_santa_fe: "Santa Fe (IPEC)", ipc_cordoba: "Córdoba (DGEyC)"},
+     fuentes_variantes: {ipc_santa_fe: "IPEC, Instituto Provincial de Estadística y Censos de Santa Fe", ipc_cordoba: "Dirección General de Estadística y Censos de Córdoba"},
+     nota: "Índices de precios al consumidor que miden los institutos de estadística provinciales, cada uno con su canasta. Ciudad de Buenos Aires (IDECBA): se publica unos días antes que el IPC nacional; empalme de la serie con base julio 2011-junio 2012 (hasta febrero de 2022) y la serie con base 2021. Santa Fe (IPEC): relevamiento en las ciudades de Santa Fe y Rosario, desde diciembre de 2016; se carga cada mes desde la planilla oficial del IPEC. Córdoba (Dirección General de Estadística y Censos): serie base 2014 desde julio de 2013 encadenada con la base nueva (junio-noviembre de 2025) desde noviembre de 2025; el portal provincial actualiza sus tablas de datos con algunos meses de demora respecto del informe mensual."}
+  - {id: expo_cordoba, nombre: "Exportaciones de Córdoba: total", seccion: "Santa Fe, Córdoba y AMBA", serie: expo_cordoba, tipo_valor: flujo, moneda: USD, acumulado_12m: true, unidad: "millones de US$ de hoy, últimos 12 meses",
+     variante_principal: "Total", nombre_variante: "Exportaciones de Córdoba: {}",
+     variantes: {expo_cordoba_pp: "productos primarios", expo_cordoba_moa: "manufacturas de origen agropecuario", expo_cordoba_moi: "manufacturas de origen industrial", expo_cordoba_cye: "combustibles y energía"},
+     fuente: "Dirección General de Estadística y Censos de Córdoba (con datos del INDEC)",
+     nota: "Exportaciones de bienes con origen en la provincia de Córdoba (se producen en Córdoba, salgan por el puerto que sea), por gran rubro, desde 2002. Los últimos meses son provisorios. El portal provincial actualiza sus tablas con algunos meses de demora."}
+  - {id: pgb_cordoba, vista_inicial: desde_2003, nombre: "Producto bruto de Córdoba (PGB)", seccion: "Santa Fe, Córdoba y AMBA", serie: pgb_cordoba, tipo_valor: nivel, frecuencia: A, unidad: "millones de pesos de 2004",
+     fuente: "Dirección General de Estadística y Censos de Córdoba",
+     nota: "Producto geográfico bruto de la provincia de Córdoba a precios constantes de 2004: el equivalente provincial del PIB. Los años desde 2019 son provisorios y se revisan. Santa Fe y la provincia de Buenos Aires no publican una serie comparable actualizada que se pueda descargar."}
 
 # ---------- Vista por rubro ----------
 # Agrupa indicadores ya publicados en seis rubros productivos (ver pipeline/rubros.py).
@@ -1054,7 +1076,7 @@ rubros:
   - id: mineria
     nombre: Minería
     intro: "Producción de minerales metalíferos (oro, plata, litio) y no metalíferos, exportaciones mineras, empleo y proyectos de inversión. Argentina no produce cobre desde el cierre de Bajo la Alumbrera (2018); los proyectos de cobre están en etapa de construcción o factibilidad."
-    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_metales_preciosos, empleo_mineria, "rigi:Minería"]
+    items: [emae_mineria, ipi_minero, metaliferos, oro_plata, litio, litio_toneladas, expo_mineras, empleo_mineria, "tabla:expo_mineras_producto", "tabla:proyectos_mineros_etapa", "rigi:Minería"]
   - id: energia
     nombre: Energía
     intro: "Petróleo y gas (convencional y no convencional), electricidad, comercio exterior de combustibles, subsidios y tarifas."

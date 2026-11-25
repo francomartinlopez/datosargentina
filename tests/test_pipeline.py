@@ -303,3 +303,22 @@ def test_rubros_unicos_y_publicados(tmp_path):
     assert [i["id"] for i in r[0]["items"]] == ["x", "rigi_a"]
     assert r[1]["items"] == []
     assert any("y" in a for a in alertas) and any("más de un rubro" in a for a in alertas) and any("mapa:m" in a for a in alertas)
+
+
+def test_siacam_informe():
+    from pipeline.fuentes import siacam
+    t = ("Durante el mes de octubre de 2026 el sector minero realizó exportaciones por USD 660 millones, lo que implica una "
+         "caída interanual del 1,2%. De esta manera, en los primeros 10 meses de 2026 las exportaciones mineras totalizaron "
+         "USD 7.455 millones. En las provincias del NOA (Catamarca, Jujuy y Salta) las exportaciones mineras de octubre de 2026 "
+         "alcanzaron los USD 277 millones. El litio explicó el 66,4% de los envíos.")
+    f = siacam.leer_informe(t)
+    assert f["fecha"] == "2026-10-01" and f["total"] == 660 and f["acumulado"] == 7455 and f["acumulado_meses"] == 10
+    assert round(f["total_anio_anterior"]) == 668 and f["noa"] == 277 and f["noa_litio_pct"] == 66.4
+
+
+def test_cuadros_validos():
+    import json
+    from pathlib import Path
+    from pipeline import tablas
+    for a in Path("data/manual/tablas").glob("*.json"):
+        assert tablas.validar(json.loads(a.read_text(encoding="utf-8"))) == [], a.name

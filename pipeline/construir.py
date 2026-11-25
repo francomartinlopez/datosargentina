@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rigi, rubros, vistas
+from . import calidad, diseno, distribucion, encuestas, mapas, poblacion, transformar, rigi, rubros, tablas, vistas
 from .fuentes import extraer
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -191,7 +191,7 @@ def procesar(config: dict, crudas: dict) -> tuple[dict[str, pd.Series], list[str
     return mensuales, alertas
 
 
-FUENTES_ARCHIVO = {"oede": "Secretaría de Trabajo (OEDE)", "escribanos": "Colegio de Escribanos de la Ciudad de Buenos Aires", "indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda", "economia": "Ministerio de Economía", "arca": "ARCA (ex AFIP)", "provincias": "Dirección Nacional de Recursos Provinciales (direcciones de rentas provinciales)"}
+FUENTES_ARCHIVO = {"oede": "Secretaría de Trabajo (OEDE)", "escribanos": "Colegio de Escribanos de la Ciudad de Buenos Aires", "indec": "INDEC", "bcra": "BCRA", "finanzas": "Secretaría de Finanzas", "hacienda": "Secretaría de Hacienda", "economia": "Ministerio de Economía", "arca": "ARCA (ex AFIP)", "provincias": "Dirección Nacional de Recursos Provinciales (direcciones de rentas provinciales)", "mineria": "Secretaría de Minería (informe mensual Origen provincial de las exportaciones mineras, con datos de Aduana)"}
 
 
 def nombre_fuente(definicion: dict) -> str:
@@ -336,6 +336,7 @@ def main() -> None:
     alertas += alertas_proc
     fichas, alertas_ind = construir_indicadores(config, mensuales)
     alertas_mapas = [] if args.offline else mapas.construir(mensuales, config["parametros"], SALIDA) + distribucion.construir(SALIDA) + rigi.construir(SALIDA) + encuestas.construir(SALIDA) + poblacion.construir(SALIDA) + diseno.huecos(config, {f['id'] for f in fichas})
+    alertas_mapas += tablas.construir(SALIDA)
     alertas_mapas += rubros.construir(config, fichas, SALIDA)
     escribir(fichas, mensuales, alertas + alertas_ind + alertas_mapas, config)
     print(f"Listo: {len(fichas)} indicadores, {len(alertas + alertas_ind + alertas_mapas)} alertas (ver data/informe.md)")
